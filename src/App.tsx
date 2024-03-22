@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import './App.css';
-import { ThemeCustomization } from './themes';
+import { ThemeCustomization } from '@/themes';
 
 function App() {
   return (
