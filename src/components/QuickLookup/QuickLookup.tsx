@@ -34,8 +34,8 @@ export const QuickLookup = () => {
   };
 
   return (
-    <div style={{ padding: '30px 24px' }}>
-      <Tabs onChange={onChange} type="card" items={items} />
+    <div className='container py-6'>
+      <Tabs onChange={onChange} type="card" items={items} className='quick-lookup' />
     </div>
   );
 };

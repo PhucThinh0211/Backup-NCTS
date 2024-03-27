@@ -48,49 +48,49 @@ export const FreightEstimate = () => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Row style={{ paddingLeft: 24 }}>
-            <Col span={8}>
-              <Form.Item name="radio-group" label=" ">
+          <Form.Item label="Loại dịch vụ">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Row>
+            <Col span={12}>
+              <Form.Item name="radio-group">
                 <Radio.Group>
                   <Radio value="hangnoidia">Hàng nội địa</Radio>
                   <Radio value="hangquocte">Hàng quốc tế</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
-            <Col span={8}>
-              <Form.Item name="radio-group" label=" ">
+            <Col span={12}>
+              <Form.Item name="radio-group">
                 <Radio.Group>
                   <Radio value="hangden">Hàng đến</Radio>
                   <Radio value="hangdi">Hàng đi</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
-            <Col span={8}>
-              <Form.Item name="checkbox-group" label=" ">
-                <Row>
-                  <Col span={8}>
-                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
-                      Xử lý hàng
-                    </Checkbox>
-                  </Col>
-                  <Col span={8}>
-                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
-                      Lưu kho
-                    </Checkbox>
-                  </Col>
-                </Row>
-              </Form.Item>
-            </Col>
           </Row>
         </Col>
-        <Col span={12}>
-          <Form.Item label="Loại dịch vụ">
-            <Input />
+        <Col span={10}>
+          <Form.Item name="checkbox-group">
+            <Row>
+              <Col span={8}>
+                <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                  Xử lý hàng
+                </Checkbox>
+              </Col>
+              <Col span={8}>
+                <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                  Lưu kho
+                </Checkbox>
+              </Col>
+            </Row>
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item label=' '>
-            <Row justify="center">
+        <Col span={2}>
+          <Form.Item>
+            <Row justify="end">
               <Button type="primary" htmlType="submit">
                 Tra cứu
               </Button>
