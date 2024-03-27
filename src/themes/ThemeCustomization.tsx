@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd';
 import { StyleProvider } from '@ant-design/cssinjs';
 import dayjs from 'dayjs';
+import i18next from 'i18next';
 
 import enUS from 'antd/locale/en_US';
 import viVN from 'antd/locale/vi_VN';
@@ -18,7 +19,7 @@ export const ThemeCustomization = ({ children }: ThemeProps) => {
   const lang = useAppSelector(getLanguage());
 
   useEffect(() => {
-    // i18next.changeLanguage(lang);
+    i18next.changeLanguage(lang);
     dayjs.locale(lang);
   }, [lang]);
 
