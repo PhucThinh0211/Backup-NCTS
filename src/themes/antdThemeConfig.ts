@@ -6,5 +6,6 @@ export const antdThemeConfig: ThemeConfig = {
   ...defaultConfig,
   token: {
     ...defaultConfig.token,
+    colorPrimary: 'orange',
   },
 };

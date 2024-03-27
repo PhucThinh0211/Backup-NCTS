@@ -1,11 +1,14 @@
-import { Button } from 'antd';
 import './App.css';
 import { ThemeCustomization } from '@/themes';
+import { AppRouter } from './routes';
+import { AuthProvider } from './components';
 
 function App() {
   return (
     <ThemeCustomization>
-      <Button type="primary">Button</Button>
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
     </ThemeCustomization>
   );
 }
