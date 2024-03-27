@@ -86,12 +86,8 @@
 }
 
 .quick-lookup .ant-tabs-nav .ant-tabs-tab {
-  /* border-radius: 0px !important; */
-  /* font-size: 22px !important; */
   font-weight: 600 !important;
   text-transform: uppercase;
-  /* border-top-left-radius: 8px; */
-  /* border-top-right-radius: 8px; */
 }
 
 .quick-lookup .ant-tabs-nav {
@@ -113,6 +109,6 @@
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  /* padding-right: 1rem; */
-  /* padding-left: 1rem */
+  padding-right: 1rem;
+  padding-left: 1rem
 }

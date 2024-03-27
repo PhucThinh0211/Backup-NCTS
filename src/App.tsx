@@ -1,15 +1,17 @@
 import './App.css';
 import { ThemeCustomization } from '@/themes';
 import { AppRouter } from './routes';
-import { AuthProvider } from './components';
+import { AuthProvider, ReduxStoreProvider } from './components';
 
 function App() {
   return (
-    <ThemeCustomization>
-      <AuthProvider>
-        <AppRouter />
-      </AuthProvider>
-    </ThemeCustomization>
+    <ReduxStoreProvider>
+      <ThemeCustomization>
+        <AuthProvider>
+          <AppRouter />
+        </AuthProvider>
+      </ThemeCustomization>
+    </ReduxStoreProvider>
   );
 }
 

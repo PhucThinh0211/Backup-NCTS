@@ -5,14 +5,16 @@ import { Avatar, Dropdown, Flex, Space } from 'antd';
 
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const SwitchLang = () => {
-  ('');
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState('vi');
+  const lang = useAppSelector(getLanguage());
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
-    setLang(e.key);
+    dispatch(persistStateActions.setLanguage(e.key));
     setOpen(false);
   };
 
