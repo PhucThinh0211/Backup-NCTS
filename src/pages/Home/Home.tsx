@@ -1,3 +1,4 @@
+import { QuickLookup } from '@/components';
 import { Carousel } from 'antd';
 
 export const Home = () => {
@@ -13,7 +14,9 @@ export const Home = () => {
           <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="1" width='100%' />
         </div>
       </Carousel>
-      Trang chủ
+      <div style={{ backgroundColor: 'white', width: '100%' }}>
+        <QuickLookup />
+      </div>
     </>
   );
 };

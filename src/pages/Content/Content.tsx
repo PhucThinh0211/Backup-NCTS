@@ -3,9 +3,9 @@ import { Carousel } from 'antd';
 import { Outlet, useParams } from 'react-router-dom';
 
 export const Content = () => {
-  const { '*': kk} = useParams();
+  const { '*': slug} = useParams();
 
-  console.log(kk);
+  console.log(slug);
 
   return (
     <>

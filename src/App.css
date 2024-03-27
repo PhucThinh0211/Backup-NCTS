@@ -71,7 +71,12 @@
   color: #edaa43 !important;
 }
 
+/* antd custom */
 .ant-menu .ant-menu-item-group-title {
   font-weight: 600;
   color: #edaa43 !important;
+}
+
+.ant-form-item {
+  margin-bottom: 10px !important;
 }

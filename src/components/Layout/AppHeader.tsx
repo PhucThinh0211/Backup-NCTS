@@ -1,16 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { MenuProps } from 'antd';
 import { Layout, theme, Row, Menu, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
 import { menus } from '@/fakeData';
 import { TopNavHeight } from '@/common';
 import { SwitchLang } from './SwitchLang';
 
+const flatMenu: { id: string; url?: string; parentId?: string }[] = [];
+
 const items: MenuProps['items'] = menus.map((x) => {
+  flatMenu.push({ id: x.id, url: x.url });
+  if (x.links) {
+    x.links.forEach((l) => {
+      flatMenu.push({ id: l.id, url: l.url, parentId: x.id });
+    });
+  }
+  if (x.groups) {
+    x.groups.forEach((g) => {
+      flatMenu.push({ id: g.id, url: '', parentId: x.id });
+      if (g.links) {
+        g.links.forEach((l) => {
+          flatMenu.push({ id: l.id, url: l.url, parentId: g.id });
+        });
+      }
+    });
+  }
+
   if (x.type === 'FlyoutMemu' && x.links) {
     return {
       key: x.id,
@@ -58,21 +77,28 @@ export const AppHeader = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const [current, setCurrent] = useState('/');
+  const { '*': slug } = useParams();
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log(e.key);
-    setCurrent(e.key);
-  };
+  useEffect(() => {
+    const selectedMenu = flatMenu.find((x) => `/${slug || ''}` === x.url);
+    if (selectedMenu) {
+      setCurrent(selectedMenu.id);
+    }
+  }, [slug]);
 
   return (
     <Layout.Header
-      style={{ padding: '0px 16px', color: 'GrayText', background: colorBgContainer, height: TopNavHeight }}>
+      style={{
+        padding: '0px 16px',
+        color: 'GrayText',
+        background: colorBgContainer,
+        height: TopNavHeight,
+      }}>
       <Row align="middle" justify="space-between">
         <Link to="/">
           <img src={logo} alt="logo" width={130} />
         </Link>
         <Menu
-          onClick={onClick}
           selectedKeys={[current]}
           mode="horizontal"
           items={items}
