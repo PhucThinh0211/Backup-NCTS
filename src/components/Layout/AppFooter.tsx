@@ -7,9 +7,9 @@ export const AppFooter = () => {
       <Row>
         <Space style={{ flex: 1 }}>
           <Typography.Link style={{ color: 'white' }} href='mailto:webmaster@noibaicargo.com.vn'>Email: webmaster@noibaicargo.com.vn</Typography.Link>
-          <Divider type='vertical' style={{ borderInlineStart: '1px solid black' }}/>
+          <Divider type='vertical' style={{ borderInlineStart: '1px solid gray' }}/>
           <Typography.Link style={{ color: 'white' }} href='tel:0983550608'>Hotline: 0983550608</Typography.Link>
-          <Divider type='vertical' style={{ borderInlineStart: '1px solid black' }} />
+          <Divider type='vertical' style={{ borderInlineStart: '1px solid gray' }} />
           <Link to='/sitemap'>
             <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
           </Link>

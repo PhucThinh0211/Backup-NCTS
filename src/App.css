@@ -44,11 +44,11 @@
 
 .top-nav .ant-menu-item {
   line-height: 73px;
-  color: #838587 !important;
+  color: gray !important;
 }
 
 .top-nav .ant-menu-item-selected {
-  color: #edaa43 !important;
+  color: orange !important;
 }
 
 .top-nav .ant-menu-item-active {
@@ -60,21 +60,21 @@
 }
 
 .top-nav .ant-menu-submenu-title {
-  color: #838587 !important;
+  color: gray !important;
 }
 
 .top-nav .ant-menu-submenu-active .ant-menu-submenu-title {
-  color: #edaa43 !important;
+  color: orange !important;
 }
 
 .top-nav .ant-menu-submenu-selected .ant-menu-submenu-title {
-  color: #edaa43 !important;
+  color: orange !important;
 }
 
 /* antd custom */
 .ant-menu .ant-menu-item-group-title {
   font-weight: 600;
-  color: #edaa43 !important;
+  color: orange !important;
 }
 
 .ant-form-item {
@@ -88,6 +88,7 @@
 .quick-lookup .ant-tabs-nav .ant-tabs-tab {
   font-weight: 600 !important;
   text-transform: uppercase;
+  color: gray !important;
 }
 
 .quick-lookup .ant-tabs-nav {

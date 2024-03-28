@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Layout, theme, Row, Menu, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { NIL as NIL_UUID  } from 'uuid';
 import { Link, useParams } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
@@ -81,9 +82,7 @@ export const AppHeader = () => {
 
   useEffect(() => {
     const selectedMenu = flatMenu.find((x) => `/${slug || ''}` === x.url);
-    if (selectedMenu) {
-      setCurrent(selectedMenu.id);
-    }
+    setCurrent(selectedMenu?.id || NIL_UUID);
   }, [slug]);
 
   return (

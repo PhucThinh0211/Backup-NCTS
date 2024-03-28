@@ -6,6 +6,8 @@ import * as resources from './resources';
 const ns = Object.keys(Object.values(resources)[0]);
 export const defaultNS = ns[0];
 
+console.log(defaultNS);
+
 i18n.use(initReactI18next).init({
   ns,
   defaultNS,
