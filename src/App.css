@@ -89,15 +89,24 @@
   font-weight: 600 !important;
   text-transform: uppercase;
   color: gray !important;
+  border-color: orange !important;
+}
+
+.quick-lookup .ant-tabs-nav::before {
+  border-color: orange !important;
 }
 
 .quick-lookup .ant-tabs-nav {
   margin: 0px !important;
 }
 
+.quick-lookup .ant-tabs-nav .ant-tabs-tab-active {
+  border-bottom-color: #ffffff !important;
+}
+
 .quick-lookup .ant-tabs-content-holder {
   border-width: 1px;
-  border-color: #f0f0f0;
+  border-color: orange;
   border-style: solid;
   border-top-style: none;
   border-bottom-left-radius: 8px;
