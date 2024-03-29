@@ -5,7 +5,7 @@ export const AwbLookup = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <Form layout="vertical" requiredMark>
+    <Form layout="vertical" requiredMark autoComplete="off">
       <Form.Item noStyle>
         <Form.Item
           label={t('Carrier', { ns: 'common' })}

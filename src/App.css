@@ -89,11 +89,11 @@
   font-weight: 600 !important;
   text-transform: uppercase;
   color: gray !important;
-  border-color: orange !important;
+  border-color: gray !important;
 }
 
 .quick-lookup .ant-tabs-nav::before {
-  border-color: orange !important;
+  border-color: gray !important;
 }
 
 .quick-lookup .ant-tabs-nav {
@@ -106,7 +106,7 @@
 
 .quick-lookup .ant-tabs-content-holder {
   border-width: 1px;
-  border-color: orange;
+  border-color: gray;
   border-style: solid;
   border-top-style: none;
   border-bottom-left-radius: 8px;

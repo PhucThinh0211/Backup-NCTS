@@ -6,7 +6,7 @@ export const FlightLookup = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <Form layout="vertical" initialValues={{ dateFlight: dayjs(), routing: 'di' }}>
+    <Form layout="vertical" initialValues={{ dateFlight: dayjs(), routing: 'di' }} autoComplete="off">
       <Form.Item style={{ marginBottom: 0 }} rules={[{ required: true }]}>
         <Form.Item
           label={t('Carrier', { ns: 'common' })}

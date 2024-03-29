@@ -16,7 +16,7 @@ export const FreightEstimate = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <Form layout="vertical" requiredMark>
+    <Form layout="vertical" requiredMark autoComplete="off">
       <Row style={{ marginBottom: 16 }}>
         <Typography.Title level={5} style={{ margin: 0 }}>
           Tính thử phí hàng nhập
