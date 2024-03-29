@@ -1,15 +1,18 @@
 import { Button, Form, Input, Row } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export const InfoLookup = () => {
+  const { t } = useTranslation(['common']);
+
   return (
     <Form layout="vertical" requiredMark>
-      <Form.Item label="Nhập từ tìm kiếm" required>
+      <Form.Item label={t('Type to search', { ns: 'common' })} required>
         <Input />
       </Form.Item>
       <Form.Item noStyle>
         <Row justify="end">
           <Button type="primary" htmlType="submit">
-            Tìm kiếm
+            {t('Search', { ns: 'common' })}
           </Button>
         </Row>
       </Form.Item>

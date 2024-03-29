@@ -1,12 +1,15 @@
 import { Button, DatePicker, Form, Input, Row, Select } from 'antd';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 export const FlightLookup = () => {
+  const { t } = useTranslation(['common']);
+
   return (
     <Form layout="vertical" initialValues={{ dateFlight: dayjs(), routing: 'di' }}>
       <Form.Item style={{ marginBottom: 0 }} rules={[{ required: true }]}>
         <Form.Item
-          label="Tên hãng"
+          label={t('Carrier', { ns: 'common' })}
           required
           rules={[{ required: true }]}
           style={{ display: 'inline-block', width: 'calc(50% - 4px)' }}>
@@ -22,14 +25,14 @@ export const FlightLookup = () => {
           }}>
           <Form.Item
             name="dateFlight"
-            label="Ngày bay"
+            label={t('Flight date', { ns: 'common' })}
             rules={[{ required: true }]}
             style={{ display: 'inline-block', width: 'calc(50% - 4px)' }}>
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
-            name="routing"
-            label="Lịch trình"
+            name="routine"
+            label={t('Routine', { ns: 'common' })}
             rules={[{ required: true }]}
             style={{ display: 'inline-block', width: 'calc(50% - 4px)', marginLeft: 8 }}>
             <Select
@@ -42,7 +45,7 @@ export const FlightLookup = () => {
           <Form.Item noStyle>
             <Row justify="end">
               <Button type="primary" htmlType="submit">
-                Tra cứu
+                {t('Lookup', { ns: 'common' })}
               </Button>
             </Row>
           </Form.Item>

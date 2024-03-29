@@ -1,7 +1,22 @@
 {
+  "Sign In": "Sign In",
+  "Sign Up": "Sign Up",
   "Lookup": "Lookup",
   "Lookup AWB No": "Lookup AWB No",
   "Lookup Flight": "Lookup Flight",
   "Estimate charge": "Estimate charge",
-  "Search": "Search"
+  "Search": "Search",
+  "Type to search": "Type to search",
+  "Carrier": "Carrier",
+  "AWB number": "AWB number",
+  "Routine": "Routine",
+  "Flight date": "Flight date",
+  "Estimate import charges": "Estimate import charges",
+  "Estimate export charges": "Estimate export charges",
+  "Domestic": "Domestic",
+  "International": "International",
+  "Inbound": "Inbound",
+  "Outbound": "Outbound",
+  "Process items": "Process items",
+  "Storage": "Storage"
 }

@@ -10,8 +10,11 @@ import {
   TimePicker,
   Typography,
 } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export const FreightEstimate = () => {
+  const { t } = useTranslation(['common']);
+
   return (
     <Form layout="vertical" requiredMark>
       <Row style={{ marginBottom: 16 }}>
@@ -57,16 +60,16 @@ export const FreightEstimate = () => {
             <Col span={12}>
               <Form.Item name="radio-group">
                 <Radio.Group>
-                  <Radio value="hangnoidia">Hàng nội địa</Radio>
-                  <Radio value="hangquocte">Hàng quốc tế</Radio>
+                  <Radio value="hangnoidia">{t('Domestic', { ns: 'common' })}</Radio>
+                  <Radio value="hangquocte">{t('International', { ns: 'common' })}</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item name="radio-group">
                 <Radio.Group>
-                  <Radio value="hangden">Hàng đến</Radio>
-                  <Radio value="hangdi">Hàng đi</Radio>
+                  <Radio value="hangden">{t('Inbound', { ns: 'common' })}</Radio>
+                  <Radio value="hangdi">{t('Outbound', { ns: 'common' })}</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -77,12 +80,12 @@ export const FreightEstimate = () => {
             <Row>
               <Col span={8}>
                 <Checkbox value="A" style={{ lineHeight: '32px' }}>
-                  Xử lý hàng
+                  {t('Process items', { ns: 'common' })}
                 </Checkbox>
               </Col>
               <Col span={8}>
                 <Checkbox value="B" style={{ lineHeight: '32px' }}>
-                  Lưu kho
+                  {t('Storage', { ns: 'common' })}
                 </Checkbox>
               </Col>
             </Row>
@@ -92,7 +95,7 @@ export const FreightEstimate = () => {
           <Form.Item>
             <Row justify="end">
               <Button type="primary" htmlType="submit">
-                Tra cứu
+                {t('Lookup', { ns: 'common' })}
               </Button>
             </Row>
           </Form.Item>

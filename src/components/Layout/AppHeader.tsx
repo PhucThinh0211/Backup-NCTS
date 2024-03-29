@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Layout, theme, Row, Menu, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 import { NIL as NIL_UUID  } from 'uuid';
 import { Link, useParams } from 'react-router-dom';
 
@@ -74,6 +75,8 @@ const items: MenuProps['items'] = menus.map((x) => {
 });
 
 export const AppHeader = () => {
+  const { t } = useTranslation(['common']);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -113,10 +116,10 @@ export const AppHeader = () => {
         />
         <Space>
           <Link to="/dang-ky">
-            <Button type="default">Đăng ký</Button>
+            <Button type="default">{t('Sign Up', { ns: 'common' })}</Button>
           </Link>
           <Link to="/dang-nhap">
-            <Button type="primary">Đăng nhập</Button>
+            <Button type="primary">{t('Sign In', { ns: 'common' })}</Button>
           </Link>
           {/* Switch Language */}
           <SwitchLang />
