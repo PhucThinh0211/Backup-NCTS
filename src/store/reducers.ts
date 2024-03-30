@@ -1,17 +1,20 @@
 import { combineReducers } from '@reduxjs/toolkit';
+
 import { persistStateReducer } from './persistState';
+import { loadingReducer } from './loading';
+import { modalReducer } from './modal';
 
 const mainReducer = combineReducers({
-  persist: persistStateReducer,
+  persistApp: persistStateReducer,
+  loading: loadingReducer,
+  modal: modalReducer
 });
 
 const rootReducers = (state: any, action: any) => {
   // reset store if logout
   if (action.type === 'app/logout') {
     state = {
-      app: {
-        language: state.app.language,
-      },
+      persistApp: state.persistApp
     };
   }
 

@@ -1,38 +1,50 @@
-import { Button, Form, Input, Row } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { Button, Form, Input, Row } from "antd";
+import { useTranslation } from "react-i18next";
+
+import { useAppDispatch } from "@/store/hooks";
+import { startLoading } from "@/store/loading";
 
 export const AwbLookup = () => {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(["common"]);
+  const dispatch = useAppDispatch();
+
+  const handleLookup = () => {
+    dispatch(startLoading({ key: "testLoadingKey" }));
+  };
 
   return (
-    <Form layout="vertical" requiredMark autoComplete="off">
+    <Form layout="vertical" requiredMark autoComplete="off" onFinish={handleLookup}>
       <Form.Item noStyle>
         <Form.Item
-          label={t('Carrier', { ns: 'common' })}
+          label={t("Carrier", { ns: "common" })}
           required
           rules={[{ required: true }]}
-          style={{ display: 'inline-block', width: 'calc(50% - 4px)' }}>
+          style={{ display: "inline-block", width: "calc(50% - 4px)" }}
+        >
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('AWB number', { ns: 'common' })}
+          label={t("AWB number", { ns: "common" })}
           required
           style={{
-            display: 'inline-block',
-            width: 'calc(50% - 4px)',
+            display: "inline-block",
+            width: "calc(50% - 4px)",
             marginBottom: 0,
             marginLeft: 8,
-          }}>
+          }}
+        >
           <Form.Item
             name="awbPfx"
             rules={[{ required: true }]}
-            style={{ display: 'inline-block', width: 'calc(50% - 4px)' }}>
+            style={{ display: "inline-block", width: "calc(50% - 4px)" }}
+          >
             <Input placeholder="Prefix" />
           </Form.Item>
           <Form.Item
             name="awbNum"
             rules={[{ required: true }]}
-            style={{ display: 'inline-block', width: 'calc(50% - 4px)', marginLeft: 8 }}>
+            style={{ display: "inline-block", width: "calc(50% - 4px)", marginLeft: 8 }}
+          >
             <Input placeholder="AWB#" />
           </Form.Item>
         </Form.Item>
@@ -40,7 +52,7 @@ export const AwbLookup = () => {
       <Form.Item noStyle>
         <Row justify="end">
           <Button type="primary" htmlType="submit">
-            {t('Lookup', { ns: 'common' })}
+            {t("Lookup", { ns: "common" })}
           </Button>
         </Row>
       </Form.Item>

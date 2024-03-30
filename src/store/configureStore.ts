@@ -6,16 +6,11 @@ import storage from 'redux-persist/lib/storage';
 import rootEpics from './epics';
 import rootReducers from './reducers';
 import { RootState } from './types';
-import { persitConfigKey } from '@/common/define';
 
 const storeConfig = (config: any) => {
-  const savedConfigVal = localStorage.getItem(persitConfigKey);
-  const savedConfig = savedConfigVal ? JSON.parse(savedConfigVal) : {};
   const persistConfig = {
     key: 'root',
     storage,
-    whitelist: [],
-    ...savedConfig,
     ...config,
   };
 

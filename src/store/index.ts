@@ -1,9 +1,8 @@
-import configureStore from './configureStore';
+import configureStore from "./configureStore";
 
-export const persistConfigStorage = {
-  whitelist: ['persistState'],
-};
-export const defaultPersistConfig = { whitelist: ['persist'] };
+export const persistConfigStorage = {};
+
+export const defaultPersistConfig = { whitelist: ["persistApp"] };
 
 export const initialStoreCongig = configureStore(defaultPersistConfig);
 export const store = initialStoreCongig.store;
