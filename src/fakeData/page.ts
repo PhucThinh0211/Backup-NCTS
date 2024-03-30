@@ -1,4 +1,4 @@
-type PageType = 'Content' | 'News' | 'Contact' | 'MediaLibrary' | 'Logo' | 'FileList';
+type PageType = 'Content' | 'News' | 'Contact' | 'Photos' | 'Videos' | 'Logos' | 'Files';
 type NewsType = 'NCTS' | 'Customer' | 'Activities' | 'Industrial' | 'Recruitment'; // Nhóm tin
 // NCTS News, Activities News là bản tin nội bộ NCTS
 

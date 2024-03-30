@@ -10,7 +10,7 @@ import { Link, useParams } from 'react-router-dom';
 import logo from '@/assets/logo.png';
 import { menus } from '@/fakeData';
 import { TopNavHeight } from '@/common';
-import { SwitchLang } from './SwitchLang';
+import { SwitchLang } from '@/components';
 
 const flatMenu: { id: string; url?: string; parentId?: string }[] = [];
 
