@@ -1,0 +1,22 @@
+{
+  "Sign In": "Đăng nhập",
+  "Sign Up": "Đăng ký",
+  "Lookup": "Tra cứu",
+  "Lookup AWB No": "Tra cứu vận đơn",
+  "Lookup Flight": "Tra cứu lịch bay",
+  "Estimate charge": "Tính thử phí hàng xuất, nhập",
+  "Search": "Tìm kiếm",
+  "Type to search": "Nhập để tìm kiếm",
+  "Carrier": "Tên hãng",
+  "AWB number": "Số vận đơn",
+  "Routine": "Lịch trình",
+  "Flight date": "Ngày bay",
+  "Estimate import charges": "Tính thử phí hàng nhập",
+  "Estimate export charges": "Tính thử phí hàng xuất",
+  "Domestic": "Nội địa",
+  "International": "Quốc tế",
+  "Inbound": "Hàng đến",
+  "Outbound": "Hàng đi",
+  "Process items": "Xử lý hàng",
+  "Storage": "Lưu kho"
+}
