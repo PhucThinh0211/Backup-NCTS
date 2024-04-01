@@ -1,7 +1,6 @@
 import { AuthRouteObject } from './AuthRoute';
 import { Content, Home } from '@/pages';
-import { AppLayout } from '@/components';
-import { Outlet } from 'react-router';
+import { AdminLayout, AppLayout } from '@/components';
 
 type MetaMenu = {
   name?: string;
@@ -33,7 +32,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
     path: '/admin',
     name: 'Admin',
     // Layout cho trang Quản trị web
-    element: <Outlet />,
+    element: <AdminLayout />,
     children: [
       { index: true, name: 'Home', element: 'Quản trị nội dung website' }
     ]
