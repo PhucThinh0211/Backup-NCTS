@@ -54,6 +54,7 @@ export const AdminSider = (props: SiderProps) => {
       label: t("Media"),
       icon: <img src={MediaSvg} alt="media icon" />,
       key: "/admin/media",
+      popupClassName: "leftSider_subMenu",
       children: [
         {
           label: t("Photos"),

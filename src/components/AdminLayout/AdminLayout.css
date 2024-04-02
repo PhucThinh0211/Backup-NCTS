@@ -1,9 +1,11 @@
-.leftSider .ant-menu:not(.ant-menu-inline-collapsed) .ant-menu-item {
+.leftSider .ant-menu:not(.ant-menu-inline-collapsed) .ant-menu-item,
+.leftSider_subMenu.ant-menu:not(.ant-menu-inline-collapsed) .ant-menu-item {
     height: 46px !important;
 }
-.leftSider .ant-menu-item-selected {
+.leftSider .ant-menu-item-selected,
+.leftSider_subMenu .ant-menu-item-selected {
     background-color: #0C75A0 !important;
 }
-.leftSider .ant-menu-sub {
+.leftSider .ant-menu-sub{
     background-color: transparent !important;
 }
