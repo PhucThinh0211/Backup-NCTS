@@ -1,0 +1,16 @@
+{
+    "Find menu": "Find menu",
+    "ID": "ID",
+    "Name": "Name",
+    "Name required": "Menu name is required",
+    "Url": "Url",
+    "Url required": "Url is required",
+    "Edit": "Edit",
+    "Remove": "Remove",
+    "Add new menu": "Add new menu",
+    "Update menu": "Update menu information",
+    "okText": "Save",
+    "cancelText": "Cancel",
+    "pagingTotal": "{{range1}} - {{range2}} out of {{total}} records",
+    "confirmRemove": "Do you want to delete {{name}}?"
+  }

@@ -1,7 +1,8 @@
-import { AuthRouteObject } from "./AuthRoute";
-import { Content, Home } from "@/pages";
-import { AdminLayout, AppLayout } from "@/components";
-import { Navigate } from "react-router-dom";
+import { AuthRouteObject } from './AuthRoute';
+import { Content, Home } from '@/pages';
+import { AdminLayout, AppLayout } from '@/components';
+import { Navigate } from 'react-router-dom';
+import { MenuList } from '@/pages/MenuPage';
 
 type MetaMenu = {
   name?: string;
@@ -36,7 +37,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
     element: <AdminLayout />,
     children: [
       { index: true, element: <Navigate to={'/admin/menu'} /> },
-      { path: '/admin/menu', name: 'Menu', element: 'Menu' },
+      { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
       { path: '/admin/banners', name: 'Banners', element: <>Banners</> },
       { path: '/admin/pages', name: 'Pages', element: <>Pages</> },
       { path: '/admin/blogs', name: 'Blogs', element: <>Blogs</> },
