@@ -1,6 +1,7 @@
-import { AuthRouteObject } from './AuthRoute';
-import { Content, Home } from '@/pages';
-import { AdminLayout, AppLayout } from '@/components';
+import { AuthRouteObject } from "./AuthRoute";
+import { Content, Home } from "@/pages";
+import { AdminLayout, AppLayout } from "@/components";
+import { Navigate } from "react-router-dom";
 
 type MetaMenu = {
   name?: string;
@@ -34,7 +35,24 @@ export const routers: MetaMenuAuthRouteObject[] = [
     // Layout cho trang Quản trị web
     element: <AdminLayout />,
     children: [
-      { index: true, name: 'Home', element: 'Quản trị nội dung website' }
+      { index: true, element: <Navigate to={'/admin/menu'} /> },
+      { path: '/admin/menu', name: 'Menu', element: 'Menu' },
+      { path: '/admin/banners', name: 'Banners', element: <>Banners</> },
+      { path: '/admin/pages', name: 'Pages', element: <>Pages</> },
+      { path: '/admin/blogs', name: 'Blogs', element: <>Blogs</> },
+      {
+        path: '/admin/media',
+        name: 'Media',
+        children: [
+          { path: '/admin/media/photos', name: 'Photos', element: <>Photos</> },
+          { path: '/admin/media/videos', name: 'Video', element: <>Videos</> },
+          { path: '/admin/media/certifications', name: 'Certifications', element: <>Certifications</> },
+          { path: '/admin/media/partnersLogo', name: 'PartnersLogo', element: <>Partners Logo</> },
+        ]
+      },
+      { path: '/admin/contacts', name: 'Contacts', element: <>Contacts</> },
+      { path: '/admin/members', name: 'Members', element: <>Members</> },
+      { path: '/admin/users', name: 'Users', element: <>Users</> },
     ]
   },
   { path: '*', name: 'Not found', element: <>Not found</> },
