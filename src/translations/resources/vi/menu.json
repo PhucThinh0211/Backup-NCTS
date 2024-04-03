@@ -1,0 +1,16 @@
+{
+    "Find menu": "Tìm kiếm menu",
+    "ID": "ID",
+    "Name": "Tên",
+    "Name required": "Vui lòng nhập tên",
+    "Url": "Đường dẫn",
+    "Url required": "Vui lòng nhập đường dẫn",
+    "Edit": "Cập nhật",
+    "Remove": "Xóa",
+    "Add new menu": "Thêm mới menu",
+    "Update menu": "Chỉnh sửa thông tin menu",
+    "okText": "Lưu",
+    "cancelText": "Hủy",
+    "pagingTotal": "{{range1}} - {{range2}} trong {{total}} bản ghi",
+    "confirmRemove": "Xác nhận xóa {{name}}?"
+  }
