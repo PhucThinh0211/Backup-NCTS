@@ -1,39 +1,43 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { Button, Modal, Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import { CreateUpdateMenuModalName } from '@/common/modalName';
 import {
-  CreateUpdateMenuModalName,
-  GettingMenuList,
-  RemovingMenu,
-} from '@/common/define';
+  GettingMenuListLoadingKey,
+  RemovingMenuLoadingKey,
+} from '@/common/loadingKey';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { showModal } from '@/store/modal';
+import { getMenus, menuActions } from '@/store/menu';
+import useModal from 'antd/es/modal/useModal';
 
 export const MenuListTable = () => {
-  const { t } = useTranslation('menu');
+  const [modal, contextHolder] = useModal();
+  const { t } = useTranslation(['common', 'menu']);
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(getLoading(GettingMenuList));
-  const isRemoving = useAppSelector(getLoading(RemovingMenu));
+  const menus = useAppSelector(getMenus());
+  const isLoading = useAppSelector(getLoading(GettingMenuListLoadingKey));
+  const isRemoving = useAppSelector(getLoading(RemovingMenuLoadingKey));
 
   const moreActions = [
     {
       key: 'edit',
-      label: t('Edit'),
+      label: t('Edit', { ns: 'common' }),
       icon: <EditOutlined style={{ color: '#1890ff' }} />,
     },
     {
       key: 'remove',
-      label: t('Remove'),
+      label: t('Remove', { ns: 'common' }),
       icon: <DeleteOutlined style={{ color: '#ff4d4f' }} />,
     },
   ];
 
-  const handleMoreActionClick = ({ key }: any, record: any) => {
+  const handleMoreActionClick = (key: any, record: any) => {
     switch (key) {
       case 'edit':
         editMenu(record);
@@ -45,22 +49,23 @@ export const MenuListTable = () => {
   };
 
   const editMenu = (menu: any) => {
-    console.log(menu);
+    dispatch(menuActions.setSelectedMenu(menu));
     dispatch(showModal({ key: CreateUpdateMenuModalName }));
   };
 
   const confirmRemoveMenu = (menu: any) => {
-    Modal.confirm({
+    modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
-            __html: t('confirmRemove', {
-              name: `<strong>"${menu.name}"</strong>`,
+            __html: t('ConfirmRemove', {
+              name: `<strong>"${menu.label}"</strong>`,
             }),
           }}
         />
       ),
+      centered: true,
       closable: true,
       onOk: (close) => {
         handleRemoveMenu(menu.id);
@@ -92,17 +97,17 @@ export const MenuListTable = () => {
 
   const columns = [
     {
-      title: t('ID'),
+      title: t('ID', { ns: 'menu' }),
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: t('Name'),
-      dataIndex: 'name',
-      key: 'name',
+      title: t('Name', { ns: 'menu' }),
+      dataIndex: 'label',
+      key: 'label',
     },
     {
-      title: t('Url'),
+      title: t('Url', { ns: 'menu' }),
       dataIndex: 'url',
       key: 'url',
     },
@@ -127,9 +132,10 @@ export const MenuListTable = () => {
 
   return (
     <div style={{ padding: 10 }}>
+      {contextHolder}
       <Table
         rowKey={(record) => record.id}
-        dataSource={[]}
+        dataSource={menus?.results}
         columns={columns}
         style={{ width: '100%' }}
         size='small'

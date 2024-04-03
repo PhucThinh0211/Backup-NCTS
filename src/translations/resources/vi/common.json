@@ -18,5 +18,12 @@
   "Inbound": "Hàng đến",
   "Outbound": "Hàng đi",
   "Process items": "Xử lý hàng",
-  "Storage": "Lưu kho"
+  "Storage": "Lưu kho",
+  "OkText": "Lưu",
+  "CancelText": "Hủy",
+  "Edit": "Cập nhật",
+  "Remove": "Xóa",
+  "PagingTotal": "{{range1}} - {{range2}} trong {{total}} bản ghi",
+  "ConfirmRemove": "Xác nhận xóa {{name}}?",
+  "Notification": "Thông báo"
 }

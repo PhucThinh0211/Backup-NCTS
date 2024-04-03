@@ -1,22 +1,25 @@
 import { Modal, Form, Row, Col, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName, SavingMenu } from '@/common/define';
+import { CreateUpdateMenuModalName } from '@/common/modalName';
+import { SavingMenuLoadingKey } from '@/common/loadingKey';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getModalVisible, hideModal } from '@/store/modal';
+import { getSelectedMenu, menuActions } from '@/store/menu';
 
 export const CreateUpdateMenuModal = () => {
-  const { t } = useTranslation('menu');
+  const { t } = useTranslation(['common', 'menu']);
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(
     getModalVisible(CreateUpdateMenuModalName)
   );
-  const isSaving = useAppSelector(getLoading(SavingMenu));
+  const selectedMenu = useAppSelector(getSelectedMenu());
+  const isSaving = useAppSelector(getLoading(SavingMenuLoadingKey));
   const [form] = Form.useForm();
 
   const handleCancel = () => {
-    // dispatch(menuActions.setSelectedMenu(undefined));
+    dispatch(menuActions.setSelectedMenu(undefined));
     dispatch(hideModal({ key: CreateUpdateMenuModalName }));
   };
 
@@ -41,33 +44,43 @@ export const CreateUpdateMenuModal = () => {
 
   return (
     <Modal
-      title={false ? t('Update menu') : t('Add new menu')}
+      title={
+        selectedMenu
+          ? t('Update menu', { ns: 'menu' })
+          : t('Add new menu', { ns: 'menu' })
+      }
       open={isModalOpen}
-      okText={t('okText')}
+      okText={t('OkText', { ns: 'common' })}
       onOk={handleOk}
-      cancelText={t('cancelText')}
+      cancelText={t('CancelText', { ns: 'common' })}
       onCancel={handleCancel}
       confirmLoading={isSaving}
     >
       <Form
         form={form}
         layout='vertical'
-        initialValues={{}}
+        initialValues={{
+          ...selectedMenu,
+        }}
         onFinish={handleSaveMenu}
       >
         <Row>
           <Col span={24} md={24}>
             <Form.Item
-              label={t('Name')}
-              name='name'
-              rules={[{ required: true, message: t('Name required') }]}
+              label={t('Name', { ns: 'menu' })}
+              name='label'
+              rules={[
+                { required: true, message: t('Name required', { ns: 'menu' }) },
+              ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label={t('Url')}
-              name='code'
-              rules={[{ required: true, message: t('Url required') }]}
+              label={t('Url', { ns: 'menu' })}
+              name='url'
+              rules={[
+                { required: true, message: t('Url required', { ns: 'menu' }) },
+              ]}
             >
               <Input />
             </Form.Item>

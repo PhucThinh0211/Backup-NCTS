@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Row, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName } from '@/common/define';
+import { CreateUpdateMenuModalName } from '@/common/modalName';
 import { getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { showModal } from '@/store/modal';
