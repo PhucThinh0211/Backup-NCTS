@@ -5,6 +5,7 @@ import { loadingReducer } from './loading';
 import { modalReducer } from './modal';
 import { appReducer } from './app';
 import { menuReducer } from './menu';
+import { bannerReducer } from './banner';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -12,6 +13,7 @@ const mainReducer = combineReducers({
   modal: modalReducer,
   app: appReducer,
   menu: menuReducer,
+  banner: bannerReducer,
 });
 
 const rootReducers = (state: any, action: any) => {
