@@ -132,7 +132,103 @@ export default class Utils {
     });
   }
 
-  static concatFullName = (firstName: string, middleName: string, lastName: string) => {
-    return [lastName?.trim(), middleName?.trim(), firstName?.trim()].filter(x => x).join(' ');
+  static checkChildren(items: any[]): any[] {
+    return items.map((item: any) => ({
+      ...item,
+      children: item.children?.length
+        ? Utils.checkChildren(item.children)
+        : undefined,
+    }));
+  }
+  static findItem(items: any[], itemId: string) {
+    return items.find(({ id }) => id === itemId);
+  }
+
+  static concatFullName = (
+    firstName: string,
+    middleName: string,
+    lastName: string
+  ) => {
+    return [lastName?.trim(), middleName?.trim(), firstName?.trim()]
+      .filter((x) => x)
+      .join(' ');
   };
+
+  // static mapMenuToTreeData = (menu: MenuResponse[]) => {
+  //   const data: any[] = [];
+  //   menu.forEach((menuItem) => {
+  //     const { links, groups, ...rest } = menuItem;
+  //     switch (menuItem.type) {
+  //       case MenuType.Link:
+  //         data.push(menuItem);
+  //         break;
+  //       case MenuType.Dropdown:
+  //         data.push({
+  //           ...rest,
+  //           children: links?.map((link) => ({
+  //             ...link,
+  //             parentId: rest.id,
+  //           })),
+  //         });
+  //         break;
+  //       case MenuType.Group:
+  //         data.push({
+  //           ...rest,
+  //           children: groups?.map(({ links, ...rest }) => ({
+  //             ...rest,
+  //             parentId: rest.id,
+  //             children: links?.map((link) => ({
+  //               ...link,
+  //               parentId: rest.id,
+  //             })),
+  //           })),
+  //         });
+  //         break;
+  //     }
+  //   });
+  //   return data;
+  // };
+  static flatten(
+    items: any[],
+    parentId: string | null = null,
+    depth = 0,
+    parent: any | null = null
+  ): any[] {
+    return items.reduce<any[]>((acc, item, index) => {
+      const flattenedItem: any = {
+        ...item,
+        parentId,
+        depth,
+        index,
+        isLast: items.length === index + 1,
+        parent: parent,
+      };
+      return [
+        ...acc,
+        flattenedItem,
+        ...Utils.flatten(
+          item.children ?? [],
+          item.id,
+          depth + 1,
+          flattenedItem
+        ),
+      ];
+    }, []);
+  }
+  static buildTree(flattenedItems: any[]) {
+    const root = { id: 'root', children: [] } as any;
+    const nodes = { [root.id]: root };
+    const items = flattenedItems.map((item) => ({ ...item, children: [] }));
+
+    for (const item of items) {
+      const { id } = item;
+      const parentId = item.parentId ?? root.id;
+      const parent = nodes[parentId] ?? Utils.findItem(items, parentId);
+      item.parent = null;
+      nodes[id] = item;
+      parent?.children?.push(item);
+    }
+
+    return Utils.checkChildren(root.children ?? []);
+  }
 }

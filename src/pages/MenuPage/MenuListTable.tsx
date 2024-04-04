@@ -1,9 +1,8 @@
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, DragOutlined } from '@ant-design/icons';
 
 import { Button, Space, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName } from '@/common/modalName';
 import {
   GettingMenuListLoadingKey,
   RemovingMenuLoadingKey,
@@ -11,18 +10,86 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { showModal } from '@/store/modal';
 import { getMenus, menuActions } from '@/store/menu';
 import useModal from 'antd/es/modal/useModal';
+import Utils from '@/utils';
+import type { TableColumnsType } from 'antd';
+import { MenuResponse } from '@/services/MenuService';
+
+import type { DragEndEvent } from '@dnd-kit/core';
+import { DndContext } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  'data-row-key': string;
+}
+
+const Row = ({ children, ...props }: RowProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: props['data-row-key'],
+  });
+
+  const style: React.CSSProperties = {
+    ...props.style,
+    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
+    transition,
+    ...(isDragging ? { position: 'relative', zIndex: 9999 } : {}),
+  };
+
+  return (
+    <tr {...props} ref={setNodeRef} style={style} {...attributes}>
+      {React.Children.map(children, (child) => {
+        if ((child as React.ReactElement).key === 'sort') {
+          return React.cloneElement(child as React.ReactElement, {
+            children: (
+              <DragOutlined
+                ref={setActivatorNodeRef}
+                style={{ touchAction: 'none', cursor: 'move', marginLeft: 10 }}
+                {...listeners}
+              />
+            ),
+          });
+        }
+        return child;
+      })}
+    </tr>
+  );
+};
 
 export const MenuListTable = () => {
+  const [dataSource, setDataSource] = useState<any[]>([]);
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common', 'menu']);
+
+  const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
+
   const menus = useAppSelector(getMenus());
   const isLoading = useAppSelector(getLoading(GettingMenuListLoadingKey));
   const isRemoving = useAppSelector(getLoading(RemovingMenuLoadingKey));
+
+  useEffect(() => {
+    if (menus) {
+      setDataSource(Utils.buildTree(menus.results || []));
+    }
+  }, []);
 
   const moreActions = [
     {
@@ -50,7 +117,7 @@ export const MenuListTable = () => {
 
   const editMenu = (menu: any) => {
     dispatch(menuActions.setSelectedMenu(menu));
-    dispatch(showModal({ key: CreateUpdateMenuModalName }));
+    navigate('/admin/menu/edit');
   };
 
   const confirmRemoveMenu = (menu: any) => {
@@ -95,11 +162,10 @@ export const MenuListTable = () => {
   // const showTotal: PaginationProps['showTotal'] = (total, range) =>
   //   t('menu.pagingTotal', { range1: range[0], range2: range[1], total });
 
-  const columns = [
+  const columns: TableColumnsType<MenuResponse> = [
     {
-      title: t('ID', { ns: 'menu' }),
-      dataIndex: 'id',
-      key: 'id',
+      key: 'sort',
+      width: '150px',
     },
     {
       title: t('Name', { ns: 'menu' }),
@@ -113,6 +179,9 @@ export const MenuListTable = () => {
     },
     {
       title: 'Action',
+      fixed: 'right',
+      align: 'center',
+      width: '80px',
       render: (_: any, record: any) => {
         return (
           <Space>
@@ -130,27 +199,76 @@ export const MenuListTable = () => {
     },
   ];
 
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    console.log(active, over);
+    if (active.id !== over?.id) {
+      setDataSource((previous) => {
+        const flattenItems = Utils.flatten(previous);
+        const activeIndex = flattenItems.findIndex((i) => i.id === active.id);
+        const overIndex = flattenItems.findIndex((i) => i.id === over?.id);
+        console.log(
+          Utils.buildTree(arrayMove(flattenItems, activeIndex, overIndex))
+        );
+
+        return Utils.buildTree(arrayMove(flattenItems, activeIndex, overIndex));
+      });
+    }
+  };
+
+  const getIds = () => {
+    const ids: string[] = [];
+    dataSource.forEach((data) => {
+      ids.push(data.id);
+      if (data.children) {
+        data.children.forEach((child: any) => {
+          ids.push(child.id);
+          if (child.children) {
+            child.children.forEach((subChild: any) => {
+              ids.push(subChild.id);
+            });
+          }
+        });
+      }
+    });
+    return ids;
+  };
+
   return (
     <div style={{ padding: 10 }}>
-      {contextHolder}
-      <Table
-        rowKey={(record) => record.id}
-        dataSource={menus?.results}
-        columns={columns}
-        style={{ width: '100%' }}
-        size='small'
-        scroll={{ x: 1000, y: windowSize[1] - 310 }}
-        // pagination={{
-        //   current: params?.page || defaultPagingParams.page,
-        //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
-        //   total: menus?.queryCount || 0,
-        //   responsive: true,
-        //   showTotal,
-        // }}
-        loading={isLoading || isRemoving}
-        // onChange={handleTableChange}
-        rowSelection={{ columnWidth: 50 }}
-      />
+      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+        <SortableContext
+          // rowKey array
+          items={getIds()}
+          strategy={verticalListSortingStrategy}
+        >
+          {contextHolder}
+          <Table
+            rowKey={(record) => record.id}
+            dataSource={dataSource}
+            columns={columns}
+            style={{ width: '100%' }}
+            size='small'
+            scroll={{ x: 1000, y: windowSize[1] - 310 }}
+            components={{
+              body: {
+                row: Row,
+              },
+            }}
+            // pagination={{
+            //   current: params?.page || defaultPagingParams.page,
+            //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
+            //   total: menus?.queryCount || 0,
+            //   responsive: true,
+            //   showTotal,
+            // }}
+            loading={isLoading || isRemoving}
+            expandable={{
+              indentSize: 30,
+            }}
+            // onChange={handleTableChange}
+          />
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };

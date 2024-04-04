@@ -6,8 +6,26 @@ import { PagingResponse } from '@/common/define';
 // const { apiUrl } = getEnvVars();
 const apiUrl = '';
 
+export type MenuStyle = 'None' | 'Button';
+
 export interface MenusPagingResponse extends PagingResponse {
   results: MenuResponse[];
+}
+
+export interface MenuLink {
+  id: string;
+  label: string;
+  url: string;
+  icon?: string;
+  style?: MenuStyle;
+  sortSeq: number;
+}
+
+export interface MegaMenuType {
+  id: string;
+  label: string;
+  links: MenuLink[];
+  sortSeq: number;
 }
 
 export enum MenuType {
@@ -17,13 +35,18 @@ export enum MenuType {
 }
 
 export interface MenuResponse {
-  id: number;
+  id: string;
   label: string;
-  url?: string;
-  icons?: string;
-  parentId?: string;
   type: MenuType;
-  style: string;
+  icons?: string | null;
+  url?: string | null;
+  links?: MenuLink[];
+  groups?: MegaMenuType[];
+  sortSeq: number;
+  parentId?: string | null;
+  parent?: MenuResponse | null;
+  style?: string | null;
+  language?: string | null;
 }
 export interface CreateUpdateMenuPayload {
   label: string;

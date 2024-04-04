@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { defaultPagingParams } from '@/common/define';
 import { MenuResponse, MenusPagingResponse } from '@/services/MenuService';
-import { menus } from '@/fakeData';
+import { menusData } from '@/fakeData';
 
 interface MenuState {
   menus?: MenusPagingResponse;
@@ -16,10 +16,10 @@ const initialState: MenuState = {
     page: 1,
     pageCount: 1,
     pageSize: 20,
-    queryCount: menus.length,
+    queryCount: menusData.length,
     firstRowIndex: 0,
-    lastRowIndex: menus.length,
-    results: menus,
+    lastRowIndex: menusData.length,
+    results: menusData,
   },
 };
 

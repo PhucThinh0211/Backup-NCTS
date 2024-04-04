@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { BorderlessTableOutlined } from '@ant-design/icons';
 import { InformationDescription } from '@/components/InformationDescription';
 
-export const BannerInformation = () => {
-  const { t } = useTranslation(['common', 'banner']);
+export const MenuInformation = () => {
+  const { t } = useTranslation(['common', 'menu']);
   return (
     <div className='w-full border-b-gray-500 shadow-sm rounded-md bg-white p-4'>
       <div className='mb-8'>
@@ -34,14 +34,27 @@ export const BannerInformation = () => {
 
       <div>
         <span className='uppercase text-gray-500 text-sm font-medium'>
-          {t('Internationalization', { ns: 'common' })}
+          {t('Translation', { ns: 'common' })}
         </span>
         <Divider className='!my-3' />
         <div className='flex flex-col gap-1'>
           <span className='font-semibold text-[14px]'>
             {t('Locales', { ns: 'common' })}
           </span>
-          <Select className='w-full' />
+          <Select
+            className='w-full'
+            defaultValue={'vi'}
+            options={[
+              {
+                label: 'Vietnamese',
+                value: 'vi',
+              },
+              {
+                label: 'English',
+                value: 'en',
+              },
+            ]}
+          />
         </div>
         <span className='text-blue-800'>
           <BorderlessTableOutlined style={{ fontSize: 12, marginRight: 5 }} />
