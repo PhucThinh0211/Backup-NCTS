@@ -3,26 +3,26 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Space, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName } from '@/common/modalName';
 import {
-  GettingMenuListLoadingKey,
-  RemovingMenuLoadingKey,
+  GettingBannerListLoadingKey,
+  RemovingBannerLoadingKey,
 } from '@/common/loadingKey';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { showModal } from '@/store/modal';
-import { getMenus, menuActions } from '@/store/menu';
+import { getBanners, bannerActions } from '@/store/banner';
 import useModal from 'antd/es/modal/useModal';
+import { useNavigate } from 'react-router-dom';
 
-export const MenuListTable = () => {
+export const BannerListTable = () => {
   const [modal, contextHolder] = useModal();
-  const { t } = useTranslation(['common', 'menu']);
+  const { t } = useTranslation(['common', 'banner']);
+  const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
-  const menus = useAppSelector(getMenus());
-  const isLoading = useAppSelector(getLoading(GettingMenuListLoadingKey));
-  const isRemoving = useAppSelector(getLoading(RemovingMenuLoadingKey));
+  const banners = useAppSelector(getBanners());
+  const isLoading = useAppSelector(getLoading(GettingBannerListLoadingKey));
+  const isRemoving = useAppSelector(getLoading(RemovingBannerLoadingKey));
 
   const moreActions = [
     {
@@ -40,27 +40,27 @@ export const MenuListTable = () => {
   const handleMoreActionClick = (key: any, record: any) => {
     switch (key) {
       case 'edit':
-        editMenu(record);
+        editBanner(record);
         break;
       default:
-        confirmRemoveMenu(record);
+        confirmRemoveBanner(record);
         break;
     }
   };
 
-  const editMenu = (menu: any) => {
-    dispatch(menuActions.setSelectedMenu(menu));
-    dispatch(showModal({ key: CreateUpdateMenuModalName }));
+  const editBanner = (banner: any) => {
+    dispatch(bannerActions.setSelectedBanner(banner));
+    navigate('/admin/banners/edit');
   };
 
-  const confirmRemoveMenu = (menu: any) => {
+  const confirmRemoveBanner = (banner: any) => {
     modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
             __html: t('ConfirmRemove', {
-              name: `<strong>"${menu.label}"</strong>`,
+              name: `<strong>"${banner.label}"</strong>`,
             }),
           }}
         />
@@ -68,16 +68,16 @@ export const MenuListTable = () => {
       centered: true,
       closable: true,
       onOk: (close) => {
-        handleRemoveMenu(menu.id);
+        handleRemoveBanner(banner.id);
         close();
       },
     });
   };
 
-  const handleRemoveMenu = (menuId: number) => {
-    console.log(menuId);
+  const handleRemoveBanner = (bannerId: number) => {
+    console.log(bannerId);
 
-    // dispatch(menuActions.removeMenuRequest({ menuId, projectId: selectedProject?.id }));
+    // dispatch(bannerActions.removeBannerRequest({ bannerId, projectId: selectedProject?.id }));
   };
 
   // const handleTableChange: TableProps<any>['onChange'] = (
@@ -88,26 +88,26 @@ export const MenuListTable = () => {
   // const { current, pageSize } = pagination;
   // const search = { ...params, page: current, pageSize };
   // if (selectedProject) {
-  //   dispatch(menuActions.getMenusRequest({ params: search, projectId: selectedProject.id }));
+  //   dispatch(bannerActions.getBannersRequest({ params: search, projectId: selectedProject.id }));
   // }
   // };
 
   // const showTotal: PaginationProps['showTotal'] = (total, range) =>
-  //   t('menu.pagingTotal', { range1: range[0], range2: range[1], total });
+  //   t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
 
   const columns = [
     {
-      title: t('ID', { ns: 'menu' }),
+      title: t('ID', { ns: 'banner' }),
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: t('Name', { ns: 'menu' }),
-      dataIndex: 'label',
-      key: 'label',
+      title: t('Name', { ns: 'banner' }),
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: t('Url', { ns: 'menu' }),
+      title: t('Url', { ns: 'banner' }),
       dataIndex: 'url',
       key: 'url',
     },
@@ -135,7 +135,7 @@ export const MenuListTable = () => {
       {contextHolder}
       <Table
         rowKey={(record) => record.id}
-        dataSource={menus?.results}
+        dataSource={banners?.results}
         columns={columns}
         style={{ width: '100%' }}
         size='small'
@@ -143,7 +143,7 @@ export const MenuListTable = () => {
         // pagination={{
         //   current: params?.page || defaultPagingParams.page,
         //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
-        //   total: menus?.queryCount || 0,
+        //   total: banners?.queryCount || 0,
         //   responsive: true,
         //   showTotal,
         // }}

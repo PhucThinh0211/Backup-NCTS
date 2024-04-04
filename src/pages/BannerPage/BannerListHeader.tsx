@@ -2,18 +2,20 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Row, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName } from '@/common/modalName';
 import { getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { showModal } from '@/store/modal';
+import { useNavigate } from 'react-router-dom';
+import { bannerActions } from '@/store/banner';
 
-export const MenuListHeader = () => {
-  const { t } = useTranslation('menu');
-  const dispatch = useAppDispatch();
+export const BannerListHeader = () => {
+  const { t } = useTranslation('banner');
+  const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
+  const dispatch = useAppDispatch();
 
-  const createMenu = () => {
-    dispatch(showModal({ key: CreateUpdateMenuModalName }));
+  const createBanner = () => {
+    dispatch(bannerActions.setSelectedBanner(undefined));
+    navigate('/admin/banners/create');
   };
 
   return (
@@ -24,8 +26,8 @@ export const MenuListHeader = () => {
         </Typography.Title>
       </Space>
       <Space>
-        <Button type='primary' icon={<PlusOutlined />} onClick={createMenu}>
-          {t('Add new menu')}
+        <Button type='primary' icon={<PlusOutlined />} onClick={createBanner}>
+          {t('Add new banner')}
         </Button>
         {/* <Button
           icon={<DashOutlined />}

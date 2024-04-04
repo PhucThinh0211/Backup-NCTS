@@ -1,11 +1,11 @@
-import { MenuProps } from "antd";
+import { MenuProps } from 'antd';
 
-export type LanguageType = "vi" | "en";
+export type LanguageType = 'vi' | 'en';
 
 export const TopNavHeight = 75;
 export const LeftPanelWidth = 256;
 
-export type MenuItem = Required<MenuProps>["items"][number];
+export type MenuItem = Required<MenuProps>['items'][number];
 export interface CustomIconComponentProps {
   width?: string | number;
   height?: string | number;
@@ -27,7 +27,12 @@ export const largePagingParams = {
   pageSize: 2000,
 };
 
-export const CreateUpdateMenuModalName = "CreateUpdateMenuModal";
-export const GettingMenuList = "GettingMenuList";
-export const SavingMenu = "SavingMenu";
-export const RemovingMenu = "RemovingMenu";
+export interface PagingResponse {
+  page: number;
+  pageCount: number;
+  pageSize: number;
+  queryCount: number;
+  firstRowIndex: number;
+  lastRowIndex: number;
+  // results: any[];
+}

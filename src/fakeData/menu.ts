@@ -29,7 +29,7 @@ interface NavigationType {
 }
 
 // prettier-ignore
-export const menus: NavigationType[] = [
+export const menus: any[] = [
   { id: '1', label: 'Trang chủ', type: 'Link', url: '/', sortSeq: 1 },
   { 
     id: '2', 

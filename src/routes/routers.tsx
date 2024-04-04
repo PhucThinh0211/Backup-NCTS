@@ -3,6 +3,8 @@ import { Content, Home } from '@/pages';
 import { AdminLayout, AppLayout } from '@/components';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
+import { BannerList } from '@/pages/BannerPage';
+import { CreateUpdateBannerPage } from '@/pages/BannerPage/CreateUpdateBannerPage';
 
 type MetaMenu = {
   name?: string;
@@ -38,7 +40,9 @@ export const routers: MetaMenuAuthRouteObject[] = [
     children: [
       { index: true, element: <Navigate to={'/admin/menu'} /> },
       { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
-      { path: '/admin/banners', name: 'Banners', element: <>Banners</> },
+      { path: '/admin/banners', name: 'Banners', element: <BannerList /> },
+      { path: '/admin/banners/create', name: 'Create banner', element: <CreateUpdateBannerPage /> },
+      { path: '/admin/banners/edit', name: 'Edit banner', element: <CreateUpdateBannerPage /> },
       { path: '/admin/pages', name: 'Pages', element: <>Pages</> },
       { path: '/admin/blogs', name: 'Blogs', element: <>Blogs</> },
       {

@@ -21,7 +21,7 @@ const { Sider } = Layout;
 
 export const LeftPanel = (props: SiderProps) => {
   const { ...rest } = props;
-  const { t } = useTranslation(['layout']);
+  const { t } = useTranslation(['leftPanel']);
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -46,12 +46,12 @@ export const LeftPanel = (props: SiderProps) => {
       key: '/admin/pages',
     },
     {
-      label: t('Blogs'),
+      label: t('News'),
       icon: <img src={BlogSvg} alt='blog icon' />,
       key: '/admin/blogs',
     },
     {
-      label: t('Media'),
+      label: t('All Files'),
       icon: <img src={MediaSvg} alt='media icon' />,
       key: '/admin/media',
       popupClassName: 'leftSider_subMenu',
