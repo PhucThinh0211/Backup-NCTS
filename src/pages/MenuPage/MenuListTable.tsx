@@ -164,10 +164,6 @@ export const MenuListTable = () => {
 
   const columns: TableColumnsType<MenuResponse> = [
     {
-      key: 'sort',
-      width: '150px',
-    },
-    {
       title: t('Name', { ns: 'menu' }),
       dataIndex: 'label',
       key: 'label',
@@ -176,6 +172,11 @@ export const MenuListTable = () => {
       title: t('Url', { ns: 'menu' }),
       dataIndex: 'url',
       key: 'url',
+    },
+    {
+      key: 'sort',
+      width: 40,
+      align: 'center'
     },
     {
       title: 'Action',
@@ -242,31 +243,35 @@ export const MenuListTable = () => {
           strategy={verticalListSortingStrategy}
         >
           {contextHolder}
-          <Table
-            rowKey={(record) => record.id}
-            dataSource={dataSource}
-            columns={columns}
-            style={{ width: '100%' }}
-            size='small'
-            scroll={{ x: 1000, y: windowSize[1] - 310 }}
-            components={{
-              body: {
-                row: Row,
-              },
-            }}
-            // pagination={{
-            //   current: params?.page || defaultPagingParams.page,
-            //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
-            //   total: menus?.queryCount || 0,
-            //   responsive: true,
-            //   showTotal,
-            // }}
-            loading={isLoading || isRemoving}
-            expandable={{
-              indentSize: 30,
-            }}
-            // onChange={handleTableChange}
-          />
+          {
+            dataSource?.length && 
+            <Table
+              rowKey={(record) => record.id}
+              dataSource={dataSource}
+              columns={columns}
+              style={{ width: '100%' }}
+              size='small'
+              scroll={{ x: 1000, y: windowSize[1] - 310 }}
+              components={{
+                body: {
+                  row: Row,
+                },
+              }}
+              // pagination={{
+              //   current: params?.page || defaultPagingParams.page,
+              //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
+              //   total: menus?.queryCount || 0,
+              //   responsive: true,
+              //   showTotal,
+              // }}
+              loading={isLoading || isRemoving}
+              expandable={{
+                indentSize: 30,
+                defaultExpandAllRows: true
+              }}
+              // onChange={handleTableChange}
+            />
+          }
         </SortableContext>
       </DndContext>
     </div>

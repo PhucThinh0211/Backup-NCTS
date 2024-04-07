@@ -154,40 +154,6 @@ export default class Utils {
       .join(' ');
   };
 
-  // static mapMenuToTreeData = (menu: MenuResponse[]) => {
-  //   const data: any[] = [];
-  //   menu.forEach((menuItem) => {
-  //     const { links, groups, ...rest } = menuItem;
-  //     switch (menuItem.type) {
-  //       case MenuType.Link:
-  //         data.push(menuItem);
-  //         break;
-  //       case MenuType.Dropdown:
-  //         data.push({
-  //           ...rest,
-  //           children: links?.map((link) => ({
-  //             ...link,
-  //             parentId: rest.id,
-  //           })),
-  //         });
-  //         break;
-  //       case MenuType.Group:
-  //         data.push({
-  //           ...rest,
-  //           children: groups?.map(({ links, ...rest }) => ({
-  //             ...rest,
-  //             parentId: rest.id,
-  //             children: links?.map((link) => ({
-  //               ...link,
-  //               parentId: rest.id,
-  //             })),
-  //           })),
-  //         });
-  //         break;
-  //     }
-  //   });
-  //   return data;
-  // };
   static flatten(
     items: any[],
     parentId: string | null = null,
