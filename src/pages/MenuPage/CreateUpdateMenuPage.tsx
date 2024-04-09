@@ -19,7 +19,9 @@ export const CreateUpdateMenuPage = () => {
       <div className='flex flex-row justify-between items-center'>
         <div>
           <Typography.Title level={4}>
-            {selectedMenu ? 'Update menu' : 'Create menu'}
+            {selectedMenu
+              ? t('Update menu', { ns: 'menu' })
+              : t('Create menu', { ns: 'menu' })}
           </Typography.Title>
         </div>
         <div>

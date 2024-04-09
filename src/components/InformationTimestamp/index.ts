@@ -1,0 +1,1 @@
+export { InformationTimestamp } from './InformationTimestamp';

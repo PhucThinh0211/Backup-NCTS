@@ -3,15 +3,18 @@ import { Button, Row, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { getActiveMenu } from '@/store/app';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useNavigate } from 'react-router-dom';
+import { menuActions } from '@/store/menu';
 
 export const MenuListHeader = () => {
   const { t } = useTranslation('menu');
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
 
   const createMenu = () => {
+    dispatch(menuActions.setSelectedMenu(undefined));
     navigate('/admin/menu/create');
   };
 

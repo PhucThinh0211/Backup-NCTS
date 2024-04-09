@@ -1,3 +1,4 @@
+import { arrayMove } from '@dnd-kit/sortable';
 import { notification } from 'antd';
 import i18next from 'i18next';
 import { jwtDecode } from 'jwt-decode';
@@ -154,6 +155,75 @@ export default class Utils {
       .join(' ');
   };
 
+  static getDragDepth(offset: number, indentationWidth: number) {
+    return Math.round(offset / indentationWidth);
+  }
+  static getProjection(
+    items: any[],
+    activeId: string,
+    overId: string,
+    dragOffset: number,
+    indentationWidth: number
+  ) {
+    const overItemIndex = items.findIndex(({ id }) => id === overId);
+    const activeItemIndex = items.findIndex(({ id }) => id === activeId);
+    const activeItem = items[activeItemIndex];
+    const newItems = arrayMove(items, activeItemIndex, overItemIndex);
+    const previousItem = newItems[overItemIndex - 1];
+    const nextItem = newItems[overItemIndex + 1];
+    const dragDepth = Utils.getDragDepth(dragOffset, indentationWidth);
+    const projectedDepth = activeItem.depth + dragDepth;
+    const maxDepth = Utils.getMaxDepth({
+      previousItem,
+    });
+    const minDepth = Utils.getMinDepth({ nextItem });
+    let depth = projectedDepth;
+
+    if (projectedDepth >= maxDepth) {
+      depth = maxDepth;
+    } else if (projectedDepth < minDepth) {
+      depth = minDepth;
+    }
+
+    return { depth, maxDepth, minDepth, parentId: getParentId() };
+
+    function getParentId() {
+      if (depth === 0 || !previousItem) {
+        return null;
+      }
+
+      if (depth === previousItem.depth) {
+        return previousItem.parentId;
+      }
+
+      if (depth > previousItem.depth) {
+        return previousItem.id;
+      }
+
+      const newParent = newItems
+        .slice(0, overItemIndex)
+        .reverse()
+        .find((item) => item.depth === depth)?.parentId;
+
+      return newParent ?? null;
+    }
+  }
+
+  static getMaxDepth({ previousItem }: { previousItem: any }) {
+    if (previousItem) {
+      return previousItem.depth + 1;
+    }
+
+    return 0;
+  }
+
+  static getMinDepth({ nextItem }: { nextItem: any }) {
+    if (nextItem) {
+      return nextItem.depth;
+    }
+
+    return 0;
+  }
   static flatten(
     items: any[],
     parentId: string | null = null,

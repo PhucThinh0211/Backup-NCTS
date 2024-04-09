@@ -1,26 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { defaultPagingParams } from '@/common/define';
-import { MenuResponse, MenusPagingResponse } from '@/services/MenuService';
+import { MenuResponse } from '@/services/MenuService';
 import { menusData } from '@/fakeData';
 
 interface MenuState {
-  menus?: MenusPagingResponse;
+  menus?: MenuResponse[];
   selectedMenu?: MenuResponse;
   queryParams: any;
 }
 
 const initialState: MenuState = {
   queryParams: defaultPagingParams,
-  menus: {
-    page: 1,
-    pageCount: 1,
-    pageSize: 20,
-    queryCount: menusData.length,
-    firstRowIndex: 0,
-    lastRowIndex: menusData.length,
-    results: menusData,
-  },
+  menus: menusData,
 };
 
 const menuSlice = createSlice({

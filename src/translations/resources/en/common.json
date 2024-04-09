@@ -26,5 +26,9 @@
   "PagingTotal": "{{range1}} - {{range2}} out of {{total}} records",
   "ConfirmRemove": "Do you want to delete {{name}}?",
   "Company info": "Company information",
-  "Notification": "Notification"
+  "Notification": "Notification",
+  "Created": "Created",
+  "By": "By",
+  "Updated": "Updated",
+  "Locales": "Locales"
 }

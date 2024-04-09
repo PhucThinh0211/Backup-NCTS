@@ -16,7 +16,12 @@ import Utils from '@/utils';
 import type { TableColumnsType } from 'antd';
 import { MenuResponse } from '@/services/MenuService';
 
-import type { DragEndEvent } from '@dnd-kit/core';
+import type {
+  DragEndEvent,
+  DragMoveEvent,
+  DragOverEvent,
+  DragStartEvent,
+} from '@dnd-kit/core';
 import { DndContext } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import {
@@ -26,7 +31,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
@@ -49,7 +54,7 @@ const Row = ({ children, ...props }: RowProps) => {
     ...props.style,
     transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
     transition,
-    ...(isDragging ? { position: 'relative', zIndex: 9999 } : {}),
+    ...(isDragging ? { position: 'relative', zIndex: '9999' } : {}),
   };
 
   return (
@@ -71,23 +76,45 @@ const Row = ({ children, ...props }: RowProps) => {
     </tr>
   );
 };
+const indentationWidth = 30;
 
 export const MenuListTable = () => {
   const [dataSource, setDataSource] = useState<any[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common', 'menu']);
+  const [offsetLeft, setOffsetLeft] = useState(0);
 
   const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
   const menus = useAppSelector(getMenus());
-  const isLoading = useAppSelector(getLoading(GettingMenuListLoadingKey));
-  const isRemoving = useAppSelector(getLoading(RemovingMenuLoadingKey));
+  const isLoading = useAppSelector(
+    getLoading([GettingMenuListLoadingKey, RemovingMenuLoadingKey])
+  );
+
+  const flattenedItems = useMemo(() => {
+    const flattenedTree = Utils.flatten(dataSource || []);
+
+    return flattenedTree;
+  }, [dataSource]);
+
+  const projected =
+    activeId && overId
+      ? Utils.getProjection(
+          flattenedItems,
+          activeId,
+          overId,
+          offsetLeft,
+          indentationWidth
+        )
+      : null;
 
   useEffect(() => {
     if (menus) {
-      setDataSource(Utils.buildTree(menus.results || []));
+      setDataSource(Utils.buildTree(menus || []));
     }
   }, []);
 
@@ -147,21 +174,6 @@ export const MenuListTable = () => {
     // dispatch(menuActions.removeMenuRequest({ menuId, projectId: selectedProject?.id }));
   };
 
-  // const handleTableChange: TableProps<any>['onChange'] = (
-  //   pagination,
-  //   filters,
-  //   sorter
-  // ) => {
-  // const { current, pageSize } = pagination;
-  // const search = { ...params, page: current, pageSize };
-  // if (selectedProject) {
-  //   dispatch(menuActions.getMenusRequest({ params: search, projectId: selectedProject.id }));
-  // }
-  // };
-
-  // const showTotal: PaginationProps['showTotal'] = (total, range) =>
-  //   t('menu.pagingTotal', { range1: range[0], range2: range[1], total });
-
   const columns: TableColumnsType<MenuResponse> = [
     {
       title: t('Name', { ns: 'menu' }),
@@ -176,10 +188,10 @@ export const MenuListTable = () => {
     {
       key: 'sort',
       width: 40,
-      align: 'center'
+      fixed: 'right',
+      align: 'center',
     },
     {
-      title: 'Action',
       fixed: 'right',
       align: 'center',
       width: '80px',
@@ -200,51 +212,27 @@ export const MenuListTable = () => {
     },
   ];
 
-  const onDragEnd = ({ active, over }: DragEndEvent) => {
-    console.log(active, over);
-    if (active.id !== over?.id) {
-      setDataSource((previous) => {
-        const flattenItems = Utils.flatten(previous);
-        const activeIndex = flattenItems.findIndex((i) => i.id === active.id);
-        const overIndex = flattenItems.findIndex((i) => i.id === over?.id);
-        console.log(
-          Utils.buildTree(arrayMove(flattenItems, activeIndex, overIndex))
-        );
-
-        return Utils.buildTree(arrayMove(flattenItems, activeIndex, overIndex));
-      });
-    }
-  };
-
   const getIds = () => {
-    const ids: string[] = [];
-    dataSource.forEach((data) => {
-      ids.push(data.id);
-      if (data.children) {
-        data.children.forEach((child: any) => {
-          ids.push(child.id);
-          if (child.children) {
-            child.children.forEach((subChild: any) => {
-              ids.push(subChild.id);
-            });
-          }
-        });
-      }
-    });
-    return ids;
+    return flattenedItems.map((item) => item.id);
   };
 
   return (
     <div style={{ padding: 10 }}>
-      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+      <DndContext
+        modifiers={[restrictToVerticalAxis]}
+        onDragEnd={handleDragEnd}
+        onDragMove={handleDragMove}
+        onDragCancel={handleDragCancel}
+        onDragOver={handleDragOver}
+        onDragStart={handleDragStart}
+      >
         <SortableContext
           // rowKey array
           items={getIds()}
           strategy={verticalListSortingStrategy}
         >
           {contextHolder}
-          {
-            dataSource?.length && 
+          {dataSource?.length && (
             <Table
               rowKey={(record) => record.id}
               dataSource={dataSource}
@@ -257,23 +245,62 @@ export const MenuListTable = () => {
                   row: Row,
                 },
               }}
-              // pagination={{
-              //   current: params?.page || defaultPagingParams.page,
-              //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
-              //   total: menus?.queryCount || 0,
-              //   responsive: true,
-              //   showTotal,
-              // }}
-              loading={isLoading || isRemoving}
+              pagination={false}
+              loading={isLoading}
               expandable={{
-                indentSize: 30,
-                defaultExpandAllRows: true
+                indentSize: indentationWidth,
+                defaultExpandAllRows: true,
               }}
-              // onChange={handleTableChange}
             />
-          }
+          )}
         </SortableContext>
       </DndContext>
     </div>
   );
+
+  function handleDragStart({ active: { id: activeId } }: DragStartEvent) {
+    setActiveId(activeId.toString());
+    setOverId(activeId.toString());
+
+    document.body.style.setProperty('cursor', 'grabbing');
+  }
+
+  function handleDragMove({ delta }: DragMoveEvent) {
+    setOffsetLeft(delta.x);
+  }
+
+  function handleDragOver({ over }: DragOverEvent) {
+    setOverId(over?.id.toString() ?? null);
+  }
+
+  function handleDragEnd({ active, over }: DragEndEvent) {
+    resetState();
+
+    if (projected && over) {
+      const { depth, parentId } = projected;
+      const clonedItems: any[] = JSON.parse(
+        JSON.stringify(Utils.flatten(dataSource))
+      );
+      const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
+      const activeIndex = clonedItems.findIndex(({ id }) => id === active.id);
+      const activeTreeItem = clonedItems[activeIndex];
+
+      clonedItems[activeIndex] = { ...activeTreeItem, depth, parentId };
+
+      const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
+      const newItems = Utils.buildTree(sortedItems);
+
+      setDataSource(newItems);
+    }
+  }
+
+  function handleDragCancel() {
+    resetState();
+  }
+  function resetState() {
+    setOverId(null);
+    setActiveId(null);
+
+    document.body.style.setProperty('cursor', '');
+  }
 };
