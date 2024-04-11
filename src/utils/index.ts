@@ -133,6 +133,37 @@ export default class Utils {
   }
 
   static concatFullName = (firstName: string, middleName: string, lastName: string) => {
-    return [lastName?.trim(), middleName?.trim(), firstName?.trim()].filter(x => x).join(' ');
+    return [lastName?.trim(), middleName?.trim(), firstName?.trim()].filter((x) => x).join(' ');
   };
 }
+
+export const trimAll = (obj: any) => {
+  const objType = typeof obj;
+  if (objType === 'string') {
+    return obj ? obj.trim() : '';
+  }
+  if (objType === 'object' && !Array.isArray(obj)) {
+    const newObj = Utils.deepClone(obj);
+    for (const [key, value] of Object.entries(obj)) {
+      if (typeof value === 'string') {
+        newObj[key] = value ? value.trim() : '';
+      } else if (typeof value === 'object') {
+        newObj[key] = trimAll(value);
+      }
+    }
+    return newObj;
+  }
+  if (Array.isArray(obj)) {
+    const newArray = Utils.deepClone(obj);
+    for (let index = 0; index < newArray.length; index++) {
+      const value = newArray[index];
+      if (typeof value === 'string') {
+        newArray[index] = value ? value.trim() : '';
+      } else if (typeof value === 'object') {
+        newArray[index] = trimAll(value);
+      }
+    }
+    return newArray;
+  }
+  return obj;
+};

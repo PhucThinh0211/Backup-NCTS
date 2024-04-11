@@ -5,6 +5,7 @@ import { catchError, finalize, map, switchMap, take } from 'rxjs/operators';
 import { buildRequestUrl, extractHeaders, removeCustomKeys } from './HttpHelper';
 import { RequesterConfig, RequestOptions } from './types';
 import { AppStore } from '@/store';
+import { trimAll } from '@/utils';
 
 enum HttpMethod {
   GET = 'GET',
@@ -108,7 +109,8 @@ const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
 
 class HttpInterceptor {
   request(method: HttpMethod, url: string, body?: any, options?: RequestOptions) {
-    return httpRequest(url, { ...options, method, body });
+    const newBody = body ? trimAll(body) : body;
+    return httpRequest(url, { ...options, method, body: newBody });
   }
 
   get(url: string, options?: RequestOptions) {
