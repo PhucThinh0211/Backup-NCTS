@@ -1,6 +1,13 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { Button, Space, Table } from 'antd';
+import {
+  Button,
+  PaginationProps,
+  Space,
+  Table,
+  TableColumnsType,
+  TableProps,
+} from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -10,9 +17,16 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getBanners, bannerActions } from '@/store/banner';
+import {
+  getBanners,
+  bannerActions,
+  getBannerQueryParams,
+} from '@/store/banner';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
+import { BannerResponse } from '@/services/BannerService';
+import { defaultPagingParams } from '@/common';
+import { useEffect } from 'react';
 
 export const BannerListTable = () => {
   const [modal, contextHolder] = useModal();
@@ -20,9 +34,16 @@ export const BannerListTable = () => {
   const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
+
+  const params = useAppSelector(getBannerQueryParams());
   const banners = useAppSelector(getBanners());
-  const isLoading = useAppSelector(getLoading(GettingBannerListLoadingKey));
-  const isRemoving = useAppSelector(getLoading(RemovingBannerLoadingKey));
+  const isLoading = useAppSelector(
+    getLoading([GettingBannerListLoadingKey, RemovingBannerLoadingKey])
+  );
+
+  useEffect(() => {
+    dispatch(bannerActions.getBannersRequest({}));
+  }, []);
 
   const moreActions = [
     {
@@ -37,7 +58,7 @@ export const BannerListTable = () => {
     },
   ];
 
-  const handleMoreActionClick = (key: any, record: any) => {
+  const handleMoreActionClick = (key: any, record: BannerResponse) => {
     switch (key) {
       case 'edit':
         editBanner(record);
@@ -48,19 +69,19 @@ export const BannerListTable = () => {
     }
   };
 
-  const editBanner = (banner: any) => {
+  const editBanner = (banner: BannerResponse) => {
     dispatch(bannerActions.setSelectedBanner(banner));
     navigate('/admin/banners/edit');
   };
 
-  const confirmRemoveBanner = (banner: any) => {
+  const confirmRemoveBanner = (banner: BannerResponse) => {
     modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
             __html: t('ConfirmRemove', {
-              name: `<strong>"${banner.label}"</strong>`,
+              name: `<strong>"${banner.title}"</strong>`,
             }),
           }}
         />
@@ -74,42 +95,36 @@ export const BannerListTable = () => {
     });
   };
 
-  const handleRemoveBanner = (bannerId: number) => {
+  const handleRemoveBanner = (bannerId: string) => {
     console.log(bannerId);
 
     // dispatch(bannerActions.removeBannerRequest({ bannerId, projectId: selectedProject?.id }));
   };
 
-  // const handleTableChange: TableProps<any>['onChange'] = (
-  //   pagination,
-  //   filters,
-  //   sorter
-  // ) => {
-  // const { current, pageSize } = pagination;
-  // const search = { ...params, page: current, pageSize };
-  // if (selectedProject) {
-  //   dispatch(bannerActions.getBannersRequest({ params: search, projectId: selectedProject.id }));
-  // }
-  // };
+  const handleTableChange: TableProps<any>['onChange'] = (pagination) => {
+    const { current, pageSize } = pagination;
+    const search = { ...params, page: current, pageSize };
+    dispatch(bannerActions.getBannersRequest({ params: search }));
+  };
 
-  // const showTotal: PaginationProps['showTotal'] = (total, range) =>
-  //   t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
+  const showTotal: PaginationProps['showTotal'] = (total, range) =>
+    t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
 
-  const columns = [
+  const columns: TableColumnsType<BannerResponse> = [
     {
-      title: t('ID', { ns: 'banner' }),
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: t('Name', { ns: 'banner' }),
+      title: t('Title', { ns: 'banner' }),
       dataIndex: 'title',
       key: 'title',
     },
     {
-      title: t('Url', { ns: 'banner' }),
-      dataIndex: 'url',
-      key: 'url',
+      title: t('Photo url', { ns: 'banner' }),
+      dataIndex: 'photoUrl',
+      key: 'photoUrl',
+    },
+    {
+      title: t('Description', { ns: 'banner' }),
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: 'Action',
@@ -135,20 +150,20 @@ export const BannerListTable = () => {
       {contextHolder}
       <Table
         rowKey={(record) => record.id}
-        dataSource={banners?.results}
+        dataSource={banners?.items}
         columns={columns}
         style={{ width: '100%' }}
         size='small'
         scroll={{ x: 1000, y: windowSize[1] - 310 }}
-        // pagination={{
-        //   current: params?.page || defaultPagingParams.page,
-        //   pageSize: params?.pageSize || defaultPagingParams.pageSize,
-        //   total: banners?.queryCount || 0,
-        //   responsive: true,
-        //   showTotal,
-        // }}
-        loading={isLoading || isRemoving}
-        // onChange={handleTableChange}
+        pagination={{
+          current: params?.page || defaultPagingParams.page,
+          pageSize: params?.pageSize || defaultPagingParams.pageSize,
+          total: params?.queryCount || 0,
+          responsive: true,
+          showTotal,
+        }}
+        loading={isLoading}
+        onChange={handleTableChange}
         rowSelection={{ columnWidth: 50 }}
       />
     </div>

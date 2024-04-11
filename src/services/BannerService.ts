@@ -1,37 +1,51 @@
 import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
 import { PagingResponse } from '@/common/define';
-// import { getEnvVars } from '@/environment';
+import { getEnvVars } from '@/enviroment';
 
-// const { apiUrl } = getEnvVars();
-const apiUrl = '';
+const { apiUrl } = getEnvVars();
 
 export interface BannersPagingResponse extends PagingResponse {
-  results: BannerResponse[];
+  items: BannerResponse[];
 }
 
 export interface BannerResponse {
-  id: number;
-  title: string;
-  imgUrl?: string;
-  description?: string;
-  link?: string;
+  id: string;
+  creationTime: string;
+  creatorId: string | null;
+  lastModificationTime: string;
+  lastModifierId: string | null;
+  isDeleted: boolean;
+  deleterId: string | null;
+  deletionTime: string | null;
+  photoUrl: string | null;
+  title: string | null;
+  description: string | null;
+  buttonLabel: string | null;
+  linkButton: string | null;
+  horizontal: string | null;
+  vertical: string | null;
+  pageUrls: string[];
+  language: string | null;
 }
 export interface CreateUpdateBannerPayload {
-  label: string;
-  url?: string;
-  icons?: string;
-  style: string;
-  sortSeq?: number;
+  photoUrl: string;
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+  linkButton?: string;
+  horizontal?: string;
+  vertical?: string;
+  pageUrls?: string[];
 }
 
 class BannerController {
   public Get = {
     getAllBanners: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/Banner`, options);
+      return HttpClient.get(`${apiUrl}/api/app/banner`, options);
     },
-    getBannerById: (bannerId: number, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/Banner/${bannerId}`, options);
+    getBannerById: (bannerId: string, options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/banner/${bannerId}`, options);
     },
   };
 
@@ -40,23 +54,27 @@ class BannerController {
       input: CreateUpdateBannerPayload,
       options?: RequestOptions
     ) => {
-      return HttpClient.post(`${apiUrl}/api/Banner`, input, options);
+      return HttpClient.post(`${apiUrl}/api/app/banner`, input, options);
     },
   };
 
   public Put = {
     updateBanner: (
-      bannerId: number,
+      bannerId: string,
       input: CreateUpdateBannerPayload,
       options?: RequestOptions
     ) => {
-      return HttpClient.put(`${apiUrl}/api/Banner/${bannerId}`, input, options);
+      return HttpClient.put(
+        `${apiUrl}/api/app/banner/${bannerId}`,
+        input,
+        options
+      );
     },
   };
 
   public delete = {
-    removeBanner: (bannerId: number, options?: RequestOptions) => {
-      return HttpClient.delete(`${apiUrl}/api/Banner/${bannerId}`, options);
+    removeBanner: (bannerId: string, options?: RequestOptions) => {
+      return HttpClient.delete(`${apiUrl}/api/app/banner/${bannerId}`, options);
     },
   };
 }
