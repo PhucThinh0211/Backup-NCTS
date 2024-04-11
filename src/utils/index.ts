@@ -1,3 +1,5 @@
+import { FlattenedItem, TreeItem } from '@/common';
+import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { notification } from 'antd';
 import i18next from 'i18next';
@@ -158,10 +160,10 @@ export default class Utils {
   static getDragDepth(offset: number, indentationWidth: number) {
     return Math.round(offset / indentationWidth);
   }
-  static getProjection(
-    items: any[],
-    activeId: string,
-    overId: string,
+  static getProjection<T>(
+    items: FlattenedItem<T>[],
+    activeId: UniqueIdentifier,
+    overId: UniqueIdentifier,
     dragOffset: number,
     indentationWidth: number
   ) {
@@ -224,11 +226,11 @@ export default class Utils {
 
     return 0;
   }
-  static flatten(
-    items: any[],
-    parentId: string | null = null,
+  static flatten<T extends Record<string, any>>(
+    items: TreeItem<T>[],
+    parentId: UniqueIdentifier | null = null,
     depth = 0,
-    parent: any | null = null
+    parent: TreeItem<T> | null = null
   ): any[] {
     return items.reduce<any[]>((acc, item, index) => {
       const flattenedItem: any = {
@@ -267,4 +269,13 @@ export default class Utils {
 
     return Utils.checkChildren(root.children ?? []);
   }
+  static createSlug = (input: string) => {
+    return input
+      .toLowerCase()
+      .trim()
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  };
 }

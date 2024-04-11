@@ -1,15 +1,14 @@
 import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
 import { PagingResponse } from '@/common/define';
-// import { getEnvVars } from '@/environment';
+import { getEnvVars } from '@/enviroment';
 
-// const { apiUrl } = getEnvVars();
-const apiUrl = '';
+const { apiUrl } = getEnvVars();
 
 export type MenuStyle = 'None' | 'Button';
 
 export interface MenusPagingResponse extends PagingResponse {
-  results: MenuResponse[];
+  items: MenuResponse[];
 }
 
 export interface MenuLink {
@@ -40,13 +39,9 @@ export interface MenuResponse {
   type: MenuType;
   icons?: string | null;
   url?: string | null;
-  links?: MenuLink[];
-  groups?: MegaMenuType[];
   sortSeq: number;
   parentId?: string | null;
-  parent?: MenuResponse | null;
   style?: string | null;
-  language?: string | null;
 }
 export interface CreateUpdateMenuPayload {
   label: string;
@@ -58,35 +53,51 @@ export interface CreateUpdateMenuPayload {
   sortSeq?: number;
 }
 
+export interface CreateUpdateMenuTranslationPayload {
+  language: string;
+  label: string;
+}
+
 class MenuController {
   public Get = {
     getAllMenus: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/Menu`, options);
+      return HttpClient.get(`${apiUrl}/api/app/menu`, options);
     },
     getMenuById: (menuId: number, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/Menu/${menuId}`, options);
+      return HttpClient.get(`${apiUrl}/api/app/menu/${menuId}`, options);
     },
   };
 
   public Post = {
     createMenu: (input: CreateUpdateMenuPayload, options?: RequestOptions) => {
-      return HttpClient.post(`${apiUrl}/api/Menu`, input, options);
+      return HttpClient.post(`${apiUrl}/api/app/menu`, input, options);
+    },
+    createMenuTranslations: (
+      menuId: string,
+      input: CreateUpdateMenuTranslationPayload,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/menu/${menuId}`,
+        input,
+        options
+      );
     },
   };
 
   public Put = {
     updateMenu: (
-      menuId: number,
+      menuId: string,
       input: CreateUpdateMenuPayload,
       options?: RequestOptions
     ) => {
-      return HttpClient.put(`${apiUrl}/api/Menu/${menuId}`, input, options);
+      return HttpClient.put(`${apiUrl}/api/app/menu/${menuId}`, input, options);
     },
   };
 
   public delete = {
-    removeMenu: (menuId: number, options?: RequestOptions) => {
-      return HttpClient.delete(`${apiUrl}/api/Menu/${menuId}`, options);
+    removeMenu: (menuId: string, options?: RequestOptions) => {
+      return HttpClient.delete(`${apiUrl}/api/app/menu/${menuId}`, options);
     },
   };
 }

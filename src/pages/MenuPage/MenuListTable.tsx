@@ -10,7 +10,7 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getMenus, menuActions } from '@/store/menu';
+import { getMenuQueryParams, getMenus, menuActions } from '@/store/menu';
 import useModal from 'antd/es/modal/useModal';
 import Utils from '@/utils';
 import type { TableColumnsType } from 'antd';
@@ -21,6 +21,7 @@ import type {
   DragMoveEvent,
   DragOverEvent,
   DragStartEvent,
+  UniqueIdentifier,
 } from '@dnd-kit/core';
 import { DndContext } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -33,9 +34,31 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TreeItem } from '@/common';
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
 }
+
+const searchItemDeep = (
+  search: string,
+  item: TreeItem<MenuResponse>
+): boolean => {
+  const { label, url, children } = item;
+
+  if (
+    label?.toLowerCase().includes(search) ||
+    url?.toLowerCase().includes(search)
+  ) {
+    return true;
+  }
+
+  if (children?.length) {
+    for (const item of children) {
+      return searchItemDeep(search, item);
+    }
+  }
+  return false;
+};
 
 const Row = ({ children, ...props }: RowProps) => {
   const {
@@ -52,7 +75,9 @@ const Row = ({ children, ...props }: RowProps) => {
 
   const style: React.CSSProperties = {
     ...props.style,
-    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
+    transform: CSS.Transform.toString(
+      transform && { ...transform, scaleY: 1, x: 1 }
+    ),
     transition,
     ...(isDragging ? { position: 'relative', zIndex: '9999' } : {}),
   };
@@ -79,9 +104,9 @@ const Row = ({ children, ...props }: RowProps) => {
 const indentationWidth = 30;
 
 export const MenuListTable = () => {
-  const [dataSource, setDataSource] = useState<any[]>([]);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [overId, setOverId] = useState<string | null>(null);
+  const [dataSource, setDataSource] = useState<TreeItem<MenuResponse>[]>([]);
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [overId, setOverId] = useState<UniqueIdentifier | null>(null);
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common', 'menu']);
   const [offsetLeft, setOffsetLeft] = useState(0);
@@ -91,6 +116,7 @@ export const MenuListTable = () => {
   const dispatch = useAppDispatch();
 
   const menus = useAppSelector(getMenus());
+  const queryParams = useAppSelector(getMenuQueryParams());
   const isLoading = useAppSelector(
     getLoading([GettingMenuListLoadingKey, RemovingMenuLoadingKey])
   );
@@ -113,10 +139,23 @@ export const MenuListTable = () => {
       : null;
 
   useEffect(() => {
-    if (menus) {
-      setDataSource(Utils.buildTree(menus || []));
-    }
+    dispatch(menuActions.getMenusRequest({}));
   }, []);
+
+  useEffect(() => {
+    if (menus) {
+      const newDataSource = Utils.buildTree(menus.items || []);
+      if (queryParams?.search) {
+        setDataSource(
+          newDataSource.filter((item) =>
+            searchItemDeep(queryParams?.search.toLowerCase(), item)
+          )
+        );
+      } else {
+        setDataSource(newDataSource);
+      }
+    }
+  }, [menus, queryParams]);
 
   const moreActions = [
     {
@@ -131,7 +170,7 @@ export const MenuListTable = () => {
     },
   ];
 
-  const handleMoreActionClick = (key: any, record: any) => {
+  const handleMoreActionClick = (key: any, record: TreeItem<MenuResponse>) => {
     switch (key) {
       case 'edit':
         editMenu(record);
@@ -142,12 +181,12 @@ export const MenuListTable = () => {
     }
   };
 
-  const editMenu = (menu: any) => {
+  const editMenu = (menu: TreeItem<MenuResponse>) => {
     dispatch(menuActions.setSelectedMenu(menu));
     navigate('/admin/menu/edit');
   };
 
-  const confirmRemoveMenu = (menu: any) => {
+  const confirmRemoveMenu = (menu: TreeItem<MenuResponse>) => {
     modal.confirm({
       title: t('Notification'),
       content: (
@@ -168,13 +207,11 @@ export const MenuListTable = () => {
     });
   };
 
-  const handleRemoveMenu = (menuId: number) => {
-    console.log(menuId);
-
-    // dispatch(menuActions.removeMenuRequest({ menuId, projectId: selectedProject?.id }));
+  const handleRemoveMenu = (menuId: string) => {
+    dispatch(menuActions.removeMenuRequest({ menuId }));
   };
 
-  const columns: TableColumnsType<MenuResponse> = [
+  const columns: TableColumnsType<TreeItem<MenuResponse>> = [
     {
       title: t('Name', { ns: 'menu' }),
       dataIndex: 'label',
@@ -195,7 +232,7 @@ export const MenuListTable = () => {
       fixed: 'right',
       align: 'center',
       width: '80px',
-      render: (_: any, record: any) => {
+      render: (_: any, record: TreeItem<MenuResponse>) => {
         return (
           <Space>
             {moreActions.map((action) => (
@@ -232,7 +269,7 @@ export const MenuListTable = () => {
           strategy={verticalListSortingStrategy}
         >
           {contextHolder}
-          {dataSource?.length && (
+          {
             <Table
               rowKey={(record) => record.id}
               dataSource={dataSource}
@@ -252,7 +289,7 @@ export const MenuListTable = () => {
                 defaultExpandAllRows: true,
               }}
             />
-          )}
+          }
         </SortableContext>
       </DndContext>
     </div>
