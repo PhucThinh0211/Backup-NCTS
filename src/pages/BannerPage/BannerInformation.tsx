@@ -1,7 +1,7 @@
 import { Divider, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { InformationDescription } from './InformationDescription';
 import { BorderlessTableOutlined } from '@ant-design/icons';
+import { InformationDescription } from '@/components/InformationDescription';
 
 export const BannerInformation = () => {
   const { t } = useTranslation(['common', 'banner']);

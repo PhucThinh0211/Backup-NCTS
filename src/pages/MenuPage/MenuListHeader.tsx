@@ -2,18 +2,20 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Row, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CreateUpdateMenuModalName } from '@/common/modalName';
 import { getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { showModal } from '@/store/modal';
+import { useNavigate } from 'react-router-dom';
+import { menuActions } from '@/store/menu';
 
 export const MenuListHeader = () => {
   const { t } = useTranslation('menu');
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
 
   const createMenu = () => {
-    dispatch(showModal({ key: CreateUpdateMenuModalName }));
+    dispatch(menuActions.setSelectedMenu(undefined));
+    navigate('/admin/menu/create');
   };
 
   return (
