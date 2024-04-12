@@ -10,6 +10,7 @@ import {
 interface BannerState {
   banners?: BannersPagingResponse;
   selectedBanner?: BannerResponse;
+  bannerPhotoUrl?: string;
   queryParams: any;
 }
 
@@ -21,8 +22,15 @@ const bannerSlice = createSlice({
   name: 'banner',
   initialState,
   reducers: {
-    setSelectedBanner: (state, action) => {
+    setSelectedBanner: (
+      state,
+      action: PayloadAction<BannerResponse | undefined>
+    ) => {
       state.selectedBanner = action.payload;
+      state.bannerPhotoUrl = action.payload?.photoUrl || undefined;
+    },
+    setBannerPhotoUrl: (state, action: PayloadAction<string | undefined>) => {
+      state.bannerPhotoUrl = action.payload;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;

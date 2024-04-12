@@ -117,7 +117,7 @@ export default class Utils {
     if (error.response?.error) {
       notification.error({
         message: i18next.t('notification'),
-        description: i18next.t(error.response?.error),
+        description: i18next.t(error.response?.error.details),
       });
       return;
     }
@@ -287,7 +287,7 @@ export const trimAll = (obj: any) => {
   }
   if (objType === 'object' && !Array.isArray(obj)) {
     const newObj = Utils.deepClone(obj);
-    for (const [key, value] of Object.entries(obj)) {
+    for (const [key, value] of Object.entries(obj || {})) {
       if (typeof value === 'string') {
         newObj[key] = value ? value.trim() : '';
       } else if (typeof value === 'object') {

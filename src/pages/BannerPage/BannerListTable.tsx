@@ -96,19 +96,24 @@ export const BannerListTable = () => {
   };
 
   const handleRemoveBanner = (bannerId: string) => {
-    console.log(bannerId);
-
-    // dispatch(bannerActions.removeBannerRequest({ bannerId, projectId: selectedProject?.id }));
+    dispatch(bannerActions.removeBannerRequest({ bannerId }));
   };
 
-  const handleTableChange: TableProps<any>['onChange'] = (pagination) => {
+  const handleTableChange: TableProps<BannerResponse>['onChange'] = (
+    pagination
+  ) => {
     const { current, pageSize } = pagination;
     const search = { ...params, page: current, pageSize };
     dispatch(bannerActions.getBannersRequest({ params: search }));
   };
 
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
-    t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
+    t('PagingTotal', {
+      range1: range[0],
+      range2: range[1],
+      total,
+      ns: 'common',
+    });
 
   const columns: TableColumnsType<BannerResponse> = [
     {
@@ -128,7 +133,7 @@ export const BannerListTable = () => {
     },
     {
       title: 'Action',
-      render: (_: any, record: any) => {
+      render: (_, record) => {
         return (
           <Space>
             {moreActions.map((action) => (
@@ -164,7 +169,6 @@ export const BannerListTable = () => {
         }}
         loading={isLoading}
         onChange={handleTableChange}
-        rowSelection={{ columnWidth: 50 }}
       />
     </div>
   );
