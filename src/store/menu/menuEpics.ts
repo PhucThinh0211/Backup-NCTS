@@ -12,7 +12,6 @@ import { startLoading, stopLoading } from '../loading';
 import { hideModal } from '../modal';
 import { RootEpic } from '../types';
 import { CreateUpdateMenuModalName } from '@/common/modalName';
-import { defaultPagingParams } from '@/common/define';
 import {
   GettingMenuListLoadingKey,
   RemovingMenuLoadingKey,
@@ -28,7 +27,6 @@ const getMenusRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { params } = action.payload;
       const search = {
-        ...defaultPagingParams,
         ...state.menu.queryParams,
         ...params,
       };
@@ -60,13 +58,16 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menu } = action.payload;
+      const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
-        ...defaultPagingParams,
         ...state.menu.queryParams,
       };
       return concat(
         [startLoading({ key: SavingMenuLoadingKey })],
-        MenuService.Post.createMenu(menu).pipe(
+        MenuService.Post.createMenu({
+          ...menu,
+          sortSeq: totalCount + 1,
+        }).pipe(
           switchMap(() => {
             return MenuService.Get.getAllMenus({
               search,
@@ -103,7 +104,6 @@ const updateMenuRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { menuId, menu } = action.payload;
       const search = {
-        ...defaultPagingParams,
         ...state.menu.queryParams,
       };
       return concat(
@@ -145,7 +145,6 @@ const removeMenuRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { menuId } = action.payload;
       const search = {
-        ...defaultPagingParams,
         ...state.menu.queryParams,
         page: 1,
       };

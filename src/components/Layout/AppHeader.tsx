@@ -32,7 +32,7 @@ const items: MenuProps['items'] = menus.map((x) => {
     });
   }
 
-  if (x.type === 'FlyoutMemu' && x.links) {
+  if (x.type === 'Dropdown' && x.links) {
     return {
       key: x.id,
       label: (
@@ -47,7 +47,7 @@ const items: MenuProps['items'] = menus.map((x) => {
       })),
     };
   }
-  if (x.type === 'MegaMenu' && x.groups) {
+  if (x.type === 'Group' && x.groups) {
     const groupChildren: any[] = []; //x.groups.map(g => ({ key: g.id, label: g.label, type: 'group' }));
     x.groups.forEach((g) => {
       groupChildren.push({ key: g.id, label: g.label, type: 'group' });

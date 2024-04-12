@@ -1,4 +1,5 @@
 import { MenuProps } from 'antd';
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 export type LanguageType = 'vi' | 'en';
 
@@ -28,11 +29,23 @@ export const largePagingParams = {
 };
 
 export interface PagingResponse {
-  page: number;
-  pageCount: number;
-  pageSize: number;
-  queryCount: number;
-  firstRowIndex: number;
-  lastRowIndex: number;
-  // results: any[];
+  totalCount: number;
 }
+export type TreeItem<T> = {
+  children?: TreeItem<T>[];
+  id: UniqueIdentifier;
+} & T;
+
+export type FlattenedItem<T> = {
+  parentId: UniqueIdentifier | null;
+  /*
+  How deep in the tree is current item.
+  0 - means the item is on the Root level,
+  1 - item is child of Root level parent,
+  etc.
+   */
+  depth: number;
+  index: number;
+
+  parent: FlattenedItem<T> | null;
+} & TreeItem<T>;

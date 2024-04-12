@@ -25,5 +25,9 @@
   "Remove": "Xóa",
   "PagingTotal": "{{range1}} - {{range2}} trong {{total}} bản ghi",
   "ConfirmRemove": "Xác nhận xóa {{name}}?",
-  "Notification": "Thông báo"
+  "Notification": "Thông báo",
+  "Created": "Đã tạo",
+  "By": "Bởi",
+  "Updated": "Đã cập nhật",
+  "Locales": "Ngôn ngữ"
 }

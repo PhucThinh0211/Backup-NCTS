@@ -4,8 +4,8 @@ import { defaultPagingParams } from '@/common/define';
 import {
   BannerResponse,
   BannersPagingResponse,
+  CreateUpdateBannerPayload,
 } from '@/services/BannerService';
-import { banners } from '@/fakeData/banner';
 
 interface BannerState {
   banners?: BannersPagingResponse;
@@ -15,15 +15,6 @@ interface BannerState {
 
 const initialState: BannerState = {
   queryParams: defaultPagingParams,
-  banners: {
-    page: 1,
-    pageCount: 1,
-    pageSize: 20,
-    queryCount: banners.length,
-    firstRowIndex: 0,
-    lastRowIndex: banners.length,
-    results: banners,
-  },
 };
 
 const bannerSlice = createSlice({
@@ -37,9 +28,21 @@ const bannerSlice = createSlice({
       state.queryParams = action.payload;
     },
     getBannersRequest: (_, _action: PayloadAction<any>) => {},
-    createBannerRequest: (_, _action: PayloadAction<any>) => {},
-    updateBannerRequest: (_, _action: PayloadAction<any>) => {},
-    removeBannerRequest: (_, _action: PayloadAction<any>) => {},
+    createBannerRequest: (
+      _,
+      _action: PayloadAction<{ banner: CreateUpdateBannerPayload }>
+    ) => {},
+    updateBannerRequest: (
+      _,
+      _action: PayloadAction<{
+        banner: CreateUpdateBannerPayload;
+        bannerId: string;
+      }>
+    ) => {},
+    removeBannerRequest: (
+      _,
+      _action: PayloadAction<{ bannerId: string }>
+    ) => {},
     setBanners: (state, action) => {
       state.banners = action.payload;
     },

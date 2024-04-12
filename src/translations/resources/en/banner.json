@@ -1,0 +1,17 @@
+{
+    "Find banner": "Find banner",
+    "ID": "ID",
+    "Title": "Title",
+    "Title required": "Title is required",
+    "Photor url": "Photor url",
+    "Photor url required": "Photor url is required",
+    "Description": "Description",
+    "Description required": "Description is required",
+    "Button label": "Button label",
+    "Button label required": "Button label is required",
+    "Button link": "Button link",
+    "Button link required": "Button link is required",
+    "Add new banner": "Add new banner",
+    "Create banner": "Create banner",
+    "Update banner": "Update banner information"
+  }

@@ -1,0 +1,17 @@
+{
+    "Find banner": "Tìm kiếm banner",
+    "ID": "ID",
+    "Title": "Tiêu đề",
+    "Title required": "Vui lòng nhập tiêu đề",
+    "Photor url": "Đường dẫn hình ảnh",
+    "Photor url required": "Vui lòng nhập đường dẫn hình ảnh",
+    "Description": "Mô tả",
+    "Description required": "Vui lòng nhập mô tả",
+    "Button label": "Tiêu đề nút",
+    "Button label required": "Vui lòng nhập tiêu đề nút",
+    "Button link": "Đường dẫn nút",
+    "Button link required": "Vui lòng nhập đường dẫn nút",
+    "Add new banner": "Thêm mới",
+    "Create banner": "Thêm mới",
+    "Update banner": "Cập nhật thông tin"
+  }

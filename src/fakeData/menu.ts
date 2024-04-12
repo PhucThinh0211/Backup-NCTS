@@ -1,40 +1,12 @@
-type MenuType = 'Link' | 'FlyoutMemu' | 'MegaMenu';
-type MenuStyle = 'None' | 'Button';
-
-interface MenuLink {
-  id: string;
-  label: string;
-  url: string;
-  icon?: string;
-  style?: MenuStyle;
-  sortSeq: number;
-}
-
-interface MegaMenuType {
-  id: string;
-  label: string;
-  links: MenuLink[];
-  sortSeq: number;
-}
-
-interface NavigationType {
-  id: string;
-  label: string;
-  type: MenuType;
-  icon?: string;
-  url?: string;
-  links?: MenuLink[];
-  groups?: MegaMenuType[];
-  sortSeq: number;
-}
+import { MenuResponse, MenuType } from '@/services/MenuService';
 
 // prettier-ignore
-export const menus: any[] = [
-  { id: '1', label: 'Trang chủ', type: 'Link', url: '/', sortSeq: 1 },
+export const menus: MenuResponse[] = [
+  { id: '1', label: 'Trang chủ', type: MenuType.Link, url: '/', sortSeq: 1 },
   { 
     id: '2', 
     label: 'Giới thiệu', 
-    type: 'MegaMenu', 
+    type: MenuType.Group, 
     groups: [
       { 
         id: '3', 
@@ -72,7 +44,7 @@ export const menus: any[] = [
   { 
     id: '40', 
     label: 'Dịch vụ', 
-    type: 'MegaMenu', 
+    type: MenuType.Group, 
     groups: [
       {
         id: '41',
@@ -107,7 +79,7 @@ export const menus: any[] = [
   {
     id: '80',
     label: 'Tin tức',
-    type: 'FlyoutMemu',
+    type: MenuType.Dropdown,
     links: [
       { id: '81', label: 'Dành cho khách hàng', url: '/tin-tuc/danh-cho-khach-hang', sortSeq: 81 },
       { id: '82', label: 'Hoạt động', url: '/tin-tuc/hoat-dong', sortSeq: 82 },
@@ -118,7 +90,7 @@ export const menus: any[] = [
   { 
     id: '100', 
     label: 'Quan hệ cổ đông', 
-    type: 'FlyoutMemu', 
+    type: MenuType.Dropdown, 
     links: [
       { id: '101', label: 'Tin dành cho cổ đông', url: '/quan-he-co-dong/tin-danh-cho-co-dong', sortSeq: 101 },
       { id: '102', label: 'Đại hội đồng cổ đông', url: '/quan-he-co-dong/dai-hoi-dong-co-dong', sortSeq: 102 },
@@ -132,7 +104,7 @@ export const menus: any[] = [
   {
     id: '120',
     label: 'Hướng dẫn',
-    type: 'FlyoutMemu',
+    type: MenuType.Dropdown,
     links: [
       { id: '121', label: 'Sử dụng trang thông tin điện tử NCTS', url: '/huong-dan/su-dung-trang-thong-tin-dien-tu-ncts', sortSeq: 121 },
       { id: '122', label: 'Nhận hàng quốc tế tại kho thành phố', url: '/huong-dan/nhan-hang-quoc-te-tai-kho-thanh-pho', sortSeq: 122 },
@@ -147,5 +119,79 @@ export const menus: any[] = [
     ],
     sortSeq: 120,
   },
-  { id: '140', label: 'Liên hệ', type: 'Link', url: '/lien-he', sortSeq: 140 },
+  { id: '140', label: 'Liên hệ', type: MenuType.Link, url: '/lien-he', sortSeq: 140 },
+];
+export const menusData: MenuResponse[] = [
+  {
+    label: 'Tin khách hàng',
+    url: '/tin-tuc/tin-khach-hang',
+    icons: null,
+    sortSeq: 0,
+    parentId: 'f226daae-49bf-7d25-9e1e-3a11b9a7b543',
+    parent: null,
+    type: MenuType.Link,
+    style: 'None',
+    language: 'vi',
+    id: '1266ea6a-e658-2abf-6622-3a11b9a89c94',
+  },
+  {
+    label: 'Tin tức',
+    url: null,
+    icons: null,
+    sortSeq: 0,
+    parentId: null,
+    parent: null,
+    type: MenuType.Dropdown,
+    style: 'None',
+    language: 'vi',
+    id: 'f226daae-49bf-7d25-9e1e-3a11b9a7b543',
+  },
+  {
+    label: 'Trang chủ',
+    url: '/trang-chu',
+    icons: null,
+    sortSeq: 0,
+    parentId: null,
+    parent: null,
+    type: MenuType.Link,
+    style: 'None',
+    language: 'vi',
+    id: '3fdd5651-eb2d-fa05-2881-3a11b9a73a6c',
+  },
+  {
+    label: 'Sứ mệnh và tầm nhìn',
+    url: '/gioi-thieu/su-menh-va-tam-nhin',
+    icons: null,
+    sortSeq: 0,
+    parentId: 'fb910fbf-4df9-43fe-cc8a-3a11b91e2e53',
+    parent: null,
+    type: MenuType.Link,
+    style: 'None',
+    language: 'vi',
+    id: '9266d8d9-602e-454a-0af6-3a11b91f659b',
+  },
+  {
+    label: 'Về chúng tôi',
+    url: null,
+    icons: null,
+    sortSeq: 0,
+    parentId: '4579bef6-9ca7-b280-2b9b-3a11b91d30e1',
+    parent: null,
+    type: MenuType.Group,
+    style: 'None',
+    language: 'vi',
+    id: 'fb910fbf-4df9-43fe-cc8a-3a11b91e2e53',
+  },
+  {
+    label: 'Giới thiệu',
+    url: null,
+    icons: null,
+    sortSeq: 0,
+    parentId: null,
+    parent: null,
+    type: MenuType.Group,
+    style: 'None',
+    language: 'vi',
+    id: '4579bef6-9ca7-b280-2b9b-3a11b91d30e1',
+  },
 ];

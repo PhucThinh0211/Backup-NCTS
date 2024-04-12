@@ -1,3 +1,6 @@
+import { FlattenedItem, TreeItem } from '@/common';
+import { UniqueIdentifier } from '@dnd-kit/core';
+import { arrayMove } from '@dnd-kit/sortable';
 import { notification } from 'antd';
 import i18next from 'i18next';
 import { jwtDecode } from 'jwt-decode';
@@ -132,8 +135,148 @@ export default class Utils {
     });
   }
 
-  static concatFullName = (firstName: string, middleName: string, lastName: string) => {
-    return [lastName?.trim(), middleName?.trim(), firstName?.trim()].filter((x) => x).join(' ');
+  static checkChildren(items: any[]): any[] {
+    return items.map((item: any) => ({
+      ...item,
+      children: item.children?.length
+        ? Utils.checkChildren(item.children)
+        : undefined,
+    }));
+  }
+  static findItem(items: any[], itemId: string) {
+    return items.find(({ id }) => id === itemId);
+  }
+
+  static concatFullName = (
+    firstName: string,
+    middleName: string,
+    lastName: string
+  ) => {
+    return [lastName?.trim(), middleName?.trim(), firstName?.trim()]
+      .filter((x) => x)
+      .join(' ');
+  };
+
+  static getDragDepth(offset: number, indentationWidth: number) {
+    return Math.round(offset / indentationWidth);
+  }
+  static getProjection<T>(
+    items: FlattenedItem<T>[],
+    activeId: UniqueIdentifier,
+    overId: UniqueIdentifier,
+    dragOffset: number,
+    indentationWidth: number
+  ) {
+    const overItemIndex = items.findIndex(({ id }) => id === overId);
+    const activeItemIndex = items.findIndex(({ id }) => id === activeId);
+    const activeItem = items[activeItemIndex];
+    const newItems = arrayMove(items, activeItemIndex, overItemIndex);
+    const previousItem = newItems[overItemIndex - 1];
+    const nextItem = newItems[overItemIndex + 1];
+    const dragDepth = Utils.getDragDepth(dragOffset, indentationWidth);
+    const projectedDepth = activeItem.depth + dragDepth;
+    const maxDepth = Utils.getMaxDepth({
+      previousItem,
+    });
+    const minDepth = Utils.getMinDepth({ nextItem });
+    let depth = projectedDepth;
+
+    if (projectedDepth >= maxDepth) {
+      depth = maxDepth;
+    } else if (projectedDepth < minDepth) {
+      depth = minDepth;
+    }
+
+    return { depth, maxDepth, minDepth, parentId: getParentId() };
+
+    function getParentId() {
+      if (depth === 0 || !previousItem) {
+        return null;
+      }
+
+      if (depth === previousItem.depth) {
+        return previousItem.parentId;
+      }
+
+      if (depth > previousItem.depth) {
+        return previousItem.id;
+      }
+
+      const newParent = newItems
+        .slice(0, overItemIndex)
+        .reverse()
+        .find((item) => item.depth === depth)?.parentId;
+
+      return newParent ?? null;
+    }
+  }
+
+  static getMaxDepth({ previousItem }: { previousItem: any }) {
+    if (previousItem) {
+      return previousItem.depth + 1;
+    }
+
+    return 0;
+  }
+
+  static getMinDepth({ nextItem }: { nextItem: any }) {
+    if (nextItem) {
+      return nextItem.depth;
+    }
+
+    return 0;
+  }
+  static flatten<T extends Record<string, any>>(
+    items: TreeItem<T>[],
+    parentId: UniqueIdentifier | null = null,
+    depth = 0,
+    parent: TreeItem<T> | null = null
+  ): any[] {
+    return items.reduce<any[]>((acc, item, index) => {
+      const flattenedItem: any = {
+        ...item,
+        parentId,
+        depth,
+        index,
+        isLast: items.length === index + 1,
+        parent: parent,
+      };
+      return [
+        ...acc,
+        flattenedItem,
+        ...Utils.flatten(
+          item.children ?? [],
+          item.id,
+          depth + 1,
+          flattenedItem
+        ),
+      ];
+    }, []);
+  }
+  static buildTree(flattenedItems: any[]) {
+    const root = { id: 'root', children: [] } as any;
+    const nodes = { [root.id]: root };
+    const items = flattenedItems.map((item) => ({ ...item, children: [] }));
+
+    for (const item of items) {
+      const { id } = item;
+      const parentId = item.parentId ?? root.id;
+      const parent = nodes[parentId] ?? Utils.findItem(items, parentId);
+      item.parent = null;
+      nodes[id] = item;
+      parent?.children?.push(item);
+    }
+
+    return Utils.checkChildren(root.children ?? []);
+  }
+  static createSlug = (input: string) => {
+    return input
+      .toLowerCase()
+      .trim()
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 }
 

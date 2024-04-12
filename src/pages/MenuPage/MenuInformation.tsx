@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { InformationTimestamp } from '@/components/InformationTimestamp';
+import { useState } from 'react';
 
-export const BannerInformation = () => {
+export const MenuInformation = () => {
   const [locale, setLocale] = useState<string>('vi');
   const props = {
     createdAt: '2 years ago',
