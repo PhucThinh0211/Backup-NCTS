@@ -11,6 +11,7 @@ interface BannerState {
   banners?: BannersPagingResponse;
   selectedBanner?: BannerResponse;
   bannerPhotoUrl?: string;
+  bannerLocale?: string;
   queryParams: any;
 }
 
@@ -28,9 +29,13 @@ const bannerSlice = createSlice({
     ) => {
       state.selectedBanner = action.payload;
       state.bannerPhotoUrl = action.payload?.photoUrl || undefined;
+      state.bannerLocale = action.payload?.language || undefined;
     },
     setBannerPhotoUrl: (state, action: PayloadAction<string | undefined>) => {
       state.bannerPhotoUrl = action.payload;
+    },
+    setBannerLocale: (state, action: PayloadAction<string | undefined>) => {
+      state.bannerLocale = action.payload;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;
