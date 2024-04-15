@@ -142,7 +142,7 @@ export const MenuListTable = () => {
 
   useEffect(() => {
     dispatch(menuActions.getMenusRequest({}));
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (menus) {
