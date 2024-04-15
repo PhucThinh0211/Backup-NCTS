@@ -117,7 +117,7 @@ export default class Utils {
     if (error.response?.error) {
       notification.error({
         message: i18next.t('notification'),
-        description: i18next.t(error.response?.error),
+        description: i18next.t(error.response?.error.details),
       });
       return;
     }

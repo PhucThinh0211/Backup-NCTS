@@ -19,3 +19,9 @@ export function getBannerQueryParams() {
     (state) => state.queryParams || defaultPagingParams
   );
 }
+export function getBannerPhotoUrl() {
+  return createSelector([getBannerState], (state) => state.bannerPhotoUrl);
+}
+export function getBannerLocale() {
+  return createSelector([getBannerState], (state) => state.bannerLocale);
+}

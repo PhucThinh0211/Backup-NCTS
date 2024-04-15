@@ -30,5 +30,6 @@
   "Created": "Created",
   "By": "By",
   "Updated": "Updated",
-  "Locales": "Locales"
+  "Locales": "Locales",
+  "StringRange": "Must be from {{range1}} - {{range2}} letters"
 }

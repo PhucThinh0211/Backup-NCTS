@@ -1,8 +1,9 @@
 import { Typography } from 'antd';
+import { ReactNode } from 'react';
 
 interface InformationDescriptionProps {
   label: string;
-  value: string;
+  value: ReactNode;
 }
 export const InformationDescription = ({
   label,
@@ -11,7 +12,11 @@ export const InformationDescription = ({
   return (
     <div className='w-full flex flex-row justify-between items-center'>
       <Typography.Text strong>{label}</Typography.Text>
-      <Typography.Text>{value}</Typography.Text>
+      {typeof value === 'string' ? (
+        <Typography.Text>{value}</Typography.Text>
+      ) : (
+        value
+      )}
     </div>
   );
 };

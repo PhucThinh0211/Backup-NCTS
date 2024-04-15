@@ -29,5 +29,6 @@
   "Created": "Đã tạo",
   "By": "Bởi",
   "Updated": "Đã cập nhật",
-  "Locales": "Ngôn ngữ"
+  "Locales": "Ngôn ngữ",
+  "StringRange": "Tối đa từ {{range1}} - {{range2}} ký tự"
 }

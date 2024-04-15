@@ -99,6 +99,8 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { bannerId, banner } = action.payload;
+      console.log(action.payload.bannerId, action.payload.banner);
+
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,

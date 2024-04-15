@@ -1,5 +1,9 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { bannerActions, getSelectedBanner } from '@/store/banner';
+import {
+  bannerActions,
+  getBannerPhotoUrl,
+  getSelectedBanner,
+} from '@/store/banner';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { Button, Col, Form, Input, Row, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +11,14 @@ import { Link } from 'react-router-dom';
 import { BannerInformation } from './BannerInformation';
 import { getLoading } from '@/store/loading';
 import { SavingBannerLoadingKey } from '@/common';
+import { BannerPhotoUrlUploader } from './BannerPhotoUrlUploader';
+
+const normFile = (e: any) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
 
 export const CreateUpdateBannerPage = () => {
   const [form] = Form.useForm();
@@ -14,11 +26,14 @@ export const CreateUpdateBannerPage = () => {
   const dispatch = useAppDispatch();
 
   const selectedBanner = useAppSelector(getSelectedBanner());
+  const bannerPhotoUrl = useAppSelector(getBannerPhotoUrl());
   const isSubmmiting = useAppSelector(getLoading(SavingBannerLoadingKey));
 
   const handleSaveBanner = (values: any) => {
     const inputData = {
       ...values,
+      photoUrl: bannerPhotoUrl,
+      pageUrls: [],
     };
     if (selectedBanner) {
       // prettier-ignore
@@ -26,6 +41,11 @@ export const CreateUpdateBannerPage = () => {
       return;
     }
     dispatch(bannerActions.createBannerRequest({ banner: inputData }));
+  };
+
+  const onImageDelete = () => {
+    form.setFieldsValue({ upload: undefined });
+    dispatch(bannerActions.setBannerPhotoUrl(undefined));
   };
 
   return (
@@ -61,13 +81,52 @@ export const CreateUpdateBannerPage = () => {
           <Col span={16}>
             <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
               <Form.Item
-                label={'Title'}
+                label={t('Title', { ns: 'banner' })}
                 name='title'
-                rules={[{ required: true, message: t('Title required') }]}
+                rules={[
+                  { required: true, message: t('Title required') },
+                  {
+                    max: 500,
+                    min: 0,
+                    message: t('StringRange', {
+                      ns: 'common',
+                      range1: 0,
+                      range2: 500,
+                    }),
+                  },
+                ]}
               >
                 <Input />
               </Form.Item>
-              <Form.Item label={'Description'} name='description'>
+              <Form.Item
+                name='upload'
+                label={t('Photo url', { ns: 'banner' })}
+                valuePropName='fileList'
+                getValueFromEvent={normFile}
+                rules={[
+                  {
+                    required: !bannerPhotoUrl,
+                    message: t('Photo url required', { ns: 'banner' }),
+                  },
+                ]}
+              >
+                <BannerPhotoUrlUploader onImageDelete={onImageDelete} />
+              </Form.Item>
+              <Form.Item
+                label={t('Description', { ns: 'banner' })}
+                name='description'
+                rules={[
+                  {
+                    max: 2000,
+                    min: 0,
+                    message: t('StringRange', {
+                      ns: 'common',
+                      range1: 0,
+                      range2: 2000,
+                    }),
+                  },
+                ]}
+              >
                 <Input.TextArea />
               </Form.Item>
             </div>

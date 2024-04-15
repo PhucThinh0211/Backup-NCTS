@@ -7,6 +7,7 @@ import {
   Table,
   TableColumnsType,
   TableProps,
+  Image,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +26,7 @@ import {
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
-import { defaultPagingParams } from '@/common';
+import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect } from 'react';
 
 export const BannerListTable = () => {
@@ -96,19 +97,24 @@ export const BannerListTable = () => {
   };
 
   const handleRemoveBanner = (bannerId: string) => {
-    console.log(bannerId);
-
-    // dispatch(bannerActions.removeBannerRequest({ bannerId, projectId: selectedProject?.id }));
+    dispatch(bannerActions.removeBannerRequest({ bannerId }));
   };
 
-  const handleTableChange: TableProps<any>['onChange'] = (pagination) => {
+  const handleTableChange: TableProps<BannerResponse>['onChange'] = (
+    pagination
+  ) => {
     const { current, pageSize } = pagination;
     const search = { ...params, page: current, pageSize };
     dispatch(bannerActions.getBannersRequest({ params: search }));
   };
 
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
-    t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
+    t('PagingTotal', {
+      range1: range[0],
+      range2: range[1],
+      total,
+      ns: 'common',
+    });
 
   const columns: TableColumnsType<BannerResponse> = [
     {
@@ -120,6 +126,18 @@ export const BannerListTable = () => {
       title: t('Photo url', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
+      render(value) {
+        return (
+          value && (
+            <Image
+              src={`${uploadedPhotoUrl(value)}`}
+              style={{
+                backgroundColor: '#00000073',
+              }}
+            />
+          )
+        );
+      },
     },
     {
       title: t('Description', { ns: 'banner' }),
@@ -128,7 +146,7 @@ export const BannerListTable = () => {
     },
     {
       title: 'Action',
-      render: (_: any, record: any) => {
+      render: (_, record) => {
         return (
           <Space>
             {moreActions.map((action) => (
@@ -164,7 +182,6 @@ export const BannerListTable = () => {
         }}
         loading={isLoading}
         onChange={handleTableChange}
-        rowSelection={{ columnWidth: 50 }}
       />
     </div>
   );
