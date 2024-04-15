@@ -4,14 +4,15 @@ import { InformationDescription } from '../InformationDescription';
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
 import { ReactNode } from 'react';
+import { LanguageType } from '@/common';
 
 interface InformationTimestampProps {
   createdAt?: ReactNode;
   createdBy?: ReactNode;
   updatedAt?: ReactNode;
   updatedBy?: ReactNode;
-  locale?: string;
-  onChangeLocale?: (value: string) => void;
+  locale?: LanguageType;
+  onChangeLocale?: (value: LanguageType) => void;
 }
 export const InformationTimestamp = ({
   createdAt,
@@ -24,40 +25,38 @@ export const InformationTimestamp = ({
   const { t } = useTranslation(['common']);
   return (
     <div className='w-full border-b-gray-500 shadow-sm rounded-md bg-white p-4'>
-      {(createdAt || createdBy || updatedAt || updatedBy) && (
-        <div className='mb-8'>
-          <span className='uppercase text-gray-500 text-sm font-medium'>
-            {t('Information', { ns: 'common' })}
-          </span>
-          <Divider className='!my-3' />
-          <div className='flex flex-col gap-1'>
-            {createdAt && (
-              <InformationDescription
-                label={t('Created', { ns: 'common' })}
-                value={createdAt}
-              />
-            )}
-            {createdBy && (
-              <InformationDescription
-                label={t('By', { ns: 'common' })}
-                value={createdBy}
-              />
-            )}
-            {updatedAt && (
-              <InformationDescription
-                label={t('Last update', { ns: 'common' })}
-                value={updatedAt}
-              />
-            )}
-            {updatedBy && (
-              <InformationDescription
-                label={t('By', { ns: 'common' })}
-                value={updatedBy}
-              />
-            )}
-          </div>
+      <div className='mb-8'>
+        <span className='uppercase text-gray-500 text-sm font-medium'>
+          {t('Information', { ns: 'common' })}
+        </span>
+        <Divider className='!my-3' />
+        <div className='flex flex-col gap-1'>
+          {createdAt && (
+            <InformationDescription
+              label={t('Created at', { ns: 'common' })}
+              value={createdAt}
+            />
+          )}
+          {createdBy && (
+            <InformationDescription
+              label={t('Created by', { ns: 'common' })}
+              value={createdBy}
+            />
+          )}
+          {updatedAt && (
+            <InformationDescription
+              label={t('Updated at', { ns: 'common' })}
+              value={updatedAt}
+            />
+          )}
+          {updatedBy && (
+            <InformationDescription
+              label={t('Updated by', { ns: 'common' })}
+              value={updatedBy}
+            />
+          )}
         </div>
-      )}
+      </div>
 
       <div>
         <span className='uppercase text-gray-500 text-sm font-medium'>

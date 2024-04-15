@@ -1,6 +1,6 @@
 import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
-import { PagingResponse } from '@/common/define';
+import { LanguageType, PagingResponse } from '@/common/define';
 import { getEnvVars } from '@/enviroment';
 
 const { apiUrl } = getEnvVars();
@@ -42,6 +42,11 @@ export interface MenuResponse {
   sortSeq: number;
   parentId?: string | null;
   style?: string | null;
+  language?: LanguageType;
+  creationTime: string;
+  creatorId: string | null;
+  lastModificationTime: string;
+  lastModifierId: string | null;
 }
 export interface CreateUpdateMenuPayload {
   label: string;
@@ -63,7 +68,7 @@ class MenuController {
     getAllMenus: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/menu`, options);
     },
-    getMenuById: (menuId: number, options?: RequestOptions) => {
+    getMenuById: (menuId: string, options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/menu/${menuId}`, options);
     },
   };
@@ -78,7 +83,7 @@ class MenuController {
       options?: RequestOptions
     ) => {
       return HttpClient.post(
-        `${apiUrl}/api/app/menu/${menuId}`,
+        `${apiUrl}/api/app/menu/${menuId}/translations`,
         input,
         options
       );

@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface PersistAppState {
   language: LanguageType;
+  locales: LanguageType;
 }
 
 const initialState: PersistAppState = {
   language: 'vi',
+  locales: 'vi',
 };
 
 const persistStateSlice = createSlice({
@@ -15,6 +17,9 @@ const persistStateSlice = createSlice({
   reducers: {
     setLanguage: (state, action) => {
       state.language = action.payload;
+    },
+    setLocales: (state, action) => {
+      state.locales = action.payload;
     },
   },
 });

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
+import { RequestOptions } from '@/services/types';
 // import { defaultPagingParams } from '@/common/define';
 import {
   CreateUpdateMenuPayload,
@@ -11,13 +11,16 @@ import { TreeItem } from '@/common';
 interface MenuState {
   menus?: MenusPagingResponse;
   selectedMenu?: TreeItem<MenuResponse>;
+  selectedMenuDetail?: MenuResponse;
   queryParams: any;
+  createOrUpdate?: boolean;
 }
 
 const initialState: MenuState = {
   queryParams: {
     pageSize: 2000,
   },
+  createOrUpdate: false,
 };
 
 const menuSlice = createSlice({
@@ -27,17 +30,32 @@ const menuSlice = createSlice({
     setSelectedMenu: (state, action) => {
       state.selectedMenu = action.payload;
     },
+    setSelectedMenuDetail: (state, action) => {
+      state.selectedMenuDetail = action.payload;
+    },
+    setCreateOrUpdate: (state, action) => {
+      state.createOrUpdate = action.payload;
+    },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;
     },
     getMenusRequest: (_, _action: PayloadAction<any>) => {},
+    getMenuRequest: (
+      _,
+      _action: PayloadAction<{ menuId: string; options?: RequestOptions }>
+    ) => {},
     createMenuRequest: (
       _,
-      _action: PayloadAction<{ menu: CreateUpdateMenuPayload }>
+      _action: PayloadAction<{
+        menu: CreateUpdateMenuPayload;
+      }>
     ) => {},
     updateMenuRequest: (
       _,
-      _action: PayloadAction<{ menuId: string; menu: CreateUpdateMenuPayload }>
+      _action: PayloadAction<{
+        menuId: string;
+        menu: CreateUpdateMenuPayload;
+      }>
     ) => {},
     removeMenuRequest: (_, _action: PayloadAction<{ menuId: string }>) => {},
     setMenus: (state, action) => {

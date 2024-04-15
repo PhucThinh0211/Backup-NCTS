@@ -8,7 +8,12 @@ export const getMenuState = (state: RootState) => state.menu;
 export function getSelectedMenu() {
   return createSelector([getMenuState], (state) => state.selectedMenu);
 }
-
+export function getSelectedMenuDetail() {
+  return createSelector([getMenuState], (state) => state.selectedMenuDetail);
+}
+export function getCreateOrUpdateMenu() {
+  return createSelector([getMenuState], (state) => state.createOrUpdate);
+}
 export function getMenus() {
   return createSelector([getMenuState], (state) => state.menus);
 }

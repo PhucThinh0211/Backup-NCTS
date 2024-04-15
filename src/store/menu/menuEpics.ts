@@ -14,6 +14,7 @@ import { RootEpic } from '../types';
 import { CreateUpdateMenuModalName } from '@/common/modalName';
 import {
   GettingMenuListLoadingKey,
+  GettingMenuLoadingKey,
   RemovingMenuLoadingKey,
   SavingMenuLoadingKey,
 } from '@/common/loadingKey';
@@ -58,6 +59,7 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menu } = action.payload;
+      const { locales } = state.persistApp;
       const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...state.menu.queryParams,
@@ -68,21 +70,36 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
           ...menu,
           sortSeq: totalCount + 1,
         }).pipe(
-          switchMap(() => {
-            return MenuService.Get.getAllMenus({
-              search,
-            }).pipe(
-              mergeMap((menusResult) => {
-                Utils.successNotification();
-                return [
-                  menuActions.setMenus(menusResult),
-                  menuActions.setSelectedMenu(undefined),
-                  hideModal({ key: CreateUpdateMenuModalName }),
-                ];
+          switchMap((createdMenu) => {
+            const createTranslationInput = {
+              language: locales,
+              label: menu.label,
+            };
+            return MenuService.Post.createMenuTranslations(
+              createdMenu.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return MenuService.Get.getAllMenus({
+                  search,
+                }).pipe(
+                  mergeMap((menusResult) => {
+                    Utils.successNotification();
+                    return [
+                      menuActions.setMenus(menusResult),
+                      menuActions.setSelectedMenu(undefined),
+                      hideModal({ key: CreateUpdateMenuModalName }),
+                    ];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [menuActions.setMenus(undefined)];
+                  })
+                );
               }),
               catchError((errors) => {
                 Utils.errorHandling(errors);
-                return [menuActions.setMenus(undefined)];
+                return [];
               })
             );
           }),
@@ -103,27 +120,43 @@ const updateMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menuId, menu } = action.payload;
+      const { locales } = state.persistApp;
       const search = {
         ...state.menu.queryParams,
       };
       return concat(
         [startLoading({ key: SavingMenuLoadingKey })],
         MenuService.Put.updateMenu(menuId, menu).pipe(
-          switchMap(() => {
-            return MenuService.Get.getAllMenus({
-              search,
-            }).pipe(
-              mergeMap((menusResult) => {
-                Utils.successNotification();
-                return [
-                  menuActions.setMenus(menusResult),
-                  menuActions.setSelectedMenu(undefined),
-                  hideModal({ key: CreateUpdateMenuModalName }),
-                ];
+          switchMap((updatedMenu) => {
+            const createTranslationInput = {
+              language: locales,
+              label: menu.label,
+            };
+            return MenuService.Post.createMenuTranslations(
+              updatedMenu.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return MenuService.Get.getAllMenus({
+                  search,
+                }).pipe(
+                  mergeMap((menusResult) => {
+                    Utils.successNotification();
+                    return [
+                      menuActions.setMenus(menusResult),
+                      menuActions.setSelectedMenu(undefined),
+                      hideModal({ key: CreateUpdateMenuModalName }),
+                    ];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [menuActions.setMenus(undefined)];
+                  })
+                );
               }),
               catchError((errors) => {
                 Utils.errorHandling(errors);
-                return [menuActions.setMenus(undefined)];
+                return [];
               })
             );
           }),
@@ -180,9 +213,39 @@ const removeMenuRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const getMenuRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(menuActions.getMenuRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { menuId } = action.payload;
+      const { locales } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locales || 'vi',
+        },
+      };
+      return concat(
+        [startLoading({ key: GettingMenuLoadingKey })],
+        MenuService.Get.getMenuById(menuId, options).pipe(
+          mergeMap((menu) => {
+            return [menuActions.setSelectedMenuDetail(menu)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: GettingMenuLoadingKey })]
+      );
+    })
+  );
+};
+
 export const menuEpics = [
   getMenusRequest$,
   createMenuRequest$,
   updateMenuRequest$,
   removeMenuRequest$,
+  getMenuRequest$,
 ];

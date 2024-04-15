@@ -1,5 +1,6 @@
 export const lookupAwbLoadingKey = 'lookupAwbLoadingKey';
 
+export const GettingMenuLoadingKey = 'GettingMenuLoadingKey';
 export const GettingMenuListLoadingKey = 'GettingMenuListLoadingKey';
 export const SavingMenuLoadingKey = 'SavingMenuLoadingKey';
 export const RemovingMenuLoadingKey = 'RemovingMenuLoadingKey';

@@ -54,3 +54,5 @@ export type FlattenedItem<T> = {
 
 export const uploadedPhotoUrl = (fileName: string) =>
   `${apiUrl}/api/photo/dowload/${fileName}`;
+
+export const dateTimeFormat = 'HH:mm:ss DD/MM/YYYY';

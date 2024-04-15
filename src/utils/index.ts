@@ -15,7 +15,7 @@ export default class Utils {
     const persistState = localStorage.getItem('persist:root');
     const rootState = persistState ? JSON.parse(persistState) : {};
     /* prettier-ignore */
-    const persistAppState: any = rootState['app'] ? JSON.parse(rootState['app']) : {};
+    const persistAppState: any = rootState['persistApp'] ? JSON.parse(rootState['persistApp']) : {};
     return persistAppState;
   }
 

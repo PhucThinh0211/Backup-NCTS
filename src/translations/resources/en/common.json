@@ -27,9 +27,14 @@
   "ConfirmRemove": "Do you want to delete {{name}}?",
   "Company info": "Company information",
   "Notification": "Notification",
-  "Created": "Created",
-  "By": "By",
-  "Updated": "Updated",
+  "Back": "Back",
+  "Information": "Information",
+  "Translation": "Translation",
+  "Created at": "Created at",
+  "Created by": "Created by",
+  "Updated at": "Updated at",
+  "Updated by": "Updated by",
+  "Now": "Now",
   "Locales": "Locales",
   "StringRange": "Must be from {{range1}} - {{range2}} letters"
 }

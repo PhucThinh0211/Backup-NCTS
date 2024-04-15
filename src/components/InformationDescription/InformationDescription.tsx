@@ -10,10 +10,12 @@ export const InformationDescription = ({
   value,
 }: InformationDescriptionProps) => {
   return (
-    <div className='w-full flex flex-row justify-between items-center'>
-      <Typography.Text strong>{label}</Typography.Text>
+    <div className='w-full flex flex-row justify-between gap-2'>
+      <Typography.Text strong className='whitespace-nowrap'>
+        {label}
+      </Typography.Text>
       {typeof value === 'string' ? (
-        <Typography.Text>{value}</Typography.Text>
+        <Typography.Text className={'text-right'}>{value}</Typography.Text>
       ) : (
         value
       )}
