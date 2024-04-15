@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { bannerActions, getBannerPhotoUrl } from '@/store/banner';
 import Utils from '@/utils';
 import { UploadChangeParam } from 'antd/es/upload';
+import { uploadedPhotoUrl } from '@/common';
 const { apiUrl } = getEnvVars();
 
 interface BannerPhotoUrlUploaderProps {
@@ -48,7 +49,7 @@ export const BannerPhotoUrlUploader = ({
   return bannerPhotoUrl ? (
     <div className='flex items-center justify-center relative'>
       <Image
-        src={`${apiUrl}/${bannerPhotoUrl}`}
+        src={`${uploadedPhotoUrl(bannerPhotoUrl)}`}
         style={{
           backgroundColor: '#00000073',
         }}

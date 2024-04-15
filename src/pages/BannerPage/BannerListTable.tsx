@@ -7,6 +7,7 @@ import {
   Table,
   TableColumnsType,
   TableProps,
+  Image,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +26,7 @@ import {
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
-import { defaultPagingParams } from '@/common';
+import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect } from 'react';
 
 export const BannerListTable = () => {
@@ -125,6 +126,18 @@ export const BannerListTable = () => {
       title: t('Photo url', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
+      render(value) {
+        return (
+          value && (
+            <Image
+              src={`${uploadedPhotoUrl(value)}`}
+              style={{
+                backgroundColor: '#00000073',
+              }}
+            />
+          )
+        );
+      },
     },
     {
       title: t('Description', { ns: 'banner' }),
