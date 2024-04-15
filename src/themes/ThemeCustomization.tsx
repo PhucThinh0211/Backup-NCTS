@@ -10,6 +10,7 @@ import { antdThemeConfig } from './antdThemeConfig';
 import { useAppSelector } from '@/store/hooks';
 import { getLanguage } from '@/store/persistState';
 import { useEffect } from 'react';
+import { setAcceptLanguage } from '@/services/HttpHelper';
 
 interface ThemeProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ interface ThemeProps {
 
 export const ThemeCustomization = ({ children }: ThemeProps) => {
   const lang = useAppSelector(getLanguage());
+  setAcceptLanguage(lang);
 
   useEffect(() => {
     i18next.changeLanguage(lang);
