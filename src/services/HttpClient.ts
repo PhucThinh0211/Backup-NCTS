@@ -109,7 +109,7 @@ const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
 
 class HttpInterceptor {
   request(method: HttpMethod, url: string, body?: any, options?: RequestOptions) {
-    const newBody = body ? trimAll(body) : body;
+    const newBody = trimAll(body);
     return httpRequest(url, { ...options, method, body: newBody });
   }
 
