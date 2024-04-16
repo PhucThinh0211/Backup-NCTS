@@ -3,6 +3,12 @@ import { AjaxRequest } from 'rxjs/ajax';
 
 import { RequestOptions, StringKeyValue } from './types';
 import Utils from '@/utils';
+import { LanguageType } from '@/common';
+
+let acceptLanguage: LanguageType = 'vi';
+export const setAcceptLanguage = (lang: LanguageType) => {
+  acceptLanguage = lang;
+}
 
 const asQueryString = (parameters?: StringKeyValue): string => {
   if (!parameters || Object.keys(parameters).length === 0) return '';
@@ -52,13 +58,13 @@ export const extractHeaders = (
   }
 
   const state = Utils.getPersistAppState();
-  const { auth, language } = state;
+  const { auth } = state;
   if (auth?.token && !newHeaders['authorization']) {
     newHeaders['authorization'] = `Bearer ${auth?.token}`;
   }
 
-  if (!newHeaders['Accept-Language'] && language) {
-    newHeaders['Accept-Language'] = language;
+  if (!newHeaders['Accept-Language'] && acceptLanguage) {
+    newHeaders['Accept-Language'] = acceptLanguage;
   }
 
   return newHeaders;

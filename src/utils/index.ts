@@ -281,6 +281,9 @@ export default class Utils {
 }
 
 export const trimAll = (obj: any) => {
+  if (!obj) {
+    return obj;
+  }
   const objType = typeof obj;
   if (objType === 'string') {
     return obj ? obj.trim() : '';
