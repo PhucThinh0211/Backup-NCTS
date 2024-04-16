@@ -8,6 +8,7 @@ import {
   TableColumnsType,
   TableProps,
   Image,
+  Typography,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -46,6 +47,7 @@ export const BannerListTable = () => {
 
   useEffect(() => {
     dispatch(bannerActions.getBannersRequest({}));
+    dispatch(bannerActions.getMenusRequest({ pageSize: 2000 }));
   }, [language]);
 
   const moreActions = [
@@ -74,7 +76,7 @@ export const BannerListTable = () => {
 
   const editBanner = (banner: BannerResponse) => {
     dispatch(bannerActions.setSelectedBanner(banner));
-    
+
     dispatch(persistStateActions.setLocale(language));
     navigate('/admin/banners/edit');
   };
@@ -139,6 +141,22 @@ export const BannerListTable = () => {
                 backgroundColor: '#00000073',
               }}
             />
+          )
+        );
+      },
+    },
+    {
+      title: t('Page url', { ns: 'banner' }),
+      dataIndex: 'pageUrls',
+      key: 'pageUrls',
+      render(pageUrls) {
+        return (
+          !!pageUrls?.length && (
+            <div className='flex flex-col gap-4'>
+              {pageUrls.map((url: string) => (
+                <Typography.Text>{url}</Typography.Text>
+              ))}
+            </div>
           )
         );
       },

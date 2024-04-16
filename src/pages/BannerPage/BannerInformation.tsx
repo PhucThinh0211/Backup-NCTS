@@ -3,9 +3,7 @@ import dayjs from 'dayjs';
 
 import { AuditedInfoCard } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import {
-  getSelectedBanner,
-} from '@/store/banner';
+import { getSelectedBannerDetail } from '@/store/banner';
 import { getLocale, persistStateActions } from '@/store/persistState';
 import { LanguageType, dateTimeFormat } from '@/common';
 
@@ -13,19 +11,19 @@ export const BannerInformation = () => {
   const { t } = useTranslation(['common']);
   const locales = useAppSelector(getLocale());
   const dispatch = useAppDispatch();
-  const selectedBanner = useAppSelector(getSelectedBanner());
+  const selectedBannerDetail = useAppSelector(getSelectedBannerDetail());
 
   const props = {
-    createdAt: selectedBanner?.creationTime
-      ? dayjs(selectedBanner?.creationTime).format(dateTimeFormat)
+    createdAt: selectedBannerDetail?.creationTime
+      ? dayjs(selectedBannerDetail?.creationTime).format(dateTimeFormat)
       : t('Now', { ns: 'common' }),
-    createdBy: selectedBanner?.creatorId || undefined,
-    updatedAt: selectedBanner?.lastModificationTime
-      ? dayjs(selectedBanner?.lastModificationTime).format(dateTimeFormat)
+    createdBy: selectedBannerDetail?.creatorId || undefined,
+    updatedAt: selectedBannerDetail?.lastModificationTime
+      ? dayjs(selectedBannerDetail?.lastModificationTime).format(dateTimeFormat)
       : t('Now', { ns: 'common' }),
-    updatedBy: selectedBanner?.lastModifierId || undefined,
+    updatedBy: selectedBannerDetail?.lastModifierId || undefined,
   };
-  
+
   const handleChangeLocale = (locale: LanguageType) => {
     dispatch(persistStateActions.setLocale(locale));
   };

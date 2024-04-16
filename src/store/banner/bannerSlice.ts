@@ -6,9 +6,11 @@ import {
   BannersPagingResponse,
   CreateUpdateBannerPayload,
 } from '@/services/BannerService';
+import { MenusPagingResponse } from '@/services/MenuService';
 
 interface BannerState {
   banners?: BannersPagingResponse;
+  menus?: MenusPagingResponse;
   selectedBanner?: BannerResponse;
   bannerPhotoUrl?: string;
   selectedBannerDetail?: BannerResponse;
@@ -28,36 +30,46 @@ const bannerSlice = createSlice({
       action: PayloadAction<BannerResponse | undefined>
     ) => {
       state.selectedBanner = action.payload;
-      state.bannerPhotoUrl = action.payload?.photoUrl || undefined;
     },
     setBannerPhotoUrl: (state, action: PayloadAction<string | undefined>) => {
       state.bannerPhotoUrl = action.payload;
     },
-    setSelectedBannerDetail: (state, action: PayloadAction<BannerResponse | undefined>) => {
+    setSelectedBannerDetail: (
+      state,
+      action: PayloadAction<BannerResponse | undefined>
+    ) => {
       state.selectedBannerDetail = action.payload;
+      state.bannerPhotoUrl = action.payload?.photoUrl || undefined;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;
     },
-    getBannersRequest: (_, _action: PayloadAction<any>) => {},
-    getBannerRequest: (_, _action: PayloadAction<{ bannerId: string}>) => {},
+    getMenusRequest: (state, action: PayloadAction<any>) => {},
+    getBannersRequest: (state, action: PayloadAction<any>) => {},
+    getBannerRequest: (
+      state,
+      action: PayloadAction<{ bannerId: string }>
+    ) => {},
     createBannerRequest: (
-      _,
-      _action: PayloadAction<{ banner: CreateUpdateBannerPayload }>
+      state,
+      action: PayloadAction<{ banner: CreateUpdateBannerPayload }>
     ) => {},
     updateBannerRequest: (
-      _,
-      _action: PayloadAction<{
+      state,
+      action: PayloadAction<{
         banner: CreateUpdateBannerPayload;
         bannerId: string;
       }>
     ) => {},
     removeBannerRequest: (
-      _,
-      _action: PayloadAction<{ bannerId: string }>
+      state,
+      action: PayloadAction<{ bannerId: string }>
     ) => {},
     setBanners: (state, action) => {
       state.banners = action.payload;
+    },
+    setMenus: (state, action) => {
+      state.menus = action.payload;
     },
   },
 });

@@ -52,11 +52,13 @@ export const BannerPhotoUrlUploader = ({
         src={`${uploadedPhotoUrl(bannerPhotoUrl)}`}
         style={{
           backgroundColor: '#00000073',
+          maxWidth: 300,
+          objectFit: 'cover',
         }}
       />
       {onImageDelete && (
         <DeleteOutlined
-          className='absolute top-0 right-0 text-red-600'
+          className='absolute top-0 right-0 text-red-600 text-lg'
           onClick={onImageDelete}
         />
       )}

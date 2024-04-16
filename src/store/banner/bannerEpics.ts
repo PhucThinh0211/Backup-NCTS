@@ -15,10 +15,12 @@ import {
   GettingBannerListLoadingKey,
   RemovingBannerLoadingKey,
   SavingBannerLoadingKey,
-  GettingBannerLoadingKey
+  GettingBannerLoadingKey,
+  GettingMenuListLoadingKey,
 } from '@/common/loadingKey';
 import { BannerService } from '@/services/BannerService';
 import Utils from '@/utils';
+import { MenuService } from '@/services/MenuService';
 
 const getBannersRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -60,13 +62,17 @@ const createBannerRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { banner } = action.payload;
       const { locale } = state.persistApp;
+      const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,
       };
       return concat(
         [startLoading({ key: SavingBannerLoadingKey })],
-        BannerService.Post.createBanner(banner).pipe(
+        BannerService.Post.createBanner({
+          ...banner,
+          sortSeq: totalCount + 1,
+        }).pipe(
           switchMap((createdBanner) => {
             const createTranslationInput = {
               language: locale,
@@ -101,7 +107,6 @@ const createBannerRequest$: RootEpic = (action$, state$) => {
                 return [];
               })
             );
-            
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);
@@ -120,7 +125,7 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { bannerId, banner } = action.payload;
-      const { locale } = state.persistApp
+      const { locale } = state.persistApp;
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,
@@ -131,10 +136,10 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
           switchMap((updatedBanner) => {
             const createTranslationInput = {
               language: locale,
-              title: updatedBanner.title,
-              photoUrl: updatedBanner.photoUrl,
-              description: updatedBanner.description,
-              buttonLable: updatedBanner.buttonLable,
+              title: banner.title,
+              photoUrl: banner.photoUrl,
+              description: banner.description,
+              buttonLabel: banner.buttonLabel,
             };
             return BannerService.Post.createBannerTranslations(
               updatedBanner.id,
@@ -146,10 +151,7 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
                 }).pipe(
                   mergeMap((bannersResult) => {
                     Utils.successNotification();
-                    return [
-                      bannerActions.setBanners(bannersResult),
-                      bannerActions.setSelectedBanner(undefined),
-                    ];
+                    return [bannerActions.setBanners(bannersResult)];
                   }),
                   catchError((errors) => {
                     Utils.errorHandling(errors);
@@ -245,10 +247,40 @@ const getBannerRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const getMenusRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(bannerActions.getMenusRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...state.menu.queryParams,
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMenuListLoadingKey })],
+        MenuService.Get.getAllMenus({
+          search,
+        }).pipe(
+          mergeMap((menus) => {
+            return [bannerActions.setMenus(menus)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [bannerActions.setMenus(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingMenuListLoadingKey })]
+      );
+    })
+  );
+};
+
 export const bannerEpics = [
   getBannersRequest$,
   createBannerRequest$,
   updateBannerRequest$,
   removeBannerRequest$,
-  getBannerRequest$
+  getBannerRequest$,
+  getMenusRequest$,
 ];

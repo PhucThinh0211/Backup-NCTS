@@ -37,13 +37,14 @@ export interface CreateUpdateBannerPayload {
   horizontal?: string;
   vertical?: string;
   pageUrls?: string[];
+  sortSeq?: number;
 }
 export interface CreateUpdateBannerTranslationPayload {
-  language: string,
-  photoUrl: string,
-  title?: string,
-  description?: string,
-  buttonLabel?: string
+  language: string;
+  photoUrl: string;
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
 }
 
 class BannerController {
