@@ -1,16 +1,17 @@
-import { InformationTimestamp } from '@/components/InformationTimestamp';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getSelectedMenu } from '@/store/menu';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+
+import { AuditedInfoCard } from '@/components';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getSelectedMenu } from '@/store/menu';
 import { LanguageType, dateTimeFormat } from '@/common';
-import { getLocales, persistStateActions } from '@/store/persistState';
+import { getLocale, persistStateActions } from '@/store/persistState';
 
 export const MenuInformation = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const selectedMenu = useAppSelector(getSelectedMenu());
-  const locales = useAppSelector(getLocales());
+  const locales = useAppSelector(getLocale());
   const props = {
     createdAt: selectedMenu?.creationTime
       ? dayjs(selectedMenu?.creationTime).format(dateTimeFormat)
@@ -23,11 +24,11 @@ export const MenuInformation = () => {
   };
 
   const handleChangeLocale = (locale: LanguageType) => {
-    dispatch(persistStateActions.setLocales(locale));
+    dispatch(persistStateActions.setLocale(locale));
   };
 
   return (
-    <InformationTimestamp
+    <AuditedInfoCard
       {...props}
       locale={locales}
       onChangeLocale={handleChangeLocale}

@@ -13,14 +13,12 @@ interface MenuState {
   selectedMenu?: TreeItem<MenuResponse>;
   selectedMenuDetail?: MenuResponse;
   queryParams: any;
-  createOrUpdate?: boolean;
 }
 
 const initialState: MenuState = {
   queryParams: {
     pageSize: 2000,
   },
-  createOrUpdate: false,
 };
 
 const menuSlice = createSlice({
@@ -32,9 +30,6 @@ const menuSlice = createSlice({
     },
     setSelectedMenuDetail: (state, action) => {
       state.selectedMenuDetail = action.payload;
-    },
-    setCreateOrUpdate: (state, action) => {
-      state.createOrUpdate = action.payload;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;

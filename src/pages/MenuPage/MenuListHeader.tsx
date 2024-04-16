@@ -19,7 +19,7 @@ export const MenuListHeader = () => {
     dispatch(menuActions.setSelectedMenu(undefined));
     dispatch(menuActions.setSelectedMenuDetail(undefined));
 
-    dispatch(persistStateActions.setLocales(language));
+    dispatch(persistStateActions.setLocale(language));
     navigate('/admin/menu/create');
   };
 

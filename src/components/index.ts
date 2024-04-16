@@ -5,3 +5,4 @@ export * from './QuickLookup';
 export * from './ReduxStoreProvider';
 export * from './SwitchLang';
 export * from './AdminLayout';
+export * from './AuditedInfoCard';

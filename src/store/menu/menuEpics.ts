@@ -59,7 +59,7 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menu } = action.payload;
-      const { locales } = state.persistApp;
+      const { locale } = state.persistApp;
       const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...state.menu.queryParams,
@@ -72,7 +72,7 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
         }).pipe(
           switchMap((createdMenu) => {
             const createTranslationInput = {
-              language: locales,
+              language: locale,
               label: menu.label,
             };
             return MenuService.Post.createMenuTranslations(
@@ -120,7 +120,7 @@ const updateMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menuId, menu } = action.payload;
-      const { locales } = state.persistApp;
+      const { locale } = state.persistApp;
       const search = {
         ...state.menu.queryParams,
       };
@@ -129,7 +129,7 @@ const updateMenuRequest$: RootEpic = (action$, state$) => {
         MenuService.Put.updateMenu(menuId, menu).pipe(
           switchMap((updatedMenu) => {
             const createTranslationInput = {
-              language: locales,
+              language: locale,
               label: menu.label,
             };
             return MenuService.Post.createMenuTranslations(
@@ -219,10 +219,10 @@ const getMenuRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { menuId } = action.payload;
-      const { locales } = state.persistApp;
+      const { locale } = state.persistApp;
       const options = {
         headers: {
-          'Accept-Language': locales || 'vi',
+          'Accept-Language': locale || 'vi',
         },
       };
       return concat(

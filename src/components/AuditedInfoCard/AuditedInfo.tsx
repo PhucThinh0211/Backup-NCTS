@@ -1,14 +1,14 @@
 import { Typography } from 'antd';
 import { ReactNode } from 'react';
 
-interface InformationDescriptionProps {
+interface AuditedInfoProps {
   label: string;
   value: ReactNode;
 }
-export const InformationDescription = ({
+export const AuditedInfo = ({
   label,
   value,
-}: InformationDescriptionProps) => {
+}: AuditedInfoProps) => {
   return (
     <div className='w-full flex flex-row justify-between gap-2'>
       <Typography.Text strong className='whitespace-nowrap'>
