@@ -29,10 +29,9 @@ export const CreateUpdateMenuPage = () => {
   const locale = useAppSelector(getLocale());
   const isSubmmiting = useAppSelector(getLoading(SavingMenuLoadingKey));
   const menuTitle = Form.useWatch('label', form);
-  const urlValue = Form.useWatch('url', form);
 
   useEffect(() => {
-    if (menuTitle && !urlValue) {
+    if (menuTitle && !selectedMenu) {
       form.setFieldValue('url', '/' + Utils.createSlug(menuTitle));
     }
   }, [menuTitle]);

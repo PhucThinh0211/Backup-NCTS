@@ -36,5 +36,8 @@
   "Updated by": "Updated by",
   "Now": "Now",
   "Locales": "Locales",
-  "StringRange": "Must be from {{range1}} - {{range2}} letters"
+  "StringRange": "Must be from {{range1}} - {{range2}} letters",
+  "notification": "Notification",
+  "Saved successfully": "Saved successfully.",
+  "Removed successfully": "Removed successfully."
 }

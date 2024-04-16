@@ -87,7 +87,7 @@ const createMenuRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       menuActions.setMenus(menusResult),
-                      menuActions.setSelectedMenu(undefined),
+                      menuActions.setSelectedMenu(createdMenu),
                       hideModal({ key: CreateUpdateMenuModalName }),
                     ];
                   }),
@@ -144,7 +144,7 @@ const updateMenuRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       menuActions.setMenus(menusResult),
-                      menuActions.setSelectedMenu(undefined),
+                      menuActions.setSelectedMenu(updatedMenu),
                       hideModal({ key: CreateUpdateMenuModalName }),
                     ];
                   }),
