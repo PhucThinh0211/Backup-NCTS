@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
 import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect } from 'react';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const BannerListTable = () => {
   const [modal, contextHolder] = useModal();
@@ -36,6 +37,7 @@ export const BannerListTable = () => {
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
+  const language = useAppSelector(getLanguage());
   const params = useAppSelector(getBannerQueryParams());
   const banners = useAppSelector(getBanners());
   const isLoading = useAppSelector(
@@ -44,7 +46,7 @@ export const BannerListTable = () => {
 
   useEffect(() => {
     dispatch(bannerActions.getBannersRequest({}));
-  }, []);
+  }, [language]);
 
   const moreActions = [
     {
@@ -72,6 +74,8 @@ export const BannerListTable = () => {
 
   const editBanner = (banner: BannerResponse) => {
     dispatch(bannerActions.setSelectedBanner(banner));
+    
+    dispatch(persistStateActions.setLocale(language));
     navigate('/admin/banners/edit');
   };
 
@@ -123,7 +127,7 @@ export const BannerListTable = () => {
       key: 'title',
     },
     {
-      title: t('Photo url', { ns: 'banner' }),
+      title: t('Photo', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
       render(value) {

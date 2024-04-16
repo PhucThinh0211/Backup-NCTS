@@ -38,6 +38,13 @@ export interface CreateUpdateBannerPayload {
   vertical?: string;
   pageUrls?: string[];
 }
+export interface CreateUpdateBannerTranslationPayload {
+  language: string,
+  photoUrl: string,
+  title?: string,
+  description?: string,
+  buttonLabel?: string
+}
 
 class BannerController {
   public Get = {
@@ -55,6 +62,17 @@ class BannerController {
       options?: RequestOptions
     ) => {
       return HttpClient.post(`${apiUrl}/api/app/banner`, input, options);
+    },
+    createBannerTranslations: (
+      bannerId: string,
+      input: CreateUpdateBannerTranslationPayload,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/banner/${bannerId}/translations`,
+        input,
+        options
+      );
     },
   };
 

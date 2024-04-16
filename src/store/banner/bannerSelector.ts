@@ -22,6 +22,6 @@ export function getBannerQueryParams() {
 export function getBannerPhotoUrl() {
   return createSelector([getBannerState], (state) => state.bannerPhotoUrl);
 }
-export function getBannerLocale() {
-  return createSelector([getBannerState], (state) => state.bannerLocale);
+export function getSelectedBannerDetail() {
+  return createSelector([getBannerState], (state) => state.selectedBannerDetail);
 }

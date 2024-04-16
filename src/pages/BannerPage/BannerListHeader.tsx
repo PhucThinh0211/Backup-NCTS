@@ -6,15 +6,20 @@ import { getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { bannerActions } from '@/store/banner';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const BannerListHeader = () => {
   const { t } = useTranslation('banner');
   const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
   const dispatch = useAppDispatch();
+  const language = useAppSelector(getLanguage());
 
   const createBanner = () => {
     dispatch(bannerActions.setSelectedBanner(undefined));
+    dispatch(bannerActions.setSelectedBannerDetail(undefined));
+    
+    dispatch(persistStateActions.setLocale(language));
     navigate('/admin/banners/create');
   };
 

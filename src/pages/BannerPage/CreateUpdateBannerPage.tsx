@@ -1,18 +1,29 @@
+import { useEffect } from 'react';
+
+import { Avatar, Button, Col, Form, Input, Row, Typography } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 import {
   bannerActions,
   getBannerPhotoUrl,
   getSelectedBanner,
+  getSelectedBannerDetail,
 } from '@/store/banner';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { Button, Col, Form, Input, Row, Typography } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { BannerInformation } from './BannerInformation';
 import { getLoading } from '@/store/loading';
 import { SavingBannerLoadingKey } from '@/common';
 import { BannerPhotoUrlUploader } from './BannerPhotoUrlUploader';
+import vi from '@/assets/vn.svg';
+import en from '@/assets/us.svg';
+import { getLocale } from '@/store/persistState';
 
+const flag = {
+  vi,
+  en,
+};
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
     return e;
@@ -25,9 +36,25 @@ export const CreateUpdateBannerPage = () => {
   const { t } = useTranslation(['common', 'banner']);
   const dispatch = useAppDispatch();
 
+  const locale = useAppSelector(getLocale());
   const selectedBanner = useAppSelector(getSelectedBanner());
+  const selectedBannerDetail = useAppSelector(getSelectedBannerDetail());
   const bannerPhotoUrl = useAppSelector(getBannerPhotoUrl());
   const isSubmmiting = useAppSelector(getLoading(SavingBannerLoadingKey));
+
+  useEffect(() => {
+    if (locale && selectedBanner) {
+      dispatch(bannerActions.getBannerRequest({ bannerId: selectedBanner.id }));
+    }
+  }, [locale, selectedBanner]);
+
+  useEffect(() => {
+    if (selectedBannerDetail) {
+      form.setFieldsValue(selectedBannerDetail);
+    } else {
+      form.resetFields();
+    }
+  }, [selectedBannerDetail]);
 
   const handleSaveBanner = (values: any) => {
     const inputData = {
@@ -52,7 +79,7 @@ export const CreateUpdateBannerPage = () => {
     <div className='p-4'>
       <Link
         to={'/admin/banners'}
-        className={'flex flex-row items-center gap-1'}
+        className={'flex flex-row items-center gap-1 mb-4'}
       >
         <ArrowLeftOutlined style={{ fontSize: 12 }} />
         {t('Back', { ns: 'common' })}
@@ -72,9 +99,6 @@ export const CreateUpdateBannerPage = () => {
       <Form
         form={form}
         layout='vertical'
-        initialValues={{
-          ...selectedBanner,
-        }}
         onFinish={handleSaveBanner}
       >
         <Row gutter={[10, 10]} className='mt-4'>
@@ -96,17 +120,17 @@ export const CreateUpdateBannerPage = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input suffix={<Avatar size={18} src={locale ? flag[locale] : flag['vi']} />}/>
               </Form.Item>
               <Form.Item
                 name='upload'
-                label={t('Photo url', { ns: 'banner' })}
+                label={t('Photo', { ns: 'banner' })}
                 valuePropName='fileList'
                 getValueFromEvent={normFile}
                 rules={[
                   {
                     required: !bannerPhotoUrl,
-                    message: t('Photo url required', { ns: 'banner' }),
+                    message: t('Photo required', { ns: 'banner' }),
                   },
                 ]}
               >
