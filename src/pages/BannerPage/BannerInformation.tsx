@@ -1,15 +1,15 @@
-import { InformationTimestamp } from '@/components/InformationTimestamp';
+import { AuditedInfoCard } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   bannerActions,
-  getBannerLocale,
   getSelectedBanner,
 } from '@/store/banner';
+import { getLocale } from '@/store/persistState';
 
 export const BannerInformation = () => {
   const dispatch = useAppDispatch();
   const selectedBanner = useAppSelector(getSelectedBanner());
-  const bannerLocale = useAppSelector(getBannerLocale());
+  const bannerLocale = useAppSelector(getLocale());
   const props = {
     createdAt: selectedBanner?.creationTime || undefined,
     createdBy: selectedBanner?.creatorId || undefined,
@@ -17,7 +17,7 @@ export const BannerInformation = () => {
     updatedBy: selectedBanner?.lastModifierId || undefined,
   };
   return (
-    <InformationTimestamp
+    <AuditedInfoCard
       {...props}
       locale={bannerLocale}
       onChangeLocale={(locale) =>

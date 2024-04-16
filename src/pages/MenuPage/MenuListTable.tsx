@@ -35,6 +35,7 @@ import { CSS } from '@dnd-kit/utilities';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TreeItem } from '@/common';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
 }
@@ -115,6 +116,7 @@ export const MenuListTable = () => {
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
+  const language = useAppSelector(getLanguage());
   const menus = useAppSelector(getMenus());
   const queryParams = useAppSelector(getMenuQueryParams());
   const isLoading = useAppSelector(
@@ -140,7 +142,7 @@ export const MenuListTable = () => {
 
   useEffect(() => {
     dispatch(menuActions.getMenusRequest({}));
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     if (menus) {
@@ -182,6 +184,7 @@ export const MenuListTable = () => {
   };
 
   const editMenu = (menu: TreeItem<MenuResponse>) => {
+    dispatch(persistStateActions.setLocale(language));
     dispatch(menuActions.setSelectedMenu(menu));
     navigate('/admin/menu/edit');
   };

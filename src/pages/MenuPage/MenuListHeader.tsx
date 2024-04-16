@@ -6,15 +6,20 @@ import { getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { menuActions } from '@/store/menu';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const MenuListHeader = () => {
   const { t } = useTranslation('menu');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
+  const language = useAppSelector(getLanguage());
 
   const createMenu = () => {
     dispatch(menuActions.setSelectedMenu(undefined));
+    dispatch(menuActions.setSelectedMenuDetail(undefined));
+
+    dispatch(persistStateActions.setLocale(language));
     navigate('/admin/menu/create');
   };
 
