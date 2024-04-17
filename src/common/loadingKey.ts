@@ -9,3 +9,8 @@ export const GettingBannerLoadingKey = 'GettingBannerLoadingKey';
 export const GettingBannerListLoadingKey = 'GettingBannerListLoadingKey';
 export const SavingBannerLoadingKey = 'SavingBannerLoadingKey';
 export const RemovingBannerLoadingKey = 'RemovingBannerLoadingKey';
+
+export const GettingContentLoadingKey = 'GettingContentLoadingKey';
+export const GettingContentListLoadingKey = 'GettingContentListLoadingKey';
+export const SavingContentLoadingKey = 'SavingContentLoadingKey';
+export const RemovingContentLoadingKey = 'RemovingContentLoadingKey';

@@ -6,6 +6,8 @@ import { MenuList } from '@/pages/MenuPage';
 import { BannerList } from '@/pages/BannerPage';
 import { CreateUpdateBannerPage } from '@/pages/BannerPage/CreateUpdateBannerPage';
 import { CreateUpdateMenuPage } from '@/pages/MenuPage/CreateUpdateMenuPage';
+import { NewsList } from '@/pages/NewsPage';
+import { CreateUpdateNewsPage } from '@/pages/NewsPage/CreateUpdateNewsPage';
 
 type MetaMenu = {
   name?: string;
@@ -47,7 +49,9 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/banners/create', name: 'Create banner', element: <CreateUpdateBannerPage /> },
       { path: '/admin/banners/edit', name: 'Edit banner', element: <CreateUpdateBannerPage /> },
       { path: '/admin/pages', name: 'Pages', element: <>Pages</> },
-      { path: '/admin/blogs', name: 'Blogs', element: <>Blogs</> },
+      { path: '/admin/news', name: 'News', element: <NewsList /> },
+      { path: '/admin/news/create', name: 'Create news', element: <CreateUpdateNewsPage /> },
+      { path: '/admin/news/edit', name: 'Edit news', element: <CreateUpdateNewsPage /> },
       {
         path: '/admin/media',
         name: 'Media',
@@ -61,6 +65,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/contacts', name: 'Contacts', element: <>Contacts</> },
       { path: '/admin/members', name: 'Members', element: <>Members</> },
       { path: '/admin/users', name: 'Users', element: <>Users</> },
+      { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]
   },
   { path: '*', name: 'Not found', element: <>Not found</> },
