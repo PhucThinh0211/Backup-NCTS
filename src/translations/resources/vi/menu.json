@@ -5,6 +5,8 @@
     "Name required": "Vui lòng nhập tên",
     "Url": "Đường dẫn",
     "Url required": "Vui lòng nhập đường dẫn",
+    "Parent menu": "Danh mục cha",
+    "Parent menu required": "Vui lòng chọn danh mục cha",
     "Add new menu": "Thêm mới",
     "Create menu": "Thêm mới",
     "Update menu": "Chỉnh sửa thông tin"
