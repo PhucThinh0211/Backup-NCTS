@@ -7,6 +7,8 @@ import {
   Table,
   TableColumnsType,
   TableProps,
+  Image,
+  Typography,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -25,8 +27,9 @@ import {
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
-import { defaultPagingParams } from '@/common';
+import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect } from 'react';
+import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const BannerListTable = () => {
   const [modal, contextHolder] = useModal();
@@ -35,6 +38,7 @@ export const BannerListTable = () => {
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
+  const language = useAppSelector(getLanguage());
   const params = useAppSelector(getBannerQueryParams());
   const banners = useAppSelector(getBanners());
   const isLoading = useAppSelector(
@@ -43,7 +47,8 @@ export const BannerListTable = () => {
 
   useEffect(() => {
     dispatch(bannerActions.getBannersRequest({}));
-  }, []);
+    dispatch(bannerActions.getMenusRequest({ pageSize: 2000 }));
+  }, [language]);
 
   const moreActions = [
     {
@@ -71,6 +76,8 @@ export const BannerListTable = () => {
 
   const editBanner = (banner: BannerResponse) => {
     dispatch(bannerActions.setSelectedBanner(banner));
+
+    dispatch(persistStateActions.setLocale(language));
     navigate('/admin/banners/edit');
   };
 
@@ -96,19 +103,24 @@ export const BannerListTable = () => {
   };
 
   const handleRemoveBanner = (bannerId: string) => {
-    console.log(bannerId);
-
-    // dispatch(bannerActions.removeBannerRequest({ bannerId, projectId: selectedProject?.id }));
+    dispatch(bannerActions.removeBannerRequest({ bannerId }));
   };
 
-  const handleTableChange: TableProps<any>['onChange'] = (pagination) => {
+  const handleTableChange: TableProps<BannerResponse>['onChange'] = (
+    pagination
+  ) => {
     const { current, pageSize } = pagination;
     const search = { ...params, page: current, pageSize };
     dispatch(bannerActions.getBannersRequest({ params: search }));
   };
 
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
-    t('banner.pagingTotal', { range1: range[0], range2: range[1], total });
+    t('PagingTotal', {
+      range1: range[0],
+      range2: range[1],
+      total,
+      ns: 'common',
+    });
 
   const columns: TableColumnsType<BannerResponse> = [
     {
@@ -117,9 +129,37 @@ export const BannerListTable = () => {
       key: 'title',
     },
     {
-      title: t('Photo url', { ns: 'banner' }),
+      title: t('Photo', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
+      render(value) {
+        return (
+          value && (
+            <Image
+              src={`${uploadedPhotoUrl(value)}`}
+              style={{
+                backgroundColor: '#00000073',
+              }}
+            />
+          )
+        );
+      },
+    },
+    {
+      title: t('Page url', { ns: 'banner' }),
+      dataIndex: 'pageUrls',
+      key: 'pageUrls',
+      render(pageUrls) {
+        return (
+          !!pageUrls?.length && (
+            <div className='flex flex-col gap-4'>
+              {pageUrls.map((url: string) => (
+                <Typography.Text>{url}</Typography.Text>
+              ))}
+            </div>
+          )
+        );
+      },
     },
     {
       title: t('Description', { ns: 'banner' }),
@@ -128,7 +168,7 @@ export const BannerListTable = () => {
     },
     {
       title: 'Action',
-      render: (_: any, record: any) => {
+      render: (_, record) => {
         return (
           <Space>
             {moreActions.map((action) => (
@@ -164,7 +204,6 @@ export const BannerListTable = () => {
         }}
         loading={isLoading}
         onChange={handleTableChange}
-        rowSelection={{ columnWidth: 50 }}
       />
     </div>
   );

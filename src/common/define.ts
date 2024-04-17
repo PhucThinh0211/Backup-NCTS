@@ -1,5 +1,7 @@
 import { MenuProps } from 'antd';
 import { UniqueIdentifier } from '@dnd-kit/core';
+import { getEnvVars } from '@/enviroment';
+const { apiUrl } = getEnvVars();
 
 export type LanguageType = 'vi' | 'en';
 
@@ -49,3 +51,8 @@ export type FlattenedItem<T> = {
 
   parent: FlattenedItem<T> | null;
 } & TreeItem<T>;
+
+export const uploadedPhotoUrl = (fileName: string) =>
+  `${apiUrl}/api/photo/dowload/${fileName}`;
+
+export const dateTimeFormat = 'HH:mm:ss DD/MM/YYYY';

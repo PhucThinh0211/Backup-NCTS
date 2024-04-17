@@ -15,9 +15,12 @@ import {
   GettingBannerListLoadingKey,
   RemovingBannerLoadingKey,
   SavingBannerLoadingKey,
+  GettingBannerLoadingKey,
+  GettingMenuListLoadingKey,
 } from '@/common/loadingKey';
 import { BannerService } from '@/services/BannerService';
 import Utils from '@/utils';
+import { MenuService } from '@/services/MenuService';
 
 const getBannersRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -58,27 +61,50 @@ const createBannerRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { banner } = action.payload;
+      const { locale } = state.persistApp;
+      const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,
       };
       return concat(
         [startLoading({ key: SavingBannerLoadingKey })],
-        BannerService.Post.createBanner(banner).pipe(
-          switchMap(() => {
-            return BannerService.Get.getAllBanners({
-              search,
-            }).pipe(
-              mergeMap((bannersResult) => {
-                Utils.successNotification();
-                return [
-                  bannerActions.setBanners(bannersResult),
-                  bannerActions.setSelectedBanner(undefined),
-                ];
+        BannerService.Post.createBanner({
+          ...banner,
+          sortSeq: totalCount + 1,
+        }).pipe(
+          switchMap((createdBanner) => {
+            const createTranslationInput = {
+              language: locale,
+              title: createdBanner.title,
+              photoUrl: createdBanner.photoUrl,
+              description: createdBanner.description,
+              buttonLable: createdBanner.buttonLable,
+            };
+            return BannerService.Post.createBannerTranslations(
+              createdBanner.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return BannerService.Get.getAllBanners({
+                  search,
+                }).pipe(
+                  mergeMap((bannersResult) => {
+                    Utils.successNotification();
+                    return [
+                      bannerActions.setBanners(bannersResult),
+                      bannerActions.setSelectedBanner(undefined),
+                    ];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [bannerActions.setBanners(undefined)];
+                  })
+                );
               }),
               catchError((errors) => {
                 Utils.errorHandling(errors);
-                return [bannerActions.setBanners(undefined)];
+                return [];
               })
             );
           }),
@@ -99,6 +125,7 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { bannerId, banner } = action.payload;
+      const { locale } = state.persistApp;
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,
@@ -106,17 +133,35 @@ const updateBannerRequest$: RootEpic = (action$, state$) => {
       return concat(
         [startLoading({ key: SavingBannerLoadingKey })],
         BannerService.Put.updateBanner(bannerId, banner).pipe(
-          switchMap(() => {
-            return BannerService.Get.getAllBanners({
-              search,
-            }).pipe(
-              mergeMap((bannersResult) => {
-                Utils.successNotification();
-                return [bannerActions.setBanners(bannersResult)];
+          switchMap((updatedBanner) => {
+            const createTranslationInput = {
+              language: locale,
+              title: banner.title,
+              photoUrl: banner.photoUrl,
+              description: banner.description,
+              buttonLabel: banner.buttonLabel,
+            };
+            return BannerService.Post.createBannerTranslations(
+              updatedBanner.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return BannerService.Get.getAllBanners({
+                  search,
+                }).pipe(
+                  mergeMap((bannersResult) => {
+                    Utils.successNotification();
+                    return [bannerActions.setBanners(bannersResult)];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [bannerActions.setBanners(undefined)];
+                  })
+                );
               }),
               catchError((errors) => {
                 Utils.errorHandling(errors);
-                return [bannerActions.setBanners(undefined)];
+                return [];
               })
             );
           }),
@@ -173,9 +218,69 @@ const removeBannerRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const getBannerRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(bannerActions.getBannerRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { bannerId } = action.payload;
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        },
+      };
+      return concat(
+        [startLoading({ key: GettingBannerLoadingKey })],
+        BannerService.Get.getBannerById(bannerId, options).pipe(
+          mergeMap((banner) => {
+            return [bannerActions.setSelectedBannerDetail(banner)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: GettingBannerLoadingKey })]
+      );
+    })
+  );
+};
+
+const getMenusRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(bannerActions.getMenusRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...state.menu.queryParams,
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMenuListLoadingKey })],
+        MenuService.Get.getAllMenus({
+          search,
+        }).pipe(
+          mergeMap((menus) => {
+            return [bannerActions.setMenus(menus)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [bannerActions.setMenus(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingMenuListLoadingKey })]
+      );
+    })
+  );
+};
+
 export const bannerEpics = [
   getBannersRequest$,
   createBannerRequest$,
   updateBannerRequest$,
   removeBannerRequest$,
+  getBannerRequest$,
+  getMenusRequest$,
 ];

@@ -26,8 +26,17 @@
   "PagingTotal": "{{range1}} - {{range2}} trong {{total}} bản ghi",
   "ConfirmRemove": "Xác nhận xóa {{name}}?",
   "Notification": "Thông báo",
-  "Created": "Đã tạo",
-  "By": "Bởi",
-  "Updated": "Đã cập nhật",
-  "Locales": "Ngôn ngữ"
+  "Back": "Quay lại",
+  "Information": "Thông tin",
+  "Translation": "Dịch",
+  "Created at": "Ngày tạo",
+  "Created by": "Người tạo",
+  "Updated at": "Ngày cập nhật",
+  "Updated by": "Người cập nhật",
+  "Now": "Hiện tại",
+  "Locales": "Ngôn ngữ",
+  "StringRange": "Tối đa từ {{range1}} - {{range2}} ký tự",
+  "notification": "Thông báo",
+  "Saved successfully": "Lưu dữ liệu thành công.",
+  "Removed successfully": "Xóa dữ liệu thành công."
 }

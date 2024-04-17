@@ -12,10 +12,22 @@ export function getSelectedBanner() {
 export function getBanners() {
   return createSelector([getBannerState], (state) => state.banners);
 }
+export function getBannerMenus() {
+  return createSelector([getBannerState], (state) => state.menus);
+}
 
 export function getBannerQueryParams() {
   return createSelector(
     [getBannerState],
     (state) => state.queryParams || defaultPagingParams
+  );
+}
+export function getBannerPhotoUrl() {
+  return createSelector([getBannerState], (state) => state.bannerPhotoUrl);
+}
+export function getSelectedBannerDetail() {
+  return createSelector(
+    [getBannerState],
+    (state) => state.selectedBannerDetail
   );
 }

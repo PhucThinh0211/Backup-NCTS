@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import * as resources from './resources';
 
 const ns = Object.keys(Object.values(resources)[0]);
-export const defaultNS = ns[0];
+export const defaultNS = ns;
 
 console.log(defaultNS);
 

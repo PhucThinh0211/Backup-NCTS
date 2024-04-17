@@ -11,7 +11,13 @@ export const AdminLayout = () => {
       <AdminHeader />
       <Layout>
         <LeftPanel />
-        <Content style={{ margin: 0, minHeight: 'calc(100vh - 76px)' }}>
+        <Content
+          style={{
+            margin: 0,
+            minHeight: 'calc(100vh - 76px)',
+            overflow: 'auto',
+          }}
+        >
           <Outlet />
         </Content>
       </Layout>
