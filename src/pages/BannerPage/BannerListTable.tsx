@@ -6,9 +6,7 @@ import {
   Space,
   Table,
   TableColumnsType,
-  TableProps,
   Image,
-  Typography,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -19,19 +17,26 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import {
-  getBanners,
-  bannerActions,
-  getBannerQueryParams,
-} from '@/store/banner';
+import { getBanners, bannerActions } from '@/store/banner';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
 import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
+import { SortableRow } from '@/components/SortableRow';
+
+import type { DragEndEvent } from '@dnd-kit/core';
+import { DndContext } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 
 export const BannerListTable = () => {
+  const [dataSource, setDataSource] = useState<BannerResponse[]>([]);
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common', 'banner']);
   const navigate = useNavigate();
@@ -39,7 +44,6 @@ export const BannerListTable = () => {
   const dispatch = useAppDispatch();
 
   const language = useAppSelector(getLanguage());
-  const params = useAppSelector(getBannerQueryParams());
   const banners = useAppSelector(getBanners());
   const isLoading = useAppSelector(
     getLoading([GettingBannerListLoadingKey, RemovingBannerLoadingKey])
@@ -49,6 +53,12 @@ export const BannerListTable = () => {
     dispatch(bannerActions.getBannersRequest({}));
     dispatch(bannerActions.getMenusRequest({ pageSize: 2000 }));
   }, [language]);
+
+  useEffect(() => {
+    if (banners) {
+      setDataSource(banners?.items || []);
+    }
+  }, [banners]);
 
   const moreActions = [
     {
@@ -106,14 +116,6 @@ export const BannerListTable = () => {
     dispatch(bannerActions.removeBannerRequest({ bannerId }));
   };
 
-  const handleTableChange: TableProps<BannerResponse>['onChange'] = (
-    pagination
-  ) => {
-    const { current, pageSize } = pagination;
-    const search = { ...params, page: current, pageSize };
-    dispatch(bannerActions.getBannersRequest({ params: search }));
-  };
-
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
     t('PagingTotal', {
       range1: range[0],
@@ -124,14 +126,10 @@ export const BannerListTable = () => {
 
   const columns: TableColumnsType<BannerResponse> = [
     {
-      title: t('Title', { ns: 'banner' }),
-      dataIndex: 'title',
-      key: 'title',
-    },
-    {
       title: t('Photo', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
+      align: 'center',
       render(value) {
         return (
           value && (
@@ -140,34 +138,32 @@ export const BannerListTable = () => {
               style={{
                 backgroundColor: '#00000073',
               }}
+              height={80}
             />
           )
         );
       },
     },
     {
-      title: t('Page url', { ns: 'banner' }),
-      dataIndex: 'pageUrls',
-      key: 'pageUrls',
-      render(pageUrls) {
-        return (
-          !!pageUrls?.length && (
-            <div className='flex flex-col gap-4'>
-              {pageUrls.map((url: string) => (
-                <Typography.Text>{url}</Typography.Text>
-              ))}
-            </div>
-          )
-        );
-      },
+      title: t('Title', { ns: 'banner' }),
+      dataIndex: 'title',
+      key: 'title',
     },
     {
       title: t('Description', { ns: 'banner' }),
       dataIndex: 'description',
       key: 'description',
     },
+    // {
+    //   key: 'sort',
+    //   width: 40,
+    //   fixed: 'right',
+    //   align: 'center',
+    // },
     {
-      title: 'Action',
+      fixed: 'right',
+      align: 'right',
+      width: '80px',
       render: (_, record) => {
         return (
           <Space>
@@ -185,26 +181,58 @@ export const BannerListTable = () => {
     },
   ];
 
+  const getIds = () => {
+    return (banners?.items || []).map((item) => item.id);
+  };
+
   return (
     <div style={{ padding: 10 }}>
-      {contextHolder}
-      <Table
-        rowKey={(record) => record.id}
-        dataSource={banners?.items}
-        columns={columns}
-        style={{ width: '100%' }}
-        size='small'
-        scroll={{ x: 1000, y: windowSize[1] - 310 }}
-        pagination={{
-          current: params?.page || defaultPagingParams.page,
-          pageSize: params?.pageSize || defaultPagingParams.pageSize,
-          total: params?.queryCount || 0,
-          responsive: true,
-          showTotal,
-        }}
-        loading={isLoading}
-        onChange={handleTableChange}
-      />
+      <DndContext
+        modifiers={[restrictToVerticalAxis]}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          // rowKey array
+          items={getIds()}
+          strategy={verticalListSortingStrategy}
+        >
+          {contextHolder}
+          {
+            <Table
+              rowKey={(record) => record.id}
+              dataSource={dataSource}
+              columns={columns}
+              style={{ width: '100%' }}
+              size='small'
+              scroll={{ x: 1000, y: windowSize[1] - 310 }}
+              pagination={{
+                pageSize: defaultPagingParams.pageSize,
+                total: dataSource?.length || 0,
+                responsive: true,
+                showTotal,
+              }}
+              components={{
+                body: {
+                  row: SortableRow,
+                },
+              }}
+              loading={isLoading}
+            />
+          }
+        </SortableContext>
+      </DndContext>
     </div>
   );
+
+  function handleDragEnd({ active, over }: DragEndEvent) {
+    if (active.id !== over?.id) {
+      setDataSource((previous) => {
+        const activeIndex = previous.findIndex(({ id }) => id === active.id);
+        const overIndex = previous.findIndex(({ id }) => id === over?.id);
+        console.log({ active, over });
+
+        return arrayMove(previous, activeIndex, overIndex);
+      });
+    }
+  }
 };

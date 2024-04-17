@@ -120,6 +120,15 @@ export const CreateUpdateBannerPage = () => {
     dispatch(bannerActions.setBannerPhotoUrl(undefined));
   };
 
+  const FlagComponent = () => (
+    <Avatar
+      size={20}
+      shape='square'
+      src={locale ? flag[locale] : flag['vi']}
+      className='!rounded-none '
+    />
+  );
+
   return (
     <div className='p-4'>
       <Link
@@ -178,17 +187,50 @@ export const CreateUpdateBannerPage = () => {
                     },
                   ]}
                 >
-                  <Input
-                    suffix={
-                      <Avatar
-                        size={18}
-                        src={locale ? flag[locale] : flag['vi']}
-                      />
-                    }
-                  />
+                  <Input suffix={<FlagComponent />} />
                 </Form.Item>
                 <Form.Item
-                  label={t('Description', { ns: 'banner' })}
+                  label={t('Button label', { ns: 'banner' })}
+                  name='buttonLabel'
+                  rules={[
+                    {
+                      max: 50,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 50,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input suffix={<FlagComponent />} />
+                </Form.Item>
+                <Form.Item
+                  label={t('Button link', { ns: 'banner' })}
+                  name='linkButton'
+                  rules={[
+                    {
+                      max: 500,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 500,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
+                      <span>{t('Description', { ns: 'banner' })}</span>
+                      {' - '}
+                      <span className='uppercase'>{locale}</span>
+                    </div>
+                  }
                   name='description'
                   rules={[
                     {
