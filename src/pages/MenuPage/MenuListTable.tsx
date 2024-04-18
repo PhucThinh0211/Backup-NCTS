@@ -279,7 +279,7 @@ export const MenuListTable = () => {
           strategy={verticalListSortingStrategy}
         >
           {contextHolder}
-          {dataSource.length > 0 &&
+          {
             <Table
               rowKey={(record) => record.id}
               dataSource={dataSource}
