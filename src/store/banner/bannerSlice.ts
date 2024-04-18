@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { defaultPagingParams } from '@/common/define';
 import {
   BannerResponse,
   BannersPagingResponse,
@@ -18,7 +17,7 @@ interface BannerState {
 }
 
 const initialState: BannerState = {
-  queryParams: defaultPagingParams,
+  queryParams: {},
 };
 
 const bannerSlice = createSlice({

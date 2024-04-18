@@ -52,7 +52,7 @@ export const BannerPhotoUrlUploader = ({
         src={`${uploadedPhotoUrl(bannerPhotoUrl)}`}
         style={{
           backgroundColor: '#00000073',
-          maxWidth: 300,
+          maxHeight: 300,
           objectFit: 'cover',
         }}
       />
