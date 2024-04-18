@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Avatar,
@@ -48,6 +48,7 @@ const normFile = (e: any) => {
 };
 
 export const CreateUpdateNewsPage = () => {
+  const [newsBody, setNewsBody] = useState('')
   const [form] = Form.useForm();
   const { t } = useTranslation(['common', 'news']);
   const dispatch = useAppDispatch();
@@ -94,8 +95,10 @@ export const CreateUpdateNewsPage = () => {
   useEffect(() => {
     if (selectedContentDetail) {
       form.setFieldsValue(selectedContentDetail);
+      setNewsBody(selectedContentDetail.body || '');
     } else {
       form.resetFields();
+      setNewsBody('');
     }
   }, [selectedContentDetail]);
 
@@ -103,6 +106,7 @@ export const CreateUpdateNewsPage = () => {
     const inputData = {
       ...values,
       photoUrl: contentPhotoUrl,
+      body: newsBody
     };
     if (selectedContent) {
       // prettier-ignore
@@ -219,24 +223,18 @@ export const CreateUpdateNewsPage = () => {
                 <CKEditor
                   editor={ ClassicEditor }
                   key={language}
+                  data={newsBody}
+                  onChange={(e, editor) => {
+                    const data = editor.getData();
+                    setNewsBody(data);
+                  }}
                   config={{
                     language: {
                       ui: language,
                     }
                   }}
-                  data="<p>Hello from CKEditor 5!</p>"
                   onReady={ editor => {
-                      console.log( 'Editor is ready to use!', editor );
-                  } }
-                  onChange={ ( event, editor ) => {
-                      const data = editor.getData();
-                      console.log( { event, editor, data } );
-                  } }
-                  onBlur={ ( event, editor ) => {
-                      console.log( 'Blur.', editor );
-                  } }
-                  onFocus={ ( event, editor ) => {
-                      console.log( 'Focus.', editor );
+                    console.log( 'Editor is ready to use!', editor );
                   } }
                 />
               </div>
