@@ -22,13 +22,18 @@ import {
   getSelectedContentDetail,
 } from '@/store/content';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { AuditedNews } from './AuditedNews';
 import { getLoading } from '@/store/loading';
 import { GettingContentLoadingKey, SavingContentLoadingKey } from '@/common';
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
-import { getLocale } from '@/store/persistState';
+import { getLanguage, getLocale } from '@/store/persistState';
+
+import { AuditedNews } from './AuditedNews';
 import { NewsPhotoUrlUploader } from './NewsPhotoUrlUploader';
+
+import {CKEditor} from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 
 const flag = {
   vi,
@@ -47,6 +52,7 @@ export const CreateUpdateNewsPage = () => {
   const { t } = useTranslation(['common', 'news']);
   const dispatch = useAppDispatch();
 
+  const language = useAppSelector(getLanguage());
   const locale = useAppSelector(getLocale());
   const selectedContent = useAppSelector(getSelectedContent());
   const selectedContentDetail = useAppSelector(getSelectedContentDetail());
@@ -210,6 +216,29 @@ export const CreateUpdateNewsPage = () => {
                 >
                   <Input.TextArea />
                 </Form.Item>
+                <CKEditor
+                  editor={ ClassicEditor }
+                  key={language}
+                  config={{
+                    language: {
+                      ui: language,
+                    }
+                  }}
+                  data="<p>Hello from CKEditor 5!</p>"
+                  onReady={ editor => {
+                      console.log( 'Editor is ready to use!', editor );
+                  } }
+                  onChange={ ( event, editor ) => {
+                      const data = editor.getData();
+                      console.log( { event, editor, data } );
+                  } }
+                  onBlur={ ( event, editor ) => {
+                      console.log( 'Blur.', editor );
+                  } }
+                  onFocus={ ( event, editor ) => {
+                      console.log( 'Focus.', editor );
+                  } }
+                />
               </div>
             </Col>
             <Col span={8}>
