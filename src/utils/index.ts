@@ -273,10 +273,13 @@ export default class Utils {
     return input
       .toLowerCase()
       .trim()
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
+      .replace(/[\s_-]+/g, '-') // Xóa khoảng trắng thay bằng ký tự -
+      .replace(/^-+|-+$/g, '') // xóa phần dư - ở đầu & cuối
+      .normalize('NFD') // chuyển chuỗi sang unicode tổ hợp
+      .replace(/[\u0300-\u036f]/g, '') // xóa các ký tự dấu sau khi tách tổ hợp
+      .replace(/[đĐ]/g, 'd') // Thay ký tự đĐ
+      .replace(/([^0-9a-z-\s])/g, '') // xóa ký tự đặt biệt
+      .replace(/-+/g, '-'); // Xóa ký tự - liên tiếp
   };
 }
 

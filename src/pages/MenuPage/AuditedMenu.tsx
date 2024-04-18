@@ -7,7 +7,7 @@ import { getSelectedMenu } from '@/store/menu';
 import { LanguageType, dateTimeFormat } from '@/common';
 import { getLocale, persistStateActions } from '@/store/persistState';
 
-export const MenuInformation = () => {
+export const AuditedMenu = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const selectedMenu = useAppSelector(getSelectedMenu());
