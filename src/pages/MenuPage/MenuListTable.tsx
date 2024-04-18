@@ -13,7 +13,7 @@ import { getLoading } from '@/store/loading';
 import { getMenuQueryParams, getMenus, menuActions } from '@/store/menu';
 import useModal from 'antd/es/modal/useModal';
 import Utils from '@/utils';
-import type { TableColumnsType } from 'antd';
+import { TableColumnsType, Tooltip } from 'antd';
 import { MenuResponse } from '@/services/MenuService';
 
 import type {
@@ -146,42 +146,40 @@ export const MenuListTable = () => {
 
   useEffect(() => {
     if (menus) {
-      const newDataSource = Utils.buildTree(menus.items || []);
+      const newDataSource = Utils.buildTree(
+        [...(menus.items || [])].sort((a, b) => {
+          return a.sortSeq - b.sortSeq;
+        })
+      );
       if (queryParams?.search) {
         setDataSource(
           newDataSource.filter((item) =>
             searchItemDeep(queryParams?.search.toLowerCase(), item)
-          )
-        );
-      } else {
+        )
+      );
+    } else {
         setDataSource(newDataSource);
       }
     }
   }, [menus, queryParams]);
 
-  const moreActions = [
-    {
-      key: 'edit',
-      label: t('Edit', { ns: 'common' }),
-      icon: <EditOutlined style={{ color: '#1890ff' }} />,
-    },
-    {
-      key: 'remove',
-      label: t('Remove', { ns: 'common' }),
-      icon: <DeleteOutlined style={{ color: '#ff4d4f' }} />,
-    },
-  ];
-
-  const handleMoreActionClick = (key: any, record: TreeItem<MenuResponse>) => {
-    switch (key) {
-      case 'edit':
-        editMenu(record);
-        break;
-      default:
-        confirmRemoveMenu(record);
-        break;
-    }
-  };
+  const getMoreActions = (record: TreeItem<MenuResponse>) => {
+    return [
+      {
+        key: 'edit',
+        label: t('Edit', { ns: 'common' }),
+        icon: <EditOutlined style={{ color: '#1890ff' }} />,
+        onClick: () => editMenu(record)
+      },
+      {
+        key: 'remove',
+        label: t('Remove', { ns: 'common' }),
+        icon: <DeleteOutlined style={{ color: !!record.children?.length ? 'grey' : '#ff4d4f' }} />,
+        onClick: () => confirmRemoveMenu(record),
+        disabled: !!record.children?.length
+      },
+    ];
+  }
 
   const editMenu = (menu: TreeItem<MenuResponse>) => {
     dispatch(persistStateActions.setLocale(language));
@@ -234,16 +232,24 @@ export const MenuListTable = () => {
     {
       fixed: 'right',
       align: 'center',
-      width: '80px',
+      width: '70px',
       render: (_: any, record: TreeItem<MenuResponse>) => {
         return (
           <Space>
-            {moreActions.map((action) => (
+            {getMoreActions(record).map((action) => (
+              action.label ? 
+                <Tooltip title={action.label}>
+                  <Button
+                    {...action}
+                    type='text'
+                    size='small'
+                  />
+                </Tooltip>
+              :
               <Button
+                {...action}
                 type='text'
-                icon={action.icon}
-                key={action.key}
-                onClick={() => handleMoreActionClick(action.key, record)}
+                size='small'
               />
             ))}
           </Space>
@@ -272,7 +278,7 @@ export const MenuListTable = () => {
           strategy={verticalListSortingStrategy}
         >
           {contextHolder}
-          {
+          {dataSource.length > 0 &&
             <Table
               rowKey={(record) => record.id}
               dataSource={dataSource}

@@ -8,8 +8,8 @@ import {
   Form,
   Input,
   Row,
-  Select,
   Spin,
+  TreeSelect,
   Typography,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -22,13 +22,14 @@ import {
   menuActions,
 } from '@/store/menu';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { MenuInformation } from './MenuInformation';
+import { AuditedMenu } from './AuditedMenu';
 import Utils from '@/utils';
 import { getLoading } from '@/store/loading';
-import { GettingMenuLoadingKey, SavingMenuLoadingKey } from '@/common';
+import { GettingMenuLoadingKey, SavingMenuLoadingKey, TreeItem } from '@/common';
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
 import { getLocale } from '@/store/persistState';
+import { MenuResponse } from '@/services/MenuService';
 
 const flag = {
   vi,
@@ -93,6 +94,14 @@ export const CreateUpdateMenuPage = () => {
     dispatch(menuActions.createMenuRequest({ menu: { ...inputData } }));
   };
 
+  const mapTreeToSelectOption = (item: TreeItem<MenuResponse>): any => {
+    return {
+      title: item.label,
+      value: item.id,
+      children: item.children ? item.children.map(child => mapTreeToSelectOption(child)) : undefined
+    }
+  }
+
   return (
     <div className='p-4'>
       <Link
@@ -116,7 +125,7 @@ export const CreateUpdateMenuPage = () => {
           </Button>
         </div>
       </div>
-      <Form form={form} onFinish={handleSaveMenu} layout='vertical'>
+      <Form autoComplete='off' form={form} onFinish={handleSaveMenu} layout='vertical'>
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
@@ -158,14 +167,16 @@ export const CreateUpdateMenuPage = () => {
                       label={t('Parent menu', { ns: 'menu' })}
                       name='parentId'
                     >
-                      <Select
-                        options={menus?.items
-                          .filter((item) => item.id !== selectedMenuDetail?.id)
-                          .map((item) => ({
-                            label: item.label,
-                            value: item.id,
-                          }))}
+                      <TreeSelect
+                        treeData={Utils.buildTree(
+                          [...(menus?.items || [])].sort((a, b) => {
+                            return a.sortSeq - b.sortSeq;
+                          })
+                          .filter((item) => item.id !== selectedMenuDetail?.id))
+                          .map((item) => mapTreeToSelectOption(item))
+                        }
                         allowClear
+                        treeDefaultExpandAll
                       />
                     </Form.Item>
                   </Col>
@@ -173,7 +184,7 @@ export const CreateUpdateMenuPage = () => {
               </div>
             </Col>
             <Col span={8}>
-              <MenuInformation />
+              <AuditedMenu />
             </Col>
           </Row>
         </Spin>
