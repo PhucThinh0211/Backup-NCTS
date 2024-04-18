@@ -26,7 +26,7 @@ const getMenusRequest$: RootEpic = (action$, state$) => {
     filter(menuActions.getMenusRequest.match),
     withLatestFrom(state$),
     switchMap(([action, state]) => {
-      const { params } = action.payload;
+      const { params, headers } = action.payload;
       const search = {
         ...state.menu.queryParams,
         ...params,
@@ -35,6 +35,7 @@ const getMenusRequest$: RootEpic = (action$, state$) => {
         [startLoading({ key: GettingMenuListLoadingKey })],
         MenuService.Get.getAllMenus({
           search,
+          headers
         }).pipe(
           mergeMap((menus) => {
             return [
