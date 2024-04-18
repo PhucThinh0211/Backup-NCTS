@@ -51,7 +51,7 @@ export const BannerListTable = () => {
 
   useEffect(() => {
     dispatch(bannerActions.getBannersRequest({}));
-    dispatch(bannerActions.getMenusRequest({ pageSize: 2000 }));
+    dispatch(bannerActions.getMenusRequest({ MaxResultCount: 1000 }));
   }, [language]);
 
   useEffect(() => {

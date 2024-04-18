@@ -17,7 +17,7 @@ interface MenuState {
 
 const initialState: MenuState = {
   queryParams: {
-    pageSize: 2000,
+    MaxResultCount: 1000,
   },
 };
 
