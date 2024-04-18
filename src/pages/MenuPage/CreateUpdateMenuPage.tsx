@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import {
@@ -47,6 +47,8 @@ export const CreateUpdateMenuPage = () => {
   const isSubmmiting = useAppSelector(getLoading(SavingMenuLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingMenuLoadingKey));
   const menuTitle = Form.useWatch('label', form);
+  const parentId = Form.useWatch('parentId', form);
+  const parentMenu = useMemo(() => menus?.items.find(item => item.id === parentId), [parentId, menus]);
 
   useEffect(() => {
     if (menuTitle && !selectedMenu) {
@@ -62,7 +64,12 @@ export const CreateUpdateMenuPage = () => {
 
   useEffect(() => {
     if (selectedMenuDetail) {
-      form.setFieldsValue(selectedMenuDetail);
+      const lastIndexOfSlash = selectedMenuDetail.url?.lastIndexOf('/');
+
+      form.setFieldsValue({
+        ...selectedMenuDetail,
+        url: selectedMenuDetail.url?.slice(lastIndexOfSlash, selectedMenuDetail.url.length)
+      });
     } else {
       form.resetFields();
     }
@@ -74,6 +81,9 @@ export const CreateUpdateMenuPage = () => {
     };
     if (values.url && !values.url.startsWith('/')) {
       inputData.url = '/' + values.url.trim();
+    }
+    if (parentMenu) {
+      inputData.url = parentMenu.url + inputData.url
     }
     if (selectedMenu) {
       // prettier-ignore
@@ -142,7 +152,7 @@ export const CreateUpdateMenuPage = () => {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input addonBefore={parentMenu ? parentMenu.url : undefined} />
                     </Form.Item>
                     <Form.Item
                       label={t('Parent menu', { ns: 'menu' })}
@@ -155,6 +165,7 @@ export const CreateUpdateMenuPage = () => {
                             label: item.label,
                             value: item.id,
                           }))}
+                        allowClear
                       />
                     </Form.Item>
                   </Col>
