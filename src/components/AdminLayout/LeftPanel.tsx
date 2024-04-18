@@ -48,7 +48,7 @@ export const LeftPanel = (props: SiderProps) => {
     {
       label: t('News'),
       icon: <img src={BlogSvg} alt='blog icon' />,
-      key: '/admin/blogs',
+      key: '/admin/news',
     },
     {
       label: t('All Files'),
