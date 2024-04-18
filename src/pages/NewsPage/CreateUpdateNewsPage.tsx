@@ -34,6 +34,7 @@ import { NewsPhotoUrlUploader } from './NewsPhotoUrlUploader';
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
+import { SeoForm } from './SeoForm';
 
 const flag = {
   vi,
@@ -108,6 +109,7 @@ export const CreateUpdateNewsPage = () => {
       photoUrl: contentPhotoUrl,
       body: newsBody
     };
+    
     if (selectedContent) {
       // prettier-ignore
       dispatch(contentActions.updateContentRequest({ contentId: selectedContent.id, content: { ...selectedContent, ...inputData }}));
@@ -157,7 +159,7 @@ export const CreateUpdateNewsPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm mb-4'>
                 <Form.Item
                   name='upload'
                   label={t('Photo', { ns: 'banner' })}
@@ -220,24 +222,30 @@ export const CreateUpdateNewsPage = () => {
                 >
                   <Input.TextArea />
                 </Form.Item>
-                <CKEditor
-                  editor={ ClassicEditor }
-                  key={language}
-                  data={newsBody}
-                  onChange={(e, editor) => {
-                    const data = editor.getData();
-                    setNewsBody(data);
-                  }}
-                  config={{
-                    language: {
-                      ui: language,
-                    }
-                  }}
-                  onReady={ editor => {
-                    console.log( 'Editor is ready to use!', editor );
-                  } }
-                />
+                <div>
+                  <Typography.Text className='ant-form-item-label'>
+                    {t('Content', { ns: 'news' })}
+                  </Typography.Text>
+                  <CKEditor
+                    editor={ ClassicEditor }
+                    key={language}
+                    data={newsBody}
+                    onChange={(e, editor) => {
+                      const data = editor.getData();
+                      setNewsBody(data);
+                    }}
+                    config={{
+                      language: {
+                        ui: language,
+                      }
+                    }}
+                    onReady={ editor => {
+                      console.log( 'Editor is ready to use!', editor );
+                    } }
+                  />
+                </div>
               </div>
+              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedNews />

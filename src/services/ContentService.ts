@@ -1,4 +1,5 @@
 import HttpClient from './HttpClient';
+import { CreateUpdateSeoPayload } from './SEOService';
 import { RequestOptions } from './types';
 import { PagingResponse } from '@/common/define';
 import { getEnvVars } from '@/enviroment';
@@ -48,6 +49,7 @@ export interface CreateUpdateContentPayload {
   publishDate: string | null;
   url: string;
   seoId: string | null;
+  seo?: CreateUpdateSeoPayload
 }
 export interface CreateUpdateContentTranslationPayload {
   language: string;
