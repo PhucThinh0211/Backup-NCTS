@@ -63,11 +63,21 @@ export const CreateUpdateMenuPage = () => {
   }, [menuTitle]);
 
   useEffect(() => {
+    if (locale) {
+      dispatch(menuActions.getMenusRequest({
+        headers: {
+          'Accept-Language': locale || 'vi',
+        },
+      }));
+    }
+  }, [locale]);
+
+  useEffect(() => {
     if (locale && selectedMenu) {
       dispatch(menuActions.getMenuRequest({ menuId: selectedMenu.id }));
     }
   }, [locale, selectedMenu]);
-
+  
   useEffect(() => {
     if (selectedMenuDetail) {
       const lastIndexOfSlash = selectedMenuDetail.url?.lastIndexOf('/');
