@@ -146,11 +146,12 @@ export const MenuListTable = () => {
 
   useEffect(() => {
     if (menus) {
-      const newDataSource = Utils.buildTree(
-        [...(menus.items || [])].sort((a, b) => {
-          return a.sortSeq - b.sortSeq;
-        })
-      );
+      const sortedMenus: MenuResponse[] = Utils.deepClone(menus.items || []);
+      sortedMenus.sort((a, b) => {
+        return a.sortSeq - b.sortSeq;
+      })
+      const newDataSource = Utils.buildTree(sortedMenus);
+      
       if (queryParams?.search) {
         setDataSource(
           newDataSource.filter((item) =>

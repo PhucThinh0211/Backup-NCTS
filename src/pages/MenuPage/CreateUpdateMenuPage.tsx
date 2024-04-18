@@ -51,6 +51,11 @@ export const CreateUpdateMenuPage = () => {
   const parentId = Form.useWatch('parentId', form);
   const parentMenu = useMemo(() => menus?.items.find(item => item.id === parentId), [parentId, menus]);
 
+  const sortedMenus: MenuResponse[] = Utils.deepClone(menus?.items || []);
+  sortedMenus.sort((a, b) => {
+    return a.sortSeq - b.sortSeq;
+  })
+
   useEffect(() => {
     if (menuTitle && !selectedMenu) {
       form.setFieldValue('url', '/' + Utils.createSlug(menuTitle));
@@ -169,11 +174,10 @@ export const CreateUpdateMenuPage = () => {
                     >
                       <TreeSelect
                         treeData={Utils.buildTree(
-                          [...(menus?.items || [])].sort((a, b) => {
-                            return a.sortSeq - b.sortSeq;
-                          })
+                          sortedMenus
                           .filter((item) => item.id !== selectedMenuDetail?.id))
-                          .map((item) => mapTreeToSelectOption(item))
+                          .map((item) => mapTreeToSelectOption(item)
+                        )
                         }
                         allowClear
                         treeDefaultExpandAll
