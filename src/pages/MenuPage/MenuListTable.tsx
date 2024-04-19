@@ -10,7 +10,7 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getMenuQueryParams, getMenus, menuActions } from '@/store/menu';
+import { getExpandedRowKeys, getMenuQueryParams, getMenus, menuActions } from '@/store/menu';
 import useModal from 'antd/es/modal/useModal';
 import Utils from '@/utils';
 import { TableColumnsType, Tooltip } from 'antd';
@@ -111,6 +111,7 @@ export const MenuListTable = () => {
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common', 'menu']);
   const [offsetLeft, setOffsetLeft] = useState(0);
+  const expandedRowKeys = useAppSelector(getExpandedRowKeys());
 
   const navigate = useNavigate();
   const windowSize = useWindowSize();
@@ -263,6 +264,10 @@ export const MenuListTable = () => {
     return flattenedItems.map((item) => item.id);
   };
 
+  const onExpandedRowsChange = (keys: string[]) => {
+    dispatch(menuActions.setExpandedRowKeys(keys));
+  }
+
   return (
     <div style={{ padding: 10 }}>
       <DndContext
@@ -297,6 +302,8 @@ export const MenuListTable = () => {
               expandable={{
                 indentSize: indentationWidth,
                 defaultExpandAllRows: true,
+                expandedRowKeys: expandedRowKeys,
+                onExpandedRowsChange: (keys) => onExpandedRowsChange(keys as string[])
               }}
             />
           }

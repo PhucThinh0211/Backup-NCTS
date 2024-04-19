@@ -11,11 +11,13 @@ export function getSelectedMenu() {
 export function getSelectedMenuDetail() {
   return createSelector([getMenuState], (state) => state.selectedMenuDetail);
 }
-export function getCreateOrUpdateMenu() {
-  return createSelector([getMenuState], (state) => state.createOrUpdate);
-}
+
 export function getMenus() {
   return createSelector([getMenuState], (state) => state.menus);
+}
+
+export function getExpandedRowKeys() {
+  return createSelector([getMenuState], (state) => state.expandedRowKeys || []);
 }
 
 export function getMenuQueryParams() {
