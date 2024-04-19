@@ -129,7 +129,7 @@ export const BannerListTable = () => {
       title: t('Photo', { ns: 'banner' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
-      align: 'center',
+      // align: 'center',
       render(value) {
         return (
           value && (
