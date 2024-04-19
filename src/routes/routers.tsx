@@ -8,6 +8,7 @@ import { CreateUpdateBannerPage } from '@/pages/BannerPage/CreateUpdateBannerPag
 import { CreateUpdateMenuPage } from '@/pages/MenuPage/CreateUpdateMenuPage';
 import { NewsList } from '@/pages/NewsPage';
 import { CreateUpdateNewsPage } from '@/pages/NewsPage/CreateUpdateNewsPage';
+import { CreateUpdateCompanyPage } from '@/pages/CompanyPage';
 
 type MetaMenu = {
   name?: string;
@@ -41,7 +42,8 @@ export const routers: MetaMenuAuthRouteObject[] = [
     // Layout cho trang Quản trị web
     element: <AdminLayout />,
     children: [
-      { index: true, element: <Navigate to={'/admin/menu'} /> },
+      { index: true, element: <Navigate to={'/admin/company'} /> },
+      { path: '/admin/company', name: 'Company', element: <CreateUpdateCompanyPage /> },
       { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
       { path: '/admin/menu/create', name: 'Create menu', element: <CreateUpdateMenuPage /> },
       { path: '/admin/menu/edit', name: 'Edit menu', element: <CreateUpdateMenuPage /> },

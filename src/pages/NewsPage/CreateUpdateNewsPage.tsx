@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
-  Avatar,
   Button,
   Col,
   Form,
@@ -22,18 +21,17 @@ import {
   getSelectedContentDetail,
 } from '@/store/content';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { AuditedNews } from './AuditedNews';
 import { getLoading } from '@/store/loading';
 import { GettingContentLoadingKey, SavingContentLoadingKey } from '@/common';
-import vi from '@/assets/vn.svg';
-import en from '@/assets/us.svg';
-import { getLocale } from '@/store/persistState';
+import { getLanguage, getLocale } from '@/store/persistState';
+
+import { AuditedNews } from './AuditedNews';
 import { NewsPhotoUrlUploader } from './NewsPhotoUrlUploader';
 
-const flag = {
-  vi,
-  en,
-};
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
+import { SeoForm } from './SeoForm';
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -43,10 +41,12 @@ const normFile = (e: any) => {
 };
 
 export const CreateUpdateNewsPage = () => {
+  const [newsBody, setNewsBody] = useState('');
   const [form] = Form.useForm();
   const { t } = useTranslation(['common', 'news']);
   const dispatch = useAppDispatch();
 
+  const language = useAppSelector(getLanguage());
   const locale = useAppSelector(getLocale());
   const selectedContent = useAppSelector(getSelectedContent());
   const selectedContentDetail = useAppSelector(getSelectedContentDetail());
@@ -88,8 +88,10 @@ export const CreateUpdateNewsPage = () => {
   useEffect(() => {
     if (selectedContentDetail) {
       form.setFieldsValue(selectedContentDetail);
+      setNewsBody(selectedContentDetail.body || '');
     } else {
       form.resetFields();
+      setNewsBody('');
     }
   }, [selectedContentDetail]);
 
@@ -97,7 +99,9 @@ export const CreateUpdateNewsPage = () => {
     const inputData = {
       ...values,
       photoUrl: contentPhotoUrl,
+      body: newsBody,
     };
+
     if (selectedContent) {
       // prettier-ignore
       dispatch(contentActions.updateContentRequest({ contentId: selectedContent.id, content: { ...selectedContent, ...inputData }}));
@@ -105,15 +109,6 @@ export const CreateUpdateNewsPage = () => {
     }
     dispatch(contentActions.createContentRequest({ content: inputData }));
   };
-
-  const FlagComponent = () => (
-    <Avatar
-      size={20}
-      shape='square'
-      src={locale ? flag[locale] : flag['vi']}
-      className='!rounded-none '
-    />
-  );
 
   const onImageDelete = () => {
     form.setFieldsValue({ upload: undefined });
@@ -147,7 +142,7 @@ export const CreateUpdateNewsPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm mb-4'>
                 <Form.Item
                   name='upload'
                   label={t('Photo', { ns: 'banner' })}
@@ -163,7 +158,20 @@ export const CreateUpdateNewsPage = () => {
                   <NewsPhotoUrlUploader onImageDelete={onImageDelete} />
                 </Form.Item>
                 <Form.Item
-                  label={t('Title', { ns: 'news' })}
+                  label={t('News type', { ns: 'news' })}
+                  name='type'
+                  rules={[{ required: true, message: t('News type required') }]}
+                >
+                  <Select options={newsTypes} />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
+                      <span>{t('Title', { ns: 'news' })}</span>
+                      {' - '}
+                      <span className='uppercase text-red-600'>{locale}</span>
+                    </div>
+                  }
                   name='title'
                   rules={[
                     { required: true, message: t('Title required') },
@@ -178,21 +186,14 @@ export const CreateUpdateNewsPage = () => {
                     },
                   ]}
                 >
-                  <Input suffix={<FlagComponent />} />
-                </Form.Item>
-                <Form.Item
-                  label={t('News type', { ns: 'news' })}
-                  name='type'
-                  rules={[{ required: true, message: t('News type required') }]}
-                >
-                  <Select options={newsTypes} />
+                  <Input />
                 </Form.Item>
                 <Form.Item
                   label={
                     <div>
                       <span>{t('Description', { ns: 'news' })}</span>
                       {' - '}
-                      <span className='uppercase'>{locale}</span>
+                      <span className='uppercase text-red-600'>{locale}</span>
                     </div>
                   }
                   name='description'
@@ -210,7 +211,53 @@ export const CreateUpdateNewsPage = () => {
                 >
                   <Input.TextArea />
                 </Form.Item>
+                <div>
+                  <Typography.Text className='ant-form-item-label'>
+                    {t('Content', { ns: 'news' })}
+                    {' - '}
+                    <span className='uppercase text-red-600'>{locale}</span>
+                  </Typography.Text>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    key={language}
+                    data={newsBody}
+                    onChange={(e, editor) => {
+                      const data = editor.getData();
+                      setNewsBody(data);
+                    }}
+                    config={{
+                      language: {
+                        ui: language,
+                      },
+                      toolbar: {
+                        items: [
+                          'undo',
+                          'redo',
+                          '|',
+                          'heading',
+                          '|',
+                          'bold',
+                          'italic',
+                          '|',
+                          'link',
+                          'insertImage',
+                          'mediaEmbed',
+                          'blockQuote',
+                          '|',
+                          'bulletedList',
+                          'numberedList',
+                          'outdent',
+                          'indent',
+                        ],
+                      },
+                    }}
+                    onReady={(editor) => {
+                      console.log('Editor is ready to use!', editor);
+                    }}
+                  />
+                </div>
               </div>
+              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedNews />

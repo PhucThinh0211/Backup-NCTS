@@ -19,6 +19,7 @@ import {
 } from '@/common/loadingKey';
 import { ContentService } from '@/services/ContentService';
 import Utils from '@/utils';
+import { SeoService } from '@/services/SEOService';
 
 const getContentsRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -84,6 +85,36 @@ const createContentRequest$: RootEpic = (action$, state$) => {
               createTranslationInput
             ).pipe(
               mergeMap(() => {
+                if (content.seo) {
+                  const createSeoTranslationInput = {
+                    title: content.seo.title,
+                    description: content.seo.description,
+                    language: locale,
+                  }
+                  return SeoService.Post.createSeoTranslations(
+                    createdContent.seoId, 
+                    createSeoTranslationInput
+                  ).pipe(
+                    mergeMap(() => {
+                      return ContentService.Get.getAllContents({
+                        search,
+                      }).pipe(
+                        mergeMap((contentsResult) => {
+                          Utils.successNotification();
+                          return [contentActions.setContents(contentsResult)];
+                        }),
+                        catchError((errors) => {
+                          Utils.errorHandling(errors);
+                          return [contentActions.setContents(undefined)];
+                        })
+                      );
+                    }),
+                    catchError((errors) => {
+                      Utils.errorHandling(errors);
+                      return [];
+                    })
+                  );
+                }
                 return ContentService.Get.getAllContents({
                   search,
                 }).pipe(
@@ -143,6 +174,36 @@ const updateContentRequest$: RootEpic = (action$, state$) => {
               createTranslationInput
             ).pipe(
               mergeMap(() => {
+                if (content.seo) {
+                  const createSeoTranslationInput = {
+                    title: content.seo.title,
+                    description: content.seo.description,
+                    language: locale,
+                  }
+                  return SeoService.Post.createSeoTranslations(
+                    updatedContent.seoId, 
+                    createSeoTranslationInput
+                  ).pipe(
+                    mergeMap(() => {
+                      return ContentService.Get.getAllContents({
+                        search,
+                      }).pipe(
+                        mergeMap((contentsResult) => {
+                          Utils.successNotification();
+                          return [contentActions.setContents(contentsResult)];
+                        }),
+                        catchError((errors) => {
+                          Utils.errorHandling(errors);
+                          return [contentActions.setContents(undefined)];
+                        })
+                      );
+                    }),
+                    catchError((errors) => {
+                      Utils.errorHandling(errors);
+                      return [];
+                    })
+                  );
+                }
                 return ContentService.Get.getAllContents({
                   search,
                 }).pipe(

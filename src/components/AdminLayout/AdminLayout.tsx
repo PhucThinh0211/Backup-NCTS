@@ -2,10 +2,19 @@ import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import { AdminHeader, LeftPanel } from '.';
 import './AdminLayout.css';
+import { useAppDispatch } from '@/store/hooks';
+import { useEffect } from 'react';
+import { companyActions } from '@/store/company';
 
 const { Content } = Layout;
 
 export const AdminLayout = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(companyActions.getCompaniesRequest({ MaxResultCount: 1 }));
+  }, []);
+
   return (
     <Layout className='w-screen h-screen relative'>
       <AdminHeader />

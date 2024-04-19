@@ -16,6 +16,8 @@ import MediaSvg from '@/assets/media.svg';
 import ContactSvg from '@/assets/contact.svg';
 import MemberSvg from '@/assets/member.svg';
 import UserSvg from '@/assets/user.svg';
+import { getCompanies } from '@/store/company';
+import { Company } from '../Company';
 
 const { Sider } = Layout;
 
@@ -27,9 +29,20 @@ export const LeftPanel = (props: SiderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openKeys, setOpenKeys] = useState(['/']);
+
   const activeMenu = useAppSelector(getActiveMenu());
+  const companies = useAppSelector(getCompanies());
+  const currentCompany = companies?.items[0];
 
   const adminMenu: MenuItem[] = [
+    {
+      label: currentCompany ? (
+        <Company company={currentCompany} />
+      ) : (
+        t('Company')
+      ),
+      key: '/admin/company',
+    },
     {
       label: t('Menu'),
       icon: <img src={MenuSvg} alt='menu icon' />,
