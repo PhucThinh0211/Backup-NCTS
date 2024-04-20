@@ -10,7 +10,6 @@ import { MenusPagingResponse } from '@/services/MenuService';
 interface CompanyState {
   companys?: CompaniesPagingResponse;
   menus?: MenusPagingResponse;
-  selectedCompany?: CompanyResponse;
   companyPhotoUrl?: string;
   selectedCompanyDetail?: CompanyResponse;
   queryParams: any;
@@ -24,12 +23,6 @@ const companySlice = createSlice({
   name: 'company',
   initialState,
   reducers: {
-    setSelectedCompany: (
-      state,
-      action: PayloadAction<CompanyResponse | undefined>
-    ) => {
-      state.selectedCompany = action.payload;
-    },
     setCompanyPhotoUrl: (state, action: PayloadAction<string | undefined>) => {
       state.companyPhotoUrl = action.payload;
     },

@@ -5,10 +5,6 @@ import { RootState } from '@/store/types';
 
 export const getCompanyState = (state: RootState) => state.company;
 
-export function getSelectedCompany() {
-  return createSelector([getCompanyState], (state) => state.selectedCompany);
-}
-
 export function getCompanies() {
   return createSelector([getCompanyState], (state) => state.companys);
 }

@@ -15,11 +15,11 @@ export const CompanyInformation = () => {
 
   const props = {
     createdAt: selectedCompanyDetail?.creationTime
-      ? dayjs(selectedCompanyDetail?.creationTime).format(dateTimeFormat)
+      ? dayjs(selectedCompanyDetail?.creationTime + 'Z').format(dateTimeFormat)
       : t('Now', { ns: 'common' }),
     createdBy: selectedCompanyDetail?.creatorId || undefined,
     updatedAt: selectedCompanyDetail?.lastModificationTime
-      ? dayjs(selectedCompanyDetail?.lastModificationTime).format(
+      ? dayjs(selectedCompanyDetail?.lastModificationTime + 'Z').format(
           dateTimeFormat
         )
       : t('Now', { ns: 'common' }),

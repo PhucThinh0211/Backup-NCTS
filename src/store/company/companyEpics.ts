@@ -19,7 +19,6 @@ import {
 } from '@/common/loadingKey';
 import { CompanyService } from '@/services/CompanyService';
 import Utils from '@/utils';
-import { SeoService } from '@/services/SEOService';
 
 const getCompaniesRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -91,7 +90,6 @@ const createCompanyRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       companyActions.setCompanies(companysResult),
-                      companyActions.setSelectedCompany(undefined),
                     ];
                   }),
                   catchError((errors) => {
@@ -196,7 +194,6 @@ const removeCompanyRequest$: RootEpic = (action$, state$) => {
                 Utils.successNotification('Removed successfully');
                 return [
                   companyActions.setCompanies(companysResult),
-                  companyActions.setSelectedCompany(undefined),
                 ];
               }),
               catchError((errors) => {

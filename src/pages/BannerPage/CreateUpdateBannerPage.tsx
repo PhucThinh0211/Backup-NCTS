@@ -189,40 +189,47 @@ export const CreateUpdateBannerPage = () => {
                 >
                   <Input suffix={<FlagComponent />} />
                 </Form.Item>
-                <Form.Item
-                  label={t('Button label', { ns: 'banner' })}
-                  name='buttonLabel'
-                  rules={[
-                    {
-                      max: 50,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 50,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input suffix={<FlagComponent />} />
-                </Form.Item>
-                <Form.Item
-                  label={t('Button link', { ns: 'banner' })}
-                  name='linkButton'
-                  rules={[
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col sm={24} md={12}>
+                    <Form.Item
+                      label={t('Button label', { ns: 'banner' })}
+                      name='buttonLabel'
+                      rules={[
+                        {
+                          max: 50,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 50,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input suffix={<FlagComponent />} />
+                    </Form.Item>
+                  </Col>
+                  <Col sm={24} md={12}>
+                    <Form.Item
+                      label={t('Button link', { ns: 'banner' })}
+                      name='linkButton'
+                      rules={[
+                        {
+                          max: 500,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 500,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                  </Col>
+                </Row>
                 <Form.Item
                   label={
                     <div>
