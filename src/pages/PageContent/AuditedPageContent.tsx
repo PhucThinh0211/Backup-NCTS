@@ -3,27 +3,27 @@ import dayjs from 'dayjs';
 
 import { AuditedInfoCard } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getSelectedCompanyDetail } from '@/store/company';
+import { getSelectedPageContentDetail } from '@/store/pageContent';
 import { getLocale, persistStateActions } from '@/store/persistState';
 import { LanguageType, dateTimeFormat } from '@/common';
 
-export const CompanyInformation = () => {
+export const AuditedPageContent = () => {
   const { t } = useTranslation(['common']);
   const locales = useAppSelector(getLocale());
   const dispatch = useAppDispatch();
-  const selectedCompanyDetail = useAppSelector(getSelectedCompanyDetail());
+  const selectedPageContentDetail = useAppSelector(getSelectedPageContentDetail());
 
   const props = {
-    createdAt: selectedCompanyDetail?.creationTime
-      ? dayjs(selectedCompanyDetail?.creationTime + 'Z').format(dateTimeFormat)
+    createdAt: selectedPageContentDetail?.creationTime
+      ? dayjs(selectedPageContentDetail?.creationTime).format(dateTimeFormat)
       : t('Now', { ns: 'common' }),
-    createdBy: selectedCompanyDetail?.creatorId || undefined,
-    updatedAt: selectedCompanyDetail?.lastModificationTime
-      ? dayjs(selectedCompanyDetail?.lastModificationTime + 'Z').format(
+    createdBy: selectedPageContentDetail?.creatorId || undefined,
+    updatedAt: selectedPageContentDetail?.lastModificationTime
+      ? dayjs(selectedPageContentDetail?.lastModificationTime).format(
           dateTimeFormat
         )
       : t('Now', { ns: 'common' }),
-    updatedBy: selectedCompanyDetail?.lastModifierId || undefined,
+    updatedBy: selectedPageContentDetail?.lastModifierId || undefined,
   };
 
   const handleChangeLocale = (locale: LanguageType) => {

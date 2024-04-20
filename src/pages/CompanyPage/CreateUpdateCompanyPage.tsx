@@ -13,11 +13,11 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { GettingCompanyLoadingKey, SavingCompanyLoadingKey } from '@/common';
 import { getLocale } from '@/store/persistState';
-import { CompanyInformation } from './CompanyInformation';
+import { AuditedCompany } from './AuditedCompany';
 
 export const CreateUpdateCompanyPage = () => {
   const [form] = Form.useForm();
-  const { t } = useTranslation(['common', 'company']);
+  const { t } = useTranslation(['common', 'company', 'leftPanel']);
   const dispatch = useAppDispatch();
 
   const locale = useAppSelector(getLocale());
@@ -63,7 +63,7 @@ export const CreateUpdateCompanyPage = () => {
       <div className='flex flex-row justify-between items-center'>
         <div>
           <Typography.Title level={4}>
-            {t('Company', { ns: 'company' })}
+            {t('Company', { ns: 'leftPanel' })}
           </Typography.Title>
         </div>
         <div>
@@ -308,7 +308,7 @@ export const CreateUpdateCompanyPage = () => {
               </div>
             </Col>
             <Col span={8}>
-              <CompanyInformation />
+              <AuditedCompany />
             </Col>
           </Row>
         </Spin>

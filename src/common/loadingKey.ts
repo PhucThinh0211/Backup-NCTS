@@ -19,3 +19,8 @@ export const GettingCompanyLoadingKey = 'GettingCompanyLoadingKey';
 export const GettingCompanyListLoadingKey = 'GettingCompanyListLoadingKey';
 export const SavingCompanyLoadingKey = 'SavingCompanyLoadingKey';
 export const RemovingCompanyLoadingKey = 'RemovingCompanyLoadingKey';
+
+export const GettingPageContentLoadingKey = 'GettingPageContentLoadingKey';
+export const GettingPageContentListLoadingKey = 'GettingPageContentListLoadingKey';
+export const SavingPageContentLoadingKey = 'SavingPageContentLoadingKey';
+export const RemovingPageContentLoadingKey = 'RemovingPageContentLoadingKey';

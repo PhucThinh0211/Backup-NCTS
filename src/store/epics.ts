@@ -6,6 +6,7 @@ import { menuEpics } from './menu';
 import { bannerEpics } from './banner';
 import { contentEpics } from './content';
 import { companyEpics } from './company';
+import { pageContentEpics } from './pageContent';
 
 const rootEpics = combineEpics(
   ...persistStateEpics,
@@ -13,7 +14,8 @@ const rootEpics = combineEpics(
   ...menuEpics,
   ...bannerEpics,
   ...contentEpics,
-  ...companyEpics
+  ...companyEpics,
+  ...pageContentEpics
 );
 
 export default rootEpics;
