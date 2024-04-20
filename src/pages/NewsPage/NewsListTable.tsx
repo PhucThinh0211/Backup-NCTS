@@ -128,7 +128,7 @@ export const NewsListTable = () => {
       title: t('Photo', { ns: 'news' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
-      align: 'center',
+      // align: 'center',
       render(value) {
         return (
           value && (

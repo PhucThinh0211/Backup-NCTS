@@ -13,12 +13,14 @@ interface MenuState {
   selectedMenu?: TreeItem<MenuResponse>;
   selectedMenuDetail?: MenuResponse;
   queryParams: any;
+  expandedRowKeys: string[];
 }
 
 const initialState: MenuState = {
   queryParams: {
     MaxResultCount: 1000,
   },
+  expandedRowKeys: []
 };
 
 const menuSlice = createSlice({
@@ -56,6 +58,9 @@ const menuSlice = createSlice({
     setMenus: (state, action) => {
       state.menus = action.payload;
     },
+    setExpandedRowKeys: (state, action) => {
+      state.expandedRowKeys = action.payload;
+    }
   },
 });
 

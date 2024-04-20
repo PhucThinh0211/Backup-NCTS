@@ -145,7 +145,7 @@ export const CreateUpdateNewsPage = () => {
               <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm mb-4'>
                 <Form.Item
                   name='upload'
-                  label={t('Photo', { ns: 'banner' })}
+                  label={t('Photo', { ns: 'news' })}
                   valuePropName='fileList'
                   getValueFromEvent={normFile}
                   rules={[
