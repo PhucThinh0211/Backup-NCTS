@@ -17,6 +17,7 @@ export const Home = () => {
       <div className="bg-white w-full">
         <QuickLookup />
       </div>
+      <button className="btn btn-primary">Bootstrap Primary button</button>
     </>
   );
 };
