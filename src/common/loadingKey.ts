@@ -24,3 +24,8 @@ export const GettingPageContentLoadingKey = 'GettingPageContentLoadingKey';
 export const GettingPageContentListLoadingKey = 'GettingPageContentListLoadingKey';
 export const SavingPageContentLoadingKey = 'SavingPageContentLoadingKey';
 export const RemovingPageContentLoadingKey = 'RemovingPageContentLoadingKey';
+
+export const GettingDepartmentLoadingKey = 'GettingDepartmentLoadingKey';
+export const GettingDepartmentListLoadingKey = 'GettingDepartmentListLoadingKey';
+export const SavingDepartmentLoadingKey = 'SavingDepartmentLoadingKey';
+export const RemovingDepartmentLoadingKey = 'RemovingDepartmentLoadingKey';

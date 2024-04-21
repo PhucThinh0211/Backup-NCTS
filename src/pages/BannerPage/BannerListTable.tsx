@@ -154,12 +154,12 @@ export const BannerListTable = () => {
       dataIndex: 'description',
       key: 'description',
     },
-    // {
-    //   key: 'sort',
-    //   width: 40,
-    //   fixed: 'right',
-    //   align: 'center',
-    // },
+    {
+      key: 'sort',
+      width: 40,
+      fixed: 'right',
+      align: 'center',
+    },
     {
       fixed: 'right',
       align: 'right',
@@ -182,7 +182,7 @@ export const BannerListTable = () => {
   ];
 
   const getIds = () => {
-    return (banners?.items || []).map((item) => item.id);
+    return dataSource.map((item) => item.id);
   };
 
   return (
@@ -229,7 +229,6 @@ export const BannerListTable = () => {
       setDataSource((previous) => {
         const activeIndex = previous.findIndex(({ id }) => id === active.id);
         const overIndex = previous.findIndex(({ id }) => id === over?.id);
-        console.log({ active, over });
 
         return arrayMove(previous, activeIndex, overIndex);
       });

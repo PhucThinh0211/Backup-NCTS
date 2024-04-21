@@ -1,0 +1,23 @@
+{
+    "Find department": "Tìm kiếm phòng ban",
+    "ID": "ID",
+    "Name": "Tên",
+    "Name required": "Vui lòng nhập tên",
+    "Code": "Code",
+    "Code required": "Vui lòng nhập code",
+    "Contacts": "Liên hệ",
+    "Contacts required": "Vui lòng nhập liên hệ",
+    "Title": "Tiêu đề",
+    "Title required": "Vui lòng nhập tiêu đề",
+    "Contact num": "Thông tin",
+    "Contact num required": "Vui lòng nhập thông tin",
+    "Type": "Loại",
+    "Type required": "Vui lòng chọn loại",
+    "Email": "Email",
+    "Ext": "Số máy lẻ",
+    "Fax": "Fax",
+    "Phone": "Máy trực",
+    "Add new department": "Thêm mới",
+    "Create department": "Thêm mới",
+    "Update department": "Cập nhật thông tin"
+  }
