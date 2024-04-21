@@ -41,7 +41,7 @@ export const LeftPanel = (props: SiderProps) => {
       ) : (
         t('Company')
       ),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 14 : 20 }}/>,
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }}/>,
       key: '/admin/company',
     },
     {
@@ -149,12 +149,12 @@ export const LeftPanel = (props: SiderProps) => {
       collapsed={collapsed}
       width={LeftPanelWidth}
       onCollapse={setCollapsed}
-      className={`border-r border-[rgba(5, 5, 5, 0.06)] leftSider overflow-y-auto custom_scrollbar pb-2`}
+      className={`border-end leftSider overflow-y-auto custom_scrollbar pb-2`}
       {...rest}
     >
       <div
-        className={`flex flex-col justify-center ${
-          collapsed ? 'items-center my-2' : 'items-end m-2 mb-0'
+        className={`d-flex flex-column justify-content-center ${
+          collapsed ? 'align-items-center my-2' : 'align-items-end m-2 mb-0'
         }`}
       >
         <Button
@@ -170,7 +170,7 @@ export const LeftPanel = (props: SiderProps) => {
           }
         />
       </div>
-      <div className={'max-h-full flex-col relative p-3 pt-0'}>
+      <div className={'mh-100 flex-column relative p-3 pt-0'}>
         <Menu
           mode='inline'
           onClick={onClickMenu}

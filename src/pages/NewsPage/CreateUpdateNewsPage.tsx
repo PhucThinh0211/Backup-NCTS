@@ -119,12 +119,12 @@ export const CreateUpdateNewsPage = () => {
     <div className='p-4'>
       <Link
         to={'/admin/news'}
-        className={'flex flex-row items-center gap-1 mb-4'}
+        className={'d-flex flex-row align-items-center gap-1 mb-2'}
       >
         <ArrowLeftOutlined style={{ fontSize: 12 }} />
         {t('Back', { ns: 'common' })}
       </Link>
-      <div className='flex flex-row justify-between items-center'>
+      <div className='d-flex flex-row justify-content-between align-items-center'>
         <div>
           <Typography.Title level={4}>
             {selectedContent
@@ -142,7 +142,7 @@ export const CreateUpdateNewsPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm mb-4'>
+              <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm mb-4'>
                 <Form.Item
                   name='upload'
                   label={t('Photo', { ns: 'news' })}

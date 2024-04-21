@@ -49,9 +49,9 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { index: true, element: <Navigate to={'/admin/company'} /> },
       { path: '/admin/company', name: 'Company', element: <CreateUpdateCompanyPage /> },
       
-      // { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
-      // { path: '/admin/menu/create', name: 'Create menu', element: <CreateUpdateMenuPage /> },
-      // { path: '/admin/menu/edit', name: 'Edit menu', element: <CreateUpdateMenuPage /> },
+      { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
+      { path: '/admin/menu/create', name: 'Create menu', element: <CreateUpdateMenuPage /> },
+      { path: '/admin/menu/edit', name: 'Edit menu', element: <CreateUpdateMenuPage /> },
       
       { path: '/admin/banners', name: 'Banners', element: <BannerList /> },
       { path: '/admin/banners/create', name: 'Create banner', element: <CreateUpdateBannerPage /> },

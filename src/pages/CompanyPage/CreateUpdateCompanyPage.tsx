@@ -60,7 +60,7 @@ export const CreateUpdateCompanyPage = () => {
 
   return (
     <div className='p-4'>
-      <div className='flex flex-row justify-between items-center'>
+      <div className='d-flex flex-row justify-content-between align-items-center'>
         <div>
           <Typography.Title level={4}>
             {t('Company', { ns: 'leftPanel' })}
@@ -76,7 +76,7 @@ export const CreateUpdateCompanyPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+              <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
                 <Form.Item
                   label={t('Name', { ns: 'company' })}
                   name='name'

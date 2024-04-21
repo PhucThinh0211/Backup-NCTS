@@ -9,7 +9,7 @@ export const SeoForm = () => {
   const locale = useAppSelector(getLocale());
 
   return (
-    <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+    <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
       <Typography.Title level={5}>{t('SEO', { ns: 'seo' })}</Typography.Title>
       <Form.Item name={'seo'}>
         <Form.Item
