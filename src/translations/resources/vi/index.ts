@@ -3,6 +3,8 @@ import common from './common.json';
 import leftPanel from './leftPanel.json';
 import menu from './menu.json';
 import news from './news.json';
+import company from './company.json';
+import department from './department.json';
 
 // eslint-disable-next-line
 export default {
@@ -11,4 +13,6 @@ export default {
   leftPanel,
   menu,
   news,
+  company,
+  department,
 };

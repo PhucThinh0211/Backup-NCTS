@@ -11,16 +11,16 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import {
-  GettingBannerListLoadingKey,
-  RemovingBannerLoadingKey,
+  GettingPageContentListLoadingKey,
+  RemovingPageContentLoadingKey,
 } from '@/common/loadingKey';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getBanners, bannerActions } from '@/store/banner';
+import { getPageContents, pageContentActions } from '@/store/pageContent';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
-import { BannerResponse } from '@/services/BannerService';
+import { PageContentResponse } from '@/services/PageContentService';
 import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
@@ -35,30 +35,29 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-export const BannerListTable = () => {
-  const [dataSource, setDataSource] = useState<BannerResponse[]>([]);
+export const PageContentListTable = () => {
+  const [dataSource, setDataSource] = useState<PageContentResponse[]>([]);
   const [modal, contextHolder] = useModal();
-  const { t } = useTranslation(['common', 'banner']);
+  const { t } = useTranslation(['common', 'news']);
   const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
   const language = useAppSelector(getLanguage());
-  const banners = useAppSelector(getBanners());
+  const pageContents = useAppSelector(getPageContents());
   const isLoading = useAppSelector(
-    getLoading([GettingBannerListLoadingKey, RemovingBannerLoadingKey])
+    getLoading([GettingPageContentListLoadingKey, RemovingPageContentLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(bannerActions.getBannersRequest({}));
-    dispatch(bannerActions.getMenusRequest({ MaxResultCount: 1000 }));
+    dispatch(pageContentActions.getPageContentsRequest({}));
   }, [language]);
 
   useEffect(() => {
-    if (banners) {
-      setDataSource(banners?.items || []);
+    if (pageContents) {
+      setDataSource(pageContents?.items || []);
     }
-  }, [banners]);
+  }, [pageContents]);
 
   const moreActions = [
     {
@@ -73,32 +72,32 @@ export const BannerListTable = () => {
     },
   ];
 
-  const handleMoreActionClick = (key: any, record: BannerResponse) => {
+  const handleMoreActionClick = (key: any, record: PageContentResponse) => {
     switch (key) {
       case 'edit':
-        editBanner(record);
+        editPageContent(record);
         break;
       default:
-        confirmRemoveBanner(record);
+        confirmRemovePageContent(record);
         break;
     }
   };
 
-  const editBanner = (banner: BannerResponse) => {
-    dispatch(bannerActions.setSelectedBanner(banner));
+  const editPageContent = (pageContent: PageContentResponse) => {
+    dispatch(pageContentActions.setSelectedPageContent(pageContent));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/banners/edit');
+    navigate('/admin/news/edit');
   };
 
-  const confirmRemoveBanner = (banner: BannerResponse) => {
+  const confirmRemovePageContent = (pageContent: PageContentResponse) => {
     modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
             __html: t('ConfirmRemove', {
-              name: `<strong>"${banner.title}"</strong>`,
+              name: `<strong>"${pageContent.title}"</strong>`,
             }),
           }}
         />
@@ -106,14 +105,14 @@ export const BannerListTable = () => {
       centered: true,
       closable: true,
       onOk: (close) => {
-        handleRemoveBanner(banner.id);
+        handleRemovePageContent(pageContent.id);
         close();
       },
     });
   };
 
-  const handleRemoveBanner = (bannerId: string) => {
-    dispatch(bannerActions.removeBannerRequest({ bannerId }));
+  const handleRemovePageContent = (pageContentId: string) => {
+    dispatch(pageContentActions.removePageContentRequest({ pageContentId }));
   };
 
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
@@ -124,9 +123,9 @@ export const BannerListTable = () => {
       ns: 'common',
     });
 
-  const columns: TableColumnsType<BannerResponse> = [
+  const columns: TableColumnsType<PageContentResponse> = [
     {
-      title: t('Photo', { ns: 'banner' }),
+      title: t('Photo', { ns: 'news' }),
       dataIndex: 'photoUrl',
       key: 'photoUrl',
       // align: 'center',
@@ -145,21 +144,21 @@ export const BannerListTable = () => {
       },
     },
     {
-      title: t('Title', { ns: 'banner' }),
+      title: t('Title', { ns: 'news' }),
       dataIndex: 'title',
       key: 'title',
     },
     {
-      title: t('Description', { ns: 'banner' }),
+      title: t('Description', { ns: 'news' }),
       dataIndex: 'description',
       key: 'description',
     },
-    {
-      key: 'sort',
-      width: 40,
-      fixed: 'right',
-      align: 'center',
-    },
+    // {
+    //   key: 'sort',
+    //   width: 40,
+    //   fixed: 'right',
+    //   align: 'center',
+    // },
     {
       fixed: 'right',
       align: 'right',
@@ -182,7 +181,7 @@ export const BannerListTable = () => {
   ];
 
   const getIds = () => {
-    return dataSource.map((item) => item.id);
+    return (pageContents?.items || []).map((item) => item.id);
   };
 
   return (
@@ -229,6 +228,7 @@ export const BannerListTable = () => {
       setDataSource((previous) => {
         const activeIndex = previous.findIndex(({ id }) => id === active.id);
         const overIndex = previous.findIndex(({ id }) => id === over?.id);
+        console.log({ active, over });
 
         return arrayMove(previous, activeIndex, overIndex);
       });

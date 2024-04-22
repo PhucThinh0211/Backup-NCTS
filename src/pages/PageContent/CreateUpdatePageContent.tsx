@@ -25,8 +25,7 @@ import { getLoading } from '@/store/loading';
 import { GettingContentLoadingKey, SavingContentLoadingKey } from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
-import { AuditedNews } from './AuditedNews';
-import { NewsPhotoUrlUploader } from './NewsPhotoUrlUploader';
+import { AuditedPageContent } from './AuditedPageContent';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -40,10 +39,10 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
-export const CreateUpdateNewsPage = () => {
-  const [newsBody, setNewsBody] = useState('');
+export const CreateUpdatePageContent = () => {
+  const [pageContentBody, setPageContentBody] = useState('');
   const [form] = Form.useForm();
-  const { t } = useTranslation(['common', 'news']);
+  const { t } = useTranslation(['common', 'pageContent']);
   const dispatch = useAppDispatch();
 
   const language = useAppSelector(getLanguage());
@@ -54,26 +53,26 @@ export const CreateUpdateNewsPage = () => {
   const isSubmmiting = useAppSelector(getLoading(SavingContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingContentLoadingKey));
 
-  const newsTypes = [
+  const pageContentTypes = [
     {
-      label: t('Ncts News', { ns: 'news' }),
-      value: 'NctsNews',
+      label: t('Ncts PageContent', { ns: 'pageContent' }),
+      value: 'NctsPageContent',
     },
     {
-      label: t('Customer News', { ns: 'news' }),
-      value: 'CustomerNews',
+      label: t('Customer PageContent', { ns: 'pageContent' }),
+      value: 'CustomerPageContent',
     },
     {
-      label: t('Activities News', { ns: 'news' }),
-      value: 'ActivitiesNews',
+      label: t('Activities PageContent', { ns: 'pageContent' }),
+      value: 'ActivitiesPageContent',
     },
     {
-      label: t('Industrial News', { ns: 'news' }),
-      value: 'IndustrialNews',
+      label: t('Industrial PageContent', { ns: 'pageContent' }),
+      value: 'IndustrialPageContent',
     },
     {
-      label: t('Recruitment News', { ns: 'news' }),
-      value: 'RecruitmentNews',
+      label: t('Recruitment PageContent', { ns: 'pageContent' }),
+      value: 'RecruitmentPageContent',
     },
   ];
 
@@ -88,10 +87,10 @@ export const CreateUpdateNewsPage = () => {
   useEffect(() => {
     if (selectedContentDetail) {
       form.setFieldsValue(selectedContentDetail);
-      setNewsBody(selectedContentDetail.body || '');
+      setPageContentBody(selectedContentDetail.body || '');
     } else {
       form.resetFields();
-      setNewsBody('');
+      setPageContentBody('');
     }
   }, [selectedContentDetail]);
 
@@ -99,7 +98,7 @@ export const CreateUpdateNewsPage = () => {
     const inputData = {
       ...values,
       photoUrl: contentPhotoUrl,
-      body: newsBody,
+      body: pageContentBody,
     };
 
     if (selectedContent) {
@@ -118,7 +117,7 @@ export const CreateUpdateNewsPage = () => {
   return (
     <div className='p-4'>
       <Link
-        to={'/admin/news'}
+        to={'/admin/pageContent'}
         className={'d-flex flex-row align-items-center gap-1 mb-2'}
       >
         <ArrowLeftOutlined style={{ fontSize: 12 }} />
@@ -128,8 +127,8 @@ export const CreateUpdateNewsPage = () => {
         <div>
           <Typography.Title level={4}>
             {selectedContent
-              ? t('Update news', { ns: 'news' })
-              : t('Create news', { ns: 'news' })}
+              ? t('Update pageContent', { ns: 'pageContent' })
+              : t('Create pageContent', { ns: 'pageContent' })}
           </Typography.Title>
         </div>
         <div>
@@ -144,30 +143,16 @@ export const CreateUpdateNewsPage = () => {
             <Col span={16}>
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm mb-4'>
                 <Form.Item
-                  name='upload'
-                  label={t('Photo', { ns: 'news' })}
-                  valuePropName='fileList'
-                  getValueFromEvent={normFile}
-                  rules={[
-                    {
-                      required: !contentPhotoUrl,
-                      message: t('Photo required', { ns: 'banner' }),
-                    },
-                  ]}
-                >
-                  <NewsPhotoUrlUploader onImageDelete={onImageDelete} />
-                </Form.Item>
-                <Form.Item
-                  label={t('News type', { ns: 'news' })}
+                  label={t('PageContent type', { ns: 'pageContent' })}
                   name='type'
-                  rules={[{ required: true, message: t('News type required') }]}
+                  rules={[{ required: true, message: t('PageContent type required') }]}
                 >
-                  <Select options={newsTypes} />
+                  <Select options={pageContentTypes} />
                 </Form.Item>
                 <Form.Item
                   label={
                     <div>
-                      <span>{t('Title', { ns: 'news' })}</span>
+                      <span>{t('Title', { ns: 'pageContent' })}</span>
                       {' - '}
                       <span className='uppercase text-red-600'>{locale}</span>
                     </div>
@@ -191,7 +176,7 @@ export const CreateUpdateNewsPage = () => {
                 <Form.Item
                   label={
                     <div>
-                      <span>{t('Description', { ns: 'news' })}</span>
+                      <span>{t('Description', { ns: 'pageContent' })}</span>
                       {' - '}
                       <span className='uppercase text-red-600'>{locale}</span>
                     </div>
@@ -213,17 +198,17 @@ export const CreateUpdateNewsPage = () => {
                 </Form.Item>
                 <div>
                   <Typography.Text className='ant-form-item-label'>
-                    {t('Content', { ns: 'news' })}
+                    {t('Content', { ns: 'pageContent' })}
                     {' - '}
                     <span className='uppercase text-red-600'>{locale}</span>
                   </Typography.Text>
                   <CKEditor
                     editor={ClassicEditor}
                     key={language}
-                    data={newsBody}
+                    data={pageContentBody}
                     onChange={(e, editor) => {
                       const data = editor.getData();
-                      setNewsBody(data);
+                      setPageContentBody(data);
                     }}
                     config={{
                       language: {
@@ -260,7 +245,7 @@ export const CreateUpdateNewsPage = () => {
               <SeoForm />
             </Col>
             <Col span={8}>
-              <AuditedNews />
+              <AuditedPageContent />
             </Col>
           </Row>
         </Spin>

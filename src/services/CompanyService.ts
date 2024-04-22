@@ -18,7 +18,7 @@ export interface CompanyResponse {
   isDeleted: boolean;
   deleterId: string | null;
   deletionTime: string | null;
-  name: string | null;
+  name: string;
   businessCode: string | null;
   infoRegistered: string | null;
   address: string | null;

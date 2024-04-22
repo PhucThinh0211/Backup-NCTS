@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import {
-  Avatar,
   Button,
   Col,
   Form,
@@ -30,14 +29,7 @@ import { BannerInformation } from './BannerInformation';
 import { getLoading } from '@/store/loading';
 import { GettingBannerLoadingKey, SavingBannerLoadingKey } from '@/common';
 import { BannerPhotoUrlUploader } from './BannerPhotoUrlUploader';
-import vi from '@/assets/vn.svg';
-import en from '@/assets/us.svg';
 import { getLocale } from '@/store/persistState';
-
-const flag = {
-  vi,
-  en,
-};
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -120,27 +112,18 @@ export const CreateUpdateBannerPage = () => {
     dispatch(bannerActions.setBannerPhotoUrl(undefined));
   };
 
-  const FlagComponent = () => (
-    <Avatar
-      size={20}
-      shape='square'
-      src={locale ? flag[locale] : flag['vi']}
-      className='!rounded-none '
-    />
-  );
-
   return (
     <div className='p-4'>
       <Link
         to={'/admin/banners'}
-        className={'flex flex-row items-center gap-1 mb-4'}
+        className={'d-flex flex-row align-items-center gap-1 mb-1'}
       >
         <ArrowLeftOutlined style={{ fontSize: 12 }} />
         {t('Back', { ns: 'common' })}
       </Link>
-      <div className='flex flex-row justify-between items-center'>
+      <div className='d-flex flex-row justify-content-between align-items-center'>
         <div>
-          <Typography.Title level={4}>
+          <Typography.Title level={4} style={{ margin: 0 }}>
             {selectedBanner
               ? t('Update banner', { ns: 'banner' })
               : t('Create banner', { ns: 'banner' })}
@@ -156,7 +139,7 @@ export const CreateUpdateBannerPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+              <div className='w-full border-b-gray-500 rounded-2 bg-white p-4 shadow-sm'>
                 <Form.Item
                   name='upload'
                   label={t('Photo', { ns: 'banner' })}
@@ -172,7 +155,12 @@ export const CreateUpdateBannerPage = () => {
                   <BannerPhotoUrlUploader onImageDelete={onImageDelete} />
                 </Form.Item>
                 <Form.Item
-                  label={t('Title', { ns: 'banner' })}
+                  label={
+                    <div>
+                      <span>{t('Title', { ns: 'banner' })}</span>
+                      {' - '}
+                      <span className='text-uppercase text-danger'>{locale}</span>
+                    </div>}
                   name='title'
                   rules={[
                     { required: true, message: t('Title required') },
@@ -187,48 +175,60 @@ export const CreateUpdateBannerPage = () => {
                     },
                   ]}
                 >
-                  <Input suffix={<FlagComponent />} />
-                </Form.Item>
-                <Form.Item
-                  label={t('Button label', { ns: 'banner' })}
-                  name='buttonLabel'
-                  rules={[
-                    {
-                      max: 50,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 50,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input suffix={<FlagComponent />} />
-                </Form.Item>
-                <Form.Item
-                  label={t('Button link', { ns: 'banner' })}
-                  name='linkButton'
-                  rules={[
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}
-                >
                   <Input />
                 </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col sm={24} md={12}>
+                    <Form.Item
+                      label={
+                        <div>
+                          <span>{t('Button label', { ns: 'banner' })}</span>
+                          {' - '}
+                          <span className='text-uppercase text-danger'>{locale}</span>
+                        </div>}
+                      name='buttonLabel'
+                      rules={[
+                        {
+                          max: 50,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 50,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col sm={24} md={12}>
+                    <Form.Item
+                      label={t('Button link', { ns: 'banner' })}
+                      name='linkButton'
+                      rules={[
+                        {
+                          max: 500,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 500,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                  </Col>
+                </Row>
                 <Form.Item
                   label={
                     <div>
                       <span>{t('Description', { ns: 'banner' })}</span>
                       {' - '}
-                      <span className='uppercase'>{locale}</span>
+                      <span className='text-uppercase text-danger'>{locale}</span>
                     </div>
                   }
                   name='description'
@@ -261,7 +261,7 @@ export const CreateUpdateBannerPage = () => {
                 <Form.List name='pageUrls'>
                   {(fields, { add, remove }, { errors }) => (
                     <>
-                      <div className='w-full flex flex-row justify-between items-center'>
+                      <div className='w-100 d-flex flex-row justify-content-between align-items-center'>
                         <Typography.Text className='ant-form-item-label'>
                           {t('Page url', { ns: 'banner' })}
                         </Typography.Text>
@@ -277,7 +277,7 @@ export const CreateUpdateBannerPage = () => {
                       {fields.map((field) => (
                         <div
                           key={field.key}
-                          className='flex flex-row justify-between my-3 gap-2'
+                          className='d-flex flex-row justify-content-between my-3 gap-2'
                         >
                           <Form.Item
                             {...field}

@@ -10,12 +10,12 @@ export const AuditedInfo = ({
   value,
 }: AuditedInfoProps) => {
   return (
-    <div className='w-full flex flex-row justify-between gap-2'>
-      <Typography.Text strong className='whitespace-nowrap'>
+    <div className='w-100 d-flex flex-row justify-content-between gap-2'>
+      <Typography.Text strong style={{ whiteSpace: 'nowrap' }}>
         {label}
       </Typography.Text>
       {typeof value === 'string' ? (
-        <Typography.Text className={'text-right'}>{value}</Typography.Text>
+        <Typography.Text className={'text-end'}>{value}</Typography.Text>
       ) : (
         value
       )}

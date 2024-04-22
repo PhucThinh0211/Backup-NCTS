@@ -8,6 +8,8 @@ import { menuReducer } from './menu';
 import { bannerReducer } from './banner';
 import { contentReducer } from './content';
 import { companyReducer } from './company';
+import { pageContentReducer } from './pageContent';
+import { departmentReducer } from './department';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -18,6 +20,8 @@ const mainReducer = combineReducers({
   banner: bannerReducer,
   content: contentReducer,
   company: companyReducer,
+  pageContent: pageContentReducer,
+  department: departmentReducer
 });
 
 const rootReducers = (state: any, action: any) => {

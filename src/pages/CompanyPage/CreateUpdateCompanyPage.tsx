@@ -1,69 +1,41 @@
 import { useEffect } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Spin, Typography } from 'antd';
+import { Button, Col, Form, Input, Row, Spin, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import {
   companyActions,
+  getCompanies,
   getCompanyPhotoUrl,
-  getSelectedCompany,
   getSelectedCompanyDetail,
 } from '@/store/company';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { GettingCompanyLoadingKey, SavingCompanyLoadingKey } from '@/common';
 import { getLocale } from '@/store/persistState';
-import { CompanyInformation } from './CompanyInformation';
+import { AuditedCompany } from './AuditedCompany';
 
 export const CreateUpdateCompanyPage = () => {
   const [form] = Form.useForm();
-  const { t } = useTranslation(['common', 'company']);
+  const { t } = useTranslation(['common', 'company', 'leftPanel']);
   const dispatch = useAppDispatch();
 
   const locale = useAppSelector(getLocale());
-  const selectedCompany = useAppSelector(getSelectedCompany());
+  const companies = useAppSelector(getCompanies());
   const selectedCompanyDetail = useAppSelector(getSelectedCompanyDetail());
   const companyPhotoUrl = useAppSelector(getCompanyPhotoUrl());
   const isSubmmiting = useAppSelector(getLoading(SavingCompanyLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingCompanyLoadingKey));
 
-  const horizontalOptions = [
-    {
-      label: t('left', { ns: 'company' }),
-      value: 'left',
-    },
-    {
-      label: t('center', { ns: 'company' }),
-      value: 'center',
-    },
-    {
-      label: t('right', { ns: 'company' }),
-      value: 'right',
-    },
-  ];
-
-  const verticalOptions = [
-    {
-      label: t('top', { ns: 'company' }),
-      value: 'left',
-    },
-    {
-      label: t('middle', { ns: 'company' }),
-      value: 'middle',
-    },
-    {
-      label: t('bottom', { ns: 'company' }),
-      value: 'bottom',
-    },
-  ];
+  const currentCompany = companies?.items[0];
 
   useEffect(() => {
-    if (locale && selectedCompany) {
+    if (locale && currentCompany) {
       dispatch(
-        companyActions.getCompanyRequest({ companyId: selectedCompany.id })
+        companyActions.getCompanyRequest({ companyId: currentCompany.id })
       );
     }
-  }, [locale, selectedCompany]);
+  }, [locale, currentCompany]);
 
   useEffect(() => {
     if (selectedCompanyDetail) {
@@ -78,9 +50,9 @@ export const CreateUpdateCompanyPage = () => {
       ...values,
       photoUrl: companyPhotoUrl,
     };
-    if (selectedCompany) {
+    if (currentCompany) {
       // prettier-ignore
-      dispatch(companyActions.updateCompanyRequest({ companyId: selectedCompany.id, company: { ...selectedCompany, ...inputData }}));
+      dispatch(companyActions.updateCompanyRequest({ companyId: currentCompany.id, company: { ...currentCompany, ...inputData }}));
       return;
     }
     dispatch(companyActions.createCompanyRequest({ company: inputData }));
@@ -88,12 +60,10 @@ export const CreateUpdateCompanyPage = () => {
 
   return (
     <div className='p-4'>
-      <div className='flex flex-row justify-between items-center'>
+      <div className='d-flex flex-row justify-content-between align-items-center'>
         <div>
           <Typography.Title level={4}>
-            {selectedCompany
-              ? t('Update company', { ns: 'company' })
-              : t('Create company', { ns: 'company' })}
+            {t('Company', { ns: 'leftPanel' })}
           </Typography.Title>
         </div>
         <div>
@@ -106,12 +76,12 @@ export const CreateUpdateCompanyPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-4'>
             <Col span={16}>
-              <div className='w-full border-b-gray-500 rounded-md bg-white p-4 shadow-sm'>
+              <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
                 <Form.Item
-                  label={t('Title', { ns: 'company' })}
-                  name='title'
+                  label={t('Name', { ns: 'company' })}
+                  name='name'
                   rules={[
-                    { required: true, message: t('Title required') },
+                    { required: true, message: t('Name required') },
                     {
                       max: 500,
                       min: 0,
@@ -126,25 +96,109 @@ export const CreateUpdateCompanyPage = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label={t('Button label', { ns: 'company' })}
-                  name='buttonLabel'
+                  label={t('Address', { ns: 'company' })}
+                  name='address'
                   rules={[
+                    { required: true, message: t('Address required') },
                     {
-                      max: 50,
+                      max: 1000,
                       min: 0,
                       message: t('StringRange', {
                         ns: 'common',
                         range1: 0,
-                        range2: 50,
+                        range2: 1000,
                       }),
                     },
                   ]}
                 >
                   <Input />
                 </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Phone', { ns: 'company' })}
+                      name='phone'
+                      rules={[
+                        {
+                          max: 200,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 200,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Fax', { ns: 'company' })}
+                      name='fax'
+                      rules={[
+                        {
+                          max: 200,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 200,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                  </Col>
+                </Row>
+                <Row gutter={[10, 10]}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Sita', { ns: 'company' })}
+                      name='sita'
+                      rules={[
+                        {
+                          max: 200,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 200,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Email', { ns: 'company' })}
+                      name='email'
+                      rules={[
+                        {
+                          max: 200,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 200,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                  </Col>
+                </Row>
+
                 <Form.Item
-                  label={t('Button link', { ns: 'company' })}
-                  name='linkButton'
+                  label={t('Bank name', { ns: 'company' })}
+                  name='bankName'
                   rules={[
                     {
                       max: 500,
@@ -160,44 +214,101 @@ export const CreateUpdateCompanyPage = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label={
-                    <div>
-                      <span>{t('Description', { ns: 'company' })}</span>
-                      {' - '}
-                      <span className='uppercase'>{locale}</span>
-                    </div>
-                  }
-                  name='description'
+                  label={t('Bank branch', { ns: 'company' })}
+                  name='bankBranch'
                   rules={[
                     {
-                      max: 2000,
+                      max: 500,
                       min: 0,
                       message: t('StringRange', {
                         ns: 'common',
                         range1: 0,
-                        range2: 2000,
+                        range2: 500,
                       }),
                     },
                   ]}
                 >
-                  <Input.TextArea />
+                  <Input />
+                </Form.Item>
+
+                <Row gutter={[10, 10]}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Account vnd', { ns: 'company' })}
+                      name='accountVnd'
+                      rules={[
+                        {
+                          max: 20,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 20,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      label={t('Account usd', { ns: 'company' })}
+                      name='accountUsd'
+                      rules={[
+                        {
+                          max: 20,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 20,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Form.Item
+                  label={t('Website', { ns: 'company' })}
+                  name='website'
+                  rules={[
+                    {
+                      max: 200,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 200,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input />
                 </Form.Item>
                 <Form.Item
-                  label={t('Horizontal', { ns: 'company' })}
-                  name='horizontal'
+                  label={t('Google map embed', { ns: 'company' })}
+                  name='googleMapsEmbed'
+                  rules={[
+                    {
+                      max: 4000,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 4000,
+                      }),
+                    },
+                  ]}
                 >
-                  <Select options={horizontalOptions} />
-                </Form.Item>
-                <Form.Item
-                  label={t('Vertical', { ns: 'company' })}
-                  name='vertical'
-                >
-                  <Select options={verticalOptions} />
+                  <Input />
                 </Form.Item>
               </div>
             </Col>
             <Col span={8}>
-              <CompanyInformation />
+              <AuditedCompany />
             </Col>
           </Row>
         </Spin>

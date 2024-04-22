@@ -9,3 +9,8 @@
 .leftSider .ant-menu-sub{
     background-color: transparent !important;
 }
+.leftSider .ant-menu-item-icon {
+    height: 18px;
+    width: 18px;
+    object-fit: cover;
+}

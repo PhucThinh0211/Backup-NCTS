@@ -1,19 +1,24 @@
-import { Outlet } from 'react-router-dom';
-import { Layout } from 'antd';
-import { AdminHeader, LeftPanel } from '.';
-import './AdminLayout.css';
-import { useAppDispatch } from '@/store/hooks';
 import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import './AdminLayout.css';
+
+import { Layout } from 'antd';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { companyActions } from '@/store/company';
+import { getLanguage } from '@/store/persistState';
+
+import { AdminHeader, LeftPanel } from '.';
 
 const { Content } = Layout;
 
 export const AdminLayout = () => {
+  const language = useAppSelector(getLanguage());
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(companyActions.getCompaniesRequest({ MaxResultCount: 1 }));
-  }, []);
+  }, [language]);
 
   return (
     <Layout className='w-screen h-screen relative'>

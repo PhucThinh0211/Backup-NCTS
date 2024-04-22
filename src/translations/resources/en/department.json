@@ -1,0 +1,23 @@
+{
+    "Find department": "Find department",
+    "ID": "ID",
+    "Name": "Name",
+    "Name required": "Name is required",
+    "Code": "Code",
+    "Code required": "Code is required",
+    "Contacts": "Contacts",
+    "Contacts required": "Contacts is required",
+    "Title": "Title",
+    "Title required": "Title is required",
+    "Contact num": "Value",
+    "Contact num required": "Value is required",
+    "Type": "Type",
+    "Type required": "Type is required",
+    "Email": "Email",
+    "Ext": "Ext",
+    "Fax": "Fax",
+    "Phone": "Phone",
+    "Add new department": "Add new department",
+    "Create department": "Create department",
+    "Update department": "Update department information"
+  }
