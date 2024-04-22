@@ -205,7 +205,7 @@ export const NewsListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.pageSize,
+                pageSize: defaultPagingParams.MaxResultCount,
                 total: dataSource?.length || 0,
                 responsive: true,
                 showTotal,

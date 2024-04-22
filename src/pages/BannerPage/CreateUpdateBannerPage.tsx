@@ -1,15 +1,6 @@
 import { useEffect } from 'react';
 
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Row,
-  Select,
-  Spin,
-  Typography,
-} from 'antd';
+import { Button, Col, Form, Input, Row, Select, Spin, Typography } from 'antd';
 import {
   ArrowLeftOutlined,
   MinusCircleOutlined,
@@ -137,7 +128,7 @@ export const CreateUpdateBannerPage = () => {
       </div>
       <Form form={form} layout='vertical' onFinish={handleSaveBanner}>
         <Spin spinning={isLoading}>
-          <Row gutter={[10, 10]} className='mt-4'>
+          <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
               <div className='w-full border-b-gray-500 rounded-2 bg-white p-4 shadow-sm'>
                 <Form.Item
@@ -159,8 +150,11 @@ export const CreateUpdateBannerPage = () => {
                     <div>
                       <span>{t('Title', { ns: 'banner' })}</span>
                       {' - '}
-                      <span className='text-uppercase text-danger'>{locale}</span>
-                    </div>}
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span>
+                    </div>
+                  }
                   name='title'
                   rules={[
                     { required: true, message: t('Title required') },
@@ -184,8 +178,11 @@ export const CreateUpdateBannerPage = () => {
                         <div>
                           <span>{t('Button label', { ns: 'banner' })}</span>
                           {' - '}
-                          <span className='text-uppercase text-danger'>{locale}</span>
-                        </div>}
+                          <span className='text-uppercase text-danger'>
+                            {locale}
+                          </span>
+                        </div>
+                      }
                       name='buttonLabel'
                       rules={[
                         {
@@ -220,7 +217,6 @@ export const CreateUpdateBannerPage = () => {
                     >
                       <Input />
                     </Form.Item>
-
                   </Col>
                 </Row>
                 <Form.Item
@@ -228,7 +224,9 @@ export const CreateUpdateBannerPage = () => {
                     <div>
                       <span>{t('Description', { ns: 'banner' })}</span>
                       {' - '}
-                      <span className='text-uppercase text-danger'>{locale}</span>
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span>
                     </div>
                   }
                   name='description'

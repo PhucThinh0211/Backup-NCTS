@@ -1,5 +1,5 @@
 {
-    "Find department": "Find department",
+    "Find department": "Search",
     "ID": "ID",
     "Name": "Name",
     "Name required": "Name is required",
@@ -17,7 +17,8 @@
     "Ext": "Ext",
     "Fax": "Fax",
     "Phone": "Phone",
-    "Add new department": "Add new department",
+    "Add new": "Add new",
     "Create department": "Create department",
-    "Update department": "Update department information"
+    "Update department": "Update information",
+    "Update contact": "Update contact"
   }

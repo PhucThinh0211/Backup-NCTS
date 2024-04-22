@@ -16,9 +16,13 @@ import {
   RemovingDepartmentLoadingKey,
   SavingDepartmentLoadingKey,
   GettingDepartmentLoadingKey,
+  SavingContactLoadingKey,
+  RemovingContactLoadingKey,
 } from '@/common/loadingKey';
 import { DepartmentService } from '@/services/DepartmentService';
 import Utils from '@/utils';
+import { hideModal } from '../modal';
+import { CreateUpdateContactModalName } from '@/common';
 
 const getDepartmentsRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -132,7 +136,7 @@ const updateDepartmentRequest$: RootEpic = (action$, state$) => {
           switchMap((updatedDepartment) => {
             const createTranslationInput = {
               language: locale,
-              name: department.name
+              name: department.name,
             };
             return DepartmentService.Post.createDepartmentTranslations(
               updatedDepartment.id,
@@ -144,7 +148,9 @@ const updateDepartmentRequest$: RootEpic = (action$, state$) => {
                 }).pipe(
                   mergeMap((departmentsResult) => {
                     Utils.successNotification();
-                    return [departmentActions.setDepartments(departmentsResult)];
+                    return [
+                      departmentActions.setDepartments(departmentsResult),
+                    ];
                   }),
                   catchError((errors) => {
                     Utils.errorHandling(errors);
@@ -210,6 +216,146 @@ const removeDepartmentRequest$: RootEpic = (action$, state$) => {
     })
   );
 };
+const createContactRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(departmentActions.createContactRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { contact, departmentId } = action.payload;
+      const { locale } = state.persistApp;
+      return concat(
+        [startLoading({ key: SavingContactLoadingKey })],
+        DepartmentService.Post.createContacts(departmentId, [contact]).pipe(
+          switchMap((createdContact) => {
+            const createTranslationInput = {
+              language: locale,
+              title: createdContact.title,
+            };
+            return DepartmentService.Post.createContactTranslations(
+              createdContact.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return DepartmentService.Get.getDepartmentById(
+                  departmentId
+                ).pipe(
+                  mergeMap((department) => {
+                    Utils.successNotification();
+                    return [
+                      departmentActions.setSelectedDepartment(department),
+                      hideModal({ key: CreateUpdateContactModalName }),
+                    ];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [];
+                  })
+                );
+              }),
+              catchError((errors) => {
+                Utils.errorHandling(errors);
+                return [];
+              })
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: SavingContactLoadingKey })]
+      );
+    })
+  );
+};
+
+const updateContactRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(departmentActions.updateContactRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { contact, contactId, departmentId } = action.payload;
+      const { locale } = state.persistApp;
+      return concat(
+        [startLoading({ key: SavingContactLoadingKey })],
+        DepartmentService.Put.updateContact(contactId, contact).pipe(
+          switchMap(() => {
+            const createTranslationInput = {
+              language: locale,
+              title: contact.title,
+            };
+            return DepartmentService.Post.createContactTranslations(
+              contactId,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
+                return DepartmentService.Get.getDepartmentById(
+                  departmentId
+                ).pipe(
+                  mergeMap((department) => {
+                    Utils.successNotification();
+                    return [
+                      departmentActions.setSelectedDepartment(department),
+                      hideModal({ key: CreateUpdateContactModalName }),
+                    ];
+                  }),
+                  catchError((errors) => {
+                    Utils.errorHandling(errors);
+                    return [];
+                  })
+                );
+              }),
+              catchError((errors) => {
+                Utils.errorHandling(errors);
+                return [];
+              })
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: SavingContactLoadingKey })]
+      );
+    })
+  );
+};
+
+const removeContactRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(departmentActions.removeContactRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action]) => {
+      const { contactId, departmentId } = action.payload;
+      return concat(
+        [startLoading({ key: RemovingContactLoadingKey })],
+        DepartmentService.delete.removeContact(contactId).pipe(
+          switchMap(() => {
+            return DepartmentService.Get.getDepartmentById(departmentId).pipe(
+              mergeMap((department) => {
+                Utils.successNotification();
+                return [
+                  departmentActions.setSelectedDepartment(department),
+                  hideModal({ key: CreateUpdateContactModalName }),
+                ];
+              }),
+              catchError((errors) => {
+                Utils.errorHandling(errors);
+                return [];
+              })
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: RemovingContactLoadingKey })]
+      );
+    })
+  );
+};
 
 const getDepartmentRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -246,4 +392,7 @@ export const departmentEpics = [
   updateDepartmentRequest$,
   removeDepartmentRequest$,
   getDepartmentRequest$,
+  createContactRequest$,
+  updateContactRequest$,
+  removeContactRequest$,
 ];

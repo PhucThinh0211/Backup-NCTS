@@ -21,11 +21,16 @@ export const SavingCompanyLoadingKey = 'SavingCompanyLoadingKey';
 export const RemovingCompanyLoadingKey = 'RemovingCompanyLoadingKey';
 
 export const GettingPageContentLoadingKey = 'GettingPageContentLoadingKey';
-export const GettingPageContentListLoadingKey = 'GettingPageContentListLoadingKey';
+export const GettingPageContentListLoadingKey =
+  'GettingPageContentListLoadingKey';
 export const SavingPageContentLoadingKey = 'SavingPageContentLoadingKey';
 export const RemovingPageContentLoadingKey = 'RemovingPageContentLoadingKey';
 
 export const GettingDepartmentLoadingKey = 'GettingDepartmentLoadingKey';
-export const GettingDepartmentListLoadingKey = 'GettingDepartmentListLoadingKey';
+export const GettingDepartmentListLoadingKey =
+  'GettingDepartmentListLoadingKey';
 export const SavingDepartmentLoadingKey = 'SavingDepartmentLoadingKey';
 export const RemovingDepartmentLoadingKey = 'RemovingDepartmentLoadingKey';
+
+export const SavingContactLoadingKey = 'SavingContactLoadingKey';
+export const RemovingContactLoadingKey = 'RemovingContactLoadingKey';
