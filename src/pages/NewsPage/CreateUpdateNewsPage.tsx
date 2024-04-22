@@ -1,15 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Row,
-  Select,
-  Spin,
-  Typography,
-} from 'antd';
+import { Button, Col, Form, Input, Row, Select, Spin, Typography } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -140,7 +131,7 @@ export const CreateUpdateNewsPage = () => {
       </div>
       <Form form={form} layout='vertical' onFinish={handleSaveContent}>
         <Spin spinning={isLoading}>
-          <Row gutter={[10, 10]} className='mt-4'>
+          <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm mb-4'>
                 <Form.Item

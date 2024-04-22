@@ -4,12 +4,15 @@ import {
   DepartmentResponse,
   DepartmentsPagingResponse,
   CreateUpdateDepartmentPayload,
+  ContactResponse,
+  CreateUpdateContactPayload,
 } from '@/services/DepartmentService';
 
 interface DepartmentState {
   departments?: DepartmentsPagingResponse;
   selectedDepartment?: DepartmentResponse;
   selectedDepartmentDetail?: DepartmentResponse;
+  selectedContact?: ContactResponse;
   queryParams: any;
 }
 
@@ -26,6 +29,12 @@ const departmentSlice = createSlice({
       action: PayloadAction<DepartmentResponse | undefined>
     ) => {
       state.selectedDepartment = action.payload;
+    },
+    setSelectedContact: (
+      state,
+      action: PayloadAction<ContactResponse | undefined>
+    ) => {
+      state.selectedContact = action.payload;
     },
     setSelectedDepartmentDetail: (
       state,
@@ -55,6 +64,25 @@ const departmentSlice = createSlice({
     removeDepartmentRequest: (
       state,
       action: PayloadAction<{ departmentId: string }>
+    ) => {},
+    createContactRequest: (
+      state,
+      action: PayloadAction<{
+        contact: CreateUpdateContactPayload;
+        departmentId: string;
+      }>
+    ) => {},
+    updateContactRequest: (
+      state,
+      action: PayloadAction<{
+        contact: CreateUpdateContactPayload;
+        contactId: string;
+        departmentId: string;
+      }>
+    ) => {},
+    removeContactRequest: (
+      state,
+      action: PayloadAction<{ contactId: string; departmentId: string }>
     ) => {},
     setDepartments: (state, action) => {
       state.departments = action.payload;

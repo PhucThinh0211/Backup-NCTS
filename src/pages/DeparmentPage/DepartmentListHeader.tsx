@@ -31,8 +31,12 @@ export const DepartmentListHeader = () => {
         </Typography.Title>
       </Space>
       <Space>
-        <Button type='primary' icon={<PlusOutlined />} onClick={createDepartment}>
-          {t('Add new department')}
+        <Button
+          type='primary'
+          icon={<PlusOutlined />}
+          onClick={createDepartment}
+        >
+          {t('Add new')}
         </Button>
         {/* <Button
           icon={<DashOutlined />}

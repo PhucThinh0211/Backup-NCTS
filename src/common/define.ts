@@ -20,7 +20,7 @@ export interface CustomIconComponentProps {
 
 export const defaultPagingParams = {
   MaxResultCount: 1000,
-  pageSize: 25
+  // pageSize: 25
 };
 
 export const largePagingParams = {

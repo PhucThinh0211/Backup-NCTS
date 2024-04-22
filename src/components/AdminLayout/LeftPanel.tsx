@@ -14,10 +14,8 @@ import PageSvg from '@/assets/page.svg';
 import BlogSvg from '@/assets/blog.svg';
 import MediaSvg from '@/assets/media.svg';
 import ContactSvg from '@/assets/contact.svg';
-import MemberSvg from '@/assets/member.svg';
-import UserSvg from '@/assets/user.svg';
-import { getCompanies } from '@/store/company';
-import { Company } from '../Company';
+// import MemberSvg from '@/assets/member.svg';
+// import UserSvg from '@/assets/user.svg';
 
 const { Sider } = Layout;
 
@@ -31,17 +29,11 @@ export const LeftPanel = (props: SiderProps) => {
   const [openKeys, setOpenKeys] = useState(['/']);
 
   const activeMenu = useAppSelector(getActiveMenu());
-  const companies = useAppSelector(getCompanies());
-  const currentCompany = companies?.items[0];
 
   const adminMenu: MenuItem[] = [
     {
-      label: currentCompany ? (
-        <Company company={currentCompany} />
-      ) : (
-        t('Company')
-      ),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }}/>,
+      label: t('Company'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
       key: '/admin/company',
     },
     {
@@ -93,16 +85,16 @@ export const LeftPanel = (props: SiderProps) => {
       icon: <img src={ContactSvg} alt='contact icon' />,
       key: '/admin/contacts',
     },
-    {
-      label: t('Members'),
-      icon: <img src={MemberSvg} alt='member icon' />,
-      key: '/admin/members',
-    },
-    {
-      label: t('Users'),
-      icon: <img src={UserSvg} alt='user icon' />,
-      key: '/admin/users',
-    },
+    // {
+    //   label: t('Members'),
+    //   icon: <img src={MemberSvg} alt='member icon' />,
+    //   key: '/admin/members',
+    // },
+    // {
+    //   label: t('Users'),
+    //   icon: <img src={UserSvg} alt='user icon' />,
+    //   key: '/admin/users',
+    // },
   ];
 
   useEffect(() => {

@@ -161,7 +161,7 @@ export const CreateUpdateMenuPage = () => {
         layout='vertical'
       >
         <Spin spinning={isLoading}>
-          <Row gutter={[10, 10]} className='mt-4'>
+          <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
                 <Row>
