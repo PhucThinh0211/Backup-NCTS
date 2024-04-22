@@ -1,7 +1,5 @@
 import { QuickLookup } from '@/components';
 import { Avatar, Carousel } from 'antd';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Home = () => {
   return (
@@ -21,8 +19,8 @@ export const Home = () => {
       </div>
       <button className="btn btn-primary">Bootstrap Primary button</button>
       
-      <Avatar style={{ color: 'red' }} className=''>
-        <FontAwesomeIcon icon={fas.faEnvelope} style={{ color: 'yellow' }} className='' />
+      <Avatar size={64} style={{ backgroundColor: 'red' }}>
+        <i className="fa-brands fa-twitter fa-xl" style={{ color: 'orange' }}></i>
       </Avatar>
     </>
   );
