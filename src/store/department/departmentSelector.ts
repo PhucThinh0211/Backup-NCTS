@@ -6,7 +6,13 @@ import { RootState } from '@/store/types';
 export const getDepartmentState = (state: RootState) => state.department;
 
 export function getSelectedDepartment() {
-  return createSelector([getDepartmentState], (state) => state.selectedDepartment);
+  return createSelector(
+    [getDepartmentState],
+    (state) => state.selectedDepartment
+  );
+}
+export function getSelectedContact() {
+  return createSelector([getDepartmentState], (state) => state.selectedContact);
 }
 
 export function getDepartments() {

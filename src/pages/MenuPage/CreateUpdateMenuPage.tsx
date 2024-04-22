@@ -25,7 +25,11 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { AuditedMenu } from './AuditedMenu';
 import Utils from '@/utils';
 import { getLoading } from '@/store/loading';
-import { GettingMenuLoadingKey, SavingMenuLoadingKey, TreeItem } from '@/common';
+import {
+  GettingMenuLoadingKey,
+  SavingMenuLoadingKey,
+  TreeItem,
+} from '@/common';
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
 import { getLocale } from '@/store/persistState';
@@ -49,12 +53,15 @@ export const CreateUpdateMenuPage = () => {
   const isLoading = useAppSelector(getLoading(GettingMenuLoadingKey));
   const menuTitle = Form.useWatch('label', form);
   const parentId = Form.useWatch('parentId', form);
-  const parentMenu = useMemo(() => menus?.items.find(item => item.id === parentId), [parentId, menus]);
+  const parentMenu = useMemo(
+    () => menus?.items.find((item) => item.id === parentId),
+    [parentId, menus]
+  );
 
   const sortedMenus: MenuResponse[] = Utils.deepClone(menus?.items || []);
   sortedMenus.sort((a, b) => {
     return a.sortSeq - b.sortSeq;
-  })
+  });
 
   useEffect(() => {
     if (menuTitle && !selectedMenu) {
@@ -64,11 +71,13 @@ export const CreateUpdateMenuPage = () => {
 
   useEffect(() => {
     if (locale) {
-      dispatch(menuActions.getMenusRequest({
-        headers: {
-          'Accept-Language': locale || 'vi',
-        },
-      }));
+      dispatch(
+        menuActions.getMenusRequest({
+          headers: {
+            'Accept-Language': locale || 'vi',
+          },
+        })
+      );
     }
   }, [locale]);
 
@@ -77,14 +86,17 @@ export const CreateUpdateMenuPage = () => {
       dispatch(menuActions.getMenuRequest({ menuId: selectedMenu.id }));
     }
   }, [locale, selectedMenu]);
-  
+
   useEffect(() => {
     if (selectedMenuDetail) {
       const lastIndexOfSlash = selectedMenuDetail.url?.lastIndexOf('/');
 
       form.setFieldsValue({
         ...selectedMenuDetail,
-        url: selectedMenuDetail.url?.slice(lastIndexOfSlash, selectedMenuDetail.url.length)
+        url: selectedMenuDetail.url?.slice(
+          lastIndexOfSlash,
+          selectedMenuDetail.url.length
+        ),
       });
     } else {
       form.resetFields();
@@ -99,7 +111,7 @@ export const CreateUpdateMenuPage = () => {
       inputData.url = '/' + values.url.trim();
     }
     if (parentMenu) {
-      inputData.url = parentMenu.url + inputData.url
+      inputData.url = parentMenu.url + inputData.url;
     }
     if (selectedMenu) {
       // prettier-ignore
@@ -113,9 +125,11 @@ export const CreateUpdateMenuPage = () => {
     return {
       title: item.label,
       value: item.id,
-      children: item.children ? item.children.map(child => mapTreeToSelectOption(child)) : undefined
-    }
-  }
+      children: item.children
+        ? item.children.map((child) => mapTreeToSelectOption(child))
+        : undefined,
+    };
+  };
 
   return (
     <div className='p-4'>
@@ -140,9 +154,14 @@ export const CreateUpdateMenuPage = () => {
           </Button>
         </div>
       </div>
-      <Form autoComplete='off' form={form} onFinish={handleSaveMenu} layout='vertical'>
+      <Form
+        autoComplete='off'
+        form={form}
+        onFinish={handleSaveMenu}
+        layout='vertical'
+      >
         <Spin spinning={isLoading}>
-          <Row gutter={[10, 10]} className='mt-4'>
+          <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
                 <Row>
@@ -176,7 +195,9 @@ export const CreateUpdateMenuPage = () => {
                         },
                       ]}
                     >
-                      <Input addonBefore={parentMenu ? parentMenu.url : undefined} />
+                      <Input
+                        addonBefore={parentMenu ? parentMenu.url : undefined}
+                      />
                     </Form.Item>
                     <Form.Item
                       label={t('Parent menu', { ns: 'menu' })}
@@ -184,11 +205,10 @@ export const CreateUpdateMenuPage = () => {
                     >
                       <TreeSelect
                         treeData={Utils.buildTree(
-                          sortedMenus
-                          .filter((item) => item.id !== selectedMenuDetail?.id))
-                          .map((item) => mapTreeToSelectOption(item)
-                        )
-                        }
+                          sortedMenus.filter(
+                            (item) => item.id !== selectedMenuDetail?.id
+                          )
+                        ).map((item) => mapTreeToSelectOption(item))}
                         allowClear
                         treeDefaultExpandAll
                       />

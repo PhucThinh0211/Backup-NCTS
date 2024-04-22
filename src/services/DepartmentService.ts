@@ -9,11 +9,7 @@ export interface DepartmentsPagingResponse extends PagingResponse {
   items: DepartmentResponse[];
 }
 
-export type ContactType =
-  | 'Phone'
-  | 'Ext'
-  | 'Fax'
-  | 'Email';
+export type ContactType = 'Phone' | 'Ext' | 'Fax' | 'Email';
 
 export interface ContactResponse {
   id: string;
@@ -46,13 +42,13 @@ export interface DepartmentResponse {
   name: string;
   sortSeq: number;
   language: string;
-  contacts: ContactResponse[]
+  contacts: ContactResponse[];
 }
 export interface CreateUpdateDepartmentPayload {
   code: string;
   name: string;
   sortSeq?: number;
-  contacts?: CreateUpdateContactPayload[]
+  contacts?: CreateUpdateContactPayload[];
 }
 export interface CreateUpdateContactPayload {
   type: ContactType;
@@ -65,6 +61,10 @@ export interface CreateUpdateDepartmentTranslationPayload {
   language: string;
   name: string;
 }
+export interface CreateUpdateContactTranslationPayload {
+  language: string;
+  title: string | null;
+}
 
 class DepartmentController {
   public Get = {
@@ -72,7 +72,10 @@ class DepartmentController {
       return HttpClient.get(`${apiUrl}/api/app/department`, options);
     },
     getDepartmentById: (departmentId: string, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/department/${departmentId}`, options);
+      return HttpClient.get(
+        `${apiUrl}/api/app/department/${departmentId}`,
+        options
+      );
     },
   };
 
@@ -94,6 +97,28 @@ class DepartmentController {
         options
       );
     },
+    createContacts: (
+      departmentId: string,
+      input: CreateUpdateContactPayload[],
+      options?: RequestOptions
+    ) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/department/${departmentId}/contact`,
+        input,
+        options
+      );
+    },
+    createContactTranslations: (
+      contactId: string,
+      input: CreateUpdateContactTranslationPayload,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/department/contact-translations/${contactId}`,
+        input,
+        options
+      );
+    },
   };
 
   public Put = {
@@ -108,12 +133,29 @@ class DepartmentController {
         options
       );
     },
+    updateContact: (
+      contactId: string,
+      input: CreateUpdateContactPayload,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.put(
+        `${apiUrl}/api/app/department/contact/${contactId}`,
+        input,
+        options
+      );
+    },
   };
 
   public delete = {
     removeDepartment: (departmentId: string, options?: RequestOptions) => {
       return HttpClient.delete(
         `${apiUrl}/api/app/department/${departmentId}`,
+        options
+      );
+    },
+    removeContact: (contactId: string, options?: RequestOptions) => {
+      return HttpClient.delete(
+        `${apiUrl}/api/app/department/contact/${contactId}`,
         options
       );
     },
