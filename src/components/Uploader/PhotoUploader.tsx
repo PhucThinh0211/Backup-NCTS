@@ -1,27 +1,26 @@
 import { Button, Upload, UploadProps, Image, UploadFile } from 'antd';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { getEnvVars } from '@/enviroment';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { bannerActions, getBannerPhotoUrl } from '@/store/banner';
 import Utils from '@/utils';
 import { UploadChangeParam } from 'antd/es/upload';
 import { uploadedPhotoUrl } from '@/common';
 const { apiUrl } = getEnvVars();
 
-interface BannerPhotoUrlUploaderProps {
+interface PhotoUploaderProps {
   onImageDelete?: () => void;
   fileList?: UploadFile[];
+  photoUrl?: string | undefined;
+  onPhotoUrlChange:(url: string | undefined) => void;
   onChange?: (info: UploadChangeParam<UploadFile<any>>) => void;
 }
 
-export const BannerPhotoUrlUploader = ({
+export const PhotoUploader = ({
   onImageDelete,
   fileList,
   onChange,
-}: BannerPhotoUrlUploaderProps) => {
-  const dispatch = useAppDispatch();
-
-  const bannerPhotoUrl = useAppSelector(getBannerPhotoUrl());
+  photoUrl,
+  onPhotoUrlChange
+}: PhotoUploaderProps) => {
 
   const uploadProps: UploadProps = {
     fileList,
@@ -39,17 +38,17 @@ export const BannerPhotoUrlUploader = ({
       onChange && onChange(info);
       const { status } = info.file;
       if (status === 'done') {
-        dispatch(bannerActions.setBannerPhotoUrl(`${info.file.response}`));
+        onPhotoUrlChange(`${info.file.response}`);
       } else if (status === 'error') {
-        dispatch(bannerActions.setBannerPhotoUrl(undefined));
+        onPhotoUrlChange(undefined);
         Utils.errorHandling(info.file.response);
       }
     },
   };
-  return bannerPhotoUrl ? (
+  return photoUrl ? (
     <div className='d-flex align-items-center justify-content-center position-relative'>
       <Image
-        src={`${uploadedPhotoUrl(bannerPhotoUrl)}`}
+        src={`${uploadedPhotoUrl(photoUrl)}`}
         style={{
           backgroundColor: '#00000073',
           maxHeight: 300,

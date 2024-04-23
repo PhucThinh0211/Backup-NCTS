@@ -33,6 +33,7 @@ export interface CompanyResponse {
   accountUsd: string | null;
   googleMapsEmbed: string | null;
   language: string | null;
+  logoUrl: string | null;
 }
 export interface CreateUpdateCompanyPayload {
   name: string;

@@ -9,7 +9,7 @@ import { pageContentActions } from '@/store/pageContent';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 
 export const PageContentListHeader = () => {
-  const { t } = useTranslation('news');
+  const { t } = useTranslation('pageContent');
   const navigate = useNavigate();
   const activeMenu = useAppSelector(getActiveMenu());
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export const PageContentListHeader = () => {
     dispatch(pageContentActions.setSelectedPageContentDetail(undefined));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news/create');
+    navigate('/admin/pages/create');
   };
 
   return (
@@ -32,7 +32,7 @@ export const PageContentListHeader = () => {
       </Space>
       <Space>
         <Button type='primary' icon={<PlusOutlined />} onClick={createPageContent}>
-          {t('Add news')}
+          {t('Add new')}
         </Button>
         {/* <Button
           icon={<DashOutlined />}

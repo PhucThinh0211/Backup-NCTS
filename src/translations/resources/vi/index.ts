@@ -5,6 +5,7 @@ import menu from './menu.json';
 import news from './news.json';
 import company from './company.json';
 import department from './department.json';
+import pageContent from './pageContent.json';
 
 // eslint-disable-next-line
 export default {
@@ -15,4 +16,5 @@ export default {
   news,
   company,
   department,
+  pageContent
 };
