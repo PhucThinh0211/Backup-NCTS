@@ -199,6 +199,9 @@ export const CreateUpdateMenuPage = () => {
                         addonBefore={parentMenu ? parentMenu.url : undefined}
                       />
                     </Form.Item>
+                    <Form.Item label={t('Icons', { ns: 'menu' })} name='icons'>
+                      <Input />
+                    </Form.Item>
                     <Form.Item
                       label={t('Parent menu', { ns: 'menu' })}
                       name='parentId'
