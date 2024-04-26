@@ -133,7 +133,7 @@ export const CreateUpdateNewsPage = () => {
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
-              <div className='w-100 border-bottom rounded-2 bg-white p-3 shadow-sm mb-2'>
+              <div className='w-100 border-bottom rounded-2 bg-white p-3 shadow-sm'>
                 <Form.Item
                   name='upload'
                   label={t('Photo', { ns: 'news' })}
@@ -248,10 +248,10 @@ export const CreateUpdateNewsPage = () => {
                   />
                 </div>
               </div>
-              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedNews />
+              <SeoForm />
             </Col>
           </Row>
         </Spin>

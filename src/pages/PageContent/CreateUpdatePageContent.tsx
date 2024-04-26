@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Spin, TreeSelect, Typography } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Spin,
+  TreeSelect,
+  Typography,
+} from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -12,7 +22,10 @@ import {
 } from '@/store/pageContent';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { GettingPageContentLoadingKey, SavingPageContentLoadingKey } from '@/common';
+import {
+  GettingPageContentLoadingKey,
+  SavingPageContentLoadingKey,
+} from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
 import { AuditedPageContent } from './AuditedPageContent';
@@ -20,9 +33,10 @@ import { AuditedPageContent } from './AuditedPageContent';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
-import { SeoForm } from './SeoForm';
+
 import Utils from '@/utils';
 import { PageContentType } from '@/services/PageContentService';
+import { SeoForm } from '../NewsPage/SeoForm';
 
 export const CreateUpdatePageContent = () => {
   const [pageContentBody, setPageContentBody] = useState('');
@@ -33,12 +47,14 @@ export const CreateUpdatePageContent = () => {
   const language = useAppSelector(getLanguage());
   const locale = useAppSelector(getLocale());
   const selectedPageContent = useAppSelector(getSelectedPageContent());
-  const selectedPageContentDetail = useAppSelector(getSelectedPageContentDetail());
+  const selectedPageContentDetail = useAppSelector(
+    getSelectedPageContentDetail()
+  );
   const isSubmmiting = useAppSelector(getLoading(SavingPageContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingPageContentLoadingKey));
 
-  const pageTitle = Form.useWatch("title", form);
-  const pageType = Form.useWatch("pageType", form);
+  const pageTitle = Form.useWatch('title', form);
+  const pageType = Form.useWatch('pageType', form);
 
   const newsTypes = [
     {
@@ -120,7 +136,7 @@ export const CreateUpdatePageContent = () => {
           label: t('Register', { ns: 'pageContent' }),
           value: PageContentType.REGISTER,
         },
-      ]
+      ],
     },
   ];
 
@@ -133,7 +149,9 @@ export const CreateUpdatePageContent = () => {
   useEffect(() => {
     if (locale && selectedPageContent) {
       dispatch(
-        pageContentActions.getPageContentRequest({ pageContentId: selectedPageContent.id })
+        pageContentActions.getPageContentRequest({
+          pageContentId: selectedPageContent.id,
+        })
       );
     }
   }, [locale, selectedPageContent]);
@@ -142,7 +160,7 @@ export const CreateUpdatePageContent = () => {
     if (selectedPageContentDetail) {
       form.setFieldsValue({
         ...selectedPageContentDetail,
-        pageType: selectedPageContentDetail.pageType || PageContentType.DYNAMIC
+        pageType: selectedPageContentDetail.pageType || PageContentType.DYNAMIC,
       });
       setPageContentBody(selectedPageContentDetail.content || '');
     } else {
@@ -155,7 +173,10 @@ export const CreateUpdatePageContent = () => {
     const inputData = {
       ...values,
       content: pageContentBody,
-      seo: !!values.seo && JSON.stringify(values.seo) !== '{}' ? values.seo : undefined  
+      seo:
+        !!values.seo && JSON.stringify(values.seo) !== '{}'
+          ? values.seo
+          : undefined,
     };
 
     if (selectedPageContentDetail) {
@@ -163,90 +184,104 @@ export const CreateUpdatePageContent = () => {
       dispatch(pageContentActions.updatePageContentRequest({ pageContentId: selectedPageContentDetail.id, pageContent: { ...selectedPageContentDetail, ...inputData }}));
       return;
     }
-    dispatch(pageContentActions.createPageContentRequest({ pageContent: inputData }));
+    dispatch(
+      pageContentActions.createPageContentRequest({ pageContent: inputData })
+    );
   };
 
   const renderByPageType = (type: string) => {
     switch (type) {
       case PageContentType.DYNAMIC:
-        return <>
-          <div>
-            <Typography.Text className='ant-form-item-label'>
-              {t('Content', { ns: 'pageContent' })}
-              {' - '}
-              <span className='text-uppercase text-danger'>{locale}</span>
-            </Typography.Text>
-            <CKEditor
-              editor={ClassicEditor}
-              key={language}
-              data={pageContentBody}
-              onChange={(e, editor) => {
-                const data = editor.getData();
-                setPageContentBody(data);
-              }}
-              config={{
-                language: {
-                  ui: language,
-                },
-                toolbar: {
-                  items: [
-                    'undo',
-                    'redo',
-                    '|',
-                    'heading',
-                    '|',
-                    'bold',
-                    'italic',
-                    '|',
-                    'link',
-                    'insertImage',
-                    'mediaEmbed',
-                    'blockQuote',
-                    '|',
-                    'bulletedList',
-                    'numberedList',
-                    'outdent',
-                    'indent',
-                  ],
-                },
-              }}
-              onReady={(editor) => {
-                console.log('Editor is ready to use!', editor);
-              }}
-            />
-          </div>
-        </>;
-      
+        return (
+          <>
+            <div>
+              <Typography.Text className='ant-form-item-label'>
+                {t('Content', { ns: 'pageContent' })}
+                {' - '}
+                <span className='text-uppercase text-danger'>{locale}</span>
+              </Typography.Text>
+              <CKEditor
+                editor={ClassicEditor}
+                key={language}
+                data={pageContentBody}
+                onChange={(e, editor) => {
+                  const data = editor.getData();
+                  setPageContentBody(data);
+                }}
+                config={{
+                  language: {
+                    ui: language,
+                  },
+                  toolbar: {
+                    items: [
+                      'undo',
+                      'redo',
+                      '|',
+                      'heading',
+                      '|',
+                      'bold',
+                      'italic',
+                      '|',
+                      'link',
+                      'insertImage',
+                      'mediaEmbed',
+                      'blockQuote',
+                      '|',
+                      'bulletedList',
+                      'numberedList',
+                      'outdent',
+                      'indent',
+                    ],
+                  },
+                }}
+                onReady={(editor) => {
+                  console.log('Editor is ready to use!', editor);
+                }}
+              />
+            </div>
+          </>
+        );
+
       case PageContentType.DOCUMENT:
-        return <>
+        return (
+          <>
             <Form.Item
               label={t('Type', { ns: 'department' })}
               name='codeType'
               rules={[
-                { required: true, message: t('Type required', { ns: 'department' }) },
+                {
+                  required: true,
+                  message: t('Type required', { ns: 'department' }),
+                },
               ]}
             >
-              <Select options={contactTypes}/>
+              <Select options={contactTypes} />
             </Form.Item>
-        </>
+          </>
+        );
 
       case PageContentType.NEWS:
-        return <>
+        return (
+          <>
             <Form.Item
               label={t('News type', { ns: 'news' })}
               name='codeType'
               rules={[
-                { required: true, message: t('News type required', { ns: 'news' }) },
+                {
+                  required: true,
+                  message: t('News type required', { ns: 'news' }),
+                },
               ]}
             >
-              <Select options={newsTypes}/>
+              <Select options={newsTypes} />
             </Form.Item>
-        </>
+          </>
+        );
 
       default:
         return;
     }
-  }
+  };
 
   return (
     <div className='p-4'>
@@ -271,12 +306,12 @@ export const CreateUpdatePageContent = () => {
           </Button>
         </div>
       </div>
-      <Form 
-        form={form} 
-        layout='vertical' 
+      <Form
+        form={form}
+        layout='vertical'
         onFinish={handleSaveContent}
         initialValues={{
-          pageType: PageContentType.DYNAMIC
+          pageType: PageContentType.DYNAMIC,
         }}
       >
         <Spin spinning={isLoading}>
@@ -286,18 +321,21 @@ export const CreateUpdatePageContent = () => {
                 <Form.Item
                   label={t('Page type', { ns: 'pageContent' })}
                   name='pageType'
-                  rules={[
-                    { required: true, message: t('Page type required') },
-                  ]}
+                  rules={[{ required: true, message: t('Page type required') }]}
                 >
-                  <TreeSelect treeData={pageTypes} treeDefaultExpandAll={true} />
+                  <TreeSelect
+                    treeData={pageTypes}
+                    treeDefaultExpandAll={true}
+                  />
                 </Form.Item>
                 <Form.Item
                   label={
                     <div>
                       <span>{t('Title', { ns: 'pageContent' })}</span>
                       {' - '}
-                      <span className='text-uppercase text-danger'>{locale}</span>
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span>
                     </div>
                   }
                   name='title'
@@ -336,10 +374,10 @@ export const CreateUpdatePageContent = () => {
                 </Form.Item>
                 {renderByPageType(pageType)}
               </div>
-              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedPageContent />
+              <SeoForm />
             </Col>
           </Row>
         </Spin>

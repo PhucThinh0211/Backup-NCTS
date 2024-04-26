@@ -23,6 +23,22 @@ const normFile = (e: any) => {
   return e?.fileList;
 };
 
+const nctsIframe = `<iframe 
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.5143650304967!2d105.80348757597315!3d21.211442481477757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135023d79147653%3A0xe0db62dc2cd981de!2sNCTS!5e0!3m2!1svi!2s!4v1713841472537!5m2!1svi!2s" 
+width="600" height="450" 
+style=" 
+  border: 0;
+  height: 100%;
+  width: 100%;
+  aspectRatio: 1 / 1;
+  min-height: 450px;
+"
+allowfullscreen="false"
+loading="lazy" 
+referrerpolicy="no-referrer-when-downgrade">
+
+</iframe>`;
+
 export const CreateUpdateCompanyPage = () => {
   const [form] = Form.useForm();
   const { t } = useTranslation(['common', 'company', 'leftPanel']);
@@ -36,6 +52,7 @@ export const CreateUpdateCompanyPage = () => {
   const isLoading = useAppSelector(getLoading(GettingCompanyLoadingKey));
 
   const currentCompany = companies?.items[0];
+  const googleMapsEmbed = Form.useWatch('googleMapsEmbed', form);
 
   useEffect(() => {
     if (locale && currentCompany) {
@@ -102,12 +119,12 @@ export const CreateUpdateCompanyPage = () => {
                     },
                   ]}
                 >
-                  <PhotoUploader 
-                    onPhotoUrlChange={(url) => 
+                  <PhotoUploader
+                    onPhotoUrlChange={(url) =>
                       dispatch(companyActions.setCompanyPhotoUrl(url))
-                    } 
-                    photoUrl={companyPhotoUrl} 
-                    onImageDelete={onImageDelete} 
+                    }
+                    photoUrl={companyPhotoUrl}
+                    onImageDelete={onImageDelete}
                   />
                 </Form.Item>
                 <Form.Item
@@ -375,21 +392,12 @@ export const CreateUpdateCompanyPage = () => {
             </Col>
             <Col xs={24} md={24} lg={8}>
               <AuditedCompany />
-              <div className='max-w-100'>
-                <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.5143650304967!2d105.80348757597315!3d21.211442481477757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135023d79147653%3A0xe0db62dc2cd981de!2sNCTS!5e0!3m2!1svi!2s!4v1713841472537!5m2!1svi!2s" 
-                width="600" height="450" 
-                style={{ 
-                  border: 0,
-                  height: '100%',
-                  width: '100%',
-                  aspectRatio: 1 / 1, 
-                }}
-                allowFullScreen={false} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade">
-
-                </iframe>
+              <div className='max-w-100 display-flex align-items-center justify-content-center'>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: googleMapsEmbed || nctsIframe,
+                  }}
+                ></div>
               </div>
             </Col>
           </Row>
