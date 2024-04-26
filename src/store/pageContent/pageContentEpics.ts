@@ -72,17 +72,17 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
           ...pageContent,
         }).pipe(
           switchMap((createdPageContent) => {
-            // const createTranslationInput = {
-            //   language: locale,
-            //   title: createdPageContent.title,
-            //   description: createdPageContent.description,
-            //   body: createdPageContent.body,
-            // };
-            // return PageContentService.Post.createPageContentTranslations(
-            //   createdPageContent.id,
-            //   createTranslationInput
-            // ).pipe(
-            //   mergeMap(() => {
+            const createTranslationInput = {
+              language: locale,
+              title: createdPageContent.title,
+              content: createdPageContent.content,
+              tags: createdPageContent.tags,
+            };
+            return PageContentService.Post.createPageContentTranslations(
+              createdPageContent.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
                 if (pageContent.seo) {
                   const createSeoTranslationInput = {
                     title: pageContent.seo.title,
@@ -128,12 +128,12 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
                     return [pageContentActions.setPageContents(undefined)];
                   })
                 );
-            //   }),
-            //   catchError((errors) => {
-            //     Utils.errorHandling(errors);
-            //     return [];
-            //   })
-            // );
+              }),
+              catchError((errors) => {
+                Utils.errorHandling(errors);
+                return [];
+              })
+            );
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);
@@ -161,17 +161,17 @@ const updatePageContentRequest$: RootEpic = (action$, state$) => {
         [startLoading({ key: SavingPageContentLoadingKey })],
         PageContentService.Put.updatePageContent(pageContentId, pageContent).pipe(
           switchMap((updatedPageContent) => {
-            // const createTranslationInput = {
-            //   language: locale,
-            //   title: pageContent.title,
-            //   description: pageContent.description,
-            //   body: pageContent.body,
-            // };
-            // return PageContentService.Post.createPageContentTranslations(
-            //   updatedPageContent.id,
-            //   createTranslationInput
-            // ).pipe(
-            //   mergeMap(() => {
+            const createTranslationInput = {
+              language: locale,
+              title: pageContent.title,
+              content: pageContent.content || null,
+              tags: pageContent.tags || null,
+            };
+            return PageContentService.Post.createPageContentTranslations(
+              updatedPageContent.id,
+              createTranslationInput
+            ).pipe(
+              mergeMap(() => {
                 if (pageContent.seo) {
                   const createSeoTranslationInput = {
                     title: pageContent.seo.title,
@@ -214,12 +214,12 @@ const updatePageContentRequest$: RootEpic = (action$, state$) => {
                     return [pageContentActions.setPageContents(undefined)];
                   })
                 );
-            //   }),
-            //   catchError((errors) => {
-            //     Utils.errorHandling(errors);
-            //     return [];
-            //   })
-            // );
+              }),
+              catchError((errors) => {
+                Utils.errorHandling(errors);
+                return [];
+              })
+            );
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);

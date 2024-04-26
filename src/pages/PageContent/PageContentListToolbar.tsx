@@ -5,7 +5,7 @@ import { Row, Space, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 export const PageContentListToolbar = () => {
-  const { t } = useTranslation('news');
+  const { t } = useTranslation('pageContent');
   const [searchStr, setSearchStr] = useState();
   const [timer, setTimer] = useState<any>(null);
 
@@ -26,7 +26,7 @@ export const PageContentListToolbar = () => {
           value={searchStr}
           onChange={onSearchChange}
           allowClear
-          placeholder={t('Find news')}
+          placeholder={t('Find page')}
           suffix={searchStr ? null : <SearchOutlined />}
           style={{ width: 300 }}
         />

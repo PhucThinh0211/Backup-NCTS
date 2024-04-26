@@ -31,6 +31,7 @@ const companySlice = createSlice({
       action: PayloadAction<CompanyResponse | undefined>
     ) => {
       state.selectedCompanyDetail = action.payload;
+      state.companyPhotoUrl = action.payload?.logoUrl || undefined;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;

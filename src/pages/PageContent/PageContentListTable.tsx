@@ -6,7 +6,6 @@ import {
   Space,
   Table,
   TableColumnsType,
-  Image,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -21,7 +20,7 @@ import { getPageContents, pageContentActions } from '@/store/pageContent';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { PageContentResponse } from '@/services/PageContentService';
-import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
+import { defaultPagingParams } from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 import { SortableRow } from '@/components/SortableRow';
@@ -38,7 +37,7 @@ import {
 export const PageContentListTable = () => {
   const [dataSource, setDataSource] = useState<PageContentResponse[]>([]);
   const [modal, contextHolder] = useModal();
-  const { t } = useTranslation(['common', 'news']);
+  const { t } = useTranslation(['common', 'pageContent']);
   const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
@@ -90,7 +89,7 @@ export const PageContentListTable = () => {
     dispatch(pageContentActions.setSelectedPageContent(pageContent));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news/edit');
+    navigate('/admin/pages/edit');
   };
 
   const confirmRemovePageContent = (pageContent: PageContentResponse) => {
@@ -128,33 +127,14 @@ export const PageContentListTable = () => {
 
   const columns: TableColumnsType<PageContentResponse> = [
     {
-      title: t('Photo', { ns: 'news' }),
-      dataIndex: 'photoUrl',
-      key: 'photoUrl',
-      // align: 'center',
-      render(value) {
-        return (
-          value && (
-            <Image
-              src={`${uploadedPhotoUrl(value)}`}
-              style={{
-                backgroundColor: '#00000073',
-              }}
-              height={80}
-            />
-          )
-        );
-      },
-    },
-    {
-      title: t('Title', { ns: 'news' }),
+      title: t('Title', { ns: 'pageContent' }),
       dataIndex: 'title',
       key: 'title',
     },
     {
-      title: t('Description', { ns: 'news' }),
-      dataIndex: 'description',
-      key: 'description',
+      title: t('Slug', { ns: 'pageContent' }),
+      dataIndex: 'slug',
+      key: 'slug',
     },
     // {
     //   key: 'sort',
@@ -184,7 +164,7 @@ export const PageContentListTable = () => {
   ];
 
   const getIds = () => {
-    return (pageContents?.items || []).map((item) => item.id);
+    return dataSource.map((item) => item.id);
   };
 
   return (

@@ -6,6 +6,17 @@ import { getEnvVars } from '@/enviroment';
 
 const { apiUrl } = getEnvVars();
 
+export enum PageContentType {
+  DYNAMIC = 'dynamic',
+  AVAILABLE = 'available',
+  VIDEO = 'video',
+  PHOTO = 'photo',
+  DOCUMENT = 'document',
+  NEWS = 'news',
+  CONTACT = 'contact',
+  LOGIN = 'login',
+  REGISTER = 'register',
+}
 export interface PageContentsPagingResponse extends PagingResponse {
   items: PageContentResponse[];
 }
@@ -20,7 +31,7 @@ export interface PageContentResponse {
   deleterId: string | null;
   deletionTime: string | null;
   published: boolean;
-  pageType: string | null;
+  pageType: PageContentType | null;
   codeType: string | null;
   title: string | null;
   slug: string | null;
@@ -34,7 +45,7 @@ export interface PageContentResponse {
   seo?: SeoResponse;
 }
 export interface CreateUpdatePageContentPayload {
-  pageType: string;
+  pageType: PageContentType;
   title: string;
   slug: string;
   codeType?: string | null;
@@ -50,8 +61,8 @@ export interface CreateUpdatePageContentPayload {
 export interface CreateUpdatePageContentTranslationPayload {
   language: string;
   title: string;
-  description: string | null;
-  body: string | null;
+  content: string | null;
+  tags: string | null;
 }
 
 class PageContentController {
@@ -71,17 +82,17 @@ class PageContentController {
     ) => {
       return HttpClient.post(`${apiUrl}/api/app/page`, input, options);
     },
-    // createPageContentTranslations: (
-    //   pagePageContentId: string,
-    //   input: CreateUpdatePageContentTranslationPayload,
-    //   options?: RequestOptions
-    // ) => {
-    //   return HttpClient.post(
-    //     `${apiUrl}/api/app/pagePageContent/${pagePageContentId}/translations`,
-    //     input,
-    //     options
-    //   );
-    // },
+    createPageContentTranslations: (
+      pageContentId: string,
+      input: CreateUpdatePageContentTranslationPayload,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/page/${pageContentId}/translations`,
+        input,
+        options
+      );
+    },
   };
 
   public Put = {

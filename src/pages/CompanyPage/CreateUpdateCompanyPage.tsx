@@ -14,6 +14,14 @@ import { getLoading } from '@/store/loading';
 import { GettingCompanyLoadingKey, SavingCompanyLoadingKey } from '@/common';
 import { getLocale } from '@/store/persistState';
 import { AuditedCompany } from './AuditedCompany';
+import { PhotoUploader } from '@/components/Uploader/PhotoUploader';
+
+const normFile = (e: any) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
 
 export const CreateUpdateCompanyPage = () => {
   const [form] = Form.useForm();
@@ -48,7 +56,7 @@ export const CreateUpdateCompanyPage = () => {
   const handleSaveCompany = (values: any) => {
     const inputData = {
       ...values,
-      photoUrl: companyPhotoUrl,
+      logoUrl: companyPhotoUrl,
     };
     if (currentCompany) {
       // prettier-ignore
@@ -56,6 +64,11 @@ export const CreateUpdateCompanyPage = () => {
       return;
     }
     dispatch(companyActions.createCompanyRequest({ company: inputData }));
+  };
+
+  const onImageDelete = () => {
+    form.setFieldsValue({ upload: undefined });
+    dispatch(companyActions.setCompanyPhotoUrl(undefined));
   };
 
   return (
@@ -75,8 +88,28 @@ export const CreateUpdateCompanyPage = () => {
       <Form form={form} layout='vertical' onFinish={handleSaveCompany}>
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-2'>
-            <Col span={16}>
+            <Col xs={24} md={24} lg={16}>
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
+                <Form.Item
+                  name='upload'
+                  label={t('Logo', { ns: 'banner' })}
+                  valuePropName='fileList'
+                  getValueFromEvent={normFile}
+                  rules={[
+                    {
+                      required: !companyPhotoUrl,
+                      message: t('Photo required', { ns: 'banner' }),
+                    },
+                  ]}
+                >
+                  <PhotoUploader 
+                    onPhotoUrlChange={(url) => 
+                      dispatch(companyActions.setCompanyPhotoUrl(url))
+                    } 
+                    photoUrl={companyPhotoUrl} 
+                    onImageDelete={onImageDelete} 
+                  />
+                </Form.Item>
                 <Form.Item
                   label={t('Name', { ns: 'company' })}
                   name='name'
@@ -96,6 +129,24 @@ export const CreateUpdateCompanyPage = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
+                  label={t('Business code', { ns: 'company' })}
+                  name='businessCode'
+                  rules={[
+                    { required: true, message: t('Business code required') },
+                    {
+                      max: 20,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 20,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
                   label={t('Address', { ns: 'company' })}
                   name='address'
                   rules={[
@@ -107,6 +158,23 @@ export const CreateUpdateCompanyPage = () => {
                         ns: 'common',
                         range1: 0,
                         range2: 1000,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label={t('Information Registered', { ns: 'company' })}
+                  name='infoRegistered'
+                  rules={[
+                    {
+                      max: 200,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 200,
                       }),
                     },
                   ]}
@@ -301,12 +369,28 @@ export const CreateUpdateCompanyPage = () => {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input.TextArea />
                 </Form.Item>
               </div>
             </Col>
-            <Col span={8}>
+            <Col xs={24} md={24} lg={8}>
               <AuditedCompany />
+              <div className='max-w-100'>
+                <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.5143650304967!2d105.80348757597315!3d21.211442481477757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135023d79147653%3A0xe0db62dc2cd981de!2sNCTS!5e0!3m2!1svi!2s!4v1713841472537!5m2!1svi!2s" 
+                width="600" height="450" 
+                style={{ 
+                  border: 0,
+                  height: '100%',
+                  width: '100%',
+                  aspectRatio: 1 / 1, 
+                }}
+                allowFullScreen={false} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade">
+
+                </iframe>
+              </div>
             </Col>
           </Row>
         </Spin>
