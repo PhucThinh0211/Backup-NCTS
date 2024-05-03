@@ -15,24 +15,6 @@ import { getMenuList, homeActions } from "@/store/publicCms";
 import { getLanguage } from "@/store/persistState";
 import { Nav, NavDropdown } from "react-bootstrap";
 
-// const buildMenuTree = (data, parentId = null) => {
-//   return data
-//     .filter((item) => item.parentId === parentId)
-//     .map((item) => {
-//       const children = buildMenuTree(data, item.id);
-//       if (children.length > 0) {
-//         return {
-//           ...item,
-//           children,
-//         };
-//       } else {
-//         return {
-//           ...item,
-//         };
-//       }
-//     });
-// };
-
 export const AppHeader = () => {
   const dispatch = useAppDispatch();
   const menus = useAppSelector(getMenuList());
@@ -57,26 +39,13 @@ export const AppHeader = () => {
   // };
   // const handleCloseSearch = () => setShowSearch(false);
 
-  // const menuTree = buildMenuTree(menus);
-  // const flattenMenuItems = (data) => {
-  //   const flatMenuItems = [];
-  //   data.forEach((item) => {
-  //     flatMenuItems.push({ key: item.id, label: item.label, url: item.url });
-  //     if (item.children && item.children.length > 0) {
-  //       flatMenuItems.push(...flattenMenuItems(item.children));
-  //     }
-  //   });
-  //   return flatMenuItems;
-  // };
-
-  // const flatMenuItems = flattenMenuItems(menuTree);
-  console.log(menus);
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const [current, setCurrent] = useState("/");
   const { "*": slug } = useParams();
+
+  // Hàm phân nhóm các mục menu theo parentId
 
   return (
     <Layout.Header
@@ -90,10 +59,11 @@ export const AppHeader = () => {
         <Link to="/">
           <img src={logo} alt="logo" height={70} />
         </Link>
-        {/* <Menu
+        <Menu
           selectedKeys={[current]}
           mode="horizontal"
-          items={flatMenuItems}
+          // Pass menu Items in here as a MenuProps type
+          items={items}
           disabledOverflow
           triggerSubMenuAction="hover"
           style={{
@@ -103,7 +73,7 @@ export const AppHeader = () => {
             textTransform: "uppercase",
           }}
           className="top-nav"
-        /> */}
+        />
 
         {/* Search and Profile */}
         <div
