@@ -10,6 +10,7 @@ import { contentReducer } from './content';
 import { companyReducer } from './company';
 import { pageContentReducer } from './pageContent';
 import { departmentReducer } from './department';
+import { homeReducer } from './publicCms';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -17,6 +18,7 @@ const mainReducer = combineReducers({
   modal: modalReducer,
   app: appReducer,
   menu: menuReducer,
+  home: homeReducer,
   banner: bannerReducer,
   content: contentReducer,
   company: companyReducer,
