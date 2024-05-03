@@ -44,8 +44,18 @@
 }
 */
 
+.top-nav{
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon:hover{
+  color: orange;
+  cursor: pointer;
+}
+
 .top-nav .ant-menu-item {
-  line-height: 73px;
+  line-height: 100px;
   color: gray !important;
 }
 
@@ -58,7 +68,7 @@
 }
 
 .top-nav .ant-menu-submenu {
-  line-height: 73px;
+  line-height: 100px;
 }
 
 .top-nav .ant-menu-submenu-title {
@@ -76,7 +86,8 @@
 /* antd custom */
 .ant-menu .ant-menu-item-group-title {
   font-weight: 600;
-  color: orange !important;
+  font-size: 20px !important;
+  color: black !important;
 }
 
 .ant-form-item {

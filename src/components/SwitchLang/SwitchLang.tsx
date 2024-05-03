@@ -55,7 +55,7 @@ export const SwitchLang = () => {
       open={open}>
       <a onClick={(e) => e.preventDefault()}>
         <Flex gap={4}>
-          <Avatar size="small" src={lang === 'vi' ? vi : en} />
+          <Avatar shape="square" size="small" src={lang === 'vi' ? vi : en} />
           <DownOutlined />
         </Flex>
       </a>

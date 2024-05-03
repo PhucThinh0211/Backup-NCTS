@@ -12,6 +12,10 @@ import { menus } from '@/fakeData';
 import { TopNavHeight } from '@/common';
 import { SwitchLang } from '@/components';
 
+
+
+
+
 const flatMenu: { id: string; url?: string; parentId?: string }[] = [];
 
 const items: MenuProps['items'] = menus.map((x) => {
@@ -91,18 +95,17 @@ export const AppHeader = () => {
   return (
     <Layout.Header
       style={{
-        padding: '0px 16px',
         color: 'GrayText',
         background: colorBgContainer,
         height: TopNavHeight,
       }}>
-      <Row align="middle" justify="space-between">
+      <Row className='container p-0' align="middle" justify="space-between">
         <Link to="/">
-          <img src={logo} alt="logo" width={130} />
+          <img src={logo} alt="logo" height={70} />
         </Link>
         <Menu
           selectedKeys={[current]}
-          mode="horizontal"
+          mode="horizontal" 
           items={items}
           disabledOverflow
           triggerSubMenuAction="hover"
@@ -114,16 +117,15 @@ export const AppHeader = () => {
           }}
           className="top-nav"
         />
-        <Space>
-          <Link to="/dang-ky">
-            <Button type="default">{t('Sign Up', { ns: 'common' })}</Button>
-          </Link>
-          <Link to="/dang-nhap">
-            <Button type="primary">{t('Sign In', { ns: 'common' })}</Button>
-          </Link>
+      
+          {/* Search and Profile */}
+          <div style={{height: 100 }} className='d-flex gap-4 align-items-center'>
+            <div className='menu-icon'> <i className=" fa-solid fa-magnifying-glass fa-lg"></i></div>
+            <div className='menu-icon'><i className=" fa-regular fa-user fa-xl"></i></div>
+           
           {/* Switch Language */}
-          <SwitchLang />
-        </Space>
+          <SwitchLang /></div>
+    
       </Row>
     </Layout.Header>
   );

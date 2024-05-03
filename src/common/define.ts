@@ -5,7 +5,7 @@ const { apiUrl } = getEnvVars();
 
 export type LanguageType = 'vi' | 'en';
 
-export const TopNavHeight = 75;
+export const TopNavHeight = 100;
 export const LeftPanelWidth = 256;
 
 export type MenuItem = Required<MenuProps>['items'][number];
