@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 
-import type { MenuProps } from "antd";
-import { Layout, theme, Row, Menu } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { useTranslation } from "react-i18next";
-import { NIL as NIL_UUID } from "uuid";
-import { Link, useParams } from "react-router-dom";
+import { Layout, Row, Menu, theme } from "antd";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-// import {menus} from '@/fakeData'
 import { TopNavHeight } from "@/common";
 import { SwitchLang } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getMenuList, homeActions } from "@/store/publicCms";
 import { getLanguage } from "@/store/persistState";
-import { Nav, NavDropdown } from "react-bootstrap";
+
+const { SubMenu } = Menu;
 
 export const AppHeader = () => {
   const dispatch = useAppDispatch();
@@ -23,29 +19,51 @@ export const AppHeader = () => {
   useEffect(() => {
     dispatch(homeActions.getMenuListRequest({}));
   }, [lang]);
-
-  // const [showMenu, setShowMenu] = useState(false);
-  // const [showSearch, setShowSearch] = useState(false);
-
-  // const handleShowMenu = () => {
-  //   setShowMenu(true);
-  //   setShowSearch(false);
-  // };
-  // const handleCloseMenu = () => setShowMenu(false);
-
-  // const handleShowSearch = () => {
-  //   setShowSearch(true);
-  //   setShowMenu(false);
-  // };
-  // const handleCloseSearch = () => setShowSearch(false);
-
+  
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  
   const [current, setCurrent] = useState("/");
-  const { "*": slug } = useParams();
 
-  // Hàm phân nhóm các mục menu theo parentId
+
+  function buildMenuTree(items, parentId = null) {
+    const node = {};
+    items
+        .filter(item => item.parentId === parentId)
+        .forEach(item => {
+            node[item.id] = {
+                label: item.label,
+                url: item.url,
+                icons: item.icons,
+                children: buildMenuTree(items, item.id)
+            };
+        });
+    return node;
+}
+
+  // Build the menu tree from the fetched data
+  const menuTree = buildMenuTree(menus);
+
+  // Function to render menu items recursively
+  const renderMenuItems = (menuItems) => {
+    return Object.keys(menuItems).map((key) => {
+      const menuItem = menuItems[key];
+      if (Object.keys(menuItem.children).length > 0) {
+        return (
+          <SubMenu key={key} title={menuItem.label} icon={menuItem.icons && <i className={`fa ${menuItem.icons}`}></i>}>
+            {renderMenuItems(menuItem.children)}
+          </SubMenu>
+        );
+      } else {
+        return (
+          <Menu.Item key={key} icon={menuItem.icons && <i className={`fa ${menuItem.icons}`}></i>}>
+            <Link to={menuItem.url}>{menuItem.label}</Link>
+          </Menu.Item>
+        );
+      }
+    });
+  };
 
   return (
     <Layout.Header
@@ -60,20 +78,14 @@ export const AppHeader = () => {
           <img src={logo} alt="logo" height={70} />
         </Link>
         <Menu
-          selectedKeys={[current]}
+          theme="light"
           mode="horizontal"
-          // Pass menu Items in here as a MenuProps type
-          items={items}
-          disabledOverflow
-          triggerSubMenuAction="hover"
-          style={{
-            fontWeight: 600,
-            fontSize: 16,
-            height: TopNavHeight,
-            textTransform: "uppercase",
-          }}
-          className="top-nav"
-        />
+          selectedKeys={[current]}
+          onClick={(e) => setCurrent(e.key)}
+        >
+          {/* Render menu items */}
+          {renderMenuItems(menuTree)}
+        </Menu>
 
         {/* Search and Profile */}
         <div
