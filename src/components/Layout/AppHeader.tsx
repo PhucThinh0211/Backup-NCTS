@@ -71,12 +71,16 @@ export const AppHeader = () => {
         color: "GrayText",
         background: colorBgContainer,
         height: TopNavHeight,
+        padding: 0,
       }}
     >
-      <Row className="container p-0" align="middle" justify="space-between">
+     
+      <Row className="container-xl" align="middle" justify="space-between">
+        {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="logo" height={70} />
+          <img src={logo} alt="logo" className="logo" />
         </Link>
+        <div  className="d-none d-lg-flex">
         <Menu
           theme="light"
           mode="horizontal"
@@ -85,25 +89,30 @@ export const AppHeader = () => {
         >
           {/* Render menu items */}
           {renderMenuItems(menuTree)}
-        </Menu>
+        </Menu></div>
 
         {/* Search and Profile */}
         <div
           style={{ height: 100 }}
           className="d-flex gap-4 align-items-center"
         >
-          <div className="menu-icon">
-            {" "}
-            <i className=" fa-solid fa-magnifying-glass fa-lg"></i>
+          <div className="mobile-display">
+          <div className="menu-icon tablet-mobile-menu">
+          <i className="fa-solid fa-bars fa-xl"></i>
           </div>
           <div className="menu-icon">
+            <i className=" fa-solid fa-magnifying-glass fa-lg"></i>
+          </div></div>
+          <div className="menu-icon mobile-hidden">
             <i className=" fa-regular fa-user fa-xl"></i>
           </div>
 
           {/* Switch Language */}
-          <SwitchLang />
+          <div className="mobile-hidden">
+          <SwitchLang /></div>
         </div>
       </Row>
+      
     </Layout.Header>
   );
 };

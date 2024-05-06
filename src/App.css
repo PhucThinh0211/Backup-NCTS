@@ -44,10 +44,6 @@
 }
 */
 
-.top-nav{
-  display: flex;
-  align-items: center;
-}
 
 .menu-icon:hover{
   color: orange;
@@ -82,6 +78,50 @@
 .top-nav .ant-menu-submenu-selected .ant-menu-submenu-title {
   color: orange !important;
 }
+
+
+.tablet-mobile-menu{
+  display: none;
+}
+
+.logo{
+  height: 70px;
+}
+
+
+
+@media (max-width: 1194px) {
+
+  .tablet-mobile-menu{
+    display:flex;
+  }
+  .mobile-display{
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+}
+
+
+@media (max-width: 500px) {
+  .mobile-hidden{
+    display: none;
+  }
+  .tablet-mobile-menu{
+    display:flex;
+  }
+  .mobile-display{
+    display: flex;
+    flex-direction: row-reverse ;
+    gap:1rem;
+  }
+  .logo{
+    height: 40px;
+  }
+}
+
 
 /* antd custom */
 .ant-menu .ant-menu-item-group-title {
