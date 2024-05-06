@@ -176,6 +176,9 @@
   .logo{
     height: 40px;
   }
+  .ant-layout-header {
+    background: transparent;
+  }
 }
 
 @media (min-width: 1194px) {
