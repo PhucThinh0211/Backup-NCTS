@@ -97,6 +97,7 @@ export const AppHeader = () => {
         background: colorBgContainer,
         height: TopNavHeight,
         padding: 0,
+        position: 'sticky', top: 0, zIndex: 1000
       }}
     >
       <Row className="container-xl top-nav" align="middle" justify="space-between">
