@@ -44,6 +44,20 @@
 }
 */
 
+.menu-mobile{
+  margin-top: 100px;
+}
+
+.custom-offcanvas-header{
+  height: 50px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 
 .menu-icon:hover{
   color: orange;
@@ -53,6 +67,8 @@
 .top-nav .ant-menu-item {
   line-height: 100px;
   color: gray !important;
+  font-weight: 600;
+  font-size: medium;
 }
 
 .top-nav .ant-menu-item-selected {
@@ -69,6 +85,8 @@
 
 .top-nav .ant-menu-submenu-title {
   color: gray !important;
+  font-weight: 600;
+  font-size: medium;
 }
 
 .top-nav .ant-menu-submenu-active .ant-menu-submenu-title {
@@ -79,9 +97,16 @@
   color: orange !important;
 }
 
+.ant-menu-vertical >.ant-menu-submenu>.ant-menu-submenu-title{
+  font-size: larger;
+  font-weight: 600;
+}
 
-.tablet-mobile-menu{
-  display: none;
+.mobile-display{
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .logo{
@@ -89,28 +114,59 @@
 }
 
 
-
 @media (max-width: 1194px) {
+  .logo{
+    height: 40px;
+  }
 
-  .tablet-mobile-menu{
-    display:flex;
-  }
-  .mobile-display{
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
-    align-items: center;
-  }
   
+  .btn-custom-signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 40px;
+    background-color: #ECA42E;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    gap:10px;
+    border-radius: 9999px;
+  }
+
+  .btn-custom-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    background-color: #ECA42E;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    gap:10px;
+    border-radius: 9999px;
+  }
+
+  .search-field{
+    background-color: #F6F6F6;
+    border-radius: 9999px;
+    height: 40px;
+  }
+  .search-field::placeholder {
+    color: #888888;
+  }
+
 }
 
 
 @media (max-width: 500px) {
   .mobile-hidden{
     display: none;
-  }
-  .tablet-mobile-menu{
-    display:flex;
   }
   .mobile-display{
     display: flex;
@@ -122,6 +178,12 @@
   }
 }
 
+@media (min-width: 1194px) {
+  .menu-mobile{
+    display: none;
+  }
+  
+}
 
 /* antd custom */
 .ant-menu .ant-menu-item-group-title {
