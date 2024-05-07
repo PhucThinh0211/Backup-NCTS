@@ -1,7 +1,6 @@
 import { Offcanvas } from "react-bootstrap";
 import { Menu } from "antd";
 import Link from "antd/es/typography/Link";
-import MenuItem from "antd/es/menu/MenuItem";
 
 type Props = {
   show: boolean;

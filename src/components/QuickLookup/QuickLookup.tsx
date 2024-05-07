@@ -9,15 +9,20 @@ import { useTranslation } from 'react-i18next';
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
 
+
   const items: TabsProps['items'] = [
     {
       key: 'lookupAwb',
-      label: t('Lookup AWB No', { ns: 'common' }),
+      label: ( <div className='d-flex gap-2 align-items-center'>
+        <i className="fa-solid fa-magnifying-glass"></i>
+        {t('Lookup AWB No', { ns: 'common' })}
+        </div>
+      ),
       children: <AwbLookup />,
     },
     {
       key: 'lookupFlightSchedules',
-      label: t('Lookup Flight', { ns: 'common' }),
+      label:  t('Lookup Flight', { ns: 'common' }),
       children: <FlightLookup />,
     },
     {

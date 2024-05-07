@@ -10,6 +10,7 @@ import { getMenuList, homeActions } from "@/store/publicCms";
 import { getLanguage } from "@/store/persistState";
 import TabletMobileMenu from "./TabletMobileMenu";
 import TabletMobileSearch from "./TabletMobileSearch";
+import React from "react";
 
 const { SubMenu } = Menu;
 
@@ -59,9 +60,69 @@ export const AppHeader = () => {
     return node;
   }
 
+
+  const renderSubMenuItems = (menuItem) => {
+    return (
+      <React.Fragment>
+        {menuItem.children &&
+          Object.keys(menuItem.children).map((key) => {
+            const subMenuItem = menuItem.children[key];
+            return (
+              <React.Fragment key={key}>
+                <Menu.Item
+                  key={key}
+                  icon={
+                    subMenuItem.icons && (
+                      <i className={`fa ${subMenuItem.icons}`}></i>
+                    )
+                  }
+                >
+                  <Link  to={subMenuItem.url}>{subMenuItem.label}</Link>
+                </Menu.Item>
+                <div className="custom-menu-title">
+               {renderSubMenuItems(subMenuItem)}
+              </div>
+              </React.Fragment>
+            );
+          })}
+      </React.Fragment>
+    );
+  };
+  
+  // const desktopTree =buildMenuTreeWithGroups(menus)
   const menuTree = buildMenuTree(menus);
 
+  // RenderMenuItems for Desktop
   const renderMenuItems = (menuItems) => {
+    return Object.keys(menuItems).map((key) => {
+      const menuItem = menuItems[key];
+      if (menuItem.children && Object.keys(menuItem.children).length > 0) {
+        return (
+          <SubMenu
+            key={key} 
+            title={menuItem.label}
+            icon={menuItem.icons && <i style={{color:"gray"}} className={`fa ${menuItem.icons}` }></i>}
+          >
+            <div className="p-3 mt-3 mb-3 fw-bold fs-5 text-gray">{menuItem.label}</div>
+            <div className="custom-dropdown">
+            {renderSubMenuItems(menuItem)}</div>
+          </SubMenu>
+        );
+      } else {
+        return (
+          <Menu.Item
+            key={key}
+            icon={menuItem.icons && <i className={`fa ${menuItem.icons}`}></i>}
+          >
+            <Link to={menuItem.url}>{menuItem.label}</Link>
+          </Menu.Item>
+        );
+      }
+    });
+  };
+
+  // Render Menu Items for Mobile
+  const renderMobileMenuItems = (menuItems) => {
     return Object.keys(menuItems).map((key) => {
       const menuItem = menuItems[key];
       if (menuItem.children && Object.keys(menuItem.children).length > 0) {
@@ -70,8 +131,6 @@ export const AppHeader = () => {
             key={key}
             title={menuItem.label}
             icon={menuItem.icons && <i className={`fa ${menuItem.icons}`}></i>}
-            className="submenu-wrapper" // Add a class to the submenu element
-            popupClassName="submenu-popup" // Add a class to the submenu popup
           >
             {renderMenuItems(menuItem.children)}
           </SubMenu>
@@ -88,7 +147,6 @@ export const AppHeader = () => {
       }
     });
   };
-
 
   return (
     <Layout.Header
@@ -141,7 +199,7 @@ export const AppHeader = () => {
         show={showMenu}
         onShowSearch={handleShowSearch}
         onHide={handleCloseMenu}
-        items={renderMenuItems(menuTree)}
+        items={renderMobileMenuItems(menuTree)}
         buttonText={LoginBtnText}
       />
       <TabletMobileSearch

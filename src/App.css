@@ -101,7 +101,25 @@
   font-size: larger;
   font-weight: 600;
 }
+.custom-dropdown{
+  display: flex;
+  flex-direction: column;
+  gap:0;
+  flex-wrap: wrap;
+  max-height: 300px;
+  max-width: fit-content;
+}
+.ant-menu-submenu>.ant-menu li{
+  max-width: fit-content;
+}
 
+.ant-menu-submenu>.ant-menu a{
+  color: #888888 !important;
+  }
+
+.text-gray{
+  color: #888888
+}
 .mobile-display{
   display: flex;
   flex-direction: row;
@@ -136,6 +154,7 @@
     border-radius: 9999px;
   }
 
+  
   .btn-custom-search {
     display: flex;
     justify-content: center;
@@ -160,7 +179,6 @@
   .search-field::placeholder {
     color: #888888;
   }
-
 }
 
 

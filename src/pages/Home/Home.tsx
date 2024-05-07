@@ -1,5 +1,5 @@
 import { QuickLookup } from '@/components';
-import { Avatar, Carousel } from 'antd';
+import { Carousel } from 'antd';
 
 export const Home = () => {
   return (
@@ -17,11 +17,6 @@ export const Home = () => {
       <div className="bg-white w-full">
         <QuickLookup />
       </div>
-      <button className="btn btn-primary">Bootstrap Primary button</button>
-      
-      <Avatar size={64} style={{ backgroundColor: 'red' }}>
-        <i className="fa-brands fa-twitter fa-xl" style={{ color: 'orange' }}></i>
-      </Avatar>
     </>
   );
 };
