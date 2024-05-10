@@ -36,14 +36,14 @@ export const AppHeader = () => {
 
  // Function to handle click on menu icon
 const handleToggleMenu = () => {
-  setShowMenu(!showMenu); // Toggle menu state
-  setShowSearch(false); // Close search
+  setShowMenu(!showMenu); 
+  setShowSearch(false);
 };
 
 // Function to handle click on search icon
 const handleToggleSearch = () => {
-  setShowSearch(!showSearch); // Toggle search state
-  setShowMenu(false); // Close menu
+  setShowSearch(!showSearch); 
+  setShowMenu(false); 
 };
 
   const handleCloseMenu = () => setShowMenu(false);
