@@ -14,7 +14,7 @@ function TabletMobileMenu({ show, onShowSearch, onHide, items, buttonText }: Pro
   return (
     <div>
       <Offcanvas
-        className="menu-mobile"
+        className="menu-mobile d-xxl-none"
         show={show}
         onHide={onHide}
         placement="end"

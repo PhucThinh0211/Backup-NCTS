@@ -20,10 +20,8 @@ export const AwbLookup = () => {
       className="d-flex flex-row gap-4"
     >
       <Form.Item
-      style={{
-        width: "calc(40%)",
-      }} 
-      className="d-flex flex-column">
+      
+      className="d-flex flex-column form-item-left">
         <Form.Item
           label={t("Carrier", { ns: "common" })}
           required
@@ -88,10 +86,7 @@ export const AwbLookup = () => {
         </Form.Item>
       </Form.Item>
         <div
-         style={{
-          width: "calc(60%)",
-        }} 
-         className=" d-flex justify-content-center">  
+         className="d-none d-md-flex justify-content-center form-item-right">  
           <img src="https://sit.ntcs.hicas.vn/api/photo/dowload/6e9e0536-e0f6-6ecd-f117-3a12634d56ac.png" alt="1" width='80%'/>
         </div>
     </Form>

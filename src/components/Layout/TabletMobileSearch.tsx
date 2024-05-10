@@ -29,7 +29,7 @@ function TabletMobileSearch({ show,showMenu, onHide, searchBtnText }: Props) {
           ></i>
           <i
             onClick={showMenu}
-            className="fa-solid fa-bars fa-lg"
+            className="fa-solid fa-bars fa-lg d-xxl-none d-flex"
           ></i>
         </div>
 

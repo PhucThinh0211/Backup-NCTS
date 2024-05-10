@@ -30,19 +30,24 @@ export const AppHeader = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
-  const handleShowMenu = () => {
-    setShowMenu(true);
-    setShowSearch(false);
-  };
-  const handleCloseMenu = () => setShowMenu(false);
+ // Function to handle click on menu icon
+const handleToggleMenu = () => {
+  setShowMenu(!showMenu); // Toggle menu state
+  setShowSearch(false); // Close search
+};
 
-  const handleShowSearch = () => {
-    setShowSearch(true);
-    setShowMenu(false);
-  };
+// Function to handle click on search icon
+const handleToggleSearch = () => {
+  setShowSearch(!showSearch); // Toggle search state
+  setShowMenu(false); // Close menu
+};
+
+  const handleCloseMenu = () => setShowMenu(false);
+  
   const handleCloseSearch = () => setShowSearch(false);
 
   function buildMenuTree(items, parentId = null) {
@@ -60,7 +65,6 @@ export const AppHeader = () => {
     return node;
   }
 
-
   const renderSubMenuItems = (menuItem) => {
     return (
       <React.Fragment>
@@ -70,13 +74,12 @@ export const AppHeader = () => {
             return (
               <React.Fragment key={key}>
                 <Menu.Item
+                  className ="d-flex justify-content-center"
                   key={key}
                   icon={
                     subMenuItem.icons && (
                       <i className={`fa ${subMenuItem.icons}`}></i>
-                    )
-                  }
-                >
+                    )}>
                   <Link  to={subMenuItem.url}>{subMenuItem.label}</Link>
                 </Menu.Item>
                 <div className="custom-menu-title">
@@ -101,9 +104,9 @@ export const AppHeader = () => {
           <SubMenu
             key={key} 
             title={menuItem.label}
-            icon={menuItem.icons && <i style={{color:"gray"}} className={`fa ${menuItem.icons}` }></i>}
+            icon={menuItem.icons && <i  className={`fa ${menuItem.icons}` }></i>}
           >
-            <div className="p-3 mt-3 mb-3 fw-bold fs-5 text-gray">{menuItem.label}</div>
+            <div className="d-none d-xl-flex p-3 mt-3 mb-3 fw-bold fs-5 text-gray">{menuItem.label}</div>
             <div className="custom-dropdown">
             {renderSubMenuItems(menuItem)}</div>
           </SubMenu>
@@ -111,6 +114,7 @@ export const AppHeader = () => {
       } else {
         return (
           <Menu.Item
+            className ="d-flex justify-content-center"
             key={key}
             icon={menuItem.icons && <i className={`fa ${menuItem.icons}`}></i>}
           >
@@ -177,11 +181,11 @@ export const AppHeader = () => {
           <div className="mobile-display">
             <div
               className="menu-icon d-xxl-none d-flex"
-              onClick={handleShowMenu}
+              onClick={handleToggleMenu}
             >
               <i className="fa-solid fa-bars fa-xl"></i>
             </div>
-            <div onClick={handleShowSearch} className="menu-icon">
+            <div onClick={handleToggleSearch} className="menu-icon">
               <i className=" fa-solid fa-magnifying-glass fa-lg"></i>
             </div>
           </div>
@@ -197,13 +201,13 @@ export const AppHeader = () => {
       </Row>
       <TabletMobileMenu
         show={showMenu}
-        onShowSearch={handleShowSearch}
+        onShowSearch={handleToggleSearch}
         onHide={handleCloseMenu}
         items={renderMobileMenuItems(menuTree)}
         buttonText={LoginBtnText}
       />
       <TabletMobileSearch
-        showMenu={handleShowMenu}
+        showMenu={handleToggleMenu}
         show={showSearch}
         onHide={handleCloseSearch}
         searchBtnText= {searchBtnText}
