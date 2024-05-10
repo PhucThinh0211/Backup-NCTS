@@ -8,6 +8,8 @@ import { InfoLookup } from './InfoLookup';
 import { FreightEstimate } from './FreightEstimate';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import '@/pages/Home/HomeStyle.css'
+ 
 
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
