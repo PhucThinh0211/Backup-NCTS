@@ -77,6 +77,11 @@
 }
 
 
+.slide-card .slick-slide {
+  display: flex !important;
+  justify-content: center !important;
+}
+
 
 @media (max-width: 1194px) {
     .form-item-left {
@@ -128,6 +133,10 @@
     .session-img{
     width: 60%;
     }
+    .slide-card .slick-slide {
+      display: flex !important;
+      justify-content: center !important;
+    }
   }
   
   /* Mobile View */
@@ -178,7 +187,14 @@
         justify-content: space-between;
       }
     .lr-carousel-button{
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background-color: #ffffffc7;
+    }
+    .lr-carousel-button:hover{
+      color: white;
+      background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%);
     }
   }
