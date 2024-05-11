@@ -20,7 +20,6 @@ export const AwbLookup = () => {
       className="d-flex flex-row gap-4"
     >
       <Form.Item
-      
       className="d-flex flex-column form-item-left">
         <Form.Item
           label={t("Carrier", { ns: "common" })}

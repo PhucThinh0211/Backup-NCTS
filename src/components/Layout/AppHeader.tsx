@@ -19,9 +19,6 @@ export const AppHeader = () => {
   const menus = useAppSelector(getMenuList());
   const lang = useAppSelector(getLanguage());
 
-  const LoginBtnText = lang === 'vi'? "Đăng nhập":"Log in"
-  const searchBtnText = lang === 'vi'? "Tìm kiếm":"Search"
-
   useEffect(() => {
     dispatch(homeActions.getMenuListRequest({}));
   }, [lang]);
@@ -204,14 +201,12 @@ const handleToggleSearch = () => {
         onShowSearch={handleToggleSearch}
         onHide={handleCloseMenu}
         items={renderMobileMenuItems(menuTree)}
-        buttonText={LoginBtnText}
       />
       <TabletMobileSearch
         showMenu={handleToggleMenu}
         show={showSearch}
         onHide={handleCloseSearch}
-        searchBtnText= {searchBtnText}
-      />
+        />
     </Layout.Header>
   );
 };

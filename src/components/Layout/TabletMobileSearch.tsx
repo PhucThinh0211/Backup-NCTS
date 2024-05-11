@@ -1,16 +1,16 @@
 
 import { Form, Offcanvas } from "react-bootstrap";
 import Link from "antd/es/typography/Link";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   show: boolean;
   showMenu:() => void;
   onHide: () => void;
-  searchBtnText: string
 };
 
-function TabletMobileSearch({ show,showMenu, onHide, searchBtnText }: Props) {
- 
+function TabletMobileSearch({ show,showMenu, onHide }: Props) {
+  const { t } = useTranslation(['home']);
 
   return (
     <div>
@@ -36,13 +36,13 @@ function TabletMobileSearch({ show,showMenu, onHide, searchBtnText }: Props) {
         <Form className="d-flex flex-column px-4 gap-2 position-relative">
             <Form.Control
               type="search"
-              placeholder="Nhập từ khóa cần tìm kiếm"
+              placeholder={t('Enter keywords to search', {ns: 'home'})}
               className="search-field me-2"
               aria-label="Search"
             />
             <Link className="d-flex justify-content-center" href="/">
             <button type="button" className="btn-custom-search">
-              <h5 className="text-white mb-0">{searchBtnText}</h5>
+              <h5 className="text-white mb-0">{t('Search', {ns: 'home'})}</h5>
             </button></Link>
           </Form>
       </Offcanvas>

@@ -1,16 +1,18 @@
 import { Offcanvas } from "react-bootstrap";
 import { Menu } from "antd";
 import Link from "antd/es/typography/Link";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   show: boolean;
   onShowSearch: () => void;
   onHide: () => void;
   items:  any;
-  buttonText: string;
 };
 
-function TabletMobileMenu({ show, onShowSearch, onHide, items, buttonText }: Props) {
+function TabletMobileMenu({ show, onShowSearch, onHide, items }: Props) {
+  const { t } = useTranslation(['home']);
+
   return (
     <div>
       <Offcanvas
@@ -35,7 +37,7 @@ function TabletMobileMenu({ show, onShowSearch, onHide, items, buttonText }: Pro
           <Link className="d-flex justify-content-center" href="/">
             <button type="button" className="btn-custom-signin">
               <i className="fa-regular fa-user fa-xl "></i>
-              <h5 className="text-white mb-0">{buttonText}</h5>
+              <h5 className="text-white mb-0">{t('Log in', {ns: 'home'})}</h5>
             </button>
           </Link>
         </Offcanvas.Body>

@@ -6,12 +6,14 @@ import news from './news.json';
 import company from './company.json';
 import department from './department.json';
 import pageContent from './pageContent.json';
+import home from './home.json'
 
 // eslint-disable-next-line
 export default {
   banner,
   common,
   leftPanel,
+  home,
   menu,
   news,
   company,
