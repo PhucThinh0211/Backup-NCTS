@@ -8,7 +8,8 @@ import { contentEpics } from "./content";
 import { companyEpics } from "./company";
 import { pageContentEpics } from "./pageContent";
 import { departmentEpics } from "./department";
-import { homeEpics } from "./publicCms";
+import { publicCmsEpics } from "./publicCms";
+import { homeEpics } from "./home"
 
 const rootEpics = combineEpics(
   ...persistStateEpics,
@@ -19,7 +20,8 @@ const rootEpics = combineEpics(
   ...contentEpics,
   ...companyEpics,
   ...pageContentEpics,
-  ...departmentEpics
+  ...departmentEpics,
+  ...publicCmsEpics,
 );
 
 export default rootEpics;

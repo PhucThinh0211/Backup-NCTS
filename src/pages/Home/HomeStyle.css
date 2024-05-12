@@ -40,14 +40,16 @@
 
 .cardNews{
     background-color: white;
-    width: 375px;
-    height: 450px;
+    max-width: 375px;
+    max-height: 450px;
     padding: 2%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     border-radius: 3%;
     border: none;
+    margin-top: 10%;
+  margin-bottom: 10%;
   }
 
 .cardImg img {
@@ -76,12 +78,82 @@
   margin-bottom: 0;
 }
 
-
 .slide-card .slick-slide {
+  background-color: transparent !important;
   display: flex !important;
   justify-content: center !important;
 }
 
+.service-session{
+  background-color: #F7F7F7;
+  margin-top: 13%;
+  margin-bottom: 13%;
+}
+.ant-carousel .slick-dots-bottom{
+  bottom: -8% !important;
+}
+
+ .ant-carousel .slick-dots li button{
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 100% !important;
+  background-color:#FFB629 !important;
+}
+
+.service-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.service-img{
+  overflow: hidden; 
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 10px solid white;
+}
+
+.service-img:hover{
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+.service-card h4 {
+  color: #006E9C;
+}
+
+.service-card:hover h4,
+.service-card:active h4 {
+  color: #EDAA3B;
+}
+
+.partner img{
+  max-height:80px;
+}
+.btn-custom{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  background-color: #ECA42E;
+  color: #FFFFFF;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  gap:10px;
+  border-radius: 9999px;
+}
 
 @media (max-width: 1194px) {
     .form-item-left {
@@ -103,7 +175,6 @@
       border: none !important;
     }
     
-    
     .quick-lookup .ant-tabs-nav .ant-tabs-tab {
       background-color: rgba(255, 255, 255, 0.8) !important;
     }
@@ -114,6 +185,7 @@
     }
   }
 
+  /* Mobile View */
 @media (max-width:800px) {
     .quick-lookup .ant-tabs-nav .ant-tabs-nav-list {
       display: flex;
@@ -122,7 +194,6 @@
     }
     .quick-lookup .ant-tabs-nav .ant-tabs-tab-active{
      background-color:  orange !important;
-      
     }
     .quick-lookup .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn{
       color: white !important;     
@@ -133,15 +204,18 @@
     .session-img{
     width: 60%;
     }
+    .aboutUs-img{
+      width: 95%;
+    }
     .slide-card .slick-slide {
       display: flex !important;
       justify-content: center !important;
     }
-  }
-  
-  /* Mobile View */
-@media (max-width: 500px) {
-   
+    .aboutUs-content{
+      display:flex;
+      flex-direction: column;
+      gap:20px;
+    }
   }
   
   /* Desktop View */
@@ -196,5 +270,10 @@
     .lr-carousel-button:hover{
       color: white;
       background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%);
+    }
+    .aboutUs-content{
+      display:flex;
+      flex-direction: row;
+      gap:20px;
     }
   }

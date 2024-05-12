@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Layout, Row, Menu, theme } from "antd";
 import { Link } from "react-router-dom";
@@ -6,11 +6,12 @@ import logo from "@/assets/logo.png";
 import { TopNavHeight } from "@/common";
 import { SwitchLang } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { getMenuList, homeActions } from "@/store/publicCms";
+import { getMenuList, publicCmsActions } from "@/store/publicCms";
 import { getLanguage } from "@/store/persistState";
 import TabletMobileMenu from "./TabletMobileMenu";
 import TabletMobileSearch from "./TabletMobileSearch";
 import React from "react";
+import { getShowMenu, getShowSearch, homeActions } from "@/store/home";
 
 const { SubMenu } = Menu;
 
@@ -18,9 +19,30 @@ export const AppHeader = () => {
   const dispatch = useAppDispatch();
   const menus = useAppSelector(getMenuList());
   const lang = useAppSelector(getLanguage());
+  const showMenu = useAppSelector(getShowMenu);
+  const showSearch = useAppSelector(getShowSearch);
+  
+  const handleToggleMenu = () => {
+    dispatch(homeActions.toggleMenu());
+    dispatch(homeActions.closeSearch()); 
+  };
+  
+  const handleToggleSearch = () => {
+    dispatch(homeActions.toggleSearch());
+    dispatch(homeActions.closeMenu()); 
+  };
+  
+  const handleCloseMenu = () => {
+    dispatch(homeActions.closeMenu());
+  };
+  
+  const handleCloseSearch = () => {
+    dispatch(homeActions.closeSearch());
+  };
+
 
   useEffect(() => {
-    dispatch(homeActions.getMenuListRequest({}));
+    dispatch(publicCmsActions.getMenuListRequest({}));
   }, [lang]);
 
   const {
@@ -28,24 +50,6 @@ export const AppHeader = () => {
   } = theme.useToken();
 
 
-  const [showMenu, setShowMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-
- // Function to handle click on menu icon
-const handleToggleMenu = () => {
-  setShowMenu(!showMenu); 
-  setShowSearch(false);
-};
-
-// Function to handle click on search icon
-const handleToggleSearch = () => {
-  setShowSearch(!showSearch); 
-  setShowMenu(false); 
-};
-
-  const handleCloseMenu = () => setShowMenu(false);
-  
-  const handleCloseSearch = () => setShowSearch(false);
 
   function buildMenuTree(items, parentId = null) {
     const node = {};

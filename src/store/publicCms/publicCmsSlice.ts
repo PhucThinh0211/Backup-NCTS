@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { MenuResponse } from "@/services/MenuService";
 
-interface HomeState {
+interface publicCmsState {
   menuList: MenuResponse[];
 }
 
-const initialState: HomeState = {
+const initialState: publicCmsState = {
   menuList: []
 }
 
-const HomeSlice = createSlice({
-  name: 'home',
+const publicCmsSlice = createSlice({
+  name: 'publicCms',
   initialState,
   reducers: {
     getMenuListRequest: (state, action) => {},
@@ -21,5 +21,5 @@ const HomeSlice = createSlice({
   }
 });
 
-export const homeActions = HomeSlice.actions;
-export const homeReducer = HomeSlice.reducer;
+export const publicCmsActions = publicCmsSlice.actions;
+export const publicCmsReducer = publicCmsSlice.reducer;
