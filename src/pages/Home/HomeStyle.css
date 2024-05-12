@@ -154,6 +154,16 @@
   gap:10px;
   border-radius: 9999px;
 }
+.btn-custom:hover{
+  background-color: #ffca76;
+}
+
+.imgSlideShow{
+  height: 50px;
+  width: auto; 
+  max-width: 200px;
+  object-fit: contain;
+}
 
 @media (max-width: 1194px) {
     .form-item-left {
