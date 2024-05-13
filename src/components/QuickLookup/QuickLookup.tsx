@@ -1,7 +1,8 @@
 import { Tabs, TabsProps } from 'antd';
 import {
-  FileSearchOutlined, CalendarOutlined, BarChartOutlined, SearchOutlined
+  FileSearchOutlined, CalendarOutlined, BarChartOutlined, SearchOutlined, FileProtectOutlined
 } from '@ant-design/icons';
+import { OnlineCheckin } from './OnlineCheckin';
 import { AwbLookup } from './AwbLookup';
 import { FlightLookup } from './FlightLookup';
 import { InfoLookup } from './InfoLookup';
@@ -15,6 +16,13 @@ export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
 
   const banner =[
+    {
+      key:'onlineCheckin',
+      title:'',
+      desc: '',
+      btnTitle:'',
+      src: 'https://sit.ntcs.hicas.vn/api/photo/dowload/2098e797-9bf6-074b-c305-3a1269ac4545.png'
+    },
     {
       key:'lookupAwb',
       title:'',
@@ -48,8 +56,16 @@ export const QuickLookup = () => {
   const [bannerSrc, setBannerSrc] = useState(banner[0].src);
 
 
-  
+
   const items: TabsProps['items'] = [
+    {
+      key: 'onlineCheckin',
+      label: (  
+        t('Online check-in', { ns: 'common' })
+      ),
+      children: <OnlineCheckin />,
+      icon: <FileProtectOutlined />
+    },
     {
       key: 'lookupAwb',
       label: (  

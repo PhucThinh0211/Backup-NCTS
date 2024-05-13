@@ -86,11 +86,11 @@
 
 .service-session{
   background-color: #F7F7F7;
-  margin-top: 13%;
-  margin-bottom: 13%;
+  margin-top: 5%;
+  padding-bottom: 5%;
 }
 .ant-carousel .slick-dots-bottom{
-  bottom: -8% !important;
+  bottom: -3% !important;
 }
 
  .ant-carousel .slick-dots li button{
@@ -138,6 +138,9 @@
 
 .partner img{
   max-height:80px;
+  width: auto; 
+  max-width: 500px;
+  object-fit: contain;
 }
 .btn-custom{
   display: flex;
@@ -285,5 +288,27 @@
       display:flex;
       flex-direction: row;
       gap:20px;
+    }
+    .onlineCheckin .ant-segmented{
+      display: flex;
+      align-items: center;
+      background-color: #F3F3F3;
+      border-radius: 10px;
+      height: 70px ;
+      width: fit-content;
+      align-items: center;
+      overflow: hidden;
+      justify-content: center;
+    }
+    .onlineCheckin .ant-segmented .ant-segmented-group{
+      height: 90%;
+    }
+    .onlineCheckin .ant-segmented .ant-segmented-item{
+      display: flex;
+      align-items: center;
+    }
+    .onlineCheckin-form{
+      margin-left: 20% !important;
+      margin-right: 20% !important;
     }
   }

@@ -38,5 +38,14 @@
   "StringRange": "Tối đa từ {{range1}} - {{range2}} ký tự",
   "notification": "Thông báo",
   "Saved successfully": "Lưu dữ liệu thành công.",
-  "Removed successfully": "Xóa dữ liệu thành công."
+  "Removed successfully": "Xóa dữ liệu thành công.",
+  "Online check-in": "Thủ tục trực tuyến",
+  "Declare export goods information": "Khai báo thông tin hàng xuất khẩu",
+  "Online delivery procedures": "Thủ tục nhận hàng trực tuyến",
+  "Account" : "Tài khoản",
+  "Password": "Mật khẩu",
+  "Verification codes": "Mã xác thực",
+  "Enter account name": "Nhập tên tài khoản",
+  "Enter password": "Nhập mật khẩu",
+  "Enter verification codes": "Nhập mã xác thực"
 }

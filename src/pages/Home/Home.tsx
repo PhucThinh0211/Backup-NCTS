@@ -1,6 +1,7 @@
 import { QuickLookup } from '@/components';
 import Cards from '@/components/CarouselCard/Cards';
 import ServiceCard from '@/components/ServiceCard/ServiceCard';
+import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import '@/pages/Home/HomeStyle.css'
 import { Carousel } from 'antd';
 import { useRef } from 'react';
@@ -172,9 +173,7 @@ export const Home = () => {
       </div>
       {/* News Session */}
       <div>
-        <div className='d-flex w-100 h-100 justify-content-center'>
-          <img className="session-img" src="https://sit.ntcs.hicas.vn/api/photo/dowload/b6eb6604-e28b-ea7a-cad2-3a1272ac5fca.png" alt="News" />
-        </div>
+      <SessionTitle title={t('News', {ns: 'home'})}/>
         {/* Carousel */}
         <div className='my-4 container slide-card'>
           <Carousel
@@ -202,9 +201,7 @@ export const Home = () => {
       </div>
       {/* Service session */}
       <div className="service-session">
-        <div className='d-flex w-100 h-100 justify-content-center'>
-          <img className="session-img" src="https://sit.ntcs.hicas.vn/api/photo/dowload/193910fd-f559-efcc-91f3-3a1278b70130.png" alt="News" />
-        </div> 
+        <SessionTitle title={t('Services', {ns: 'home'})}/>
           <div className='container w-100 justify-content-evenly'>
           <Carousel
             slidesToShow={3}
@@ -221,9 +218,7 @@ export const Home = () => {
       </div>
       {/* About Us session */}
       <div className="mb-3">
-        <div className='d-flex w-100 h-100 justify-content-center '>
-          <img className="aboutUs-img" src="https://sit.ntcs.hicas.vn/api/photo/dowload/ce19dde0-2b93-953b-fa84-3a127e03a96b.png" alt="News" />
-        </div> 
+        <SessionTitle title={t('About Us', {ns: 'home'})}/>
         <div className='container aboutUs-content my-5'>
           <img className="" src="https://sit.ntcs.hicas.vn/api/photo/dowload/5b850407-87b5-ddcd-8e20-3a127e40fb91.png" alt="News" />
           <div className ="">
