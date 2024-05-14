@@ -12,6 +12,7 @@ import TabletMobileMenu from "./TabletMobileMenu";
 import TabletMobileSearch from "./TabletMobileSearch";
 import React from "react";
 import { getShowMenu, getShowSearch, homeActions } from "@/store/home";
+import { MenuResponse } from "@/services/MenuService";
 
 const { SubMenu } = Menu;
 
@@ -51,8 +52,8 @@ export const AppHeader = () => {
 
 
 
-  function buildMenuTree(items, parentId = null) {
-    const node = {};
+  function buildMenuTree(items: MenuResponse[], parentId?: string) {
+    const node: any = {};
     items
       .filter((item) => item.parentId === parentId)
       .forEach((item) => {
@@ -66,7 +67,7 @@ export const AppHeader = () => {
     return node;
   }
 
-  const renderSubMenuItems = (menuItem) => {
+  const renderSubMenuItems = (menuItem: any) => {
     return (
       <React.Fragment>
         {menuItem.children &&
@@ -97,7 +98,7 @@ export const AppHeader = () => {
   const menuTree = buildMenuTree(menus);
 
   // RenderMenuItems for Desktop
-  const renderMenuItems = (menuItems) => {
+  const renderMenuItems = (menuItems: any) => {
     return Object.keys(menuItems).map((key) => {
       const menuItem = menuItems[key];
       if (menuItem.children && Object.keys(menuItem.children).length > 0) {
@@ -127,7 +128,7 @@ export const AppHeader = () => {
   };
 
   // Render Menu Items for Mobile
-  const renderMobileMenuItems = (menuItems) => {
+  const renderMobileMenuItems = (menuItems: any) => {
     return Object.keys(menuItems).map((key) => {
       const menuItem = menuItems[key];
       if (menuItem.children && Object.keys(menuItem.children).length > 0) {

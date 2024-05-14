@@ -1,6 +1,4 @@
-import { BannerResponse } from '@/services/BannerService';
-
-export const banners: BannerResponse[] = new Array(20)
+export const banners: any[] = new Array(20)
   .fill(null)
   .map((_, index) => {
     return {

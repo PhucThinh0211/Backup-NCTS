@@ -131,7 +131,7 @@ const partnerSlideShow = [
 ]
 
 export const Home = () => {
-  const carouselRef = useRef(null);
+  const carouselRef = useRef<any>(null);
   const { t } = useTranslation(['home']);
 
   const next = () => {
