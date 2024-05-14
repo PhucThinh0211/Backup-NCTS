@@ -167,7 +167,10 @@
   max-width: 200px;
   object-fit: contain;
 }
-
+.verification img{
+  max-width: calc(100%);
+  max-height: calc(100%);
+}
 @media (max-width: 1194px) {
     .form-item-left {
         width: calc(100%);
@@ -278,28 +281,18 @@
       flex-direction: row;
       gap:20px;
     }
-    .onlineCheckin .ant-segmented{
+    .flight-lookup .ant-segmented{
       display: flex;
       align-items: center;
       background-color: #F3F3F3;
       border-radius: 10px;
-      height: 60px ;
+      height: 40px ;
       width: fit-content;
       align-items: center;
       overflow: hidden;
       justify-content: center;
     }
-    .onlineCheckin .ant-segmented .ant-segmented-group{
-      height: 80%;
-    }
-    .onlineCheckin .ant-segmented .ant-segmented-item{
-      display: flex;
-      align-items: center;
-    }
-    .onlineCheckin-form{
-      margin-left: 20% !important;
-      margin-right: 20% !important;
-    }
+    
     .ant-carousel .slick-next, .slick-prev{
       width: 50px !important;
       height: 50px !important;

@@ -1,6 +1,6 @@
 import { Tabs, TabsProps } from 'antd';
 import {
-  FileSearchOutlined, CalendarOutlined, BarChartOutlined, SearchOutlined, FileProtectOutlined
+  FileSearchOutlined, BarChartOutlined, FileProtectOutlined
 } from '@ant-design/icons';
 import { OnlineCheckin } from './OnlineCheckin';
 import LookUp from './LookUp';

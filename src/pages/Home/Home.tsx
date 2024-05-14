@@ -141,10 +141,8 @@ const partnerSlideShow = [
 ]
 
 export const Home = () => {
-
   const carouselRef = useRef<CarouselRef>(null);
   const { t } = useTranslation(['home']);
-
 
   const newsResponsiveSettings = [
     {

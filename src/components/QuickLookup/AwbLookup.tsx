@@ -13,29 +13,31 @@ export const AwbLookup = () => {
   };
 
   return (
-    <div className="custom-container">
-      <h5 className="my-4 mb-5"> {t('Lookup AWB No', { ns: 'common' })}</h5>
+    <div className="w-75">
       <Form
         requiredMark
         autoComplete="off"
         onFinish={handleLookup}
-        className="d-flex flex-row gap-4"
+        className=""
       >
         <Form.Item
-        className="d-flex flex-column form-item-left">
+        className="d-flex flex-column ">
           <Form.Item
-            label={t("Carrier", { ns: "common" })}
+            label={t("AWB number", { ns: "common" })}
             required
+
             rules={[{ required: true }]}
             style={{ display: "" }}
           >
             <Input style={{
                 height: "40px",
                 borderRadius: 10
-              }} />
+              }}
+              placeholder="#AWB" 
+              />
           </Form.Item>
           <Form.Item
-            label={t("AWB number", { ns: "common" })}
+            label={t("Verification codes", { ns: "common" })}
             required
             style={{
               display: "inline-block",
@@ -47,30 +49,24 @@ export const AwbLookup = () => {
               name="awbPfx"
               rules={[{ required: true }]}
               style={{ display: "inline-block", 
-              width: "calc(50% - 4px)" 
+              width: "calc(70% - 4px)" 
             }}
             >
               <Input style={{
                 height: "40px",
                 borderRadius: 10
-              }} placeholder="Prefix" />
+              }} placeholder={t("Enter verification codes", { ns: "common" })} />
             </Form.Item>
-            <Form.Item
-              name="awbNum"
-              rules={[{ required: true }]}
-              style={{
+            <div className="verification" style={{
                 display: "inline-block",
-                width: "calc(50% - 4px)",
-                marginLeft: 8,
-              }}
-            >
-              <Input
-              style={{
                 height: "40px",
-                borderRadius: 10
-              }}
-              placeholder="AWB#" />
-            </Form.Item>
+                width: "calc(30% - 4px)",
+                borderRadius: 10,
+                alignContent: "center",
+                marginLeft: 8,
+              }} >
+                <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="" />
+              </div>
           </Form.Item>
           <Form.Item noStyle>
             <div className="w-100 align-self-end">
@@ -79,17 +75,13 @@ export const AwbLookup = () => {
                 fontWeight:600,
                 fontSize: "18px",
                 height:"48px",
-                width : "calc(30%)",
-                marginTop:50
+                width : "calc(100%)",
                 }}>
                 {t("Lookup", { ns: "common" })}
               </Button>
             </div>
           </Form.Item>
         </Form.Item>
-          <div className="d-none d-md-flex justify-content-center form-item-right">  
-            <img src="https://sit.ntcs.hicas.vn/api/photo/dowload/6e9e0536-e0f6-6ecd-f117-3a12634d56ac.png" alt="1" width='80%'/>
-          </div>
       </Form>
     </div>
   );
