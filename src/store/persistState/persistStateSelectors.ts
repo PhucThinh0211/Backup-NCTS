@@ -10,3 +10,4 @@ export function getLanguage() {
 export function getLocale() {
   return createSelector([getState], (state) => state.locale || 'vi');
 }
+

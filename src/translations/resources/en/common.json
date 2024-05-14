@@ -39,5 +39,14 @@
   "StringRange": "Must be from {{range1}} - {{range2}} letters",
   "notification": "Notification",
   "Saved successfully": "Saved successfully.",
-  "Removed successfully": "Removed successfully."
+  "Removed successfully": "Removed successfully.",
+  "Online check-in": "Online check-in",
+  "Declare export goods information": "Declare export goods information",
+  "Online delivery procedures": "Online delivery procedures",
+  "Account" : "Account",
+  "Password": "Password",
+  "Verification codes": "Verification codes",
+  "Enter account name": "Enter account name",
+  "Enter password": "Enter password",
+  "Enter verification codes": "Enter verification codes"
 }

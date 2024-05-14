@@ -1,23 +1,29 @@
-import { Divider, Layout, Row, Space, Typography } from 'antd';
+import {  Layout, Row, Space, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
 export const AppFooter = () => {
   return (
-    <Layout.Footer style={{ backgroundColor: 'orange', padding: 16 }}>
-      <Row>
-        <Space style={{ flex: 1 }}>
-          <Typography.Link style={{ color: 'white' }} href='mailto:webmaster@noibaicargo.com.vn'>Email: webmaster@noibaicargo.com.vn</Typography.Link>
-          <Divider type='vertical' style={{ borderInlineStart: '1px solid gray' }}/>
-          <Typography.Link style={{ color: 'white' }} href='tel:0983550608'>Hotline: 0983550608</Typography.Link>
-          <Divider type='vertical' style={{ borderInlineStart: '1px solid gray' }} />
+    <Layout.Footer  style={{ backgroundColor: 'orange', padding: 16 }}>
+      <Row className="container d-flex justify-content-between">
+        <Space>
+          <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS Noi Bai Cargo `}</Typography.Text>
+        </Space>
+        
+        <Space className ="d-none d-xl-flex gap-3">
           <Link to='/sitemap'>
             <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
           </Link>
+          <Link to='/contact'>
+            <Typography.Text style={{ color: 'white' }}>Contact</Typography.Text>
+          </Link>
+          <Link to='/support'>
+            <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
+          </Link>
+          
         </Space>
-        <Space>
-          <Typography.Text style={{ color: 'white' }}>{`© 2024 Noi Bai Cargo Terminal Services JSC`}</Typography.Text>
-        </Space>
+        
       </Row>
     </Layout.Footer>
   );
 };
+          {/* <Typography.Link style={{ color: 'white' }} href='tel:0983550608'>Hotline: 0983550608</Typography.Link> */}

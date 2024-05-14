@@ -1,0 +1,314 @@
+.form-item-left {
+    width: calc(100%);
+  }
+
+.session-img{
+    width: 40%;
+    height: auto;
+}
+
+.ant-form-item {
+    margin-bottom: 10px !important;
+  }
+  
+.quick-lookup .ant-tabs-nav .ant-tabs-tab:nth-child(1) {
+    margin-left: 0px !important;
+  }
+  
+.quick-lookup {
+    position: relative !important;
+  }
+  
+.quick-lookup .ant-tabs-tab {
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    color: #414141 !important;
+    height: 100%;
+  }
+  
+.bg-img {
+    position: relative;
+    z-index: 0;
+    padding: 0;
+  }
+  
+.quick-lookup .ant-tabs-content-holder {
+    border: none;
+    padding-top: 2%;
+    margin-bottom: 1rem;
+  }
+
+.cardNews{
+    background-color: white;
+    max-width: 375px;
+    max-height: 450px;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 3%;
+    border: none;
+    margin-top: 10%;
+  margin-bottom: 10%;
+  }
+
+.cardImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  
+.cardImg {
+    width: 100%; 
+    height: 256px; 
+    overflow: hidden; 
+    border-radius: 3%;
+  }
+  
+.cardTitle{
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardDesc{
+  max-height: 60px;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin-bottom: 0;
+}
+
+.slide-card .slick-slide {
+  background-color: transparent !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.service-session{
+  background-color: #F7F7F7;
+  margin-top: 5%;
+  padding-bottom: 5%;
+}
+.ant-carousel .slick-dots-bottom{
+  bottom: -3% !important;
+}
+
+ .ant-carousel .slick-dots li button{
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 100% !important;
+  background-color:#FFB629 !important;
+}
+
+.service-card{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.service-img{
+  overflow: hidden; 
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 10px solid white;
+}
+
+.service-img:hover{
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+.service-card h4 {
+  color: #006E9C;
+}
+
+.service-card:hover h4,
+.service-card:active h4 {
+  color: #EDAA3B;
+}
+
+.partner img{
+  max-height:80px;
+  width: auto; 
+  max-width: 500px;
+  object-fit: contain;
+}
+.btn-custom{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  background-color: #ECA42E;
+  color: #FFFFFF;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  gap:10px;
+  border-radius: 9999px;
+}
+.btn-custom:hover{
+  background-color: #ffca76;
+}
+
+.imgSlideShow{
+  height: 50px;
+  width: auto; 
+  max-width: 200px;
+  object-fit: contain;
+}
+
+@media (max-width: 1194px) {
+    .form-item-left {
+        width: calc(100%);
+    }
+  }
+
+@media (min-width: 800px) {
+    .quick-lookup .ant-tabs-nav {
+      position: absolute !important;
+      margin: 0 !important;
+      top:-65px;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+      height: 65px;
+    }
+    .quick-lookup .ant-tabs-nav::before {
+      border: none !important;
+    }
+    
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab {
+      background-color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab-active {
+      border-bottom-color: #ffffff !important;
+      background-color: #ffffff !important;
+    }
+  }
+
+  /* Mobile View */
+@media (max-width:800px) {
+    .quick-lookup .ant-tabs-nav .ant-tabs-nav-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab-active{
+     background-color:  orange !important;
+    }
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn{
+      color: white !important;     
+     }
+    .ant-tabs-nav .ant-tabs-tab{
+      border-radius: 8px 8px 8px 8px !important;
+    }
+    .session-img{
+    width: 60%;
+    }
+    .aboutUs-img{
+      width: 95%;
+    }
+    .slide-card .slick-slide {
+      display: flex !important;
+      justify-content: center !important;
+    }
+    .aboutUs-content{
+      display:flex;
+      flex-direction: column;
+      gap:20px;
+    }
+  }
+  
+  /* Desktop View */
+@media (min-width: 1194px) {
+    .custom-dropdown{
+      display: flex;
+      flex-direction: column;
+      gap:0;
+      flex-wrap: wrap;
+      max-height: 300px;
+      max-width: fit-content;
+    }
+    .ant-menu-submenu>.ant-menu li{
+      max-width: fit-content;
+    }
+    .ant-menu-submenu>.ant-menu a{
+      color: #888888 !important;
+      }
+    .ant-menu-submenu-popup >.ant-menu .ant-menu-item .ant-menu-item-icon {
+        color: gray !important; 
+      }
+    .form-item-left {
+        width: calc(40%);
+      }
+    
+    .form-item-right {
+        width: calc(60%);
+      }
+    .custom-container {
+        max-width: 1140px; 
+        margin-left: auto;
+        margin-right: auto;
+      }
+    .slide-card{
+        position: relative;
+      }
+    .arrow-btn{
+        position: absolute;
+        width: 100%;
+        display: flex;
+        top: 50%;
+        z-index: 1;
+        justify-content: space-between;
+      }
+    .lr-carousel-button{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background-color: #ffffffc7;
+    }
+    .lr-carousel-button:hover{
+      color: white;
+      background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%);
+    }
+    .aboutUs-content{
+      display:flex;
+      flex-direction: row;
+      gap:20px;
+    }
+    .onlineCheckin .ant-segmented{
+      display: flex;
+      align-items: center;
+      background-color: #F3F3F3;
+      border-radius: 10px;
+      height: 70px ;
+      width: fit-content;
+      align-items: center;
+      overflow: hidden;
+      justify-content: center;
+    }
+    .onlineCheckin .ant-segmented .ant-segmented-group{
+      height: 90%;
+    }
+    .onlineCheckin .ant-segmented .ant-segmented-item{
+      display: flex;
+      align-items: center;
+    }
+    .onlineCheckin-form{
+      margin-left: 20% !important;
+      margin-right: 20% !important;
+    }
+  }
