@@ -5,7 +5,8 @@ export const InfoLookup = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <Form layout="vertical" requiredMark autoComplete="on">
+    <div className='custom-container'>
+    <Form layout="vertical" requiredMark autoComplete="on" >
       <Form.Item label={t('Type to search', { ns: 'common' })} required>
         <Input />
       </Form.Item>
@@ -16,6 +17,6 @@ export const InfoLookup = () => {
           </Button>
         </Row>
       </Form.Item>
-    </Form>
+    </Form></div>
   );
 };

@@ -8,7 +8,7 @@ export const OnlineCheckin = () => {
     <div>
       <div className="d-flex justify-content-center onlineCheckin mb-3">
         <Segmented
-          defaultValue="center"
+          defaultValue={t("Online delivery procedures", { ns: "common" })}
           // onChange={()}
           options={[
             t("Declare export goods information", { ns: "common" }),
