@@ -101,7 +101,7 @@ export const AppHeader = () => {
   const menuTree = buildMenuTree(menus);
 
   // RenderMenuItems for Desktop
-  const renderMenuItems = (menuItems: MenuResponse[]) => {
+  const renderMenuItems = (menuItems: { [key: string]: any }) => {
     return Object.keys(menuItems).map((key) => {
       const menuItem = menuItems[key];
       if (menuItem.children && Object.keys(menuItem.children).length > 0) {
@@ -131,7 +131,7 @@ export const AppHeader = () => {
   };
 
   // Render Menu Items for Mobile
-  const renderMobileMenuItems = (menuItems: MenuResponse[]) => {
+  const renderMobileMenuItems = (menuItems: { [key: string]: any }) => {
     return Object.keys(menuItems).map((key) => {
       const menuItem = menuItems[key];
       if (menuItem.children && Object.keys(menuItem.children).length > 0) {
