@@ -47,5 +47,10 @@
   "Verification codes": "Mã xác thực",
   "Enter account name": "Nhập tên tài khoản",
   "Enter password": "Nhập mật khẩu",
-  "Enter verification codes": "Nhập mã xác thực"
+  "Enter verification codes": "Nhập mã xác thực",
+  "Arrival": "Chiều đến",
+  "Departure": "Chiều đi",
+  "Invoices Lookup": "Tra cứu hóa đơn",
+  "E-invoice number": "Số hóa đơn điện tử",
+  "Invoice date": "Ngày lập hóa đơn"
 }

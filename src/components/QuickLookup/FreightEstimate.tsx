@@ -16,6 +16,7 @@ export const FreightEstimate = () => {
   const { t } = useTranslation(['common']);
 
   return (
+    <div className='custom-container'>
     <Form layout="vertical" requiredMark autoComplete="off">
       <Row style={{ marginBottom: 16 }}>
         <Typography.Title level={5} style={{ margin: 0 }}>
@@ -25,34 +26,58 @@ export const FreightEstimate = () => {
       <Row gutter={[8, 0]}>
         <Col span={6}>
           <Form.Item label="Giờ hàng về">
-            <TimePicker style={{ width: '100%' }} />
+            <TimePicker style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }} />
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item label="Ngày hàng về">
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }}/>
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item label="Giờ nhận hàng">
-            <TimePicker style={{ width: '100%' }} />
+            <TimePicker style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }} />
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item label="Ngày nhận hàng">
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }} />
           </Form.Item>
         </Col>
       </Row>
       <Row gutter={[8, 0]}>
         <Col span={12}>
           <Form.Item label="Trọng lượng (kg)">
-            <Input />
+            <Input style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }} />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item label="Loại dịch vụ">
-            <Input />
+            <Input style={{
+                height: "40px",
+                borderRadius: 10,
+                width: "100%"
+              }} />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -101,6 +126,6 @@ export const FreightEstimate = () => {
           </Form.Item>
         </Col>
       </Row>
-    </Form>
+    </Form></div>
   );
 };
