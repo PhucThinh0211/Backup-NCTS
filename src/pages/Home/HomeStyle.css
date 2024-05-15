@@ -171,6 +171,27 @@
   max-width: calc(100%);
   max-height: calc(100%);
 }
+
+.flight-lookup .ant-segmented{
+  display: flex !important;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  border: #d9d9d9 solid 1px;
+  height: 40px ;
+  overflow: hidden;
+  margin-top: 15px;
+}
+.flight-lookup .ant-segmented .ant-segmented-group{
+  display: flex;
+  justify-content: center;
+}
+.flight-lookup .ant-segmented .ant-segmented-item-selected{
+  background-color:#006E9C !important;
+  color: white !important;
+}
+
+
 @media (max-width: 1194px) {
     .form-item-left {
         width: calc(100%);
@@ -178,14 +199,14 @@
   }
 
 @media (min-width: 800px) {
-    .quick-lookup .ant-tabs-nav {
+  .quick-lookup .ant-tabs-nav {
       position: absolute !important;
       margin: 0 !important;
-      top:-65px;
+      top:-50px;
       left: 0;
       width: 100%;
       z-index: 1;
-      height: 65px;
+      height: 50px;
     }
     .quick-lookup .ant-tabs-nav::before {
       border: none !important;
@@ -281,18 +302,7 @@
       flex-direction: row;
       gap:20px;
     }
-    .flight-lookup .ant-segmented{
-      display: flex;
-      align-items: center;
-      background-color: #F3F3F3;
-      border-radius: 10px;
-      height: 40px ;
-      width: fit-content;
-      align-items: center;
-      overflow: hidden;
-      justify-content: center;
-    }
-    
+
     .ant-carousel .slick-next, .slick-prev{
       width: 50px !important;
       height: 50px !important;

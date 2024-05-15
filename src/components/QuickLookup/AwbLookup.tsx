@@ -16,6 +16,7 @@ export const AwbLookup = () => {
     <div className="w-75">
       <Form
         requiredMark
+        layout="vertical"
         autoComplete="off"
         onFinish={handleLookup}
         className=""
@@ -49,7 +50,7 @@ export const AwbLookup = () => {
               name="awbPfx"
               rules={[{ required: true }]}
               style={{ display: "inline-block", 
-              width: "calc(70% - 4px)" 
+              width: "calc(75% - 4px)" 
             }}
             >
               <Input style={{
@@ -60,7 +61,7 @@ export const AwbLookup = () => {
             <div className="verification" style={{
                 display: "inline-block",
                 height: "40px",
-                width: "calc(30% - 4px)",
+                width: "calc(25% - 4px)",
                 borderRadius: 10,
                 alignContent: "center",
                 marginLeft: 8,

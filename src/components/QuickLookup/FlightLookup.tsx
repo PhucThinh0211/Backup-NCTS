@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, Radio, Row, Segmented } from 'antd';
+import { Button, Col, DatePicker, Form, Input, Radio, Row, Segmented } from 'antd';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
@@ -9,31 +9,34 @@ export const FlightLookup = () => {
     <div className="w-75">
     <Form
       requiredMark
+      layout='vertical'
       autoComplete="off"
+      initialValues={{ dateFlight: dayjs(), routing: "di" }}
     >
-      <Form.Item
-      className="d-flex flex-column flight-lookup">
-       <Form.Item
+      <Row gutter={[8, 0]} className=" flight-lookup d-flex align-items-center">
+        <Col xs={24} sm={12} md={9}>
+       <Form.Item 
           label={t('Carrier', { ns: 'common' })}
           required
           rules={[{ required: true }]}
           style={{
             display: "inline-block",
-            width: "calc(40% - 4px)",
+            width: "calc(100%)",
             marginBottom: 0,
           }}>
           <Input style={{
                 height: "40px",
                 borderRadius: 10
               }}/>
-          </Form.Item>
+          </Form.Item> </Col>
+          <Col xs={24} sm={12} md={9}>
           <Form.Item
             name="dateFlight"
             label={t('Flight date', { ns: 'common' })}
             rules={[{ required: true }]}
             style={{
               display: "inline-block",
-              width: "calc(40% - 4px)",
+              width: "calc(100%)",
               marginBottom: 0,
             }}>
             <DatePicker  style={{
@@ -41,10 +44,10 @@ export const FlightLookup = () => {
                 width: "100%",
                 borderRadius: 10
               }} />
-          </Form.Item>
+          </Form.Item></Col>
+          <Col >
           <Segmented
-          className=''
-          style={{width: "calc(20% - 4px)",
+          style={{width: "calc(100%)",
             display: "inline-block"
           }}
           // onChange={()}
@@ -52,8 +55,8 @@ export const FlightLookup = () => {
             t("Arrival", { ns: "common" }),
             t("Departure", { ns: "common" }),
           ]}
-        />
-        </Form.Item>
+        /></Col>
+        </Row>
         <Form.Item
           label={t("Verification codes", { ns: "common" })}
           required
@@ -104,61 +107,3 @@ export const FlightLookup = () => {
   </div>
 );
 };
-
-//     <div className='w-75'>
-//     <Form requiredMark className="d-flex flex-row gap-4" layout="vertical" initialValues={{ dateFlight: dayjs(), routing: 'di' }} autoComplete="off">
-//         <Form.Item
-//           label={t('Carrier', { ns: 'common' })}
-//           required
-//           rules={[{ required: true }]}
-//           style={{
-//             display: "inline-block",
-//             width: "calc(100%)",
-//             marginBottom: 0,
-//           }}>
-//           <Input style={{
-//                 height: "40px",
-//                 borderRadius: 10
-//               }}/>
-//           <Form.Item
-//             name="dateFlight"
-//             label={t('Flight date', { ns: 'common' })}
-//             rules={[{ required: true }]}
-//             style={{
-//               display: "inline-block",
-//               width: "calc(100%)",
-//               marginBottom: 0,
-//             }}>
-//             <DatePicker  style={{
-//                 height: "40px",
-//                 width: "100%",
-//                 borderRadius: 10
-//               }} />
-//           </Form.Item>
-//           <Form.Item
-//             name="routine"
-//             label={t('Routine', { ns: 'common' })}
-//             rules={[{ required: true }]}
-//             style={{ display: 'inline-block', width: 'calc(100%)', marginLeft: 8 }}>
-//              <Radio.Group >
-//               <Radio value={"di"}>{t('Arrival', { ns: 'common' })}</Radio>
-//               <Radio value={"den"}>{t('Departure', { ns: 'common' })}</Radio>
-//             </Radio.Group>
-//           </Form.Item>
-//           <Form.Item 
-//           style={{marginTop:50}}
-//           >
-//             <Row justify="start">
-//               <Button type="primary" htmlType="submit" style={{
-//                 fontWeight:600,
-//                 fontSize: "18px",
-//                 height:"48px",
-//                 }}>
-//                 {t('Log in', { ns: 'home' })}
-//               </Button>
-//             </Row>
-//           </Form.Item>
-//         </Form.Item>
-//     </Form></div>
-//   );
-// };
