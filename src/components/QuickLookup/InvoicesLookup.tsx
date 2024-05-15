@@ -5,7 +5,7 @@ export const InvoicesLookup = () => {
   const { t } = useTranslation(["common"]);
 
   return (
-    <div className="w-75">
+    <div className="w-xl-50">
     <Form
       requiredMark
       layout='vertical'
@@ -75,7 +75,7 @@ export const InvoicesLookup = () => {
               alignContent: "center",
               marginLeft: 8,
             }} >
-              <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="" />
+              <img src="https://sit.ntcs.hicas.vn/api/photo/dowload/64bbc359-c083-cdce-83aa-3a128d8ed489.png" alt="" />
             </div>
         </Form.Item>
         {/* Submit button */}

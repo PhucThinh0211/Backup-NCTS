@@ -14,7 +14,7 @@ export const AwbLookup = () => {
   };
 
   return (
-    <div className="w-75">
+    <div className="w-xl-50">
       <Form
         requiredMark
         layout="vertical"
@@ -33,7 +33,7 @@ export const AwbLookup = () => {
           >
             <Form.Item
               name="awbPfx"
-              style={{ display: "inline-block", width: "calc(20% - 4px)" }}
+              style={{ display: "inline-block", width: "calc(30% - 4px)" }}
               rules={[
                 {
                   pattern: /^[\d]{0,3}$/,
@@ -67,7 +67,7 @@ export const AwbLookup = () => {
               validateTrigger="onBlur"
               style={{
                 display: "inline-block",
-                width: "calc(80% - 4px)",
+                width: "calc(70% - 4px)",
                 marginLeft: 8,
               }}
             >
@@ -99,7 +99,7 @@ export const AwbLookup = () => {
           <Form.Item
             name="Verification codes"
             rules={[{ required: true }]}
-            style={{ display: "inline-block", width: "calc(75% - 4px)" }}
+            style={{ display: "inline-block", width: "calc(70% - 4px)" }}
           >
             <Input
               style={{
@@ -114,14 +114,14 @@ export const AwbLookup = () => {
             style={{
               display: "inline-block",
               height: "40px",
-              width: "calc(25% - 4px)",
+              width: "calc(30% - 4px)",
               borderRadius: 10,
               alignContent: "center",
               marginLeft: 8,
             }}
           >
             <img
-              src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg"
+              src="https://sit.ntcs.hicas.vn/api/photo/dowload/64bbc359-c083-cdce-83aa-3a128d8ed489.png"
               alt=""
             />
           </div>

@@ -190,11 +190,11 @@
   background-color:#006E9C !important;
   color: white !important;
 }
-.onlineCheckin{
-  margin-left: 20%;
-  margin-right: 20%;
-}
 
+.look-up .ant-radio-wrapper,
+.onlineCheckin .ant-radio-wrapper {
+  font-size: 16px !important;
+}
 @media (max-width: 1194px) {
    
   }
@@ -213,6 +213,10 @@
       border: none !important;
     }
     
+    .ant-tabs .ant-tabs-tab{
+      font-size: 16px !important;
+    }
+
     .quick-lookup .ant-tabs-nav .ant-tabs-tab {
       background-color: rgba(255, 255, 255, 0.8) !important;
     }
@@ -221,6 +225,9 @@
       border-bottom-color: #ffffff !important;
       background-color: #ffffff !important;
     }
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn{
+      color: #006E9C !important;     
+     }
   }
 
   /* Mobile View */
@@ -258,23 +265,7 @@
   
   /* Desktop View */
 @media (min-width: 1194px) {
-    .custom-dropdown{
-      display: flex;
-      flex-direction: column;
-      gap:0;
-      flex-wrap: wrap;
-      max-height: 300px;
-      max-width: fit-content;
-    }
-    .ant-menu-submenu>.ant-menu li{
-      max-width: fit-content;
-    }
-    .ant-menu-submenu>.ant-menu a{
-      color: #888888 !important;
-      }
-    .ant-menu-submenu-popup >.ant-menu .ant-menu-item .ant-menu-item-icon {
-        color: gray !important; 
-      }
+   
     .form-item-left {
         width: calc(40%);
       }
