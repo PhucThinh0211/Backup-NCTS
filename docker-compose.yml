@@ -1,0 +1,15 @@
+version: "3"
+networks:
+  collective:
+    name: collective
+services:
+  viewer:
+    container_name: viewer
+    image: dockerhub.anybim.vn/view_ncts
+    networks:
+      - collective
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
