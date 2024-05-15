@@ -1,9 +1,8 @@
-import { Button, Col, DatePicker, Form, Input, Radio, Row, Segmented } from 'antd';
-import dayjs from 'dayjs';
-import { useTranslation } from 'react-i18next';
+import { Button, DatePicker, Form, Input } from "antd";
+import { useTranslation } from "react-i18next";
 
-export const FlightLookup = () => {
-  const { t } = useTranslation(['common']);
+export const InvoicesLookup = () => {
+  const { t } = useTranslation(["common"]);
 
   return (
     <div className="w-75">
@@ -11,52 +10,42 @@ export const FlightLookup = () => {
       requiredMark
       layout='vertical'
       autoComplete="off"
-      initialValues={{ dateFlight: dayjs(), routing: "di" }}
     >
-      <Row gutter={[8, 0]} className=" flight-lookup d-flex align-items-center">
-        <Col xs={24} sm={12} md={9}>
-       <Form.Item 
-          label={t('Carrier', { ns: 'common' })}
+      <Form.Item  style={{
+            display: "inline-block",
+            width: "calc(100%)",
+          }}>
+        <Form.Item 
+          label={t('E-invoice number', { ns: 'common' })}
           required
           rules={[{ required: true }]}
           style={{
             display: "inline-block",
-            width: "calc(100%)",
+            width: "calc(50% - 8px)",
             marginBottom: 0,
           }}>
           <Input style={{
                 height: "40px",
                 borderRadius: 10
               }}/>
-          </Form.Item> </Col>
-          <Col xs={24} sm={12} md={9}>
-          <Form.Item
-            name="dateFlight"
-            label={t('Flight date', { ns: 'common' })}
+        </Form.Item>
+        <Form.Item
+            name="dateInvoice"
+            label={t('Invoice date', { ns: 'common' })}
             rules={[{ required: true }]}
             style={{
               display: "inline-block",
-              width: "calc(100%)",
-              marginBottom: 0,
+              width: "calc(50% - 8px) ",
+              marginLeft: 8,
             }}>
             <DatePicker  style={{
                 height: "40px",
                 width: "100%",
                 borderRadius: 10
               }} />
-          </Form.Item></Col>
-          <Col >
-          <Segmented
-          style={{width: "calc(100%)",
-            display: "inline-block"
-          }}
-          // onChange={()}
-          options={[
-            t("Arrival", { ns: "common" }),
-            t("Departure", { ns: "common" }),
-          ]}
-        /></Col>
-        </Row>
+        </Form.Item>
+      </Form.Item>
+        {/* Verification codes */}
         <Form.Item
           label={t("Verification codes", { ns: "common" })}
           required
@@ -67,7 +56,7 @@ export const FlightLookup = () => {
           }}
         >
           <Form.Item
-            name="awbPfx"
+            name="verificationCodes"
             rules={[{ required: true }]}
             style={{ display: "inline-block", 
             width: "calc(70% - 4px)" 
@@ -89,6 +78,7 @@ export const FlightLookup = () => {
               <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="" />
             </div>
         </Form.Item>
+        {/* Submit button */}
         <Form.Item noStyle>
           <div className="w-100 align-self-end">
             <Button type="primary" htmlType="submit" 

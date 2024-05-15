@@ -48,6 +48,12 @@ export interface MenuResponse {
   lastModificationTime: string;
   lastModifierId: string | null;
 }
+export interface MenuNode {
+  label: string;
+  url: string;
+  icons?: string | null;
+  children: Record<string, MenuNode>;
+}
 export interface CreateUpdateMenuPayload {
   label: string;
   url?: string;

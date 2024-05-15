@@ -48,5 +48,10 @@
   "Verification codes": "Verification codes",
   "Enter account name": "Enter account name",
   "Enter password": "Enter password",
-  "Enter verification codes": "Enter verification codes"
+  "Enter verification codes": "Enter verification codes",
+  "Arrival": "Arrival",
+  "Departure":"Departure",
+  "Invoices Lookup": "Invoices Lookup",
+  "E-invoice number": "E-invoice number",
+  "Invoice date": "Invoice date"
 }

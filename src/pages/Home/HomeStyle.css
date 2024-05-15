@@ -40,16 +40,16 @@
 
 .cardNews{
     background-color: white;
-    max-width: 375px;
+    max-width: 330px;
     max-height: 450px;
-    padding: 2%;
+    padding: 3%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     border-radius: 3%;
     border: none;
     margin-top: 10%;
-  margin-bottom: 10%;
+    margin-bottom: 10%;
   }
 
 .cardImg img {
@@ -139,8 +139,8 @@
 .partner img{
   max-height:80px;
   width: auto; 
-  max-width: 500px;
-  object-fit: contain;
+  max-width: 200px;
+  overflow: hidden;
 }
 .btn-custom{
   display: flex;
@@ -167,22 +167,47 @@
   max-width: 200px;
   object-fit: contain;
 }
+.verification img{
+  max-width: calc(100%);
+  max-height: calc(100%);
+}
+
+.flight-lookup .ant-segmented{
+  display: flex !important;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  border: #d9d9d9 solid 1px;
+  height: 40px ;
+  overflow: hidden;
+  margin-top: 15px;
+}
+.flight-lookup .ant-segmented .ant-segmented-group{
+  display: flex;
+  justify-content: center;
+}
+.flight-lookup .ant-segmented .ant-segmented-item-selected{
+  background-color:#006E9C !important;
+  color: white !important;
+}
+.onlineCheckin{
+  margin-left: 20%;
+  margin-right: 20%;
+}
 
 @media (max-width: 1194px) {
-    .form-item-left {
-        width: calc(100%);
-    }
+   
   }
 
 @media (min-width: 800px) {
-    .quick-lookup .ant-tabs-nav {
+  .quick-lookup .ant-tabs-nav {
       position: absolute !important;
       margin: 0 !important;
-      top:-65px;
+      top:-50px;
       left: 0;
       width: 100%;
       z-index: 1;
-      height: 65px;
+      height: 50px;
     }
     .quick-lookup .ant-tabs-nav::before {
       border: none !important;
@@ -273,42 +298,39 @@
         z-index: 1;
         justify-content: space-between;
       }
-    .lr-carousel-button{
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: none;
-      background-color: #ffffffc7;
-    }
-    .lr-carousel-button:hover{
-      color: white;
-      background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%);
-    }
     .aboutUs-content{
       display:flex;
       flex-direction: row;
       gap:20px;
     }
-    .onlineCheckin .ant-segmented{
-      display: flex;
-      align-items: center;
-      background-color: #F3F3F3;
-      border-radius: 10px;
-      height: 70px ;
-      width: fit-content;
-      align-items: center;
-      overflow: hidden;
+
+    .ant-carousel .slick-next, .slick-prev{
+      width: 50px !important;
+      height: 50px !important;
+      border-radius: 50%;
+      font-size: large !important;
+      border: none !important;
+      color: black !important;
+      background-color: #ffffffc7 !important;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2) !important;
+      display: flex !important;
+      align-items: center !important;
       justify-content: center;
+      z-index: 1;
     }
-    .onlineCheckin .ant-segmented .ant-segmented-group{
-      height: 90%;
+    .ant-carousel .slick-next{
+      margin-right: 10%;
     }
-    .onlineCheckin .ant-segmented .ant-segmented-item{
-      display: flex;
-      align-items: center;
+    .ant-carousel .slick-prev{
+      margin-left: 10%;
     }
-    .onlineCheckin-form{
-      margin-left: 20% !important;
-      margin-right: 20% !important;
+    .ant-carousel
+    .slick-next:hover, 
+    .slick-prev:hover,
+    .slick-next:active, 
+    .slick-prev:active{
+      color: white !important;
+      background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%) !important;
     }
+   
   }
