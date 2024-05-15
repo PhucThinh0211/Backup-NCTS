@@ -55,5 +55,4 @@ deploy-job:      # This job runs in the deploy stage.
   tags:
     - deploy
   only:
-    - master
-    - feature/k8s-view_ncts
+    - main
