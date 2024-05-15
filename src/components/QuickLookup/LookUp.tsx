@@ -15,7 +15,7 @@ function LookUp() {
 
   return (
     <div className='container'>
-      <Radio.Group onChange={handleOnChange}  className='d-flex justify-content-center pb-5'>
+      <Radio.Group value={value} onChange={handleOnChange}  className='d-flex justify-content-center pb-5'>
         <Radio value={1}>{t('Lookup AWB No', { ns: 'common' })}</Radio>
         <Radio value={2}>{t('Lookup Flight', { ns: 'common' })}</Radio>
         <Radio value={3}>{t('Invoices Lookup', { ns: 'common' })}</Radio>

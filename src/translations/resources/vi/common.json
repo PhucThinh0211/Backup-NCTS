@@ -50,5 +50,7 @@
   "Enter verification codes": "Nhập mã xác thực",
   "Arrival": "Chiều đến",
   "Departure": "Chiều đi",
-  "Invoices Lookup": "Tra cứu hóa đơn"
+  "Invoices Lookup": "Tra cứu hóa đơn",
+  "E-invoice number": "Số hóa đơn điện tử",
+  "Invoice date": "Ngày lập hóa đơn"
 }

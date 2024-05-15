@@ -1,5 +1,4 @@
-import { Button, Col, DatePicker, Form, Input, Radio, Row } from "antd";
-import dayjs from "dayjs";
+import { Button, DatePicker, Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
 
 export const InvoicesLookup = () => {
@@ -11,38 +10,42 @@ export const InvoicesLookup = () => {
       requiredMark
       layout='vertical'
       autoComplete="off"
-      initialValues={{ dateFlight: dayjs(), routing: "di" }}
     >
-       <Form.Item 
-          label={t('Carrier', { ns: 'common' })}
+      <Form.Item  style={{
+            display: "inline-block",
+            width: "calc(100%)",
+          }}>
+        <Form.Item 
+          label={t('E-invoice number', { ns: 'common' })}
           required
           rules={[{ required: true }]}
           style={{
             display: "inline-block",
-            width: "calc(50% - 4px)",
+            width: "calc(50% - 8px)",
             marginBottom: 0,
           }}>
           <Input style={{
                 height: "40px",
                 borderRadius: 10
               }}/>
-          </Form.Item>
-          <Form.Item
-            name="dateFlight"
-            label={t('Flight date', { ns: 'common' })}
+        </Form.Item>
+        <Form.Item
+            name="dateInvoice"
+            label={t('Invoice date', { ns: 'common' })}
             rules={[{ required: true }]}
             style={{
               display: "inline-block",
-              width: "calc(50%-4px)",
-              marginBottom: 0,
+              width: "calc(50% - 8px) ",
+              marginLeft: 8,
             }}>
             <DatePicker  style={{
                 height: "40px",
                 width: "100%",
                 borderRadius: 10
               }} />
-          </Form.Item>
-        
+        </Form.Item>
+      </Form.Item>
+        {/* Verification codes */}
         <Form.Item
           label={t("Verification codes", { ns: "common" })}
           required
@@ -53,7 +56,7 @@ export const InvoicesLookup = () => {
           }}
         >
           <Form.Item
-            name="awbPfx"
+            name="verificationCodes"
             rules={[{ required: true }]}
             style={{ display: "inline-block", 
             width: "calc(70% - 4px)" 
@@ -75,6 +78,7 @@ export const InvoicesLookup = () => {
               <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="" />
             </div>
         </Form.Item>
+        {/* Submit button */}
         <Form.Item noStyle>
           <div className="w-100 align-self-end">
             <Button type="primary" htmlType="submit" 

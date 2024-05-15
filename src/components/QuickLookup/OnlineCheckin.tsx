@@ -1,22 +1,25 @@
-import { Button, Form, Input, Segmented } from "antd";
+import { Button, Form, Input, Radio } from "antd";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import {EyeTwoTone, EyeInvisibleOutlined} from "@ant-design/icons";
 
 export const OnlineCheckin = () => {
   const { t } = useTranslation(["common"]);
 
+  const [value, setValue] = useState(1);
+
+  const handleOnChange = (e) => {
+    setValue(e.target.value);
+  };
   return (
-    <div>
-      <div className="d-flex justify-content-center onlineCheckin mb-3">
-        <Segmented
-          defaultValue={t("Online delivery procedures", { ns: "common" })}
-          // onChange={()}
-          options={[
-            t("Declare export goods information", { ns: "common" }),
-            t("Online delivery procedures", { ns: "common" }),
-          ]}
-        />
+    <div className="custom-container">
+      <div className="d-flex justify-content-center mb-2">
+      <Radio.Group value={value} onChange={handleOnChange} className='d-flex justify-content-center pb-5'>
+        <Radio value={1}>{t('Online delivery procedures', { ns: 'common' })}</Radio>
+        <Radio value={2}>{t('Declare export goods information', { ns: 'common' })}</Radio>
+      </Radio.Group>
       </div>
-      <Form className="onlineCheckin-form" layout="vertical" autoComplete="off">
+      <Form className="onlineCheckin" layout="vertical" autoComplete="off">
         <Form.Item
           label={t("Account", { ns: "common" })}
           required
@@ -37,15 +40,17 @@ export const OnlineCheckin = () => {
           rules={[{ required: true }]}
           style={{ display: "" }}
         >
-          <Input
+          <Input.Password
+          type="password"
             style={{
               height: "40px",
               borderRadius: 10,
             }}
-            placeholder={t("Enter password", { ns: "common" })}
-          />
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            placeholder={t("Enter password", { ns: "common" })}/>
         </Form.Item>
-        <Form.Item
+          {/* Verification codes */}
+          <Form.Item
           label={t("Verification codes", { ns: "common" })}
           required
           style={{
@@ -55,35 +60,27 @@ export const OnlineCheckin = () => {
           }}
         >
           <Form.Item
-            name="awbPfx"
+            name={t("Verification codes", { ns: "common" })}
             rules={[{ required: true }]}
-            style={{ display: "inline-block", width: "calc(80% - 4px)" }}
+            style={{ display: "inline-block", 
+            width: "calc(70% - 4px)" 
+          }}
           >
-            <Input
-              style={{
-                height: "40px",
-                borderRadius: 10,
-              }}
-              placeholder={t("Enter verification codes", { ns: "common" })}
-            />
+            <Input style={{
+              height: "40px",
+              borderRadius: 10
+            }} placeholder={t("Enter verification codes", { ns: "common" })} />
           </Form.Item>
-          <Form.Item
-            name="awbNum"
-            rules={[{ required: true }]}
-            style={{
+          <div className="verification" style={{
               display: "inline-block",
-              width: "calc(20% - 4px)",
+              height: "40px",
+              width: "calc(30% - 4px)",
+              borderRadius: 10,
+              alignContent: "center",
               marginLeft: 8,
-            }}
-          >
-            <Input
-              style={{
-                height: "40px",
-                borderRadius: 10,
-              }}
-              placeholder="AWB#"
-            />
-          </Form.Item>
+            }} >
+              <img src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg" alt="" />
+            </div>
         </Form.Item>
         <Button type="primary" htmlType="submit" 
             style={{

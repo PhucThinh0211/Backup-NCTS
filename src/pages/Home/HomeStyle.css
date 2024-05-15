@@ -190,12 +190,13 @@
   background-color:#006E9C !important;
   color: white !important;
 }
-
+.onlineCheckin{
+  margin-left: 20%;
+  margin-right: 20%;
+}
 
 @media (max-width: 1194px) {
-    .form-item-left {
-        width: calc(100%);
-    }
+   
   }
 
 @media (min-width: 800px) {

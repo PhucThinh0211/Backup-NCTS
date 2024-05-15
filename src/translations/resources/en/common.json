@@ -52,5 +52,6 @@
   "Arrival": "Arrival",
   "Departure":"Departure",
   "Invoices Lookup": "Invoices Lookup",
-  "E-invoice number": "E-invoice number"
+  "E-invoice number": "E-invoice number",
+  "Invoice date": "Invoice date"
 }
