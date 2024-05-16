@@ -190,13 +190,30 @@
   background-color:#006E9C !important;
   color: white !important;
 }
+.flight-lookup .ant-radio-group{
+  line-height: 40px !important;
+  padding-top: 18px;
+}
+
+.flight-lookup .ant-radio-button-wrapper{
+  height:40px !important;
+  display:inline-flex;
+  align-items: center;
+}
 
 .look-up .ant-radio-wrapper,
 .onlineCheckin .ant-radio-wrapper {
   font-size: 16px !important;
 }
+
+.onlineCheckin h5{
+  color:#FFB629
+}
+
 @media (max-width: 1194px) {
-   
+  .LookupContent{
+    width: 100%;
+   }
   }
 
 @media (min-width: 800px) {
@@ -273,11 +290,11 @@
     .form-item-right {
         width: calc(60%);
       }
-    .custom-container {
+    /* .custom-container {
         max-width: 1140px; 
         margin-left: auto;
         margin-right: auto;
-      }
+      } */
     .slide-card{
         position: relative;
       }
@@ -323,5 +340,7 @@
       color: white !important;
       background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%) !important;
     }
-   
+   .LookupContent{
+    width: 50%;
+   }
   }

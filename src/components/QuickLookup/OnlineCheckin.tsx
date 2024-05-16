@@ -12,14 +12,14 @@ export const OnlineCheckin = () => {
     setValue(e.target.value);
   };
   return (
-    <div className=" onlineCheckin">
+    <div className="onlineCheckin">
       <div className="d-flex  justify-content-center">
         <div className="w-xl-50 ">
           {/* Radio otions */}
           <Radio.Group
             value={value}
             onChange={handleOnChange}
-            className="d-flex justify-content-start pb-5 gap-5"
+            className="d-flex justify-content-start mb-3 gap-5"
           >
             <Radio value={1}>
               <span style={{ fontWeight: value === 1 ? 600 : "normal" }}>
@@ -32,6 +32,7 @@ export const OnlineCheckin = () => {
               </span>
             </Radio>
           </Radio.Group>
+          <h5 className = "pb-3">{t("Please fill in your login information", { ns: "common" })}</h5>
           {/* Online Checkin Form */}
           <Form className="" layout="vertical" autoComplete="off">
             <Form.Item

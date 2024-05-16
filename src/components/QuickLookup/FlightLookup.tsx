@@ -1,12 +1,15 @@
-import { Button, Col, DatePicker, Form, Input, Row, Segmented } from "antd";
+import { Button, Col, DatePicker, Form, Input, Radio, Row } from "antd";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
 export const FlightLookup = () => {
   const { t } = useTranslation(["common"]);
+  const options = [
+    { label: t("Arrival", { ns: "common" }), value: 'di' },
+    { label: t("Departure", { ns: "common" }), value: 'den' },
+  ];
 
   return (
-    <div className="w-xl-50">
       <Form
         requiredMark
         layout="vertical"
@@ -35,7 +38,7 @@ export const FlightLookup = () => {
             </Form.Item>
           </Col>
 
-          <Col xs={12} sm={12} md={8} lg={8}>
+          <Col xs={10} sm={14} md={8} lg={7}>
             <Form.Item
               name="dateFlight"
               label={t("Flight date", { ns: "common" })}
@@ -54,16 +57,8 @@ export const FlightLookup = () => {
             </Form.Item>
           </Col>
 
-          <Col xs={12} sm={12} md={8} lg={8}>
-            <Segmented
-              style={{
-                width: "100%",
-              }}
-              options={[
-                t("Arrival", { ns: "common" }),
-                t("Departure", { ns: "common" }),
-              ]}
-            />
+          <Col xs={14} sm={10} md={8} lg={9}>
+            <Radio.Group className="" options={options}  optionType="button" buttonStyle="solid"/>
           </Col>
         </Row>
         <Form.Item
@@ -122,6 +117,5 @@ export const FlightLookup = () => {
           </div>
         </Form.Item>
       </Form>
-    </div>
   );
 };

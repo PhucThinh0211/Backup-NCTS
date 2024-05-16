@@ -1,9 +1,8 @@
-import { Button, Form, Input, Tooltip } from "antd";
+import { Button, Form, Input} from "antd";
 import { useTranslation } from "react-i18next";
 
 import { useAppDispatch } from "@/store/hooks";
 import { startLoading } from "@/store/loading";
-import { InfoCircleOutlined } from "@ant-design/icons";
 
 export const AwbLookup = () => {
   const { t } = useTranslation(["common"]);
@@ -14,13 +13,12 @@ export const AwbLookup = () => {
   };
 
   return (
-    <div className="w-xl-50">
       <Form
         requiredMark
         layout="vertical"
         autoComplete="off"
         onFinish={handleLookup}
-        className=""
+        className="w-100"
       >
         <Form.Item className="d-flex flex-column ">
           <Form.Item
@@ -45,11 +43,6 @@ export const AwbLookup = () => {
               <Input
                 placeholder="Prefix"
                 type="number"
-                suffix={
-                  <Tooltip title="Value must be 3 numbers">
-                    <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                  </Tooltip>
-                }
                 style={{
                   height: "40px",
                   borderRadius: 10,
@@ -73,11 +66,6 @@ export const AwbLookup = () => {
             >
               <Input
                 placeholder="AWB#"
-                suffix={
-                  <Tooltip title="Value must be 8 numbers">
-                    <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                  </Tooltip>
-                }
                 type="number"
                 style={{
                   height: "40px",
@@ -143,6 +131,5 @@ export const AwbLookup = () => {
           </div>
         </Form.Item>
       </Form>
-    </div>
   );
 };

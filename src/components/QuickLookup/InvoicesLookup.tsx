@@ -5,7 +5,6 @@ export const InvoicesLookup = () => {
   const { t } = useTranslation(["common"]);
 
   return (
-    <div className="w-xl-50">
     <Form
       requiredMark
       layout='vertical'
@@ -92,8 +91,6 @@ export const InvoicesLookup = () => {
             </Button>
           </div>
         </Form.Item>
-      
     </Form>
-  </div>
 );
 };

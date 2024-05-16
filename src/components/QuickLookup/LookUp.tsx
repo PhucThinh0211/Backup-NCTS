@@ -16,7 +16,7 @@ function LookUp() {
 
   return (
     <div className='container look-up'>
-      <Radio.Group value={value}  onChange={handleOnChange}  className='d-flex justify-content-center pb-5 gap-xl-5'>
+      <Radio.Group value={value}  onChange={handleOnChange}  className='d-flex justify-content-center mb-3 gap-xl-5'>
         <Radio value={1}>
         <span style={{ fontWeight: value === 1 ? 600 : 'normal' }}>
           {t('Lookup AWB No', { ns: 'common' })} </span></Radio>
@@ -24,9 +24,11 @@ function LookUp() {
         <Radio value={3}> <span style={{ fontWeight: value === 3 ? 600 : 'normal' }}>{t('Invoices Lookup', { ns: 'common' })}</span></Radio>
       </Radio.Group>
       <div className='d-flex justify-content-center'>
-        {value === 1 && <AwbLookup />}
-        {value === 2 && <FlightLookup />}
-        {value === 3 && <InvoicesLookup />}
+        <div className='LookupContent'>
+          {value === 1 && <AwbLookup />}
+          {value === 2 && <FlightLookup />}
+          {value === 3 && <InvoicesLookup />}
+        </div>
       </div>
     </div>
   )
