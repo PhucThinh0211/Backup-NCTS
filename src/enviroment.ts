@@ -52,6 +52,6 @@ const ENV: EnvVars = {
 };
 
 export const getEnvVars = () => {
-  // eslint-disable-next-line no-undef
+   
   return process.env.NODE_ENV === 'development' ? ENV.dev : ENV.prod;
 };

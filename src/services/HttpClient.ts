@@ -22,7 +22,7 @@ export const injectStore = (reduxStore: AppStore) => {
 const mapResponse = map((x: AjaxResponse<any>, index) => x.response);
 
 const tokenSubject = new BehaviorSubject<string | null>(null);
-let isRefreshing = false;
+const isRefreshing = false;
 const requestQueue: any[] = [];
 
 export const setToken = (token: string | null) => {

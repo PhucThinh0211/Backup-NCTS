@@ -176,7 +176,7 @@ export const MenuListTable = () => {
       {
         key: 'remove',
         label: t('Remove', { ns: 'common' }),
-        icon: <DeleteOutlined style={{ color: !!record.children?.length ? 'grey' : '#ff4d4f' }} />,
+        icon: <DeleteOutlined style={{ color: record.children?.length ? 'grey' : '#ff4d4f' }} />,
         onClick: () => confirmRemoveMenu(record),
         disabled: !!record.children?.length
       },

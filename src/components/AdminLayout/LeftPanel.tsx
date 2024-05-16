@@ -117,7 +117,7 @@ export const LeftPanel = (props: SiderProps) => {
         }
       }
     }
-    // eslint-disable-next-line
+     
   }, [location, collapsed]);
 
   const onClickMenu = (menu: any) => {

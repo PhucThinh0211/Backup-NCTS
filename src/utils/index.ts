@@ -54,7 +54,7 @@ export default class Utils {
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    let colour = (hash & 0x00ffffff).toString(16).toUpperCase();
+    const colour = (hash & 0x00ffffff).toString(16).toUpperCase();
     return '#' + '00000'.substring(0, 6 - colour.length) + colour;
   };
 
