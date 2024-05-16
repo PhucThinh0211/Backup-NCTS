@@ -1,4 +1,4 @@
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Form, Input, Radio, RadioChangeEvent } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
@@ -8,7 +8,7 @@ export const OnlineCheckin = () => {
 
   const [value, setValue] = useState(1);
 
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
   return (

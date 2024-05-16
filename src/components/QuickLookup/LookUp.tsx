@@ -1,4 +1,4 @@
-import { Radio } from 'antd'
+import { Radio, RadioChangeEvent } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { AwbLookup } from './AwbLookup';
@@ -10,7 +10,7 @@ function LookUp() {
   const [value, setValue] = useState(1);
   const { t } = useTranslation(["common"]);
   
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
 
