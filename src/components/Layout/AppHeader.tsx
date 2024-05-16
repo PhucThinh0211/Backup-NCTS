@@ -111,7 +111,7 @@ export const AppHeader = () => {
             title={menuItem.label}
             icon={menuItem.icons && <i  className={`fa ${menuItem.icons}` }></i>}
           >
-            <div className="d-none d-xl-flex p-3 mt-3 mb-3 fw-bold fs-5 text-gray">{menuItem.label}</div>
+            <div className="d-none d-xxl-flex p-3 mt-3 mb-3 fw-bold fs-5 text-gray">{menuItem.label}</div>
             <div className="custom-dropdown">
             {renderSubMenuItems(menuItem)}</div>
           </SubMenu>

@@ -39,10 +39,10 @@
   "notification": "Thông báo",
   "Saved successfully": "Lưu dữ liệu thành công.",
   "Removed successfully": "Xóa dữ liệu thành công.",
-  "Online check-in": "Thủ tục trực tuyến",
+  "Online check-in": "Thủ tục online",
   "Declare export goods information": "Khai báo thông tin hàng xuất khẩu",
-  "Online delivery procedures": "Thủ tục nhận hàng trực tuyến",
-  "Account" : "Tài khoản",
+  "Online delivery procedures": "Thủ tục nhận hàng online",
+  "Account" : "Tên Đăng Nhập",
   "Password": "Mật khẩu",
   "Verification codes": "Mã xác thực",
   "Enter account name": "Nhập tên tài khoản",
@@ -52,5 +52,6 @@
   "Departure": "Chiều đi",
   "Invoices Lookup": "Tra cứu hóa đơn",
   "E-invoice number": "Số hóa đơn điện tử",
-  "Invoice date": "Ngày lập hóa đơn"
+  "Invoice date": "Ngày lập hóa đơn",
+  "Please fill in your login information":"Vui lòng điền thông tin đăng nhập"
 }

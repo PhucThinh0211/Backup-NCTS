@@ -179,7 +179,7 @@
 
 
 /* Desktop View */
-@media (min-width: 1194px) {
+@media (min-width: 1400px) {
   .custom-dropdown{
     display: flex;
     flex-direction: column;

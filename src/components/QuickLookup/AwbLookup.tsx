@@ -1,9 +1,8 @@
-import { Button, Form, Input, Tooltip } from "antd";
+import { Button, Form, Input} from "antd";
 import { useTranslation } from "react-i18next";
 
 import { useAppDispatch } from "@/store/hooks";
 import { startLoading } from "@/store/loading";
-import { InfoCircleOutlined } from "@ant-design/icons";
 
 export const AwbLookup = () => {
   const { t } = useTranslation(["common"]);
@@ -14,13 +13,12 @@ export const AwbLookup = () => {
   };
 
   return (
-    <div className="w-75">
       <Form
         requiredMark
         layout="vertical"
         autoComplete="off"
         onFinish={handleLookup}
-        className=""
+        className="w-100"
       >
         <Form.Item className="d-flex flex-column ">
           <Form.Item
@@ -33,7 +31,7 @@ export const AwbLookup = () => {
           >
             <Form.Item
               name="awbPfx"
-              style={{ display: "inline-block", width: "calc(20% - 4px)" }}
+              style={{ display: "inline-block", width: "calc(30% - 4px)" }}
               rules={[
                 {
                   pattern: /^[\d]{0,3}$/,
@@ -45,11 +43,6 @@ export const AwbLookup = () => {
               <Input
                 placeholder="Prefix"
                 type="number"
-                suffix={
-                  <Tooltip title="Value must be 3 numbers">
-                    <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                  </Tooltip>
-                }
                 style={{
                   height: "40px",
                   borderRadius: 10,
@@ -67,17 +60,12 @@ export const AwbLookup = () => {
               validateTrigger="onBlur"
               style={{
                 display: "inline-block",
-                width: "calc(80% - 4px)",
+                width: "calc(70% - 4px)",
                 marginLeft: 8,
               }}
             >
               <Input
                 placeholder="AWB#"
-                suffix={
-                  <Tooltip title="Value must be 8 numbers">
-                    <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                  </Tooltip>
-                }
                 type="number"
                 style={{
                   height: "40px",
@@ -99,7 +87,7 @@ export const AwbLookup = () => {
           <Form.Item
             name="Verification codes"
             rules={[{ required: true }]}
-            style={{ display: "inline-block", width: "calc(75% - 4px)" }}
+            style={{ display: "inline-block", width: "calc(70% - 4px)" }}
           >
             <Input
               style={{
@@ -114,14 +102,14 @@ export const AwbLookup = () => {
             style={{
               display: "inline-block",
               height: "40px",
-              width: "calc(25% - 4px)",
+              width: "calc(30% - 4px)",
               borderRadius: 10,
               alignContent: "center",
               marginLeft: 8,
             }}
           >
             <img
-              src="http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg"
+              src="https://sit.ntcs.hicas.vn/api/photo/dowload/64bbc359-c083-cdce-83aa-3a128d8ed489.png"
               alt=""
             />
           </div>
@@ -143,6 +131,5 @@ export const AwbLookup = () => {
           </div>
         </Form.Item>
       </Form>
-    </div>
   );
 };

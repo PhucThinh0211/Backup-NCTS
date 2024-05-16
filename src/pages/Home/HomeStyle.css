@@ -190,13 +190,30 @@
   background-color:#006E9C !important;
   color: white !important;
 }
-.onlineCheckin{
-  margin-left: 20%;
-  margin-right: 20%;
+.flight-lookup .ant-radio-group{
+  line-height: 40px !important;
+  padding-top: 18px;
+}
+
+.flight-lookup .ant-radio-button-wrapper{
+  height:40px !important;
+  display:inline-flex;
+  align-items: center;
+}
+
+.look-up .ant-radio-wrapper,
+.onlineCheckin .ant-radio-wrapper {
+  font-size: 16px !important;
+}
+
+.onlineCheckin h5{
+  color:#FFB629
 }
 
 @media (max-width: 1194px) {
-   
+  .LookupContent{
+    width: 100%;
+   }
   }
 
 @media (min-width: 800px) {
@@ -213,6 +230,10 @@
       border: none !important;
     }
     
+    .ant-tabs .ant-tabs-tab{
+      font-size: 16px !important;
+    }
+
     .quick-lookup .ant-tabs-nav .ant-tabs-tab {
       background-color: rgba(255, 255, 255, 0.8) !important;
     }
@@ -221,6 +242,9 @@
       border-bottom-color: #ffffff !important;
       background-color: #ffffff !important;
     }
+    .quick-lookup .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn{
+      color: #006E9C !important;     
+     }
   }
 
   /* Mobile View */
@@ -258,23 +282,7 @@
   
   /* Desktop View */
 @media (min-width: 1194px) {
-    .custom-dropdown{
-      display: flex;
-      flex-direction: column;
-      gap:0;
-      flex-wrap: wrap;
-      max-height: 300px;
-      max-width: fit-content;
-    }
-    .ant-menu-submenu>.ant-menu li{
-      max-width: fit-content;
-    }
-    .ant-menu-submenu>.ant-menu a{
-      color: #888888 !important;
-      }
-    .ant-menu-submenu-popup >.ant-menu .ant-menu-item .ant-menu-item-icon {
-        color: gray !important; 
-      }
+   
     .form-item-left {
         width: calc(40%);
       }
@@ -282,11 +290,11 @@
     .form-item-right {
         width: calc(60%);
       }
-    .custom-container {
+    /* .custom-container {
         max-width: 1140px; 
         margin-left: auto;
         margin-right: auto;
-      }
+      } */
     .slide-card{
         position: relative;
       }
@@ -332,5 +340,7 @@
       color: white !important;
       background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%) !important;
     }
-   
+   .LookupContent{
+    width: 50%;
+   }
   }
