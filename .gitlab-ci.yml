@@ -47,7 +47,7 @@ deploy-job:      # This job runs in the deploy stage.
 
     - cd /home/hicas-build/NTCS/k8s/
     - cp view.yml view$(date +%Y%m%d).yml
-    - sed -i s/tag1/1.0.0.$(date +%Y%m%d).$CI_JOB_ID/g view_ncts$(date +%Y%m%d).yml
+    - sed -i s/tag1/1.0.0.$(date +%Y%m%d).$CI_JOB_ID/g view$(date +%Y%m%d).yml
     - kubectl apply -f view$(date +%Y%m%d).yml
     - echo image view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
 
