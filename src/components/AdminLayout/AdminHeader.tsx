@@ -3,7 +3,7 @@ import { Layout, theme, Row, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
-import { TopNavHeight } from '@/common';
+import { TopNavHeightAdmin } from '@/common';
 import { SwitchLang } from '@/components';
 
 export const AdminHeader = () => {
@@ -19,7 +19,7 @@ export const AdminHeader = () => {
         padding: '0px 16px',
         color: 'GrayText',
         background: colorBgContainer,
-        height: TopNavHeight,
+        height: TopNavHeightAdmin,
       }}
       className='border-b border-[rgba(5, 5, 5, 0.06)]'
     >
