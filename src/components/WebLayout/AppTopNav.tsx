@@ -15,13 +15,12 @@ export const AppTopNav = () => {
   const dispatch = useAppDispatch();
   const menus = useAppSelector(getMenuList());
   const activeKey = useAppSelector(getActiveMenuKey());
-  const [current, setCurrent] = useState('/');
   const { '*': slug } = useParams();
 
   useEffect(() => {
-    const selectedMenu = menus.find((x) => `/${slug || ''}` === `${x.url}`);
-    dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || '/'));
-  }, [menus]);
+    const selectedMenu = menus.find((x) => slug ? `/${slug}` : window.location.pathname === `${x.url}`);
+    dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || window.location.pathname));
+  }, [menus, window]);
 
   const buildTopNav = () => {
     if (!menus) {
