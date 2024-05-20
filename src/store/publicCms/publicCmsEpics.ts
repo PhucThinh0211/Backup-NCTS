@@ -2,7 +2,11 @@ import { catchError, concat, filter, switchMap } from 'rxjs';
 import { RootEpic } from '../types';
 import { publicCmsActions } from './publicCmsSlice';
 import { startLoading, stopLoading } from '../loading';
-import { GettingCompanyLoadingKey, GettingMenuListLoadingKey } from '@/common';
+import {
+  GettingBannerListLoadingKey,
+  GettingCompanyLoadingKey,
+  GettingMenuListLoadingKey,
+} from '@/common';
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
 
@@ -47,4 +51,33 @@ const getMenuListRequest$: RootEpic = (action$) => {
   );
 };
 
-export const publicCmsEpics = [getMenuListRequest$, getCompanyRequest$];
+const getBannerListRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getBannerListRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingBannerListLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getBannerList({ search }).pipe(
+          switchMap((banners) => {
+            return [publicCmsActions.setBannerList(banners)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setBannerList([])];
+          })
+        ),
+        [stopLoading({ key: GettingBannerListLoadingKey })]
+      );
+    })
+  );
+};
+
+export const publicCmsEpics = [
+  getMenuListRequest$,
+  getCompanyRequest$,
+  getBannerListRequest$,
+];

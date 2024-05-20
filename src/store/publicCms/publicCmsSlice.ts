@@ -1,17 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { MenuResponse } from "@/services/MenuService";
-import { CompanyResponse } from "@/services/CompanyService";
+import { MenuResponse } from '@/services/MenuService';
+import { CompanyResponse } from '@/services/CompanyService';
+import { BannerResponse } from '@/services/BannerService';
 
 interface publicCmsState {
   company?: CompanyResponse;
   menuList: MenuResponse[];
-  
+  banners: BannerResponse[];
 }
 
 const initialState: publicCmsState = {
-  menuList: []
-}
+  menuList: [],
+  banners: [],
+};
 
 const publicCmsSlice = createSlice({
   name: 'publicCms',
@@ -24,8 +26,12 @@ const publicCmsSlice = createSlice({
     getMenuListRequest: (state, action) => {},
     setMenuList: (state, action) => {
       state.menuList = action.payload;
-    }
-  }
+    },
+    getBannerListRequest: (state, action) => {},
+    setBannerList: (state, action) => {
+      state.banners = action.payload;
+    },
+  },
 });
 
 export const publicCmsActions = publicCmsSlice.actions;

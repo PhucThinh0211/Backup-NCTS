@@ -1,6 +1,11 @@
-import { useEffect } from 'react';
+import { QuickLookup } from '@/components';
 
 export const HomePage = () => {
-
-  return <>Trang chu3</>;
+  return (
+    <div>
+      <div className='w-full'>
+        <QuickLookup />
+      </div>
+    </div>
+  );
 };

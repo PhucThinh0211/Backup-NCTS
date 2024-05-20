@@ -64,7 +64,7 @@ export const WebLayout = () => {
           <div className="d-md-none">Logo mobile</div>
         </div>
         <AppTopNav />
-        <Flex vertical align="end">
+        <Flex vertical align="end" style={{ height: '100%' }}>
           <span style={{ fontWeight: 'bold', color: '#900038' }} className='d-none d-md-flex'>
             {t('Hotline', { ns: 'common' })}: {company?.phone}
           </span>
@@ -122,7 +122,7 @@ export const WebLayout = () => {
               </Button>
             </div>
           )}
-          <div style={{ padding: '0 48px', backgroundColor: 'red', minHeight: 200 }}>
+          <div style={{ backgroundColor: 'white', minHeight: 200 }}>
             <Outlet />
           </div>
         </Content>
@@ -134,6 +134,7 @@ export const WebLayout = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: 'orange',
+          paddingBlock: 14
         }}>
         <Space>
           <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
