@@ -12,5 +12,9 @@ export const antdThemeConfig: ThemeConfig = {
     Layout: {
       siderBg: "#075B7E",
     },
+    Menu: {
+      itemHeight: 40,
+      // itemColor: "gray"
+    }
   },
 };

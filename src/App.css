@@ -137,7 +137,7 @@
 .top-nav .ant-menu-submenu-selected .ant-menu-submenu-title {
   color: orange !important;
 }
-
+/*
 .ant-menu-vertical >.ant-menu-submenu>.ant-menu-submenu-title{
   font-size: larger;
   font-weight: 600;
@@ -146,6 +146,7 @@
 .text-gray{
   color: #888888
 }
+*/
 .mobile-display{
   display: flex;
   flex-direction: row;
@@ -160,6 +161,7 @@
 
 
 /* Mobile View */
+/*
 @media (max-width: 500px) {
   .mobile-hidden{
     display: none;
@@ -176,9 +178,10 @@
     background: transparent;
   }
 }
-
+*/
 
 /* Desktop View */
+/*
 @media (min-width: 1400px) {
   .custom-dropdown{
     display: flex;
@@ -203,16 +206,6 @@
   font-weight: 600;
   font-size: 20px !important;
   color: black !important;
-}
-
-
-/* Tailwincss */
-.container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 1rem;
-  padding-left: 1rem
 }
 /** Scrollable **/
 .custom_scrollbar {

@@ -11,3 +11,11 @@ export function getLocale() {
   return createSelector([getState], (state) => state.locale || 'vi');
 }
 
+export function getSearchVisibility() {
+  return createSelector([getState], (state) => state.searchVisibility || false);
+}
+
+export function getPanelVisibility() {
+  return createSelector([getState], (state) => state.panelNavVisibility || false);
+}
+
