@@ -19,3 +19,7 @@ export function getPanelVisibility() {
   return createSelector([getState], (state) => state.panelNavVisibility || false);
 }
 
+export function getActiveMenuKey() {
+  return createSelector([getState], (state) => state.activeMenuKey || '/');
+}
+

@@ -5,7 +5,7 @@ import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getPanelVisibility, persistStateActions } from '@/store/persistState';
+import { getActiveMenuKey, getPanelVisibility, persistStateActions } from '@/store/persistState';
 
 import { getMenuList } from '@/store/publicCms';
 import { Link, useParams } from 'react-router-dom';
@@ -18,13 +18,12 @@ export const AppPanelNav = () => {
   const dispatch = useAppDispatch();
   const panelNavVisibility = useAppSelector(getPanelVisibility());
   const menus = useAppSelector(getMenuList());
-
-  const [current, setCurrent] = useState('/');
+  const acitveKey = useAppSelector(getActiveMenuKey());
   const { '*': slug } = useParams();
 
   useEffect(() => {
     const selectedMenu = menus.find((x) => `/${slug || ''}` === `${x.url}`);
-    setCurrent(selectedMenu?.id || '/');
+    dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || '/'));
   }, [menus]);
 
   const buildAppNav = () => {
@@ -99,7 +98,7 @@ export const AppPanelNav = () => {
   };
 
   const onClick: MenuProps['onClick'] = (e) => {
-    setCurrent(e.key);
+    dispatch(persistStateActions.setActiveMenuKey(e.key));
     dispatch(persistStateActions.setPanelNavVisibility(false));
   };
 
@@ -114,12 +113,13 @@ export const AppPanelNav = () => {
           <i className="fa-solid fa-xmark fa-lg" />
         </Button>
       }
-      placement="right">
+      placement="right"
+      className='web-panel-nav'>
       <Menu
         className='web-panel-nav'
         onClick={onClick}
         style={{ width: '100%' }}
-        selectedKeys={[current]}
+        selectedKeys={[acitveKey]}
         mode="inline"
         items={buildAppNav()}
       />

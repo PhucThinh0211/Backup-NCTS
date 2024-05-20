@@ -6,13 +6,15 @@ interface PersistAppState {
   locale: LanguageType;
   searchVisibility: boolean;
   panelNavVisibility: boolean;
+  activeMenuKey: string;
 }
 
 const initialState: PersistAppState = {
   language: 'vi',
   locale: 'vi',
   searchVisibility: false,
-  panelNavVisibility: false
+  panelNavVisibility: false,
+  activeMenuKey: '/'
 };
 
 const persistStateSlice = createSlice({
@@ -30,6 +32,9 @@ const persistStateSlice = createSlice({
     },
     setPanelNavVisibility: (state, action) => {
       state.panelNavVisibility = action.payload;
+    },
+    setActiveMenuKey: (state, action) => {
+      state.activeMenuKey = action.payload;
     }
   },
 });

@@ -1,25 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Menu, Space } from 'antd';
+import { ConfigProvider, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getMenuList } from '@/store/publicCms';
 import { MenuResponse } from '@/services/MenuService';
 import Utils from '@/utils';
+import { getActiveMenuKey, persistStateActions } from '@/store/persistState';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export const AppTopNav = () => {
+  const dispatch = useAppDispatch();
   const menus = useAppSelector(getMenuList());
+  const activeKey = useAppSelector(getActiveMenuKey());
   const [current, setCurrent] = useState('/');
   const { '*': slug } = useParams();
 
   useEffect(() => {
     const selectedMenu = menus.find((x) => `/${slug || ''}` === `${x.url}`);
-    setCurrent(selectedMenu?.id || '/');
+    dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || '/'));
   }, [menus]);
-
 
   const buildTopNav = () => {
     if (!menus) {
@@ -67,7 +69,12 @@ export const AppTopNav = () => {
         children: [
           {
             key: `${x.id}_${Utils.createUUID()}`,
-            label: <span style={{ fontSize: 18, fontWeight: 'bold' }}>{x.label}</span>,
+            label: (
+              <Space direction="vertical">
+                <span style={{ fontSize: 18, fontWeight: 'bold' }}>{x.label}</span>
+                <div className="d-none">Render submenu</div>
+              </Space>
+            ),
             type: 'group',
             className: 'web-mega-menu',
             children: buildSubmenu(x),
@@ -112,18 +119,27 @@ export const AppTopNav = () => {
   };
 
   const onClick: MenuProps['onClick'] = (e) => {
-    setCurrent(e.key);
+    dispatch(persistStateActions.setActiveMenuKey(e.key));
   };
 
   return (
-    <Menu
-      selectedKeys={[current]}
-      onClick={onClick}
-      mode='horizontal'
-      triggerSubMenuAction="hover"
-      items={buildTopNav()}
-      style={{ flex: 1, minWidth: 0, justifyContent: 'center' }}
-      className={`web-top-nav d-none d-xxl-flex`}
-    />
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            itemHeight: 26,
+          },
+        },
+      }}>
+      <Menu
+        selectedKeys={[activeKey]}
+        onClick={onClick}
+        mode="horizontal"
+        triggerSubMenuAction="hover"
+        items={buildTopNav()}
+        style={{ flex: 1, minWidth: 0, justifyContent: 'center' }}
+        className={`web-top-nav d-none d-xxl-flex`}
+      />
+    </ConfigProvider>
   );
 };
