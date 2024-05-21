@@ -6,3 +6,5 @@ export * from './ReduxStoreProvider';
 export * from './SwitchLang';
 export * from './AdminLayout';
 export * from './AuditedInfoCard';
+export * from './WebLayout';
+export * from './Seo';

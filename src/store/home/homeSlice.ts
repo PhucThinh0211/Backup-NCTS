@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice } from '@reduxjs/toolkit';
 
 interface HomeState {
   showMenu: boolean;
   showSearch: boolean;
+  activeLookupTab?: any;
 }
 
 const initialState: HomeState = {
   showMenu: false,
   showSearch: false,
-}
+};
 
 const homeSlice = createSlice({
   name: 'home',
@@ -41,7 +41,9 @@ const homeSlice = createSlice({
         showSearch: false,
       };
     },
-    
+    setActiveLookupTab: (state, action) => {
+      state.activeLookupTab = action.payload;
+    },
   },
 });
 export const homeActions = homeSlice.actions;

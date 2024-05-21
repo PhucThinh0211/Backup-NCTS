@@ -31,12 +31,15 @@ export enum MenuType {
   Link = 'Link',
   Dropdown = 'Dropdown',
   Group = 'Group',
+  Mega = 'Mega'
 }
+
+export type MenuItemType = 'Mega' | 'Dropdown' | 'Group' | 'Link';
 
 export interface MenuResponse {
   id: string;
   label: string;
-  type: MenuType;
+  type: MenuItemType;
   icons?: string | null;
   iconColor?: string;
   url?: string | null;

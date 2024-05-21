@@ -107,7 +107,7 @@ export const CreateUpdateMenuPage = () => {
   const handleSaveMenu = (values: any) => {
     const inputData = {
       ...values,
-      iconColor: typeof values.iconColor === 'string' ? values.iconColor : values.iconColor.toHexString()
+      iconColor: !values.iconColor ? '#ffa500' : typeof values.iconColor === 'string' ? values.iconColor : values.iconColor.toHexString()
     };
     console.log(inputData)
     if (values.url && !values.url.startsWith('/')) {
@@ -169,6 +169,9 @@ export const CreateUpdateMenuPage = () => {
               <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
                 <Row>
                   <Col span={24} md={24}>
+                    <Form.Item label={t('Type', { ns: 'menu' })} name='type'>
+                      <Input />
+                    </Form.Item>
                     <Form.Item
                       label={t('Name', { ns: 'menu' })}
                       name='label'

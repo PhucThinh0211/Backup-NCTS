@@ -1,4 +1,4 @@
-const apiUrl = `https://sit.ntcs.hicas.vn`;
+const apiUrl = `https://ncts.hicas.vn`;
 
 interface EnvVars {
   dev: EnvVar;
@@ -22,7 +22,7 @@ interface EnvVar {
 
 const ENV: EnvVars = {
   dev: {
-    identityUrl: 'https://sit.ntcs.hicas.vn',
+    identityUrl: 'https://ncts.hicas.vn',
     apiUrl,
     checkInUrl: 'https://checkin.tingconnect.com',
     oAuthConfig: {
@@ -36,7 +36,7 @@ const ENV: EnvVars = {
     },
   },
   prod: {
-    identityUrl: 'https://sit.ntcs.hicas.vn',
+    identityUrl: 'https://ncts.hicas.vn',
     apiUrl,
     checkInUrl: 'https://checkin.tingconnect.com',
     oAuthConfig: {
@@ -52,6 +52,5 @@ const ENV: EnvVars = {
 };
 
 export const getEnvVars = () => {
-   
   return process.env.NODE_ENV === 'development' ? ENV.dev : ENV.prod;
 };

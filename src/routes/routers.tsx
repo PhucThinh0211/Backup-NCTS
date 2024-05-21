@@ -1,7 +1,7 @@
 import { AuthRouteObject } from './AuthRoute';
-import { Content, Home } from '@/pages';
-import { AdminLayout, AppLayout } from '@/components';
-import { Navigate } from 'react-router-dom';
+import { Content, HomePage } from '@/pages';
+import { AdminLayout, AppLayout, WebLayout } from '@/components';
+import { Navigate, Outlet } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
 import { BannerList } from '@/pages/BannerPage';
 import { CreateUpdateBannerPage } from '@/pages/BannerPage/CreateUpdateBannerPage';
@@ -26,9 +26,9 @@ export const routers: MetaMenuAuthRouteObject[] = [
   {
     path: '/',
     name: 'Main',
-    element: <AppLayout />,
+    element: <WebLayout />,
     children: [
-      { index: true, name: 'Home', element: <Home /> },
+      { index: true, name: 'Home', element: <HomePage /> },
       {
         path: '/trang/*',
         name: 'Page',

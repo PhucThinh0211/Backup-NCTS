@@ -4,11 +4,17 @@ import { createSlice } from '@reduxjs/toolkit';
 interface PersistAppState {
   language: LanguageType;
   locale: LanguageType;
+  searchVisibility: boolean;
+  panelNavVisibility: boolean;
+  activeMenuKey: string;
 }
 
 const initialState: PersistAppState = {
   language: 'vi',
   locale: 'vi',
+  searchVisibility: false,
+  panelNavVisibility: false,
+  activeMenuKey: '/'
 };
 
 const persistStateSlice = createSlice({
@@ -21,6 +27,15 @@ const persistStateSlice = createSlice({
     setLocale: (state, action) => {
       state.locale = action.payload;
     },
+    setSearchVisible: (state, action) => {
+      state.searchVisibility = action.payload;
+    },
+    setPanelNavVisibility: (state, action) => {
+      state.panelNavVisibility = action.payload;
+    },
+    setActiveMenuKey: (state, action) => {
+      state.activeMenuKey = action.payload;
+    }
   },
 });
 

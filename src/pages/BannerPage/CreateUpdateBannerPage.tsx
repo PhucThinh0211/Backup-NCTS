@@ -21,6 +21,7 @@ import { getLoading } from '@/store/loading';
 import { GettingBannerLoadingKey, SavingBannerLoadingKey } from '@/common';
 import { BannerPhotoUrlUploader } from './BannerPhotoUrlUploader';
 import { getLocale } from '@/store/persistState';
+import { BannerHorizontal, BannerVertical } from '@/services/BannerService';
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -44,30 +45,30 @@ export const CreateUpdateBannerPage = () => {
   const horizontalOptions = [
     {
       label: t('left', { ns: 'banner' }),
-      value: 'left',
+      value: BannerHorizontal.LEFT,
     },
     {
       label: t('center', { ns: 'banner' }),
-      value: 'center',
+      value: BannerHorizontal.CENTER,
     },
     {
       label: t('right', { ns: 'banner' }),
-      value: 'right',
+      value: BannerHorizontal.RIGHT,
     },
   ];
 
   const verticalOptions = [
     {
       label: t('top', { ns: 'banner' }),
-      value: 'left',
+      value: BannerVertical.TOP,
     },
     {
       label: t('middle', { ns: 'banner' }),
-      value: 'middle',
+      value: BannerVertical.MIDDLE,
     },
     {
       label: t('bottom', { ns: 'banner' }),
-      value: 'bottom',
+      value: BannerVertical.BOTTOM,
     },
   ];
 

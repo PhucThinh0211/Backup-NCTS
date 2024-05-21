@@ -1,0 +1,53 @@
+.web-header {
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+}
+.web-header.ant-layout-header {
+  line-height: 35px;
+}
+
+// .web-top-nav .ant-menu-item {
+//   line-height: 80px;
+//   color: gray;
+//   font-weight: 600;
+//   font-size: 18;
+// }
+
+// .web-top-nav .ant-menu-submenu {
+//   line-height: 80px;
+// }
+
+.web-top-nav.ant-menu-horizontal {
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+// .web-mega-menu ul {
+//   display: flex;
+//   flex-direction: row;
+//   flex: 2;
+//   ul {
+//     flex-direction: column;
+//     .web-mega-menu-item-group {
+//       flex: 2;
+//     }
+//   }
+// }
+
+.web-mega-menu-item-group-title {
+  font-weight: 600;
+  font-size: 16px !important;
+}
+
+.ant-menu-light.ant-menu-root.ant-menu-inline {
+  border-inline-end: none !important;
+}
+
+.web-panel-nav .ant-drawer-body {
+  padding: 0 !important;
+}
+
+.web-panel-nav .ant-drawer-header {
+  padding-right: 10px !important;
+}
+

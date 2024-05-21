@@ -1,86 +1,90 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsProps } from 'antd';
 import {
-  FileSearchOutlined, BarChartOutlined, FileProtectOutlined
+  FileSearchOutlined,
+  BarChartOutlined,
+  FileProtectOutlined,
 } from '@ant-design/icons';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getActiveLookupTab, homeActions } from '@/store/home';
+
 import { OnlineCheckin } from './OnlineCheckin';
 import LookUp from './LookUp';
 import { FreightEstimate } from './FreightEstimate';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import '@/pages/Home/HomeStyle.css'
- 
+import '@/pages/Home/HomeStyle.css';
+import './QuickLookup.scss';
+import { useSearchParams } from 'react-router-dom';
 
+// const banners = [
+//   {
+//     key: 'onlineCheckin',
+//     title: '',
+//     desc: '',
+//     btnTitle: '',
+//     src: 'https://sit.ntcs.hicas.vn/api/photo/dowload/2098e797-9bf6-074b-c305-3a1269ac4545.png',
+//   },
+//   // {
+//   //   key:'lookupAwb',
+//   //   title:'',
+//   //   desc: '',
+//   //   btnTitle:'',
+//   //   src: 'https://sit.ntcs.hicas.vn/api/photo/dowload/2098e797-9bf6-074b-c305-3a1269ac4545.png'
+//   // },
+//   // {
+//   //   key:'lookupFlightSchedules',
+//   //   title:'',
+//   //   desc: '',
+//   //   btnTitle:'',
+//   //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
+//   // },
+//   {
+//     key: 'freightEstimate',
+//     title: '',
+//     desc: '',
+//     btnTitle: '',
+//     src: 'http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg',
+//   },
+//   // {
+//   //   key:'infoLookup',
+//   //   title:'',
+//   //   desc: '',
+//   //   btnTitle:'',
+//   //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
+//   // },
+//   // {
+//   //   key:'invoicesLookup',
+//   //   title:'',
+//   //   desc: '',
+//   //   btnTitle:'',
+//   //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
+//   // },
+//   {
+//     key: 'Lookup',
+//     title: '',
+//     desc: '',
+//     btnTitle: '',
+//     src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png',
+//   },
+// ];
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
+  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const banner =[
-    {
-      key:'onlineCheckin',
-      title:'',
-      desc: '',
-      btnTitle:'',
-      src: 'https://sit.ntcs.hicas.vn/api/photo/dowload/2098e797-9bf6-074b-c305-3a1269ac4545.png'
-    },
-    // {
-    //   key:'lookupAwb',
-    //   title:'',
-    //   desc: '',
-    //   btnTitle:'',
-    //   src: 'https://sit.ntcs.hicas.vn/api/photo/dowload/2098e797-9bf6-074b-c305-3a1269ac4545.png'
-    // },
-    // {
-    //   key:'lookupFlightSchedules',
-    //   title:'',
-    //   desc: '',
-    //   btnTitle:'',
-    //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
-    // },
-    {
-      key:'freightEstimate',
-      title:'',
-      desc: '',
-      btnTitle:'',
-      src: 'http://ncts.vn/images/ThuVien/Banner/vi/banner-cargo-5.jpg'
-    },
-    // {
-    //   key:'infoLookup',
-    //   title:'',
-    //   desc: '',
-    //   btnTitle:'',
-    //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
-    // },
-    // {
-    //   key:'invoicesLookup',
-    //   title:'',
-    //   desc: '',
-    //   btnTitle:'',
-    //   src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
-    // },
-      {
-        key:'Lookup',
-        title:'',
-        desc: '',
-        btnTitle:'',
-        src: 'http://ncts.vn/images/ThuVien/Banner/vi/3-01.png'
-      },
-  ]
-
-  const [bannerSrc, setBannerSrc] = useState(banner[0].src);
-
-
+  const activeLookupTab = useAppSelector(getActiveLookupTab());
 
   const items: TabsProps['items'] = [
     {
       key: 'onlineCheckin',
-      label: (  
-        t('Online check-in', { ns: 'common' })
-      ),
+      label: t('Online check-in', { ns: 'common' }),
       children: <OnlineCheckin />,
-      icon: <FileProtectOutlined />
+      icon: <FileProtectOutlined />,
     },
     // {
     //   key: 'lookupAwb',
-    //   label: (  
+    //   label: (
     //     t('Lookup AWB No', { ns: 'common' })
     //   ),
     //   children: <AwbLookup />,
@@ -92,17 +96,17 @@ export const QuickLookup = () => {
     //   children: <FlightLookup />,
     //   icon:  <CalendarOutlined />
     // },
-    
+
     {
-      key: 'Lookup',
+      key: 'lookup',
       label: t('Lookup', { ns: 'common' }),
-      children: <LookUp  />,
+      children: <LookUp />,
       icon: <FileSearchOutlined />,
     },
     {
-      key: 'freightEstimate',
+      key: 'serviceEstimate',
       label: t('Estimate charge', { ns: 'common' }),
-      children: <FreightEstimate  />,
+      children: <FreightEstimate />,
       icon: <BarChartOutlined />,
     },
     // {
@@ -119,23 +123,42 @@ export const QuickLookup = () => {
     // },
   ];
 
-  const onChange = (key: string) => {
-    const selectedBanner = banner.find(bannerItem => bannerItem.key === key);
-    if (selectedBanner) {
-      setBannerSrc(selectedBanner.src);
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (!activeLookupTab) {
+      dispatch(homeActions.setActiveLookupTab(items[0]));
+      setSearchParams({
+        tab: items[0].key,
+      });
     } else {
-      setBannerSrc('');
+      if (!tab) {
+        setSearchParams({
+          tab: activeLookupTab.key,
+        });
+      }
     }
+  }, [activeLookupTab, searchParams]);
+
+  const onChange = (key: string) => {
+    const selectedTab = items.find((tab) => tab.key === key);
+    dispatch(homeActions.setActiveLookupTab(selectedTab));
+    setSearchParams({
+      tab: key,
+    });
   };
 
   return (
-   
-    <div>
-      <div className='bg-img'>
-         <img src={bannerSrc} alt="1" width='100%' height='100%' />
-      </div>
+    <div id='quickLookup'>
       <div className='py-6 px-2 '>
-        <Tabs centered onChange={onChange} type="card" items={items} className='quick-lookup' />
+        <Tabs
+          centered
+          onChange={onChange}
+          activeKey={activeLookupTab?.key}
+          defaultActiveKey={items[0]?.key}
+          type='card'
+          items={items}
+          className='quick-lookup'
+        />
       </div>
     </div>
   );
