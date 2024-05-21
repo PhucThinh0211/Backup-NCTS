@@ -78,12 +78,11 @@ export const AppPanelNav = () => {
       }
       return {
         key: x.id,
-        type: x.type === 'Group' ? 'group' : null,
+        type: x.type === 'Group' ? 'group' : undefined,
         className: 'web-mega-menu-item-group',
-        icon: x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : null,
         label: (
           <Space>
-            {x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : null}
+            {x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : undefined}
             <span>{x.label}</span>
           </Space>
         ),

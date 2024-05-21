@@ -102,9 +102,9 @@ export const AppTopNav = () => {
       }
       return {
         key: x.id,
-        type: x.type === 'Group' ? 'group' : null,
+        type: x.type === 'Group' ? 'group' : undefined,
         className: 'web-mega-menu-item-group',
-        icon: x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : null,
+        icon: x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : undefined,
         label: (
           <Space className={x.type === 'Group' ? 'web-mega-menu-item-group-title' : ''}>
             {x.icons && <i className={x.icons} style={{ color: x.iconColor || 'orange' }} />}
