@@ -38,6 +38,7 @@ export interface MenuResponse {
   label: string;
   type: MenuType;
   icons?: string | null;
+  iconColor?: string;
   url?: string | null;
   sortSeq: number;
   parentId?: string | null;

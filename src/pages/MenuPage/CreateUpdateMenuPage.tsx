@@ -5,6 +5,7 @@ import {
   Avatar,
   Button,
   Col,
+  ColorPicker,
   Form,
   Input,
   Row,
@@ -106,7 +107,9 @@ export const CreateUpdateMenuPage = () => {
   const handleSaveMenu = (values: any) => {
     const inputData = {
       ...values,
+      iconColor: typeof values.iconColor === 'string' ? values.iconColor : values.iconColor.toHexString()
     };
+    console.log(inputData)
     if (values.url && !values.url.startsWith('/')) {
       inputData.url = '/' + values.url.trim();
     }
@@ -201,6 +204,9 @@ export const CreateUpdateMenuPage = () => {
                     </Form.Item>
                     <Form.Item label={t('Icons', { ns: 'menu' })} name='icons'>
                       <Input />
+                    </Form.Item>
+                    <Form.Item name='iconColor'>
+                      <ColorPicker defaultValue={selectedMenuDetail?.iconColor ? selectedMenuDetail.iconColor : "#ffbb29"} showText />
                     </Form.Item>
                     <Form.Item
                       label={t('Parent menu', { ns: 'menu' })}

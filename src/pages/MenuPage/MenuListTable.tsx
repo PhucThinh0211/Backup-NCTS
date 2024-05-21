@@ -240,7 +240,7 @@ export const MenuListTable = () => {
           <Space>
             {getMoreActions(record).map((action) => (
               action.label ? 
-                <Tooltip title={action.label}>
+                <Tooltip title={action.label} key={action.key}>
                   <Button
                     {...action}
                     type='text'
