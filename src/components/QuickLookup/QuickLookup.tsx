@@ -1,22 +1,21 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsProps } from 'antd';
 import {
   FileSearchOutlined,
   BarChartOutlined,
   FileProtectOutlined,
 } from '@ant-design/icons';
+
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getActiveLookupTab, homeActions } from '@/store/home';
+
 import { OnlineCheckin } from './OnlineCheckin';
 import LookUp from './LookUp';
 import { FreightEstimate } from './FreightEstimate';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getActiveLookupTab, homeActions } from '@/store/home';
-import { Banner } from './components/Banner';
 import '@/pages/Home/HomeStyle.css';
 import './QuickLookup.scss';
-import { getBanners, publicCmsActions } from '@/store/publicCms';
-import { getLanguage } from '@/store/persistState';
-import { uploadedPhotoUrl } from '@/common';
+import { useSearchParams } from 'react-router-dom';
 
 // const banners = [
 //   {
@@ -72,10 +71,9 @@ import { uploadedPhotoUrl } from '@/common';
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const language = useAppSelector(getLanguage());
   const activeLookupTab = useAppSelector(getActiveLookupTab());
-  const banners = useAppSelector(getBanners());
 
   const items: TabsProps['items'] = [
     {
@@ -100,13 +98,13 @@ export const QuickLookup = () => {
     // },
 
     {
-      key: 'Lookup',
+      key: 'lookup',
       label: t('Lookup', { ns: 'common' }),
       children: <LookUp />,
       icon: <FileSearchOutlined />,
     },
     {
-      key: 'freightEstimate',
+      key: 'serviceEstimate',
       label: t('Estimate charge', { ns: 'common' }),
       children: <FreightEstimate />,
       icon: <BarChartOutlined />,
@@ -126,36 +124,31 @@ export const QuickLookup = () => {
   ];
 
   useEffect(() => {
-    // const currentOrigin = window.location.origin;
-    const currentOrigin = 'https://sit.ntcs.hicas.vn';
-    const params = {
-      pageUrl: currentOrigin,
-    };
-    dispatch(publicCmsActions.getBannerListRequest({ params }));
-
-    // dispatch(homeActions.setActiveLookupTab(items[0]));
-  }, [language]);
-
-  useEffect(() => {
+    const tab = searchParams.get('tab');
     if (!activeLookupTab) {
       dispatch(homeActions.setActiveLookupTab(items[0]));
+      setSearchParams({
+        tab: items[0].key,
+      });
+    } else {
+      if (!tab) {
+        setSearchParams({
+          tab: activeLookupTab.key,
+        });
+      }
     }
-  }, [activeLookupTab]);
+  }, [activeLookupTab, searchParams]);
 
   const onChange = (key: string) => {
     const selectedTab = items.find((tab) => tab.key === key);
     dispatch(homeActions.setActiveLookupTab(selectedTab));
+    setSearchParams({
+      tab: key,
+    });
   };
 
   return (
     <div id='quickLookup'>
-      {banners.map((banner, index) => (
-        <Banner
-          key={`banner-${banner.id}`}
-          src={banner.photoUrl ? uploadedPhotoUrl(banner.photoUrl) : ''}
-          active={banner.id === activeLookupTab?.key || index === 0}
-        />
-      ))}
       <div className='py-6 px-2 '>
         <Tabs
           centered

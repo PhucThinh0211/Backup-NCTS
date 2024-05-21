@@ -1,0 +1,96 @@
+@import '../../scss/mixin.scss';
+
+.banner {
+    .bannerOverlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        padding: 2rem 12%;
+        .bannerWrapper {
+            width: clamp(350px, 45%, 750px);
+            .title {
+                margin-bottom: 20px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* number of lines to show */
+                        line-clamp: 2; 
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                max-height: 2.8em;
+                line-height: 1.4em;
+                font-size: 1.6rem;
+            }
+            .description {
+                margin-bottom: 10px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* number of lines to show */
+                        line-clamp: 3; 
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                max-height: 4.2em;
+                line-height: 1.4em;
+                font-size: 1.12rem;
+            }
+        }
+    }
+}
+
+@include breakpoint(lg) {
+    .banner {
+        .bannerOverlay {
+            padding-block: 40px;
+            .title {
+                margin-bottom: 10px !important;
+                font-size: 1.4rem !important;
+            }
+            .description {
+                font-size: 1rem !important;
+            }
+        }
+    }
+    
+}
+@include breakpoint(md) {
+    .banner {
+        .bannerOverlay {
+            background-color: #f5f5f5;
+            position: relative;
+            padding: 1rem 1.2rem 2rem;
+            .bannerWrapper {
+                width: 100%;
+            }
+            .title {
+                font-size: 1.4rem !important;
+            }
+            .description {
+                font-size: 1rem !important;
+            }
+        }
+    }
+    
+}
+@include breakpoint(sm) {
+    .banner {
+        .bannerOverlay {
+            padding: .5rem .5rem 1rem;
+            .bannerWrapper {
+                .title {
+                    margin-bottom: 10px;
+                    font-size: 1rem !important;
+                    min-height: 48px;
+                }
+                .description {
+                    margin-bottom: 10px;
+                    font-size: .75rem !important;
+                }
+                .button {
+                    font-size: .75rem !important;
+                }
+            }
+        }
+    }
+    
+}
