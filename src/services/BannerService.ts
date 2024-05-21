@@ -9,6 +9,17 @@ export interface BannersPagingResponse extends PagingResponse {
   items: BannerResponse[];
 }
 
+export enum BannerVertical {
+  TOP = 'top',
+  MIDDLE = 'middle',
+  BOTTOM = 'bottom',
+}
+
+export enum BannerHorizontal {
+  LEFT = 'left',
+  CENTER = 'center',
+  RIGHT = 'right',
+}
 export interface BannerResponse {
   id: string;
   creationTime: string;
@@ -23,10 +34,14 @@ export interface BannerResponse {
   description: string | null;
   buttonLabel: string | null;
   linkButton: string | null;
-  horizontal: string | null;
-  vertical: string | null;
+  horizontal: BannerHorizontal | null;
+  vertical: BannerVertical | null;
   pageUrls: string[];
   language: string | null;
+  buttonColor: string | null;
+  buttonLabelColor: string | null;
+  titleColor: string | null;
+  descriptionColor: string | null;
 }
 export interface CreateUpdateBannerPayload {
   photoUrl: string;

@@ -216,7 +216,7 @@
    }
   }
 
-@media (min-width: 800px) {
+@media (width > 768px) {
   .quick-lookup .ant-tabs-nav {
       position: absolute !important;
       margin: 0 !important;
@@ -248,7 +248,7 @@
   }
 
   /* Mobile View */
-@media (max-width:800px) {
+@media (width <= 768px) {
     .quick-lookup .ant-tabs-nav .ant-tabs-nav-list {
       display: flex;
       flex-direction: column;

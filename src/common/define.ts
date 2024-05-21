@@ -57,3 +57,12 @@ export const uploadedPhotoUrl = (fileName: string) =>
   `${apiUrl}/api/photo/dowload/${fileName}`;
 
 export const dateTimeFormat = 'HH:mm:ss DD/MM/YYYY';
+
+export const bootstrapBreakpoints = {
+  xs: 0,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1400,
+};

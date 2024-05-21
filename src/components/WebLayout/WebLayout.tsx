@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Button, Flex, Form, Input, Layout, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getCurrentCompany, publicCmsActions } from '@/store/publicCms';
@@ -18,6 +18,7 @@ import {
 import { AppTopNav } from './AppTopNav';
 import './webLayout.scss';
 import { AppPanelNav } from './AppPanelNav';
+import Banners from '../Banners';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -28,11 +29,20 @@ export const WebLayout = () => {
   const company = useAppSelector(getCurrentCompany());
   const searchVisibility = useAppSelector(getSearchVisibility());
   const panelNavVisibility = useAppSelector(getPanelVisibility());
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(publicCmsActions.getCompanyRequest({}));
     dispatch(publicCmsActions.getMenuListRequest({}));
   }, [lang]);
+
+  useEffect(() => {
+    const params = {
+      // pageUrl: window.location.href,
+      pageUrl: 'https://sit.ntcs.hicas.vn',
+    };
+    dispatch(publicCmsActions.getBannerListRequest({ params }));
+  }, [lang, location]);
 
   const searchToggle = () => {
     dispatch(persistStateActions.setSearchVisible(!searchVisibility));
@@ -45,52 +55,62 @@ export const WebLayout = () => {
   return (
     <Layout>
       <Header
-        className="web-header"
+        className='web-header'
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           height: TopNavHeight,
           backgroundColor: 'white',
-        }}>
+        }}
+      >
         <div>
-          <Link to="/" className="d-none d-md-block">
+          <Link to='/' className='d-none d-md-block'>
             <img
               src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
-              alt="logo"
+              alt='logo'
               height={Math.round(TopNavHeight * 0.65)}
             />
           </Link>
-          <div className="d-md-none">Logo mobile</div>
+          <div className='d-md-none'>Logo mobile</div>
         </div>
         <AppTopNav />
-        <Flex vertical align="end" style={{ height: '100%' }}>
-          <span style={{ fontWeight: 'bold', color: '#900038' }} className='d-none d-md-flex'>
+        <Flex vertical align='end' style={{ height: '100%' }}>
+          <span
+            style={{ fontWeight: 'bold', color: '#900038' }}
+            className='d-none d-md-flex'
+          >
             {t('Hotline', { ns: 'common' })}: {company?.phone}
           </span>
-          <Space className="d-md-none">
-            <Button type="text" shape="circle" onClick={searchToggle}>
-              <i className="fa-solid fa-magnifying-glass fa-xl" />
+          <Space className='d-md-none'>
+            <Button type='text' shape='circle' onClick={searchToggle}>
+              <i className='fa-solid fa-magnifying-glass fa-xl' />
             </Button>
-            <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
-              <i className="fa-solid fa-bars fa-lg"></i>
+            <Button
+              type='text'
+              shape='circle'
+              size='middle'
+              onClick={panelNavToggle}
+            >
+              <i className='fa-solid fa-bars fa-lg'></i>
             </Button>
           </Space>
-          <Space size="middle" className="d-none d-md-flex">
+          <Space size='middle' className='d-none d-md-flex'>
             <Button
-              type="text"
-              shape="circle"
-              size="middle"
-              className="d-xxl-none"
-              onClick={panelNavToggle}>
-              <i className="fa-solid fa-bars fa-lg"></i>
+              type='text'
+              shape='circle'
+              size='middle'
+              className='d-xxl-none'
+              onClick={panelNavToggle}
+            >
+              <i className='fa-solid fa-bars fa-lg'></i>
             </Button>
-            <Button type="text" shape="circle" onClick={searchToggle}>
-              <i className="fa-solid fa-magnifying-glass fa-xl" />
+            <Button type='text' shape='circle' onClick={searchToggle}>
+              <i className='fa-solid fa-magnifying-glass fa-xl' />
             </Button>
-            <Link to="/dang-nhap">
-              <Button type="primary" shape="circle" size="middle">
-                <i className="fa-regular fa-user fa-lg" />
+            <Link to='/dang-nhap'>
+              <Button type='primary' shape='circle' size='middle'>
+                <i className='fa-regular fa-user fa-lg' />
               </Button>
             </Link>
             <SwitchLang />
@@ -101,12 +121,21 @@ export const WebLayout = () => {
         <Content>
           {searchVisibility && (
             <div
-              style={{ width: '100%', height: 80, padding: '0 48px', backgroundColor: 'green' }}
-              className="d-flex align-items-center">
+              style={{
+                width: '100%',
+                height: 80,
+                padding: '0 48px',
+                backgroundColor: 'green',
+              }}
+              className='d-flex align-items-center'
+            >
               <div style={{ flex: 1 }}>
-                <Form layout="inline" autoFocus>
+                <Form layout='inline' autoFocus>
                   <Form.Item style={{ flex: 1 }}>
-                    <Input autoFocus placeholder={t('Type to search', { ns: 'common' })} />
+                    <Input
+                      autoFocus
+                      placeholder={t('Type to search', { ns: 'common' })}
+                    />
                   </Form.Item>
                   <Form.Item noStyle>
                     <Button>{t('Search', { ns: 'common' })}</Button>
@@ -114,15 +143,17 @@ export const WebLayout = () => {
                 </Form>
               </div>
               <Button
-                type="text"
-                shape="circle"
+                type='text'
+                shape='circle'
                 onClick={searchToggle}
-                style={{ marginBottom: 10, marginLeft: 40 }}>
-                <i className="fa-solid fa-xmark fa-lg" />
+                style={{ marginBottom: 10, marginLeft: 40 }}
+              >
+                <i className='fa-solid fa-xmark fa-lg' />
               </Button>
             </div>
           )}
           <div style={{ backgroundColor: 'white', minHeight: 200 }}>
+            <Banners />
             <Outlet />
           </div>
         </Content>
@@ -134,20 +165,29 @@ export const WebLayout = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: 'orange',
-          paddingBlock: 14
-        }}>
+          paddingBlock: 14,
+        }}
+      >
         <Space>
-          <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
+          <Typography.Text
+            style={{ color: 'white' }}
+          >{`Copyright © NCTS`}</Typography.Text>
         </Space>
-        <Space className="d-none d-xl-flex gap-3">
-          <Link to="/sitemap">
-            <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
+        <Space className='d-none d-xl-flex gap-3'>
+          <Link to='/sitemap'>
+            <Typography.Text style={{ color: 'white' }}>
+              Sitemap
+            </Typography.Text>
           </Link>
-          <Link to="/trang/contact">
-            <Typography.Text style={{ color: 'white' }}>Contact</Typography.Text>
+          <Link to='/trang/contact'>
+            <Typography.Text style={{ color: 'white' }}>
+              Contact
+            </Typography.Text>
           </Link>
-          <Link to="/trang/support">
-            <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
+          <Link to='/trang/support'>
+            <Typography.Text style={{ color: 'white' }}>
+              Support
+            </Typography.Text>
           </Link>
         </Space>
       </Footer>
