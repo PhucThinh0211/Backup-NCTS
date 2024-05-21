@@ -262,6 +262,15 @@
   padding-bottom: 3px !important;
   font-weight: 600;
 }
+.slick-arrow {
+  opacity: 0;
+  visibility: hidden;
+}
+.slick-slider:hover .slick-arrow {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease-in-out;
+}
 /** end global custom antd */
 
 .google-maps {

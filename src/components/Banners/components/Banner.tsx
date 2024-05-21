@@ -64,7 +64,7 @@ export const Banner = ({ banner }: BannerProps) => {
               strong
               className='title'
               style={{
-                color: banner.titleColor || undefined,
+                color: banner.titleColor || '#fff',
               }}
             >
               {banner.title}
@@ -74,7 +74,7 @@ export const Banner = ({ banner }: BannerProps) => {
             <Typography.Text
               className='description'
               style={{
-                color: banner.descriptionColor || undefined,
+                color: banner.descriptionColor || '#fff',
               }}
             >
               {banner.description}{' '}
@@ -87,7 +87,7 @@ export const Banner = ({ banner }: BannerProps) => {
               className='button'
               style={{
                 backgroundColor: banner.buttonColor || undefined,
-                color: banner.buttonLabelColor || undefined,
+                color: banner.buttonLabelColor || '#fff',
               }}
             >
               {banner.buttonLabel}

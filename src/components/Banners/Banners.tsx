@@ -26,6 +26,9 @@ export const Banners = () => {
           autoplay
           autoplaySpeed={5000}
           dotPosition='top'
+          style={{
+            backgroundColor: '#f5f5f5',
+          }}
           {...arrowsSettings}
         >
           {banners.map((banner) => (
