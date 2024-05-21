@@ -16,7 +16,7 @@ export const OnlineCheckin = () => {
       <div className="d-flex  justify-content-center">
         <div className="w-xl-50 ">
           {/* Radio otions */}
-          <Radio.Group
+          {/* <Radio.Group
             value={value}
             onChange={handleOnChange}
             className="d-flex justify-content-start mb-3 gap-5"
@@ -31,7 +31,7 @@ export const OnlineCheckin = () => {
                 {t("Declare export goods information", { ns: "common" })}
               </span>
             </Radio>
-          </Radio.Group>
+          </Radio.Group> */}
           <h5 className = "pb-3">{t("Please fill in your login information", { ns: "common" })}</h5>
           {/* Online Checkin Form */}
           <Form className="" layout="vertical" autoComplete="off">

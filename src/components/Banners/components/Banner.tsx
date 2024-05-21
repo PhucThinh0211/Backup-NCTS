@@ -80,19 +80,21 @@ export const Banner = ({ banner }: BannerProps) => {
               {banner.description}{' '}
             </Typography.Text>
           </div>
-          <div>
-            <Button
-              type='primary'
-              onClick={handleClick}
-              className='button'
-              style={{
-                backgroundColor: banner.buttonColor || undefined,
-                color: banner.buttonLabelColor || '#fff',
-              }}
-            >
-              {banner.buttonLabel}
-            </Button>
-          </div>
+          {banner.buttonLabel && banner.linkButton && (
+            <div>
+              <Button
+                type='primary'
+                onClick={handleClick}
+                className='button'
+                style={{
+                  backgroundColor: banner.buttonColor || undefined,
+                  color: banner.buttonLabelColor || '#fff',
+                }}
+              >
+                {banner.buttonLabel}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
