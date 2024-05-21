@@ -22,9 +22,9 @@ export const AppPanelNav = () => {
   const { '*': slug } = useParams();
 
   useEffect(() => {
-    const selectedMenu = menus.find((x) => slug ? `/${slug}` : window.location.pathname === `${x.url}`);
+    const selectedMenu = menus.find((x) => (slug ? `/${slug}` : window.location.pathname) === x.url);
     dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || window.location.pathname));
-  }, [menus]);
+  }, [menus, slug]);
 
   const buildAppNav = () => {
     if (!menus) {
