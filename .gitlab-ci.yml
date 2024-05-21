@@ -41,13 +41,13 @@ deploy-job:      # This job runs in the deploy stage.
 
     - DOCKER_REGISTRY=dockerhub.anybim.vn docker-compose build
     - docker login -u admin -p Lenotiv@2020 dockerhub.anybim.vn
-    - docker tag dockerhub.anybim.vn/view_ncts:dev dockerhub.anybim.vn/view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
+    - docker tag dockerhub.anybim.vn/view_ncts dockerhub.anybim.vn/view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
     - docker push dockerhub.anybim.vn/view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
     - echo "Deploy complete."
 
     - cd /home/hicas-build/NTCS/k8s/
     - cp view.yml view$(date +%Y%m%d).yml
-    - sed -i s/tag1/1.0.0.$(date +%Y%m%d).$CI_JOB_ID/g view_ncts$(date +%Y%m%d).yml
+    - sed -i s/tag1/1.0.0.$(date +%Y%m%d).$CI_JOB_ID/g view$(date +%Y%m%d).yml
     - kubectl apply -f view$(date +%Y%m%d).yml
     - echo image view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
 
