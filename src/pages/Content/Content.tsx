@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Outlet, useParams } from 'react-router-dom';
 
-import { SEO } from '@/components';
+// import { SEO } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getActiveMenuKey } from '@/store/persistState';
 import { getMenuList } from '@/store/publicCms';
@@ -20,11 +20,11 @@ export const Content = () => {
     setCurrentMenu(activeMenu);
   }, [activeMenuKey, menus]);
   
-  console.log(slug);
+  console.log(slug, currentMenu);
 
   return (
     <>
-      <SEO title={`${currentMenu?.label || 'Noi Bai Cargo Terminal Services'} - NCTS`} description={currentMenu?.label || ''} />
+      {/* <SEO title={`${currentMenu?.label || 'Noi Bai Cargo Terminal Services'} - NCTS`} description={currentMenu?.label || ''} /> */}
       <div>
         Noi dung
         <Outlet />
