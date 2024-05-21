@@ -152,8 +152,8 @@ export const WebLayout = () => {
               </Button>
             </div>
           )}
+          <Banners />
           <div style={{ backgroundColor: 'white', minHeight: 200 }}>
-            <Banners />
             <Outlet />
           </div>
         </Content>
