@@ -55,9 +55,7 @@ export const WebLayout = () => {
 
   return (
     <Layout>
-      <Header
-        className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5'
-      >
+      <Header className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow'>
         <div className='h-100'>
           <Link to='/'>
             <img
@@ -112,9 +110,7 @@ export const WebLayout = () => {
       </Header>
       <Layout hasSider>
         <Content>
-          {searchVisibility && (
-            <SearchForm />
-          )}
+          {searchVisibility && <SearchForm />}
           <Banners />
           <div style={{ backgroundColor: 'white' }}>
             <Outlet />

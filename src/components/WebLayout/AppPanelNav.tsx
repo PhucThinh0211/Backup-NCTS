@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Button, Drawer, Space, Menu } from 'antd';
 import type { MenuProps } from 'antd';
@@ -10,6 +10,7 @@ import { getActiveMenuKey, getPanelVisibility, persistStateActions } from '@/sto
 import { getMenuList } from '@/store/publicCms';
 import { Link, useParams } from 'react-router-dom';
 import { MenuResponse } from '@/services/MenuService';
+import { SwitchLang } from '../SwitchLang';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -22,7 +23,9 @@ export const AppPanelNav = () => {
   const { '*': slug } = useParams();
 
   useEffect(() => {
-    const selectedMenu = menus.find((x) => (slug ? `/${slug}` : window.location.pathname) === x.url);
+    const selectedMenu = menus.find(
+      (x) => (slug ? `/${slug}` : window.location.pathname) === x.url
+    );
     dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || window.location.pathname));
   }, [menus, slug]);
 
@@ -82,7 +85,9 @@ export const AppPanelNav = () => {
         className: 'web-mega-menu-item-group',
         label: (
           <Space>
-            {x.icons ? <i className={x.icons} style={{ color: x.iconColor || 'orange' }} /> : undefined}
+            {x.icons ? (
+              <i className={x.icons} style={{ color: x.iconColor || 'orange' }} />
+            ) : undefined}
             <span>{x.label}</span>
           </Space>
         ),
@@ -103,20 +108,26 @@ export const AppPanelNav = () => {
 
   return (
     <Drawer
-      title={t('Menu', { ns: 'common' })}
-      closable={false}
+      title={null}
+      closable={true}
       onClose={panelNavToggle}
       open={panelNavVisibility}
+      size="large"
       zIndex={9999}
       extra={
-        <Button type="text" shape="circle" onClick={panelNavToggle}>
-          <i className="fa-solid fa-xmark fa-lg" />
-        </Button>
+        <div className="d-flex justify-content-between align-items-center">
+          <Space>
+            <Link to='/dang-nhap'>
+              <Button type='primary' onClick={panelNavToggle}>{t('Sign In', { ns: 'common' })}</Button>
+            </Link>
+            <SwitchLang />
+          </Space>
+        </div>
       }
       placement="right"
-      className='web-panel-nav'>
+      className="web-panel-nav">
       <Menu
-        className='web-panel-nav'
+        className="web-panel-nav"
         onClick={onClick}
         style={{ width: '100%' }}
         selectedKeys={[acitveKey]}

@@ -147,6 +147,19 @@ export const QuickLookup = () => {
     });
   };
 
+  useEffect(() => {
+    const tabsNavList = document.querySelector(
+      '.ant-tabs.quick-lookup .ant-tabs-nav-list'
+    ) as HTMLElement;
+    const tabsContentHolder = document.querySelector(
+      '.ant-tabs.quick-lookup .ant-tabs-content'
+    ) as HTMLElement;
+    if (tabsNavList && tabsContentHolder) {
+      tabsContentHolder.style.maxWidth = `${tabsNavList.clientWidth}px`;
+      tabsContentHolder.style.marginInline = `auto`;
+    }
+  }, []);
+
   return (
     <div id='quickLookup'>
       <div className='py-6 px-2 '>

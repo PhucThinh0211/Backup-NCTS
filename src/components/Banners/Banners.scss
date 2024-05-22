@@ -5,7 +5,6 @@
         position: absolute;
         inset: 0;
         display: flex;
-        padding: 2rem 48px;
         .bannerWrapper {
             width: clamp(350px, 45%, 750px);
             .title {
@@ -46,7 +45,6 @@
 @include breakpoint(lg) {
     .banner {
         .bannerOverlay {
-            padding-block: 40px;
             .title {
                 margin-bottom: 10px !important;
                 font-size: 1.4rem !important;
@@ -62,7 +60,6 @@
     .banner {
         .bannerOverlay {
             position: relative;
-            padding: 1rem 1.2rem 2rem;
             .bannerWrapper {
                 width: 100%;
             }
@@ -81,7 +78,6 @@
 @include breakpoint(sm) {
     .banner {
         .bannerOverlay {
-            padding: .5rem .5rem 1rem;
             .bannerWrapper {
                 .title {
                     margin-bottom: 10px;
