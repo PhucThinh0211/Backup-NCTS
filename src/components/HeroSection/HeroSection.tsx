@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
@@ -10,7 +11,7 @@ import { useAppSelector } from '@/store/hooks';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import './Banners.scss';
 
-export const Banners = () => {
+export const HeroSection = () => {
   const [innerWidth, innerHeight] = useWindowSize();
   const banners = useAppSelector(getBanners());
 
@@ -19,13 +20,15 @@ export const Banners = () => {
     nextArrow: <RightOutlined />,
     prevArrow: <LeftOutlined />,
   };
+
   return (
-    <div style={{ minHeight: 50 }}>
-      {!!banners?.length && (
+    !!banners?.length && (
+      <div style={{ minHeight: 50 }}>
         <Carousel
           autoplay
           autoplaySpeed={5000}
-          dots={false}
+          dotPosition='bottom'
+          dots={innerWidth < bootstrapBreakpoints.xl}
           style={{
             backgroundColor: '#f5f5f5',
           }}
@@ -35,7 +38,7 @@ export const Banners = () => {
             <Banner key={`banner-${banner.id}`} banner={banner} />
           ))}
         </Carousel>
-      )}
-    </div>
+      </div>
+    )
   );
 };

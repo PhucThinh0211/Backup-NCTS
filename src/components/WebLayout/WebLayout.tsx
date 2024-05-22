@@ -18,7 +18,7 @@ import {
 import { AppTopNav } from './AppTopNav';
 import './webLayout.scss';
 import { AppPanelNav } from './AppPanelNav';
-import Banners from '../Banners';
+import { HeroSection } from '../HeroSection';
 import { SearchForm } from '../SearchForm';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -55,53 +55,44 @@ export const WebLayout = () => {
 
   return (
     <Layout>
-      <Header className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow'>
-        <div className='h-100'>
-          <Link to='/'>
+      <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
+        <div className="h-100">
+          <Link to="/">
             <img
               src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
-              alt='logo'
-              className='h-75 mt-md-3'
+              alt="logo"
+              className="h-75 mt-md-3"
             />
           </Link>
         </div>
         <AppTopNav />
-        <Flex vertical align='end' style={{ height: '100%' }}>
-          <span
-            style={{ fontWeight: 'bold', color: '#900038' }}
-            className='d-none d-md-flex'
-          >
+        <Flex vertical align="end" style={{ height: '100%' }}>
+          <span style={{ fontWeight: 'bold', color: '#900038' }} className="d-none d-md-flex">
             {t('Hotline', { ns: 'common' })}: {company?.phone}
           </span>
-          <Space className='d-md-none'>
-            <Button type='text' shape='circle' onClick={searchToggle}>
-              <i className='fa-solid fa-magnifying-glass fa-xl' />
+          <Space className="d-md-none">
+            <Button type="text" shape="circle" onClick={searchToggle}>
+              <i className="fa-solid fa-magnifying-glass fa-xl" />
             </Button>
-            <Button
-              type='text'
-              shape='circle'
-              size='middle'
-              onClick={panelNavToggle}
-            >
-              <i className='fa-solid fa-bars fa-lg'></i>
+            <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
+              <i className="fa-solid fa-bars fa-lg"></i>
             </Button>
           </Space>
-          <Space size='middle' className='d-none d-md-flex'>
+          <Space size="middle" className="d-none d-md-flex">
             <Button
-              type='text'
-              shape='circle'
-              size='middle'
-              className='d-xxl-none'
-              onClick={panelNavToggle}
-            >
-              <i className='fa-solid fa-bars fa-lg'></i>
+              type="text"
+              shape="circle"
+              size="middle"
+              className="d-xxl-none"
+              onClick={panelNavToggle}>
+              <i className="fa-solid fa-bars fa-lg"></i>
             </Button>
-            <Button type='text' shape='circle' onClick={searchToggle}>
-              <i className='fa-solid fa-magnifying-glass fa-xl' />
+            <Button type="text" shape="circle" onClick={searchToggle}>
+              <i className="fa-solid fa-magnifying-glass fa-xl" />
             </Button>
-            <Link to='/dang-nhap'>
-              <Button type='primary' shape='circle' size='middle'>
-                <i className='fa-regular fa-user fa-lg' />
+            <Link to="/dang-nhap">
+              <Button type="primary" shape="circle" size="middle">
+                <i className="fa-regular fa-user fa-lg" />
               </Button>
             </Link>
             <SwitchLang />
@@ -111,7 +102,7 @@ export const WebLayout = () => {
       <Layout hasSider>
         <Content>
           {searchVisibility && <SearchForm />}
-          <Banners />
+          <HeroSection />
           <div style={{ backgroundColor: 'white' }}>
             <Outlet />
           </div>
@@ -125,28 +116,19 @@ export const WebLayout = () => {
           alignItems: 'center',
           backgroundColor: 'orange',
           paddingBlock: 14,
-        }}
-      >
-        <Space direction='horizontal'>
-          <Typography.Text
-            style={{ color: 'white' }}
-          >{`Copyright © NCTS`}</Typography.Text>
+        }}>
+        <Space direction="horizontal">
+          <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
         </Space>
-        <Space className='d-none d-xl-flex gap-3'>
-          <Link to='/sitemap'>
-            <Typography.Text style={{ color: 'white' }}>
-              Sitemap
-            </Typography.Text>
+        <Space className="d-none d-xl-flex gap-3">
+          <Link to="/sitemap">
+            <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
           </Link>
-          <Link to='/trang/contact'>
-            <Typography.Text style={{ color: 'white' }}>
-              Contact
-            </Typography.Text>
+          <Link to="/trang/contact">
+            <Typography.Text style={{ color: 'white' }}>Contact</Typography.Text>
           </Link>
-          <Link to='/trang/support'>
-            <Typography.Text style={{ color: 'white' }}>
-              Support
-            </Typography.Text>
+          <Link to="/trang/support">
+            <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
           </Link>
         </Space>
       </Footer>
