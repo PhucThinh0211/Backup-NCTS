@@ -107,6 +107,7 @@ export const AppPanelNav = () => {
       closable={false}
       onClose={panelNavToggle}
       open={panelNavVisibility}
+      zIndex={9999}
       extra={
         <Button type="text" shape="circle" onClick={panelNavToggle}>
           <i className="fa-solid fa-xmark fa-lg" />
