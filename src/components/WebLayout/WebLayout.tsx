@@ -62,6 +62,10 @@ export const WebLayout = () => {
           alignItems: 'center',
           height: TopNavHeight,
           backgroundColor: 'white',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          boxShadow: '0 0 4px 1px rgba(0, 0, 0, .25)'
         }}
       >
         <div>

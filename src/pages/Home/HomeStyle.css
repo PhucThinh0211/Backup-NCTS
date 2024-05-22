@@ -210,11 +210,11 @@
   color:#FFB629
 }
 
-@media (max-width: 1194px) {
-  .LookupContent{
-    width: 100%;
-   }
-  }
+.LookupContent{
+  width: 100%;
+ }
+ @media (max-width: 1194px) {
+}
 
 @media (width > 768px) {
   .quick-lookup .ant-tabs-nav {
@@ -340,7 +340,4 @@
       color: white !important;
       background: linear-gradient(94.06deg, #FFB629 -1.21%, #FFDA56 58.66%, #FFD7A6 116.84%) !important;
     }
-   .LookupContent{
-    width: 50%;
-   }
   }

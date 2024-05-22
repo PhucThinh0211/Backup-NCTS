@@ -51,7 +51,10 @@ export const Banner = ({ banner }: BannerProps) => {
         }}
       />
       <div
-        className='bannerOverlay'
+        className='
+          bannerOverlay
+          px-3 px-lg-5 py-2 py-lg-4
+        '
         style={{
           justifyContent:
             justifyContent[banner.horizontal || BannerHorizontal.LEFT],
@@ -59,27 +62,31 @@ export const Banner = ({ banner }: BannerProps) => {
         }}
       >
         <div className='bannerWrapper'>
-          <div>
-            <Typography.Text
-              strong
-              className='title'
-              style={{
-                color: banner.titleColor || '#fff',
-              }}
-            >
-              {banner.title}
-            </Typography.Text>
-          </div>
-          <div>
-            <Typography.Text
-              className='description'
-              style={{
-                color: banner.descriptionColor || '#fff',
-              }}
-            >
-              {banner.description}{' '}
-            </Typography.Text>
-          </div>
+          {banner.title && (
+            <div>
+              <Typography.Text
+                strong
+                className='title'
+                style={{
+                  color: banner.titleColor || '#fff',
+                }}
+              >
+                {banner.title}
+              </Typography.Text>
+            </div>
+          )}
+          {banner.description && (
+            <div>
+              <Typography.Text
+                className='description'
+                style={{
+                  color: banner.descriptionColor || '#fff',
+                }}
+              >
+                {banner.description}{' '}
+              </Typography.Text>
+            </div>
+          )}
           {banner.buttonLabel && banner.linkButton && (
             <div>
               <Button

@@ -1,20 +1,21 @@
-import { Button, Form, Input, Radio, RadioChangeEvent } from "antd";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Radio, RadioChangeEvent } from 'antd';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 
 export const OnlineCheckin = () => {
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation(['common']);
 
   const [value, setValue] = useState(1);
 
   const handleOnChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
   };
+
   return (
-    <div className="onlineCheckin">
-      <div className="d-flex  justify-content-center">
-        <div className="w-xl-50 ">
+    <div className='onlineCheckin'>
+      <div className='d-flex justify-content-center container'>
+        <div className='w-100'>
           {/* Radio otions */}
           {/* <Radio.Group
             value={value}
@@ -32,92 +33,95 @@ export const OnlineCheckin = () => {
               </span>
             </Radio>
           </Radio.Group> */}
-          <h5 className = "pb-3">{t("Please fill in your login information", { ns: "common" })}</h5>
+          <h5 className='pb-3'>
+            {t('Please fill in your login information', { ns: 'common' })}
+          </h5>
           {/* Online Checkin Form */}
-          <Form className="" layout="vertical" autoComplete="off">
+          <Form className='' layout='vertical' autoComplete='off'>
             <Form.Item
-              label={t("Account", { ns: "common" })}
+              label={t('Account', { ns: 'common' })}
               required
               rules={[{ required: true }]}
-              style={{ display: "" }}
+              style={{ display: '' }}
             >
               <Input
                 style={{
-                  height: "40px",
+                  height: '40px',
                   borderRadius: 10,
                 }}
-                placeholder={t("Enter account name", { ns: "common" })}
+                placeholder={t('Enter account name', { ns: 'common' })}
               />
             </Form.Item>
             <Form.Item
-              label={t("Password", { ns: "common" })}
+              label={t('Password', { ns: 'common' })}
               required
               rules={[{ required: true }]}
-              style={{ display: "" }}
+              style={{ display: '' }}
             >
               <Input.Password
-                type="password"
+                type='password'
                 style={{
-                  height: "40px",
+                  height: '40px',
                   borderRadius: 10,
                 }}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
-                placeholder={t("Enter password", { ns: "common" })}
+                placeholder={t('Enter password', { ns: 'common' })}
               />
             </Form.Item>
             {/* Verification codes */}
             <Form.Item
-              label={t("Verification codes", { ns: "common" })}
+              label={t('Verification codes', { ns: 'common' })}
               required
               style={{
-                display: "inline-block",
-                width: "calc(100%)",
+                display: 'inline-block',
+                width: 'calc(100%)',
                 marginBottom: 0,
               }}
             >
               <Form.Item
-                name={t("Verification codes", { ns: "common" })}
+                name={t('Verification codes', { ns: 'common' })}
                 rules={[{ required: true }]}
-                style={{ display: "inline-block", width: "calc(70% - 4px)" }}
+                style={{ display: 'inline-block', width: 'calc(70% - 4px)' }}
               >
                 <Input
                   style={{
-                    height: "40px",
+                    height: '40px',
                     borderRadius: 10,
                   }}
-                  placeholder={t("Enter verification codes", { ns: "common" })}
+                  placeholder={t('Enter verification codes', { ns: 'common' })}
                 />
               </Form.Item>
               <div
-                className="verification"
+                className='verification'
                 style={{
-                  display: "inline-block",
-                  height: "40px",
-                  width: "calc(30% - 4px)",
+                  display: 'inline-block',
+                  height: '40px',
+                  width: 'calc(30% - 4px)',
                   borderRadius: 10,
-                  alignContent: "center",
+                  alignContent: 'center',
                   marginLeft: 8,
                 }}
               >
                 <img
-                  src="https://sit.ntcs.hicas.vn/api/photo/dowload/64bbc359-c083-cdce-83aa-3a128d8ed489.png"
-                  alt=""
+                  src='https://sit.ntcs.hicas.vn/api/photo/dowload/64bbc359-c083-cdce-83aa-3a128d8ed489.png'
+                  alt=''
                 />
               </div>
             </Form.Item>
             <Button
-              type="primary"
-              htmlType="submit"
+              type='primary'
+              htmlType='submit'
               style={{
                 fontWeight: 600,
-                fontSize: "18px",
-                height: "48px",
-                width: "calc(100%)",
+                fontSize: '18px',
+                height: '48px',
+                width: 'calc(100%)',
+                borderRadius: 20,
               }}
             >
-              {t("Log in", { ns: "home" })}
+              {t('Log in', { ns: 'home' })}
             </Button>
           </Form>
         </div>
