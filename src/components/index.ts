@@ -8,3 +8,4 @@ export * from './AdminLayout';
 export * from './AuditedInfoCard';
 export * from './WebLayout';
 export * from './Seo';
+export * from './SearchForm';

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import { Button, Flex, Form, Input, Layout, Space, Typography } from 'antd';
+import { Button, Flex, Layout, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getCurrentCompany, publicCmsActions } from '@/store/publicCms';
 import logo from '@/assets/logo.png';
-import { TopNavHeight, uploadedPhotoUrl } from '@/common';
+import { uploadedPhotoUrl } from '@/common';
 import { SwitchLang } from '../SwitchLang';
 import {
   getLanguage,
@@ -19,6 +19,7 @@ import { AppTopNav } from './AppTopNav';
 import './webLayout.scss';
 import { AppPanelNav } from './AppPanelNav';
 import Banners from '../Banners';
+import { SearchForm } from '../SearchForm';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -44,39 +45,25 @@ export const WebLayout = () => {
     dispatch(publicCmsActions.getBannerListRequest({ params }));
   }, [lang, location]);
 
-  const searchToggle = () => {
-    dispatch(persistStateActions.setSearchVisible(!searchVisibility));
-  };
-
   const panelNavToggle = () => {
     dispatch(persistStateActions.setPanelNavVisibility(!panelNavVisibility));
   };
 
+  const searchToggle = () => {
+    dispatch(persistStateActions.setSearchVisible(!searchVisibility));
+  };
+
   return (
     <Layout>
-      <Header
-        className='web-header'
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: TopNavHeight,
-          backgroundColor: 'white',
-          position: 'sticky',
-          top: 0,
-          zIndex: 1000,
-          boxShadow: '0 0 4px 1px rgba(0, 0, 0, .25)'
-        }}
-      >
-        <div>
-          <Link to='/' className='d-none d-md-block'>
+      <Header className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow'>
+        <div className='h-100'>
+          <Link to='/'>
             <img
               src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
               alt='logo'
-              height={Math.round(TopNavHeight * 0.65)}
+              className='h-75 mt-md-3'
             />
           </Link>
-          <div className='d-md-none'>Logo mobile</div>
         </div>
         <AppTopNav />
         <Flex vertical align='end' style={{ height: '100%' }}>
@@ -123,39 +110,7 @@ export const WebLayout = () => {
       </Header>
       <Layout hasSider>
         <Content>
-          {searchVisibility && (
-            <div
-              style={{
-                width: '100%',
-                height: 80,
-                padding: '0 48px',
-                backgroundColor: 'green',
-              }}
-              className='d-flex align-items-center'
-            >
-              <div style={{ flex: 1 }}>
-                <Form layout='inline' autoFocus>
-                  <Form.Item style={{ flex: 1 }}>
-                    <Input
-                      autoFocus
-                      placeholder={t('Type to search', { ns: 'common' })}
-                    />
-                  </Form.Item>
-                  <Form.Item noStyle>
-                    <Button>{t('Search', { ns: 'common' })}</Button>
-                  </Form.Item>
-                </Form>
-              </div>
-              <Button
-                type='text'
-                shape='circle'
-                onClick={searchToggle}
-                style={{ marginBottom: 10, marginLeft: 40 }}
-              >
-                <i className='fa-solid fa-xmark fa-lg' />
-              </Button>
-            </div>
-          )}
+          {searchVisibility && <SearchForm />}
           <Banners />
           <div style={{ backgroundColor: 'white' }}>
             <Outlet />
@@ -172,7 +127,7 @@ export const WebLayout = () => {
           paddingBlock: 14,
         }}
       >
-        <Space>
+        <Space direction='horizontal'>
           <Typography.Text
             style={{ color: 'white' }}
           >{`Copyright © NCTS`}</Typography.Text>
