@@ -89,7 +89,9 @@
   margin-top: 5%;
   padding-bottom: 5%;
 }
-.ant-carousel .slick-dots-bottom{
+
+/* Để tránh chay global cần bọc ant vào trong 1 classNam */
+/* .ant-carousel .slick-dots-bottom{
   bottom: -3% !important;
 }
 
@@ -98,7 +100,7 @@
   height: 10px !important;
   border-radius: 100% !important;
   background-color:#FFB629 !important;
-}
+} */
 
 .service-card{
   display: flex;

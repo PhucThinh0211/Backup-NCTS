@@ -14,7 +14,7 @@ export const OnlineCheckin = () => {
 
   return (
     <div className='onlineCheckin'>
-      <div className='d-flex justify-content-center container'>
+      <div className='d-flex justify-content-center container-md'>
         <div className='w-100'>
           {/* Radio otions */}
           {/* <Radio.Group
