@@ -119,11 +119,9 @@ export const AwbLookup = () => {
             <Button
               type="primary"
               htmlType="submit"
+              className="w-100 fs-5 fw-semibold rounded-pill"
               style={{
-                fontWeight: 600,
-                fontSize: "18px",
                 height: "48px",
-                width: "calc(100%)",
               }}
             >
               {t("Lookup", { ns: "common" })}

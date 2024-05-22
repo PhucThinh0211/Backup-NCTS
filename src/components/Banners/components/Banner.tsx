@@ -53,7 +53,7 @@ export const Banner = ({ banner }: BannerProps) => {
       <div
         className='
           bannerOverlay
-          px-3 px-lg-5 py-2 py-lg-4
+          px-3 px-lg-5 py-2 pb-4 py-lg-4
         '
         style={{
           justifyContent:
@@ -66,7 +66,7 @@ export const Banner = ({ banner }: BannerProps) => {
             <div>
               <Typography.Text
                 strong
-                className='title'
+                className='title mb-2 '
                 style={{
                   color: banner.titleColor || '#fff',
                 }}

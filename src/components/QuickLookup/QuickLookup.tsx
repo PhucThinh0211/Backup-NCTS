@@ -16,6 +16,9 @@ import { FreightEstimate } from './FreightEstimate';
 import '@/pages/Home/HomeStyle.css';
 import './QuickLookup.scss';
 import { useSearchParams } from 'react-router-dom';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { bootstrapBreakpoints } from '@/common';
+import { QuickLookupMobile } from './QuickLookupMobile';
 
 // const banners = [
 //   {
@@ -71,7 +74,9 @@ import { useSearchParams } from 'react-router-dom';
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
+  const [innerWidth] = useWindowSize();
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log(innerWidth);
 
   const activeLookupTab = useAppSelector(getActiveLookupTab());
 
@@ -162,17 +167,21 @@ export const QuickLookup = () => {
 
   return (
     <div id='quickLookup'>
-      <div className='py-6 px-2 '>
-        <Tabs
-          centered
-          onChange={onChange}
-          activeKey={activeLookupTab?.key}
-          defaultActiveKey={items[0]?.key}
-          type='card'
-          items={items}
-          className='quick-lookup'
-        />
-      </div>
+      {innerWidth > bootstrapBreakpoints.md ? (
+        <div className='px-2'>
+          <Tabs
+            centered
+            onChange={onChange}
+            activeKey={activeLookupTab?.key}
+            defaultActiveKey={items[0]?.key}
+            type='card'
+            items={items}
+            className='quick-lookup'
+          />
+        </div>
+      ) : (
+        <QuickLookupMobile />
+      )}
     </div>
   );
 };

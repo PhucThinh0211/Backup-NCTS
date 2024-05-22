@@ -8,7 +8,6 @@
         .bannerWrapper {
             width: clamp(350px, 45%, 750px);
             .title {
-                margin-bottom: 20px;
                 overflow: hidden;
                 display: -webkit-box;
                 -webkit-line-clamp: 2; /* number of lines to show */
@@ -46,7 +45,6 @@
     .banner {
         .bannerOverlay {
             .title {
-                margin-bottom: 10px !important;
                 font-size: 1.4rem !important;
             }
             .description {
@@ -80,7 +78,6 @@
         .bannerOverlay {
             .bannerWrapper {
                 .title {
-                    margin-bottom: 10px;
                     font-size: 1rem !important;
                     // min-height: 48px;
                 }

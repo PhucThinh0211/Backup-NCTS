@@ -15,11 +15,11 @@ function LookUp() {
   };
 
   return (
-    <div className='container look-up'>
+    <div className=' container-md look-up'>
       <Radio.Group
         value={value}
         onChange={handleOnChange}
-        className='d-flex justify-content-center mb-3 gap-xl-5'
+        className='d-flex justify-content-between  mb-3 gap-xl-5'
       >
         <Radio value={1}>
           <span style={{ fontWeight: value === 1 ? 600 : 'normal' }}>
