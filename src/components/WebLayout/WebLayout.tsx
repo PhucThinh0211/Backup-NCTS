@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import { Button, Flex, Form, Input, Layout, Space, Typography } from 'antd';
+import { Button, Flex, Layout, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getCurrentCompany, publicCmsActions } from '@/store/publicCms';
 import logo from '@/assets/logo.png';
-import { TopNavHeight, uploadedPhotoUrl } from '@/common';
+import { uploadedPhotoUrl } from '@/common';
 import { SwitchLang } from '../SwitchLang';
 import {
   getLanguage,
