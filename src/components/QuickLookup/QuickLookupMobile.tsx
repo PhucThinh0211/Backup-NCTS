@@ -55,6 +55,7 @@ export const QuickLookupMobile = () => {
       accordion
       expandIconPosition={'end'}
       items={items}
+      destroyInactivePanel={true}
     />
   );
 };

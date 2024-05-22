@@ -25,7 +25,7 @@ export const Banners = () => {
         <Carousel
           autoplay
           autoplaySpeed={5000}
-          dotPosition='top'
+          dots={false}
           style={{
             backgroundColor: '#f5f5f5',
           }}
