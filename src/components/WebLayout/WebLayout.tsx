@@ -56,24 +56,16 @@ export const WebLayout = () => {
   return (
     <Layout>
       <Header
-        className='web-header'
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: TopNavHeight,
-          backgroundColor: 'white',
-        }}
+        className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5'
       >
-        <div>
-          <Link to='/' className='d-none d-md-block'>
+        <div className='h-100'>
+          <Link to='/'>
             <img
               src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
               alt='logo'
-              height={Math.round(TopNavHeight * 0.65)}
+              className='h-75 mt-md-3'
             />
           </Link>
-          <div className='d-md-none'>Logo mobile</div>
         </div>
         <AppTopNav />
         <Flex vertical align='end' style={{ height: '100%' }}>

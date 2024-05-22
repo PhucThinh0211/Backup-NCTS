@@ -5,34 +5,11 @@
   line-height: 35px;
 }
 
-// .web-top-nav .ant-menu-item {
-//   line-height: 80px;
-//   color: gray;
-//   font-weight: 600;
-//   font-size: 18;
-// }
-
-// .web-top-nav .ant-menu-submenu {
-//   line-height: 80px;
-// }
-
 .web-top-nav.ant-menu-horizontal {
   border: none;
   font-weight: 600;
   font-size: 16px;
 }
-
-// .web-mega-menu ul {
-//   display: flex;
-//   flex-direction: row;
-//   flex: 2;
-//   ul {
-//     flex-direction: column;
-//     .web-mega-menu-item-group {
-//       flex: 2;
-//     }
-//   }
-// }
 
 .web-mega-menu-item-group-title {
   font-weight: 600;
@@ -51,3 +28,31 @@
   padding-right: 10px !important;
 }
 
+@media (max-width: 575.98px) {
+  .web-header {
+    height: 70px !important;
+  }
+  .web-header.ant-layout-header {
+    line-height: 70px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+  .web-header {
+    height: 70px !important;
+  }
+  .web-header.ant-layout-header {
+    line-height: 70px;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+  .web-header {
+    height: 100px !important;
+  }
+  .web-header.ant-layout-header {
+    line-height: 35px;
+  }
+}
