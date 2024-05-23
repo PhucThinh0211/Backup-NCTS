@@ -10,7 +10,7 @@ export const OnlineCheckin = () => {
     <div className='onlineCheckin'>
       <div className='d-flex justify-content-center container-md'>
         <div className='w-100'>
-          <h5 className='pb-3'>
+          <h5 className=''>
             {t('Please fill in your login information', { ns: 'common' })}
           </h5>
           {/* Online Checkin Form */}
@@ -92,7 +92,7 @@ export const OnlineCheckin = () => {
               </Row>
             </Form.Item>
             <div className='mt-2'>
-              <LookupButton>{t('Log in', { ns: 'home' })}</LookupButton>
+              <LookupButton>{t('Sign In', { ns: 'common' })}</LookupButton>
             </div>
           </Form>
         </div>

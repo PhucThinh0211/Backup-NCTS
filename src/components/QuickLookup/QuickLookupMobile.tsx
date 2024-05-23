@@ -1,14 +1,18 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
+import { useTranslation } from 'react-i18next';
 import { Collapse, CollapseProps, Typography } from 'antd';
 
 import { FreightEstimate } from './FreightEstimate';
 import { OnlineCheckin } from './OnlineCheckin';
 import LookUp from './LookUp';
+import { getTabLookupActive, persistStateActions } from '@/store/persistState';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export const QuickLookupMobile = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['common']);
+  const tabActive = useAppSelector(getTabLookupActive()); 
 
   const panelStyle: React.CSSProperties = {
     border: 'none',
@@ -16,9 +20,10 @@ export const QuickLookupMobile = () => {
     borderRadius: '0',
     backgroundColor: 'white',
   };
+
   const items: CollapseProps['items'] = [
     {
-      key: '1',
+      key: 'online-check-in',
       label: (
         <Typography.Text strong>
           {t('Online check-in', { ns: 'common' })}
@@ -31,14 +36,14 @@ export const QuickLookupMobile = () => {
       key: 'lookup',
       label: (
         <Typography.Text strong>
-          {t('Lookup', { ns: 'common' })}
+          {t('Lookup information', { ns: 'common' })}
         </Typography.Text>
       ),
       children: <LookUp />,
       style: panelStyle,
     },
     {
-      key: '3',
+      key: 'estimate-charge',
       label: (
         <Typography.Text strong>
           {t('Estimate charge', { ns: 'common' })}
@@ -49,8 +54,14 @@ export const QuickLookupMobile = () => {
     },
   ];
 
+  const onTabChange = (key: string | string[]) => {
+    dispatch(persistStateActions.setTabLookupActive(key));
+  }
+
   return (
     <Collapse
+      activeKey={tabActive}
+      onChange={onTabChange}
       className='rounded-0 border-0 mb-2'
       accordion
       expandIconPosition={'end'}

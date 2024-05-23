@@ -1,9 +1,13 @@
 {
   "Sign In": "Sign In",
   "Sign Up": "Sign Up",
+  "Lookup information": "Lookup information",
   "Lookup": "Lookup",
   "Lookup AWB No": "Lookup AWB No",
   "Lookup Flight": "Lookup Flight",
+  "AWB": "AWB",
+  "Flight": "Flight",
+  "E-Invoice": "E-Invoice",
   "Estimate charge": "Estimate charge",
   "Search": "Search",
   "Type to search": "Type to search",
