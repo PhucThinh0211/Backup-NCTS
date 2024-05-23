@@ -23,3 +23,7 @@ export function getActiveMenuKey() {
   return createSelector([getState], (state) => state.activeMenuKey || '/');
 }
 
+export function getTabLookupActive() {
+  return createSelector([getState], (state) => state.tabLoolupActive || 'online-check-in');
+}
+

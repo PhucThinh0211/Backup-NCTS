@@ -18,8 +18,8 @@ export const FreightEstimate = () => {
   return (
     <div className=' container-md'>
       <Form layout='vertical' requiredMark autoComplete='off'>
-        <Row style={{ marginBottom: 16 }}>
-          <h5 className='pb-3' style={{ color: '#FFB629' }}>
+        <Row style={{ }}>
+          <h5 style={{ color: '#FFB629' }}>
             {'Tính thử phí hàng nhập'}
           </h5>
         </Row>
@@ -115,7 +115,7 @@ export const FreightEstimate = () => {
           <Col xs={24} sm={8}>
             <Form.Item>
               <Row justify={window.innerWidth < 576 ? 'center' : 'end'}>
-                <Button type='primary' htmlType='submit'>
+                <Button type='primary' htmlType='submit' size='large' style={{ borderRadius: 20 }}>
                   {t('Lookup', { ns: 'common' })}
                 </Button>
               </Row>
