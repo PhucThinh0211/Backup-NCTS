@@ -86,6 +86,32 @@ export const CreateUpdateNewsTypePage = () => {
                 <Form.Item
                   label={
                     <div>
+                      <span>{t('Code', { ns: 'common' })}</span>
+                      {/* {' - '}
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span> */}
+                    </div>
+                  }
+                  name='code'
+                  rules={[
+                    { required: true, message: t('Code required') },
+                    {
+                      max: 500,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 500,
+                      }),
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
                       <span>{t('Name', { ns: 'newsType' })}</span>
                       {' - '}
                       <span className='text-uppercase text-danger'>
@@ -103,32 +129,6 @@ export const CreateUpdateNewsTypePage = () => {
                         ns: 'common',
                         range1: 0,
                         range2: 2000,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
-                  label={
-                    <div>
-                      <span>{t('Code', { ns: 'newsType' })}</span>
-                      {/* {' - '}
-                      <span className='text-uppercase text-danger'>
-                        {locale}
-                      </span> */}
-                    </div>
-                  }
-                  name='code'
-                  rules={[
-                    { required: true, message: t('Code required') },
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
                       }),
                     },
                   ]}
