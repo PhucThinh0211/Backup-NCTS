@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+
 import { QuickLookup } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getTabLookupActive } from '@/store/persistState';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
 export const HomePage = () => {
   const navigate = useNavigate();
