@@ -125,14 +125,14 @@ export const NewsTypeListTable = () => {
 
   const columns: TableColumnsType<NewsTypeResponse> = [
     {
+      title: t('Code', { ns: 'common' }),
+      dataIndex: 'code',
+      key: 'code',
+    },
+    {
       title: t('Name', { ns: 'newsType' }),
       dataIndex: 'name',
       key: 'name',
-    },
-    {
-      title: t('Code', { ns: 'newsType' }),
-      dataIndex: 'code',
-      key: 'code',
     },
     {
       key: 'sort',
