@@ -177,6 +177,7 @@ export const QuickLookup = () => {
             type='card'
             items={items}
             className='quick-lookup'
+            destroyInactiveTabPane={true}
           />
         </div>
       ) : (

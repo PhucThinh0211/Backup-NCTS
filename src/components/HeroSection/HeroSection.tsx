@@ -27,12 +27,13 @@ export const HeroSection = () => {
         <Carousel
           autoplay
           autoplaySpeed={5000}
-          dotPosition="bottom"
+          dotPosition='bottom'
           dots={innerWidth < bootstrapBreakpoints.xl}
           style={{
             backgroundColor: '#f5f5f5',
           }}
-          {...arrowsSettings}>
+          {...arrowsSettings}
+        >
           {banners.map((banner) => (
             <Banner key={`banner-${banner.id}`} banner={banner} />
           ))}

@@ -19,7 +19,7 @@ function LookUp() {
       <Radio.Group
         value={value}
         onChange={handleOnChange}
-        className='d-flex justify-content-between  mb-3 gap-xl-5'
+        className='d-flex justify-content-between flex-column flex-sm-row mb-3 gap-xl-5'
       >
         <Radio value={1}>
           <span style={{ fontWeight: value === 1 ? 600 : 'normal' }}>

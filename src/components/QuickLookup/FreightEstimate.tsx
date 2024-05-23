@@ -19,9 +19,9 @@ export const FreightEstimate = () => {
     <div className=' container-md'>
       <Form layout='vertical' requiredMark autoComplete='off'>
         <Row style={{ marginBottom: 16 }}>
-          <Typography.Title level={5} style={{ margin: 0 }}>
-            Tính thử phí hàng nhập
-          </Typography.Title>
+          <h5 className='pb-3' style={{ color: '#FFB629' }}>
+            {'Tính thử phí hàng nhập'}
+          </h5>
         </Row>
         <Row gutter={[8, 0]}>
           <Col xs={24} sm={12} md={6}>

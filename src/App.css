@@ -256,7 +256,10 @@
 
 /** global custom antd */
 .ant-form-item {
-  margin-bottom: 8px;
+  margin-bottom: 8px !important;
+}
+.ant-form-item .ant-form-item{
+  margin-bottom: 0px !important;
 }
 .ant-form-item-label {
   padding-bottom: 3px !important;
