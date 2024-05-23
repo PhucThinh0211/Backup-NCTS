@@ -4,6 +4,7 @@ import { publicCmsActions } from './publicCmsSlice';
 import { startLoading, stopLoading } from '../loading';
 import {
   GettingBannerListLoadingKey,
+  GettingCaptchaLoadingKey,
   GettingCompanyLoadingKey,
   GettingMenuListLoadingKey,
 } from '@/common';
@@ -76,8 +77,29 @@ const getBannerListRequest$: RootEpic = (action$) => {
   );
 };
 
+const getCaptchaRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getCaptchaRequest.match),
+    switchMap(() => {
+      return concat(
+        [startLoading({ key: GettingCaptchaLoadingKey })],
+        PublicCmsService.Get.getCaptcha().pipe(
+          switchMap((captcha) => {
+            return [publicCmsActions.setCaptcha(captcha)];
+          }),
+          catchError(() => {
+            return [publicCmsActions.setCaptcha(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingCaptchaLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
   getBannerListRequest$,
+  getCaptchaRequest$
 ];

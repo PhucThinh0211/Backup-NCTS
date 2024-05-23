@@ -18,12 +18,17 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import { bootstrapBreakpoints } from '@/common';
 import { QuickLookupMobile } from './QuickLookupMobile';
 import { getTabLookupActive, persistStateActions } from '@/store/persistState';
+import { publicCmsActions } from '@/store/publicCms';
 
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [innerWidth] = useWindowSize();
   const activeLookupTab = useAppSelector(getTabLookupActive());
+
+  useEffect(() => {
+    dispatch(publicCmsActions.getCaptchaRequest());
+  }, []);
 
   const items: TabsProps['items'] = [
     {

@@ -13,3 +13,7 @@ export function getCurrentCompany() {
 export function getBanners() {
   return createSelector([getState], (state) => state.banners);
 }
+
+export function getCaptcha() {
+  return createSelector([getState], (state) => state.captcha);
+}
