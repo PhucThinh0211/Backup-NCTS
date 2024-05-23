@@ -1,17 +1,23 @@
-import { Button, Col, Form, Input, Row} from "antd";
+import { Button, Col, Form, Input, Row, Space, Tooltip} from "antd";
 import { useTranslation } from "react-i18next";
 
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { startLoading } from "@/store/loading";
 import { LookupButton } from "./components/LookupButton";
+import { getCaptcha, publicCmsActions } from "@/store/publicCms";
 
 export const AwbLookup = () => {
   const { t } = useTranslation(["common"]);
   const dispatch = useAppDispatch();
+  const captcha = useAppSelector(getCaptcha());
 
   const handleLookup = () => {
     dispatch(startLoading({ key: "testLoadingKey" }));
   };
+
+  const refreshCaptcha = () => {
+    dispatch(publicCmsActions.getCaptchaRequest());
+  }
 
   return (
       <Form
@@ -93,7 +99,7 @@ export const AwbLookup = () => {
                 />
               </Form.Item>
             </Col>
-            <Col flex='140px'>
+            <Col flex='180px'>
               <div
                 className='verification w-100'
                 style={{
@@ -102,10 +108,18 @@ export const AwbLookup = () => {
                   alignContent: 'center',
                 }}
               >
-                <img
-                  src='https://ncts.hicas.vn/api/photo/dowload/7d2cc5be-d112-f84f-8c63-3a12926fd666.png'
-                  alt=''
-                />
+                <Space>
+                  <img
+                    src={`data:image/png;base64,${captcha?.captchBase64Data}`}
+                    alt=''
+                    className='border rounded'
+                  />
+                  <Tooltip title={t('Refresh captcha', {ns: 'common'})}>
+                    <Button onClick={refreshCaptcha} shape='circle'>
+                      <i className="fa-solid fa-rotate"></i>
+                    </Button>
+                  </Tooltip>
+                </Space>
               </div>
             </Col>
           </Row>

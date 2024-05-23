@@ -23,19 +23,19 @@ function LookUp() {
       >
         <Radio value={1}>
           <span style={{ fontWeight: value === 1 ? 600 : 'normal' }}>
-            {t('Lookup AWB No', { ns: 'common' })}{' '}
+            {t('AWB', { ns: 'common' })}{' '}
           </span>
         </Radio>
         <Radio value={2}>
           {' '}
           <span style={{ fontWeight: value === 2 ? 600 : 'normal' }}>
-            {t('Lookup Flight', { ns: 'common' })}
+            {t('Flight', { ns: 'common' })}
           </span>
         </Radio>
         <Radio value={3}>
           {' '}
           <span style={{ fontWeight: value === 3 ? 600 : 'normal' }}>
-            {t('Invoices Lookup', { ns: 'common' })}
+            {t('E-Invoice', { ns: 'common' })}
           </span>
         </Radio>
       </Radio.Group>

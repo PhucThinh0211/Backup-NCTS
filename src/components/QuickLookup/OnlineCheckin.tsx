@@ -1,16 +1,25 @@
-import { Button, Form, Input, Col, Row } from 'antd';
+import { Form, Input, Col, Row, Space, Button, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
+
 import { LookupButton } from './components/LookupButton';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 
 export const OnlineCheckin = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(['common']);
+  const captcha = useAppSelector(getCaptcha());
+
+  const refreshCaptcha = () => {
+    dispatch(publicCmsActions.getCaptchaRequest());
+  }
 
   return (
     <div className='onlineCheckin'>
       <div className='d-flex justify-content-center container-md'>
         <div className='w-100'>
-          <h5 className='pb-3'>
+          <h5 className=''>
             {t('Please fill in your login information', { ns: 'common' })}
           </h5>
           {/* Online Checkin Form */}
@@ -74,7 +83,7 @@ export const OnlineCheckin = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col flex='140px'>
+                <Col flex='180px'>
                   <div
                     className='verification w-100'
                     style={{
@@ -83,16 +92,24 @@ export const OnlineCheckin = () => {
                       alignContent: 'center',
                     }}
                   >
-                    <img
-                      src='https://ncts.hicas.vn/api/photo/dowload/7d2cc5be-d112-f84f-8c63-3a12926fd666.png'
-                      alt=''
-                    />
+                    <Space>
+                      <img
+                        src={`data:image/png;base64,${captcha?.captchBase64Data}`}
+                        alt=''
+                        className='border rounded'
+                      />
+                      <Tooltip title={t('Refresh captcha', {ns: 'common'})}>
+                        <Button onClick={refreshCaptcha} shape='circle'>
+                          <i className="fa-solid fa-rotate"></i>
+                        </Button>
+                      </Tooltip>
+                    </Space>
                   </div>
                 </Col>
               </Row>
             </Form.Item>
             <div className='mt-2'>
-              <LookupButton>{t('Log in', { ns: 'home' })}</LookupButton>
+              <LookupButton>{t('Sign In', { ns: 'common' })}</LookupButton>
             </div>
           </Form>
         </div>

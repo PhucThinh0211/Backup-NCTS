@@ -1,9 +1,13 @@
 {
   "Sign In": "Đăng nhập",
   "Sign Up": "Đăng ký",
-  "Lookup": "Tra cứu thông tin",
+  "Lookup information": "Tra cứu thông tin",
+  "Lookup": "Tra cứu",
   "Lookup AWB No": "Tra cứu vận đơn",
   "Lookup Flight": "Tra cứu lịch bay",
+  "AWB": "Vận đơn",
+  "Flight": "Lịch bay",
+  "E-Invoice": "Hóa đơn điện tử",
   "Estimate charge": "Tính thử phí dịch vụ",
   "Search": "Tìm kiếm",
   "Type to search": "Nhập để tìm kiếm",
@@ -53,5 +57,6 @@
   "Invoices Lookup": "Tra cứu hóa đơn",
   "E-invoice number": "Mã tra cứu",
   "Invoice date": "Ngày lập hóa đơn",
-  "Please fill in your login information":"Vui lòng điền thông tin đăng nhập"
+  "Please fill in your login information":"Vui lòng điền thông tin đăng nhập",
+  "Refresh captcha": "Mã xác thực mới"
 }

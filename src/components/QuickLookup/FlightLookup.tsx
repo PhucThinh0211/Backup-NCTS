@@ -1,14 +1,22 @@
-import { Button, Col, DatePicker, Form, Input, Radio, Row } from "antd";
+import { Button, Col, DatePicker, Form, Input, Radio, Row, Space, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { LookupButton } from "./components/LookupButton";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getCaptcha, publicCmsActions } from "@/store/publicCms";
 
 export const FlightLookup = () => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(["common"]);
+  const captcha = useAppSelector(getCaptcha());
   const options = [
     { label: t("Arrival", { ns: "common" }), value: 'di' },
     { label: t("Departure", { ns: "common" }), value: 'den' },
   ];
+
+  const refreshCaptcha = () => {
+    dispatch(publicCmsActions.getCaptchaRequest());
+  }
 
   return (
       <Form
@@ -72,7 +80,7 @@ export const FlightLookup = () => {
                 />
               </Form.Item>
             </Col>
-            <Col flex='140px'>
+            <Col flex='180px'>
               <div
                 className='verification w-100'
                 style={{
@@ -81,10 +89,18 @@ export const FlightLookup = () => {
                   alignContent: 'center',
                 }}
               >
-                <img
-                  src='https://ncts.hicas.vn/api/photo/dowload/7d2cc5be-d112-f84f-8c63-3a12926fd666.png'
-                  alt=''
-                />
+                <Space>
+                  <img
+                    src={`data:image/png;base64,${captcha?.captchBase64Data}`}
+                    alt=''
+                    className='border rounded'
+                  />
+                  <Tooltip title={t('Refresh captcha', {ns: 'common'})}>
+                    <Button onClick={refreshCaptcha} shape='circle'>
+                      <i className="fa-solid fa-rotate"></i>
+                    </Button>
+                  </Tooltip>
+                </Space>
               </div>
             </Col>
           </Row>

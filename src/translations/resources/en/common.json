@@ -1,9 +1,13 @@
 {
   "Sign In": "Sign In",
   "Sign Up": "Sign Up",
+  "Lookup information": "Lookup information",
   "Lookup": "Lookup",
   "Lookup AWB No": "Lookup AWB No",
   "Lookup Flight": "Lookup Flight",
+  "AWB": "AWB",
+  "Flight": "Flight",
+  "E-Invoice": "E-Invoice",
   "Estimate charge": "Estimate charge",
   "Search": "Search",
   "Type to search": "Type to search",
@@ -45,14 +49,15 @@
   "Online delivery procedures": "Online delivery procedures",
   "Account" : "Account",
   "Password": "Password",
-  "Verification codes": "Verification codes",
+  "Verification codes": "Captcha code",
   "Enter account name": "Enter account name",
   "Enter password": "Enter password",
-  "Enter verification codes": "Enter verification codes",
+  "Enter verification codes": "Enter captcha code",
   "Arrival": "Arrival",
   "Departure":"Departure",
   "Invoices Lookup": "Invoices Lookup",
   "E-invoice number": "E-invoice number",
   "Invoice date": "Invoice date",
-  "Please fill in your login information": "Please fill in your login information"
+  "Please fill in your login information": "Please fill in your login information",
+  "Refresh captcha": "Refresh captcha"
 }
