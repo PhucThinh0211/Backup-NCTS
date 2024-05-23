@@ -67,7 +67,7 @@ export const OnlineCheckin = () => {
               }}
             >
               <Row gutter={[10, 10]}>
-                <Col flex='auto'>
+                <Col flex='calc(100% - 180px)'>
                   <Form.Item
                     name='verificationCodes'
                     rules={[{ required: true }]}
