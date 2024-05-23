@@ -1,15 +1,16 @@
-import { combineEpics } from "redux-observable";
+import { combineEpics } from 'redux-observable';
 
-import { persistStateEpics } from "./persistState";
-import { appEpics } from "./app";
-import { menuEpics } from "./menu";
-import { bannerEpics } from "./banner";
-import { contentEpics } from "./content";
-import { companyEpics } from "./company";
-import { pageContentEpics } from "./pageContent";
-import { departmentEpics } from "./department";
-import { publicCmsEpics } from "./publicCms";
-import { homeEpics } from "./home"
+import { persistStateEpics } from './persistState';
+import { appEpics } from './app';
+import { menuEpics } from './menu';
+import { bannerEpics } from './banner';
+import { contentEpics } from './content';
+import { companyEpics } from './company';
+import { pageContentEpics } from './pageContent';
+import { departmentEpics } from './department';
+import { publicCmsEpics } from './publicCms';
+import { homeEpics } from './home';
+import { newsTypeEpics } from './newsType';
 
 const rootEpics = combineEpics(
   ...persistStateEpics,
@@ -22,6 +23,7 @@ const rootEpics = combineEpics(
   ...pageContentEpics,
   ...departmentEpics,
   ...publicCmsEpics,
+  ...newsTypeEpics
 );
 
 export default rootEpics;

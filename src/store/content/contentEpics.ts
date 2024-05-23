@@ -16,10 +16,12 @@ import {
   RemovingContentLoadingKey,
   SavingContentLoadingKey,
   GettingContentLoadingKey,
+  GettingNewsTypeListLoadingKey,
 } from '@/common/loadingKey';
 import { ContentService } from '@/services/ContentService';
 import Utils from '@/utils';
 import { SeoService } from '@/services/SEOService';
+import { NewsTypeService } from '@/services/NewsTypeService';
 
 const getContentsRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -90,9 +92,9 @@ const createContentRequest$: RootEpic = (action$, state$) => {
                     title: content.seo.title,
                     description: content.seo.description,
                     language: locale,
-                  }
+                  };
                   return SeoService.Post.createSeoTranslations(
-                    createdContent.seoId, 
+                    createdContent.seoId,
                     createSeoTranslationInput
                   ).pipe(
                     mergeMap(() => {
@@ -179,9 +181,9 @@ const updateContentRequest$: RootEpic = (action$, state$) => {
                     title: content.seo.title,
                     description: content.seo.description,
                     language: locale,
-                  }
+                  };
                   return SeoService.Post.createSeoTranslations(
-                    updatedContent.seoId, 
+                    updatedContent.seoId,
                     createSeoTranslationInput
                   ).pipe(
                     mergeMap(() => {
@@ -305,10 +307,39 @@ const getContentRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const getNewsTypeRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(contentActions.getNewsTypeRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...defaultPagingParams,
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingNewsTypeListLoadingKey })],
+        NewsTypeService.Get.getAllNewsTypes({
+          search,
+        }).pipe(
+          mergeMap((newsTypes) => {
+            return [contentActions.setNewsType(newsTypes)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [contentActions.setNewsType(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingNewsTypeListLoadingKey })]
+      );
+    })
+  );
+};
 export const contentEpics = [
   getContentsRequest$,
   createContentRequest$,
   updateContentRequest$,
   removeContentRequest$,
   getContentRequest$,
+  getNewsTypeRequest$,
 ];

@@ -8,12 +8,17 @@ import { Link } from 'react-router-dom';
 import {
   contentActions,
   getContentPhotoUrl,
+  getNewsTypes,
   getSelectedContent,
   getSelectedContentDetail,
 } from '@/store/content';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { GettingContentLoadingKey, SavingContentLoadingKey } from '@/common';
+import {
+  GettingContentLoadingKey,
+  SavingContentLoadingKey,
+  largePagingParams,
+} from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
 import { AuditedNews } from './AuditedNews';
@@ -42,31 +47,20 @@ export const CreateUpdateNewsPage = () => {
   const selectedContent = useAppSelector(getSelectedContent());
   const selectedContentDetail = useAppSelector(getSelectedContentDetail());
   const contentPhotoUrl = useAppSelector(getContentPhotoUrl());
+  const newsTypes = useAppSelector(getNewsTypes());
   const isSubmmiting = useAppSelector(getLoading(SavingContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingContentLoadingKey));
 
-  const newsTypes = [
-    {
-      label: t('Ncts News', { ns: 'news' }),
-      value: 'NctsNews',
-    },
-    {
-      label: t('Customer News', { ns: 'news' }),
-      value: 'CustomerNews',
-    },
-    {
-      label: t('Activities News', { ns: 'news' }),
-      value: 'ActivitiesNews',
-    },
-    {
-      label: t('Industrial News', { ns: 'news' }),
-      value: 'IndustrialNews',
-    },
-    {
-      label: t('Recruitment News', { ns: 'news' }),
-      value: 'RecruitmentNews',
-    },
-  ];
+  const newsTypesOptions = [...(newsTypes?.items || [])]
+    .sort((a, b) => a.sortSeq - b.sortSeq)
+    .map((item) => ({
+      label: item.name,
+      value: item.id,
+    }));
+
+  useEffect(() => {
+    dispatch(contentActions.getNewsTypeRequest({ params: largePagingParams }));
+  }, [language]);
 
   useEffect(() => {
     if (locale && selectedContent) {
@@ -87,10 +81,14 @@ export const CreateUpdateNewsPage = () => {
   }, [selectedContentDetail]);
 
   const handleSaveContent = (values: any) => {
+    const foundNewsType = (newsTypes?.items || []).find(
+      (newsType) => newsType.id === values?.newsTypeId
+    );
     const inputData = {
       ...values,
       photoUrl: contentPhotoUrl,
       body: newsBody,
+      type: foundNewsType?.code,
     };
 
     if (selectedContent) {
@@ -150,10 +148,10 @@ export const CreateUpdateNewsPage = () => {
                 </Form.Item>
                 <Form.Item
                   label={t('News type', { ns: 'news' })}
-                  name='type'
+                  name='newsTypeId'
                   rules={[{ required: true, message: t('News type required') }]}
                 >
-                  <Select options={newsTypes} />
+                  <Select options={newsTypesOptions} />
                 </Form.Item>
                 <Form.Item
                   label={

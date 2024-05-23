@@ -39,6 +39,7 @@ export interface ContentResponse {
   seoId: string | null;
 }
 export interface CreateUpdateContentPayload {
+  newsTypeId: string;
   type: string;
   title: string;
   description: string | null;
@@ -49,7 +50,7 @@ export interface CreateUpdateContentPayload {
   publishDate: string | null;
   url: string;
   seoId: string | null;
-  seo?: CreateUpdateSeoPayload
+  seo?: CreateUpdateSeoPayload;
 }
 export interface CreateUpdateContentTranslationPayload {
   language: string;

@@ -1,0 +1,11 @@
+{
+    "Find newsType": "Tìm kiếm loại tin",
+    "ID": "ID",
+    "Code": "Code",
+    "Code required": "Vui lòng nhập code",
+    "Name": "Tiêu đề",
+    "Name required": "Vui lòng nhập tiêu đề",
+    "Add new newsType": "Thêm mới",
+    "Create newsType": "Thêm mới",
+    "Update newsType": "Cập nhật thông tin"
+  }

@@ -6,10 +6,12 @@ import {
   CreateUpdateContentPayload,
 } from '@/services/ContentService';
 import { MenusPagingResponse } from '@/services/MenuService';
+import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
 
 interface ContentState {
   contents?: ContentsPagingResponse;
   menus?: MenusPagingResponse;
+  newsTypes?: NewsTypesPagingResponse;
   selectedContent?: ContentResponse;
   contentPhotoUrl?: string;
   selectedContentDetail?: ContentResponse;
@@ -65,6 +67,10 @@ const contentSlice = createSlice({
     ) => {},
     setContents: (state, action) => {
       state.contents = action.payload;
+    },
+    getNewsTypeRequest: (state, action: PayloadAction<any>) => {},
+    setNewsType: (state, action) => {
+      state.newsTypes = action.payload;
     },
   },
 });

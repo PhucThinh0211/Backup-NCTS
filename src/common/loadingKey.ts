@@ -35,4 +35,9 @@ export const RemovingDepartmentLoadingKey = 'RemovingDepartmentLoadingKey';
 export const SavingContactLoadingKey = 'SavingContactLoadingKey';
 export const RemovingContactLoadingKey = 'RemovingContactLoadingKey';
 
+export const GettingNewsTypeLoadingKey = 'GettingNewsTypeLoadingKey';
+export const GettingNewsTypeListLoadingKey = 'GettingNewsTypeListLoadingKey';
+export const SavingNewsTypeLoadingKey = 'SavingNewsTypeLoadingKey';
+export const RemovingNewsTypeLoadingKey = 'RemovingNewsTypeLoadingKey';
+
 export const GettingCaptchaLoadingKey = 'GettingCaptchaLoadingKey';

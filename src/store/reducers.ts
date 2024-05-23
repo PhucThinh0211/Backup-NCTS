@@ -11,7 +11,8 @@ import { companyReducer } from './company';
 import { pageContentReducer } from './pageContent';
 import { departmentReducer } from './department';
 import { publicCmsReducer } from './publicCms';
-import { homeReducers } from './home'
+import { homeReducers } from './home';
+import { newsTypeReducer } from './newsType';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -25,7 +26,8 @@ const mainReducer = combineReducers({
   content: contentReducer,
   company: companyReducer,
   pageContent: pageContentReducer,
-  department: departmentReducer
+  department: departmentReducer,
+  newsType: newsTypeReducer,
 });
 
 const rootReducers = (state: any, action: any) => {

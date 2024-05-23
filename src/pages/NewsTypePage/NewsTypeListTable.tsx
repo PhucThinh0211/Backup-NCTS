@@ -11,21 +11,17 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import {
-  GettingContentListLoadingKey,
-  RemovingContentLoadingKey,
+  GettingNewsTypeListLoadingKey,
+  RemovingNewsTypeLoadingKey,
 } from '@/common/loadingKey';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getContents, contentActions } from '@/store/content';
+import { getNewsTypes, newsTypeActions } from '@/store/newsType';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
-import { ContentResponse } from '@/services/ContentService';
-import {
-  defaultPagingParams,
-  largePagingParams,
-  uploadedPhotoUrl,
-} from '@/common';
+import { NewsTypeResponse } from '@/services/NewsTypeService';
+import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 import { SortableRow } from '@/components/SortableRow';
@@ -39,30 +35,29 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-export const NewsListTable = () => {
-  const [dataSource, setDataSource] = useState<ContentResponse[]>([]);
+export const NewsTypeListTable = () => {
+  const [dataSource, setDataSource] = useState<NewsTypeResponse[]>([]);
   const [modal, contextHolder] = useModal();
-  const { t } = useTranslation(['common', 'news']);
+  const { t } = useTranslation(['common', 'newsType']);
   const navigate = useNavigate();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
   const language = useAppSelector(getLanguage());
-  const contents = useAppSelector(getContents());
+  const newsTypes = useAppSelector(getNewsTypes());
   const isLoading = useAppSelector(
-    getLoading([GettingContentListLoadingKey, RemovingContentLoadingKey])
+    getLoading([GettingNewsTypeListLoadingKey, RemovingNewsTypeLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(contentActions.getContentsRequest({}));
-    dispatch(contentActions.getNewsTypeRequest({ params: largePagingParams }));
+    dispatch(newsTypeActions.getNewsTypesRequest({}));
   }, [language]);
 
   useEffect(() => {
-    if (contents) {
-      setDataSource(contents?.items || []);
+    if (newsTypes) {
+      setDataSource(newsTypes?.items || []);
     }
-  }, [contents]);
+  }, [newsTypes]);
 
   const moreActions = [
     {
@@ -77,32 +72,32 @@ export const NewsListTable = () => {
     },
   ];
 
-  const handleMoreActionClick = (key: any, record: ContentResponse) => {
+  const handleMoreActionClick = (key: any, record: NewsTypeResponse) => {
     switch (key) {
       case 'edit':
-        editContent(record);
+        editNewsType(record);
         break;
       default:
-        confirmRemoveContent(record);
+        confirmRemoveNewsType(record);
         break;
     }
   };
 
-  const editContent = (content: ContentResponse) => {
-    dispatch(contentActions.setSelectedContent(content));
+  const editNewsType = (newsType: NewsTypeResponse) => {
+    dispatch(newsTypeActions.setSelectedNewsType(newsType));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news/edit');
+    navigate('/admin/news-type/edit');
   };
 
-  const confirmRemoveContent = (content: ContentResponse) => {
+  const confirmRemoveNewsType = (newsType: NewsTypeResponse) => {
     modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
             __html: t('ConfirmRemove', {
-              name: `<strong>"${content.title}"</strong>`,
+              name: `<strong>"${newsType.name}"</strong>`,
             }),
           }}
         />
@@ -110,14 +105,14 @@ export const NewsListTable = () => {
       centered: true,
       closable: true,
       onOk: (close) => {
-        handleRemoveContent(content.id);
+        handleRemoveNewsType(newsType.id);
         close();
       },
     });
   };
 
-  const handleRemoveContent = (contentId: string) => {
-    dispatch(contentActions.removeContentRequest({ contentId }));
+  const handleRemoveNewsType = (newsTypeId: string) => {
+    dispatch(newsTypeActions.removeNewsTypeRequest({ newsTypeId }));
   };
 
   const showTotal: PaginationProps['showTotal'] = (total, range) =>
@@ -128,35 +123,16 @@ export const NewsListTable = () => {
       ns: 'common',
     });
 
-  const columns: TableColumnsType<ContentResponse> = [
+  const columns: TableColumnsType<NewsTypeResponse> = [
     {
-      title: t('Photo', { ns: 'news' }),
-      dataIndex: 'photoUrl',
-      key: 'photoUrl',
-      // align: 'center',
-      render(value) {
-        return (
-          value && (
-            <Image
-              src={`${uploadedPhotoUrl(value)}`}
-              style={{
-                backgroundColor: '#00000073',
-              }}
-              height={80}
-            />
-          )
-        );
-      },
+      title: t('Name', { ns: 'newsType' }),
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: t('Title', { ns: 'news' }),
-      dataIndex: 'title',
-      key: 'title',
-    },
-    {
-      title: t('Description', { ns: 'news' }),
-      dataIndex: 'description',
-      key: 'description',
+      title: t('Code', { ns: 'newsType' }),
+      dataIndex: 'code',
+      key: 'code',
     },
     {
       key: 'sort',

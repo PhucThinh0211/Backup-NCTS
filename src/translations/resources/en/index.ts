@@ -6,17 +6,18 @@ import news from './news.json';
 import company from './company.json';
 import department from './department.json';
 import pageContent from './pageContent.json';
-import home from './home.json'
+import home from './home.json';
+import newsType from './newsType.json';
 
- 
 export default {
   banner,
   common,
   leftPanel,
-  home,
   menu,
+  home,
   news,
   company,
   department,
-  pageContent
+  pageContent,
+  newsType,
 };
