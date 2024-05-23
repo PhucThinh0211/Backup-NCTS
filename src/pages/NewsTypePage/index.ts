@@ -1,0 +1,1 @@
+export { NewsTypeList } from './NewsTypeList';

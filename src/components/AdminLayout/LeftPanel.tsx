@@ -4,7 +4,12 @@ import { Button, Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { RightOutlined, LeftOutlined, HomeOutlined } from '@ant-design/icons';
+import {
+  RightOutlined,
+  LeftOutlined,
+  HomeOutlined,
+  TagsOutlined,
+} from '@ant-design/icons';
 import { LeftPanelWidth, MenuItem } from '@/common/define';
 import { appActions, getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -55,6 +60,15 @@ export const LeftPanel = (props: SiderProps) => {
       label: t('News'),
       icon: <img src={BlogSvg} alt='blog icon' />,
       key: '/admin/news',
+    },
+    {
+      label: t('News types'),
+      icon: (
+        <TagsOutlined
+          style={{ fontSize: collapsed ? 16 : 20, color: 'white' }}
+        />
+      ),
+      key: '/admin/news-type',
     },
     {
       label: t('All Files'),
@@ -117,7 +131,6 @@ export const LeftPanel = (props: SiderProps) => {
         }
       }
     }
-     
   }, [location, collapsed]);
 
   const onClickMenu = (menu: any) => {

@@ -6,6 +6,8 @@ import { MenuList } from '@/pages/MenuPage';
 import { BannerList } from '@/pages/BannerPage';
 import { CreateUpdateBannerPage } from '@/pages/BannerPage/CreateUpdateBannerPage';
 import { CreateUpdateMenuPage } from '@/pages/MenuPage/CreateUpdateMenuPage';
+import { NewsTypeList } from '@/pages/NewsTypePage';
+import { CreateUpdateNewsTypePage } from '@/pages/NewsTypePage/CreateUpdateNewsTypePage';
 import { NewsList } from '@/pages/NewsPage';
 import { CreateUpdateNewsPage } from '@/pages/NewsPage/CreateUpdateNewsPage';
 import { CreateUpdateCompanyPage } from '@/pages/CompanyPage';
@@ -64,6 +66,10 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/news', name: 'News', element: <NewsList /> },
       { path: '/admin/news/create', name: 'Create news', element: <CreateUpdateNewsPage /> },
       { path: '/admin/news/edit', name: 'Edit news', element: <CreateUpdateNewsPage /> },
+      
+      { path: '/admin/news-type', name: 'News types', element: <NewsTypeList /> },
+      { path: '/admin/news-type/create', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },
+      { path: '/admin/news-type/edit', name: 'Edit news type', element: <CreateUpdateNewsTypePage /> },
       
       {
         path: '/admin/media',
