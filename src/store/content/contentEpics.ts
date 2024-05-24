@@ -64,17 +64,13 @@ const createContentRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { content } = action.payload;
       const { locale } = state.persistApp;
-      const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.content.queryParams,
       };
       return concat(
         [startLoading({ key: SavingContentLoadingKey })],
-        ContentService.Post.createContent({
-          ...content,
-          sortSeq: totalCount + 1,
-        }).pipe(
+        ContentService.Post.createContent(content).pipe(
           switchMap((createdContent) => {
             const createTranslationInput = {
               language: locale,
@@ -103,7 +99,7 @@ const createContentRequest$: RootEpic = (action$, state$) => {
                       }).pipe(
                         mergeMap((contentsResult) => {
                           Utils.successNotification();
-                          return [contentActions.setContents(contentsResult)];
+                          return [contentActions.setSelectedContent(createdContent), contentActions.setContents(contentsResult)];
                         }),
                         catchError((errors) => {
                           Utils.errorHandling(errors);
@@ -124,7 +120,7 @@ const createContentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       contentActions.setContents(contentsResult),
-                      contentActions.setSelectedContent(undefined),
+                      contentActions.setSelectedContent(createdContent),
                     ];
                   }),
                   catchError((errors) => {
@@ -317,11 +313,16 @@ const getNewsTypeRequest$: RootEpic = (action$, state$) => {
         ...defaultPagingParams,
         ...params,
       };
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        },
+        search
+      };
       return concat(
         [startLoading({ key: GettingNewsTypeListLoadingKey })],
-        NewsTypeService.Get.getAllNewsTypes({
-          search,
-        }).pipe(
+        NewsTypeService.Get.getAllNewsTypes(options).pipe(
           mergeMap((newsTypes) => {
             return [contentActions.setNewsType(newsTypes)];
           }),

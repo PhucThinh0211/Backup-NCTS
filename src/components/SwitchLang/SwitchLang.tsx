@@ -15,6 +15,7 @@ export const SwitchLang = () => {
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     dispatch(persistStateActions.setLanguage(e.key));
+    dispatch(persistStateActions.setLocale(e.key));
     setOpen(false);
   };
 
