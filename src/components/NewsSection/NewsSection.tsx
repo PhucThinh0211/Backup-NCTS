@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { parse } from 'node-html-parser';
 import dayjs from 'dayjs';
 
-import { Carousel, Radio, RadioChangeEvent } from 'antd';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import {
+  Carousel,
+  Dropdown,
+  Empty,
+  Radio,
+  RadioChangeEvent,
+  Space,
+  Typography,
+} from 'antd';
+import { LeftOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
 
 import {
+  GettingContentListLoadingKey,
   bootstrapBreakpoints,
   dateTimeFormat,
   defaultPagingParams,
@@ -23,6 +32,7 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import { getLanguage } from '@/store/persistState';
 import { NewsCard } from '@/components/CarouselCard';
+import { getLoading } from '@/store/loading';
 
 export const NewsSection = () => {
   const newsResponsiveSettings = [
@@ -30,35 +40,18 @@ export const NewsSection = () => {
       breakpoint: bootstrapBreakpoints.xxl,
       settings: {
         slidesToShow: 3,
-        centerMode: true,
-      },
-    },
-    {
-      breakpoint: bootstrapBreakpoints.lg,
-      settings: {
-        slidesToShow: 2,
-        centerMode: true,
       },
     },
     {
       breakpoint: bootstrapBreakpoints.md,
       settings: {
         slidesToShow: 1,
-        centerMode: true,
-      },
-    },
-    {
-      breakpoint: bootstrapBreakpoints.sm,
-      settings: {
-        slidesToShow: 1,
-        centerMode: true,
       },
     },
     {
       breakpoint: 9999, // A very large number to ensure the last settings are always applied
       settings: {
-        slidesToShow: 4,
-        centerMode: true,
+        slidesToShow: 5,
       },
     },
   ];
@@ -68,6 +61,9 @@ export const NewsSection = () => {
   const [innerWidth, innerHeight] = useWindowSize();
 
   const lang = useAppSelector(getLanguage());
+  const isNewsLoading = useAppSelector(
+    getLoading(GettingContentListLoadingKey)
+  );
   const news = useAppSelector(getNewsList());
   const newsTypes = useAppSelector(getNewsTypeList());
   const selectedNewsTypeId = useAppSelector(getSelectedNewsTypeId());
@@ -82,6 +78,16 @@ export const NewsSection = () => {
     value: undefined,
     label: t('Breaking News'),
   };
+
+  const allNewsTypesOptions = useMemo(
+    () => [breakingNewsType].concat(newsTypeOptions),
+    [newsTypeOptions]
+  );
+
+  const selectedNewsType = useCallback(
+    allNewsTypesOptions.find((type) => type.value === selectedNewsTypeId),
+    [selectedNewsTypeId, allNewsTypesOptions]
+  );
 
   const arrowsSettings = {
     arrows: true,
@@ -113,45 +119,90 @@ export const NewsSection = () => {
   }, [lang, selectedNewsTypeId]);
 
   return (
-    <section>
+    <section style={{ maxWidth: '100%', overflow: 'hidden' }}>
       <div className=' px-3 px-lg-5'>
         <SessionTitle title={t('News', { ns: 'home' })} />
         <div className='d-flex justify-content-center'>
-          <Radio.Group
-            value={selectedNewsTypeId}
-            buttonStyle='solid'
-            onChange={onChange}
-          >
-            {[breakingNewsType].concat(newsTypeOptions).map((option) => (
-              <Radio.Button style={{ paddingInline: 40 }} value={option.value}>
-                {option.label}
-              </Radio.Button>
-            ))}
-          </Radio.Group>
+          {innerWidth > bootstrapBreakpoints.sm ? (
+            <Radio.Group
+              value={selectedNewsTypeId}
+              buttonStyle='solid'
+              onChange={onChange}
+            >
+              {allNewsTypesOptions.map((option) => (
+                <Radio.Button value={option.value} key={option.value}>
+                  {option.label}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
+          ) : (
+            <Dropdown
+              menu={{
+                items: allNewsTypesOptions.map((option) => ({
+                  label: option.label,
+                  key: option.value || 'all',
+                })),
+                selectable: true,
+                selectedKeys: [selectedNewsTypeId || 'all'],
+                onSelect: ({ key }) => {
+                  dispatch(
+                    publicCmsActions.setSelectedNewsTypeId(
+                      key && key !== 'all' ? key : undefined
+                    )
+                  );
+                },
+              }}
+            >
+              <Typography.Text strong>
+                <Space>
+                  {selectedNewsType?.label}
+                  <DownOutlined />
+                </Space>
+              </Typography.Text>
+            </Dropdown>
+          )}
         </div>
       </div>
-      <div className='my-4 slide-card'>
-        <Carousel
-          {...arrowsSettings}
-          autoplay={false}
-          infinite={true}
-          autoplaySpeed={5000}
-          responsive={newsResponsiveSettings}
-        >
-          {(news?.items || []).map((news, index) => (
-            <NewsCard
-              key={news.id}
-              img={uploadedPhotoUrl(news.photoUrl || '')}
-              date={
-                news.lastModificationTime
-                  ? dayjs(news.lastModificationTime).format(dateTimeFormat)
-                  : undefined
-              }
-              title={news.title || undefined}
-              desc={news.body ? parse(news.body) : undefined}
-            />
-          ))}
-        </Carousel>
+      <div
+        className='my-4 slide-card'
+        style={{ maxWidth: 1600, marginInline: 'auto' }}
+      >
+        {isNewsLoading ? (
+          <div className='w-100 d-flex mx-auto justify-content-center '>
+            {new Array(3).fill(null).map((_, index) => (
+              <NewsCard loading key={index} />
+            ))}
+          </div>
+        ) : !news?.items?.length ? (
+          <div
+            className='w-100 d-flex mx-auto justify-content-center align-items-center '
+            style={{ minHeight: 500 }}
+          >
+            <Empty />
+          </div>
+        ) : (
+          <Carousel
+            {...arrowsSettings}
+            autoplay={false}
+            infinite={true}
+            autoplaySpeed={5000}
+            responsive={newsResponsiveSettings}
+          >
+            {(news?.items || []).map((news, index) => (
+              <NewsCard
+                key={news.id}
+                img={uploadedPhotoUrl(news.photoUrl || '')}
+                date={
+                  news.lastModificationTime
+                    ? dayjs(news.lastModificationTime).format(dateTimeFormat)
+                    : undefined
+                }
+                title={news.title || undefined}
+                desc={news.body ? parse(news.body) : undefined}
+              />
+            ))}
+          </Carousel>
+        )}
       </div>
     </section>
   );
