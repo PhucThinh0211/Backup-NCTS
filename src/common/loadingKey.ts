@@ -14,6 +14,7 @@ export const GettingContentLoadingKey = 'GettingContentLoadingKey';
 export const GettingContentListLoadingKey = 'GettingContentListLoadingKey';
 export const SavingContentLoadingKey = 'SavingContentLoadingKey';
 export const RemovingContentLoadingKey = 'RemovingContentLoadingKey';
+export const PublishContentLoadingKey = 'PublishContentLoadingKey';
 
 export const GettingCompanyLoadingKey = 'GettingCompanyLoadingKey';
 export const GettingCompanyListLoadingKey = 'GettingCompanyListLoadingKey';
