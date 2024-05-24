@@ -246,10 +246,10 @@ export const CreateUpdateNewsPage = () => {
                   />
                 </div>
               </div>
-              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedNews />
+              <SeoForm />
             </Col>
           </Row>
         </Spin>

@@ -25,7 +25,7 @@ export const AuditedInfoCard = ({
 }: InfoCardProps) => {
   const { t } = useTranslation(['common']);
   return (
-    <div className="w-100 border-b-gray-500 shadow-sm rounded-md bg-white p-3">
+    <div className="w-100 border-b-gray-500 shadow-sm rounded bg-white p-3 mb-3">
       <div style={{ marginBottom: 12 }}>
         <Typography.Text strong style={{ textTransform: 'uppercase', fontWeight: 700}}>
           {t('Information', { ns: 'common' })}
