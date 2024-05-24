@@ -64,8 +64,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/pages/edit', name: 'Edit pages', element: <CreateUpdatePageContent /> },
       
       { path: '/admin/news', name: 'News', element: <NewsList /> },
-      { path: '/admin/news/create', name: 'Create news', element: <CreateUpdateNewsPage /> },
-      { path: '/admin/news/edit', name: 'Edit news', element: <CreateUpdateNewsPage /> },
+      { path: '/admin/news/create-or-edit', name: 'Create or edit news', element: <CreateUpdateNewsPage /> },
       
       { path: '/admin/news-type', name: 'News types', element: <NewsTypeList /> },
       { path: '/admin/news-type/create', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },

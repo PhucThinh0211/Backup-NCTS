@@ -20,7 +20,7 @@ export const NewsListHeader = () => {
     dispatch(contentActions.setSelectedContentDetail(undefined));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news/create');
+    navigate('/admin/news/create-or-edit');
   };
 
   return (
