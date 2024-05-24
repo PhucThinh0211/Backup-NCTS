@@ -29,6 +29,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { SeoForm } from './SeoForm';
+import { getEnvVars } from '@/enviroment';
+
+const { apiUrl } = getEnvVars();
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -223,6 +226,9 @@ export const CreateUpdateNewsPage = () => {
                         setNewsBody(data);
                       }}
                       config={{
+                        ckfinder: {
+                          uploadUrl: `${apiUrl}/api/photo/upload-ckeditor`,
+                        },
                         language: {
                           ui: language,
                         },
