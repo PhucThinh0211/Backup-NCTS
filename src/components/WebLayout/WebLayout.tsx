@@ -103,7 +103,7 @@ export const WebLayout = () => {
         <Content>
           {searchVisibility && <SearchForm />}
           <HeroSection />
-          <div style={{ backgroundColor: 'white' }}>
+          <div style={{ backgroundColor: '#fefefe' }}>
             <Outlet />
           </div>
         </Content>
