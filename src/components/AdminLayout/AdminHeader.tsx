@@ -1,5 +1,4 @@
 import { Layout, theme, Row, Space } from 'antd';
-// import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
@@ -7,8 +6,6 @@ import { TopNavHeightAdmin } from '@/common';
 import { SwitchLang } from '@/components';
 
 export const AdminHeader = () => {
-  // const { t } = useTranslation(['common']);
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -24,9 +21,11 @@ export const AdminHeader = () => {
       className='border-b border-[rgba(5, 5, 5, 0.06)]'
     >
       <Row align='middle' justify='space-between' style={{ height: '100%' }}>
-        <Link to='/'>
-          <img src={logo} alt='logo' width={130} />
-        </Link>
+        <div className='h-100 pt-1'>
+          <Link to='/'>
+            <img src={logo} alt='logo' className='h-75' />
+          </Link>
+        </div>
         <Space>
           {/* Switch Language */}
           <SwitchLang />
