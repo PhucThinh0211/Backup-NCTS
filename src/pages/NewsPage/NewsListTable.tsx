@@ -92,7 +92,7 @@ export const NewsListTable = () => {
     dispatch(contentActions.setSelectedContent(content));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news/edit');
+    navigate('/admin/news/create-or-edit');
   };
 
   const confirmRemoveContent = (content: ContentResponse) => {

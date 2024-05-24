@@ -56,7 +56,7 @@ export const SeoForm = () => {
             },
           ]}
         >
-          <Input.TextArea />
+          <Input.TextArea rows={5} />
         </Form.Item>
       </Form.Item>
     </div>

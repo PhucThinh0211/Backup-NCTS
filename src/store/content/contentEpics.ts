@@ -17,6 +17,7 @@ import {
   SavingContentLoadingKey,
   GettingContentLoadingKey,
   GettingNewsTypeListLoadingKey,
+  PublishContentLoadingKey,
 } from '@/common/loadingKey';
 import { ContentService } from '@/services/ContentService';
 import Utils from '@/utils';
@@ -64,17 +65,13 @@ const createContentRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { content } = action.payload;
       const { locale } = state.persistApp;
-      const totalCount = state.menu.menus?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.content.queryParams,
       };
       return concat(
         [startLoading({ key: SavingContentLoadingKey })],
-        ContentService.Post.createContent({
-          ...content,
-          sortSeq: totalCount + 1,
-        }).pipe(
+        ContentService.Post.createContent(content).pipe(
           switchMap((createdContent) => {
             const createTranslationInput = {
               language: locale,
@@ -103,7 +100,7 @@ const createContentRequest$: RootEpic = (action$, state$) => {
                       }).pipe(
                         mergeMap((contentsResult) => {
                           Utils.successNotification();
-                          return [contentActions.setContents(contentsResult)];
+                          return [contentActions.setSelectedContent(createdContent), contentActions.setContents(contentsResult)];
                         }),
                         catchError((errors) => {
                           Utils.errorHandling(errors);
@@ -124,7 +121,7 @@ const createContentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       contentActions.setContents(contentsResult),
-                      contentActions.setSelectedContent(undefined),
+                      contentActions.setSelectedContent(createdContent),
                     ];
                   }),
                   catchError((errors) => {
@@ -317,11 +314,16 @@ const getNewsTypeRequest$: RootEpic = (action$, state$) => {
         ...defaultPagingParams,
         ...params,
       };
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        },
+        search
+      };
       return concat(
         [startLoading({ key: GettingNewsTypeListLoadingKey })],
-        NewsTypeService.Get.getAllNewsTypes({
-          search,
-        }).pipe(
+        NewsTypeService.Get.getAllNewsTypes(options).pipe(
           mergeMap((newsTypes) => {
             return [contentActions.setNewsType(newsTypes)];
           }),
@@ -335,6 +337,73 @@ const getNewsTypeRequest$: RootEpic = (action$, state$) => {
     })
   );
 };
+
+const publishContentRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(contentActions.publishContentRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        }
+      };
+      return concat(
+        [startLoading({ key: PublishContentLoadingKey })],
+        ContentService.Post.publishContent(action.payload, options).pipe(
+          switchMap(publishedContent => {
+            return ContentService.Get.getAllContents(options).pipe(
+              switchMap(contents => {
+                Utils.successNotification();
+                return [ contentActions.setContents(contents), contentActions.setSelectedContent(publishedContent) ];
+              })
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: PublishContentLoadingKey })]
+      );
+    })
+  );
+}
+
+const unpublishContentRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(contentActions.unpublishContentRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        }
+      };
+      return concat(
+        [startLoading({ key: PublishContentLoadingKey })],
+        ContentService.Post.unpublishContent(action.payload, options).pipe(
+          switchMap(publishedContent => {
+            return ContentService.Get.getAllContents(options).pipe(
+              switchMap(contents => {
+                Utils.successNotification();
+                return [ contentActions.setContents(contents), contentActions.setSelectedContent(publishedContent) ];
+              })
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: PublishContentLoadingKey })]
+      );
+    })
+  );
+}
+
 export const contentEpics = [
   getContentsRequest$,
   createContentRequest$,
@@ -342,4 +411,6 @@ export const contentEpics = [
   removeContentRequest$,
   getContentRequest$,
   getNewsTypeRequest$,
+  publishContentRequest$,
+  unpublishContentRequest$
 ];

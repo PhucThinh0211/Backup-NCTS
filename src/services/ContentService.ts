@@ -87,6 +87,12 @@ class ContentController {
         options
       );
     },
+    publishContent: (id: string, options?: RequestOptions) => {
+      return HttpClient.post(`${apiUrl}/api/app/content/${id}/publish`, options);
+    },
+    unpublishContent: (id: string, options?: RequestOptions) => {
+      return HttpClient.post(`${apiUrl}/api/app/content/${id}/unpublish`, options);
+    }
   };
 
   public Put = {
