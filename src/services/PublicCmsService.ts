@@ -23,9 +23,21 @@ class PublicCmsController {
     getBannerList: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/banner`, options);
     },
+    getNewsList: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/content`, options);
+    },
+    getNewsById: (contentId: string, options?: RequestOptions) => {
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/content-detail/${contentId}`,
+        options
+      );
+    },
+    getNewsTypeList: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/news-type`, options);
+    },
     getCaptcha: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/captcha`, options);
-    }
+    },
   };
 }
 
