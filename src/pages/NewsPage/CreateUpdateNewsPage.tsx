@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Spin, Typography } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Row, Select, Space, Spin, Typography } from 'antd';
+import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,12 @@ import {
 } from '@/store/content';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { GettingContentLoadingKey, SavingContentLoadingKey, largePagingParams } from '@/common';
+import {
+  GettingContentLoadingKey,
+  PublishContentLoadingKey,
+  SavingContentLoadingKey,
+  largePagingParams,
+} from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
 import { AuditedNews } from './AuditedNews';
@@ -24,6 +29,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { SeoForm } from './SeoForm';
+import { getEnvVars } from '@/enviroment';
+
+const { apiUrl } = getEnvVars();
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -46,6 +54,7 @@ export const CreateUpdateNewsPage = () => {
   const newsTypes = useAppSelector(getNewsTypes());
   const isSubmmiting = useAppSelector(getLoading(SavingContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingContentLoadingKey));
+  const isPublishing = useAppSelector(getLoading(PublishContentLoadingKey));
 
   const newsTypesOptions = [...(newsTypes?.items || [])]
     .sort((a, b) => a.sortSeq - b.sortSeq)
@@ -102,6 +111,17 @@ export const CreateUpdateNewsPage = () => {
     dispatch(contentActions.setContentPhotoUrl(undefined));
   };
 
+  const publishContent = () => {
+    if (!selectedContent) {
+      return;
+    }
+    if (!selectedContent.published) {
+      dispatch(contentActions.publishContentRequest(selectedContent.id));
+    } else {
+      dispatch(contentActions.unpublishContentRequest(selectedContent.id));
+    }
+  };
+
   return (
     <div className="p-4">
       <Link to={'/admin/news'} className={'d-flex flex-row align-items-center gap-1 mb-2'}>
@@ -114,11 +134,20 @@ export const CreateUpdateNewsPage = () => {
             {selectedContent ? t('Update news', { ns: 'news' }) : t('Create news', { ns: 'news' })}
           </Typography.Title>
         </div>
-        <div>
+        <Space>
+          <Button
+            type="default"
+            disabled={!selectedContent?.id}
+            onClick={publishContent}
+            loading={isPublishing}
+            icon={<CheckOutlined  />}  
+          >
+            {!!selectedContent?.published === false ? t('Publish', { ns: 'common' }) : t('Unpublish', { ns: 'common' })}
+          </Button>
           <Button type="primary" loading={isSubmmiting} onClick={form.submit}>
             {t('OkText', { ns: 'common' })}
           </Button>
-        </div>
+        </Space>
       </div>
       <Form form={form} layout="vertical" onFinish={handleSaveContent} autoComplete="off">
         <Spin spinning={isLoading}>
@@ -197,6 +226,9 @@ export const CreateUpdateNewsPage = () => {
                         setNewsBody(data);
                       }}
                       config={{
+                        ckfinder: {
+                          uploadUrl: `${apiUrl}/api/photo/upload-ckeditor`,
+                        },
                         language: {
                           ui: language,
                         },

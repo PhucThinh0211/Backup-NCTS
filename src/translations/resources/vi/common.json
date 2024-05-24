@@ -59,5 +59,7 @@
   "Invoice date": "Ngày lập hóa đơn",
   "Please fill in your login information":"Vui lòng điền thông tin đăng nhập",
   "Refresh captcha": "Mã xác thực mới",
-  "Code": "Mã"
+  "Code": "Mã",
+  "Publish": "Xuất bản",
+  "Unpublish": "Hủy xuất bản"
 }

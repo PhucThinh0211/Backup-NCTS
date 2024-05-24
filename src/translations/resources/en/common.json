@@ -60,5 +60,7 @@
   "Invoice date": "Invoice date",
   "Please fill in your login information": "Please fill in your login information",
   "Refresh captcha": "Refresh captcha",
-  "Code": "Code"
+  "Code": "Code",
+  "Publish": "Publish",
+  "Unpublish": "Unpublish"
 }

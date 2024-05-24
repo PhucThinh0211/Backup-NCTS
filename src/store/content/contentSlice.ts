@@ -72,6 +72,8 @@ const contentSlice = createSlice({
     setNewsType: (state, action) => {
       state.newsTypes = action.payload;
     },
+    publishContentRequest: (state, action) => {},
+    unpublishContentRequest: (state, action) => {}
   },
 });
 
