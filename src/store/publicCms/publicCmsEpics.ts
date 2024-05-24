@@ -6,7 +6,9 @@ import {
   GettingBannerListLoadingKey,
   GettingCaptchaLoadingKey,
   GettingCompanyLoadingKey,
+  GettingContentListLoadingKey,
   GettingMenuListLoadingKey,
+  GettingNewsTypeListLoadingKey,
 } from '@/common';
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
@@ -51,7 +53,6 @@ const getMenuListRequest$: RootEpic = (action$) => {
     })
   );
 };
-
 const getBannerListRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getBannerListRequest.match),
@@ -72,6 +73,55 @@ const getBannerListRequest$: RootEpic = (action$) => {
           })
         ),
         [stopLoading({ key: GettingBannerListLoadingKey })]
+      );
+    })
+  );
+};
+
+const getNewsListRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getNewsListRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingContentListLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getNewsList({ search }).pipe(
+          switchMap((news) => {
+            return [publicCmsActions.setNewsList(news)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setNewsList(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingContentListLoadingKey })]
+      );
+    })
+  );
+};
+const getNewsTypesRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getNewsTypesRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingNewsTypeListLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getNewsTypeList({ search }).pipe(
+          switchMap((newsTypes) => {
+            return [publicCmsActions.setNewsTypes(newsTypes)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setNewsTypes(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingNewsTypeListLoadingKey })]
       );
     })
   );
@@ -101,5 +151,7 @@ export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
   getBannerListRequest$,
-  getCaptchaRequest$
+  getCaptchaRequest$,
+  getNewsListRequest$,
+  getNewsTypesRequest$,
 ];

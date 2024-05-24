@@ -1,5 +1,5 @@
 import { QuickLookup } from '@/components';
-import Cards from '@/components/CarouselCard/Cards';
+import { NewsCard } from '@/components/CarouselCard/NewsCard';
 import ServiceCard from '@/components/ServiceCard/ServiceCard';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import '@/pages/Home/HomeStyle.css'
@@ -231,7 +231,7 @@ export const Home = () => {
             responsive={newsResponsiveSettings}
           >
             {newsCards.map((i, index) => (
-              <Cards key={index} img={i.img} date={i.date} author={i.author} title={i.title} desc={i.desc} />
+              <NewsCard key={index} img={i.img} date={i.date} author={i.author} title={i.title} desc={i.desc} />
             ))}
 
           </Carousel>

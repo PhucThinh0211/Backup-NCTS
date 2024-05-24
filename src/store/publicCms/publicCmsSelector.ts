@@ -13,6 +13,15 @@ export function getCurrentCompany() {
 export function getBanners() {
   return createSelector([getState], (state) => state.banners);
 }
+export function getNewsList() {
+  return createSelector([getState], (state) => state.news);
+}
+export function getNewsTypeList() {
+  return createSelector([getState], (state) => state.newsTypes);
+}
+export function getSelectedNewsTypeId() {
+  return createSelector([getState], (state) => state.selectedNewsTypeId);
+}
 
 export function getCaptcha() {
   return createSelector([getState], (state) => state.captcha);

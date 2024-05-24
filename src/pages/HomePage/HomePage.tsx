@@ -5,6 +5,7 @@ import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { QuickLookup } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getTabLookupActive } from '@/store/persistState';
+import { NewsSection } from '@/components/NewsSection';
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -15,15 +16,16 @@ export const HomePage = () => {
     navigate({
       pathname: location.pathname,
       search: createSearchParams({
-          tab: tabLookupActive
-      }).toString()
-  });
+        tab: tabLookupActive,
+      }).toString(),
+    });
   }, [tabLookupActive]);
 
   return (
     <div>
       <div className='w-full'>
         <QuickLookup />
+        <NewsSection />
       </div>
     </div>
   );
