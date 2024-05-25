@@ -175,15 +175,17 @@ export const NewsSection = () => {
       </div>
       <div className="my-2 slide-card">
         {isNewsLoading ? (
-          <div className="w-100 d-flex mx-auto justify-content-center ">
-            {new Array(3).fill(null).map((_, index) => (
-              <NewsCard loading key={index} />
-            ))}
+          <div className="w-100 d-flex mx-auto justify-content-center" style={{ height: 469 }}>
+            <Carousel responsive={responsive}>
+              {new Array(5).fill(null).map((_, index) => (
+                <NewsCard loading key={index} />
+              ))}
+            </Carousel>
           </div>
         ) : !news?.items?.length ? (
           <div
             className="w-100 d-flex mx-auto justify-content-center align-items-center "
-            style={{ height: 423 }}>
+            style={{ height: 469 }}>
             <Empty />
           </div>
         ) : (
