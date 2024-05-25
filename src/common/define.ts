@@ -21,14 +21,11 @@ export interface CustomIconComponentProps {
 }
 
 export const defaultPagingParams = {
-  MaxResultCount: 1000,
-  // pageSize: 25
+  MaxResultCount: 25
 };
 
 export const largePagingParams = {
-  paging: true,
-  page: 1,
-  pageSize: 2000,
+  MaxResultCount: 1000
 };
 
 export interface PagingResponse {

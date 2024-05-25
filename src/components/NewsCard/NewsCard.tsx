@@ -31,8 +31,8 @@ export const NewsCard = ({
           <div className='cardImg'>
             <img src={img} alt={title} />
           </div>
-          <div className='d-flex flex-column gap-2'>
-            <div className='d-flex flex-row gap-1 flex-wrap '>
+          <div className='d-flex flex-column gap-2 p-3'>
+            <div className='d-flex flex-row gap-1 flex-wrap news-meta'>
               {date && (
                 <div className='d-flex flex-row gap-1'>
                   {' '}

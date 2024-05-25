@@ -10,3 +10,4 @@ export * from './WebLayout';
 export * from './Seo';
 export * from './SearchForm';
 export * from './HeroSection';
+export * from './NewsCard';
