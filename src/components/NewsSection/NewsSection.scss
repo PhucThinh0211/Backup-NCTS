@@ -1,0 +1,19 @@
+.news-carousel {
+  padding-block: 20px;
+  .react-multiple-carousel__arrow {
+    background-color: #00000045;
+    &:hover {
+      background-color: #ffa600ca;
+    }
+  }
+  .news-carousel-dot-list-style {
+    // bottom: -10px;
+
+    li.react-multi-carousel-dot--active {
+      button {
+        background-color: #ffa500;
+        border-color: #ffa500;
+      }
+    }
+  }
+}

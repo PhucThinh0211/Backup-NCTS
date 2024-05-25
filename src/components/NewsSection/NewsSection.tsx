@@ -7,6 +7,7 @@ import { Dropdown, Empty, Radio, RadioChangeEvent, Space, Typography } from 'ant
 import { LeftOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import './NewsSection.scss';
 
 import {
   GettingContentListLoadingKey,
@@ -210,6 +211,7 @@ export const NewsSection = () => {
             containerClass="carousel-container"
             removeArrowOnDeviceType={['tablet', 'mobile']}
             // deviceType={this.props.deviceType}
+            className='news-carousel'
             dotListClass="news-carousel-dot-list-style"
             itemClass="carousel-item-padding-40-px">
             {(news?.items || []).map((news, index) => (
