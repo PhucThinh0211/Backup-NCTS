@@ -7,6 +7,7 @@ import { Layout } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { companyActions } from '@/store/company';
 import { getLanguage } from '@/store/persistState';
+import { TopNavHeight } from '@/common';
 
 import { AdminHeader, LeftPanel } from '.';
 
@@ -28,7 +29,8 @@ export const AdminLayout = () => {
         <Content
           style={{
             margin: 0,
-            minHeight: 'calc(100vh - 76px)',
+            minHeight: `calc(100vh - ${TopNavHeight}px)`,
+            maxHeight: `calc(100vh - ${TopNavHeight}px)`,
             overflow: 'auto',
           }}
         >

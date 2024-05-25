@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Spin, TreeSelect, Typography } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Radio, Row, Select, Space, Spin, TreeSelect, Typography } from 'antd';
+import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +9,11 @@ import {
   pageContentActions,
   getSelectedPageContent,
   getSelectedPageContentDetail,
+  getNewsTypes,
 } from '@/store/pageContent';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { GettingPageContentLoadingKey, SavingPageContentLoadingKey } from '@/common';
+import { GettingPageContentLoadingKey, PublishPageContentLoadingKey, SavingPageContentLoadingKey, defaultPagingParams } from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
 import { AuditedPageContent } from './AuditedPageContent';
@@ -20,9 +21,10 @@ import { AuditedPageContent } from './AuditedPageContent';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
-import { SeoForm } from './SeoForm';
+
 import Utils from '@/utils';
-import { PageContentType } from '@/services/PageContentService';
+import { PageContentShowPlace, PageContentType } from '@/services/PageContentService';
+import { SeoForm } from '../NewsPage/SeoForm';
 
 export const CreateUpdatePageContent = () => {
   const [pageContentBody, setPageContentBody] = useState('');
@@ -34,34 +36,36 @@ export const CreateUpdatePageContent = () => {
   const locale = useAppSelector(getLocale());
   const selectedPageContent = useAppSelector(getSelectedPageContent());
   const selectedPageContentDetail = useAppSelector(getSelectedPageContentDetail());
+  const newsTypes = useAppSelector(getNewsTypes());
   const isSubmmiting = useAppSelector(getLoading(SavingPageContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingPageContentLoadingKey));
+  const isPublishing = useAppSelector(getLoading(PublishPageContentLoadingKey));
 
-  const pageTitle = Form.useWatch("title", form);
-  const pageType = Form.useWatch("pageType", form);
+  const pageTitle = Form.useWatch('title', form);
+  const pageType = Form.useWatch('pageType', form);
 
-  const newsTypes = [
-    {
-      label: t('Ncts News', { ns: 'news' }),
-      value: 'NctsNews',
-    },
-    {
-      label: t('Customer News', { ns: 'news' }),
-      value: 'CustomerNews',
-    },
-    {
-      label: t('Activities News', { ns: 'news' }),
-      value: 'ActivitiesNews',
-    },
-    {
-      label: t('Industrial News', { ns: 'news' }),
-      value: 'IndustrialNews',
-    },
-    {
-      label: t('Recruitment News', { ns: 'news' }),
-      value: 'RecruitmentNews',
-    },
-  ];
+  // const newsTypes = [
+  //   {
+  //     label: t('Ncts News', { ns: 'news' }),
+  //     value: 'NctsNews',
+  //   },
+  //   {
+  //     label: t('Customer News', { ns: 'news' }),
+  //     value: 'CustomerNews',
+  //   },
+  //   {
+  //     label: t('Activities News', { ns: 'news' }),
+  //     value: 'ActivitiesNews',
+  //   },
+  //   {
+  //     label: t('Industrial News', { ns: 'news' }),
+  //     value: 'IndustrialNews',
+  //   },
+  //   {
+  //     label: t('Recruitment News', { ns: 'news' }),
+  //     value: 'RecruitmentNews',
+  //   },
+  // ];
 
   const contactTypes = [
     {
@@ -120,9 +124,24 @@ export const CreateUpdatePageContent = () => {
           label: t('Register', { ns: 'pageContent' }),
           value: PageContentType.REGISTER,
         },
-      ]
+      ],
     },
   ];
+
+  const pageShowPlaces = [
+    {
+      label: t('Introduction', { ns: 'pageContent' }),
+      value: PageContentShowPlace.INTRODUCTION,
+    },
+    {
+      label: t('Services section', { ns: 'pageContent' }),
+      value: PageContentShowPlace.SERVICES,
+    }
+  ];
+
+  useEffect(() => {
+    dispatch(pageContentActions.getNewsTypesRequest({ params: defaultPagingParams }));
+  }, [language]);
 
   useEffect(() => {
     if (pageTitle && !selectedPageContent) {
@@ -133,7 +152,9 @@ export const CreateUpdatePageContent = () => {
   useEffect(() => {
     if (locale && selectedPageContent) {
       dispatch(
-        pageContentActions.getPageContentRequest({ pageContentId: selectedPageContent.id })
+        pageContentActions.getPageContentRequest({
+          pageContentId: selectedPageContent.id,
+        })
       );
     }
   }, [locale, selectedPageContent]);
@@ -142,7 +163,13 @@ export const CreateUpdatePageContent = () => {
     if (selectedPageContentDetail) {
       form.setFieldsValue({
         ...selectedPageContentDetail,
-        pageType: selectedPageContentDetail.pageType || PageContentType.DYNAMIC
+        pageType: selectedPageContentDetail.pageType || PageContentType.DYNAMIC,
+        pageShowPlace:
+          selectedPageContentDetail.showInTheIntroduceSection === true
+            ? PageContentShowPlace.INTRODUCTION
+            : selectedPageContentDetail.showInTheServicesSection === true
+            ? PageContentShowPlace.SERVICES
+            : PageContentShowPlace.INTRODUCTION,
       });
       setPageContentBody(selectedPageContentDetail.content || '');
     } else {
@@ -155,6 +182,8 @@ export const CreateUpdatePageContent = () => {
     const inputData = {
       ...values,
       content: pageContentBody,
+      showInTheIntroduceSection: values?.pageShowPlace === PageContentShowPlace.INTRODUCTION,
+      showInTheServicesSection: values?.pageShowPlace === PageContentShowPlace.SERVICES,
       seo: !!values.seo && JSON.stringify(values.seo) !== '{}' ? values.seo : undefined  
     };
 
@@ -163,90 +192,118 @@ export const CreateUpdatePageContent = () => {
       dispatch(pageContentActions.updatePageContentRequest({ pageContentId: selectedPageContentDetail.id, pageContent: { ...selectedPageContentDetail, ...inputData }}));
       return;
     }
-    dispatch(pageContentActions.createPageContentRequest({ pageContent: inputData }));
+    dispatch(
+      pageContentActions.createPageContentRequest({ pageContent: inputData })
+    );
   };
 
   const renderByPageType = (type: string) => {
     switch (type) {
       case PageContentType.DYNAMIC:
-        return <>
-          <div>
-            <Typography.Text className='ant-form-item-label'>
-              {t('Content', { ns: 'pageContent' })}
-              {' - '}
-              <span className='text-uppercase text-danger'>{locale}</span>
-            </Typography.Text>
-            <CKEditor
-              editor={ClassicEditor}
-              key={language}
-              data={pageContentBody}
-              onChange={(e, editor) => {
-                const data = editor.getData();
-                setPageContentBody(data);
-              }}
-              config={{
-                language: {
-                  ui: language,
-                },
-                toolbar: {
-                  items: [
-                    'undo',
-                    'redo',
-                    '|',
-                    'heading',
-                    '|',
-                    'bold',
-                    'italic',
-                    '|',
-                    'link',
-                    'insertImage',
-                    'mediaEmbed',
-                    'blockQuote',
-                    '|',
-                    'bulletedList',
-                    'numberedList',
-                    'outdent',
-                    'indent',
-                  ],
-                },
-              }}
-              onReady={(editor) => {
-                console.log('Editor is ready to use!', editor);
-              }}
-            />
-          </div>
-        </>;
-      
+        return (
+          <>
+            <div>
+              <Typography.Text className='ant-form-item-label'>
+                {t('Content', { ns: 'pageContent' })}
+                {' - '}
+                <span className='text-uppercase text-danger'>{locale}</span>
+              </Typography.Text>
+              <CKEditor
+                editor={ClassicEditor}
+                key={language}
+                data={pageContentBody}
+                onChange={(e, editor) => {
+                  const data = editor.getData();
+                  setPageContentBody(data);
+                }}
+                config={{
+                  language: {
+                    ui: language,
+                  },
+                  toolbar: {
+                    items: [
+                      'undo',
+                      'redo',
+                      '|',
+                      'heading',
+                      '|',
+                      'bold',
+                      'italic',
+                      '|',
+                      'link',
+                      'insertImage',
+                      'mediaEmbed',
+                      'blockQuote',
+                      '|',
+                      'bulletedList',
+                      'numberedList',
+                      'outdent',
+                      'indent',
+                    ],
+                  },
+                }}
+                onReady={(editor) => {
+                  console.log('Editor is ready to use!', editor);
+                }}
+              />
+            </div>
+          </>
+        );
+
       case PageContentType.DOCUMENT:
-        return <>
+        return (
+          <>
             <Form.Item
               label={t('Type', { ns: 'department' })}
               name='codeType'
               rules={[
-                { required: true, message: t('Type required', { ns: 'department' }) },
+                {
+                  required: true,
+                  message: t('Type required', { ns: 'department' }),
+                },
               ]}
             >
-              <Select options={contactTypes}/>
+              <Select options={contactTypes} />
             </Form.Item>
-        </>
+          </>
+        );
 
       case PageContentType.NEWS:
-        return <>
+        return (
+          <>
             <Form.Item
               label={t('News type', { ns: 'news' })}
               name='codeType'
               rules={[
-                { required: true, message: t('News type required', { ns: 'news' }) },
+                {
+                  required: true,
+                  message: t('News type required', { ns: 'news' }),
+                },
               ]}
             >
-              <Select options={newsTypes}/>
+              <Select options={[...(newsTypes?.items || [])].sort((a, b) => a.sortSeq - b.sortSeq).map(type => ({
+                label: type.name,
+                value: type.code
+              }))}/>
             </Form.Item>
-        </>
+          </>
+        );
 
       default:
         return;
     }
-  }
+  };
+
+  const publishPageContent = () => {
+    if (!selectedPageContent) {
+      return;
+    }
+    if (!selectedPageContent.published) {
+      dispatch(pageContentActions.publishPageRequest(selectedPageContent.id));
+    } else {
+      dispatch(pageContentActions.unpublishPageRequest(selectedPageContent.id));
+    }
+  };
 
   return (
     <div className='p-4'>
@@ -265,18 +322,28 @@ export const CreateUpdatePageContent = () => {
               : t('Create page', { ns: 'pageContent' })}
           </Typography.Title>
         </div>
-        <div>
+        <Space>
+          <Button
+            type="default"
+            disabled={!selectedPageContent?.id}
+            onClick={publishPageContent}
+            loading={isPublishing}
+            icon={<CheckOutlined  />}  
+          >
+            {!!selectedPageContent?.published === false ? t('Publish', { ns: 'common' }) : t('Unpublish', { ns: 'common' })}
+          </Button>
           <Button type='primary' loading={isSubmmiting} onClick={form.submit}>
             {t('OkText', { ns: 'common' })}
           </Button>
-        </div>
+        </Space>
       </div>
-      <Form 
-        form={form} 
-        layout='vertical' 
+      <Form
+        form={form}
+        layout='vertical'
         onFinish={handleSaveContent}
         initialValues={{
-          pageType: PageContentType.DYNAMIC
+          pageType: PageContentType.DYNAMIC,
+          pageShowPlace: PageContentShowPlace.INTRODUCTION,
         }}
       >
         <Spin spinning={isLoading}>
@@ -286,18 +353,21 @@ export const CreateUpdatePageContent = () => {
                 <Form.Item
                   label={t('Page type', { ns: 'pageContent' })}
                   name='pageType'
-                  rules={[
-                    { required: true, message: t('Page type required') },
-                  ]}
+                  rules={[{ required: true, message: t('Page type required') }]}
                 >
-                  <TreeSelect treeData={pageTypes} treeDefaultExpandAll={true} />
+                  <TreeSelect
+                    treeData={pageTypes}
+                    treeDefaultExpandAll={true}
+                  />
                 </Form.Item>
                 <Form.Item
                   label={
                     <div>
                       <span>{t('Title', { ns: 'pageContent' })}</span>
                       {' - '}
-                      <span className='text-uppercase text-danger'>{locale}</span>
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span>
                     </div>
                   }
                   name='title'
@@ -331,15 +401,32 @@ export const CreateUpdatePageContent = () => {
                       }),
                     },
                   ]}
-                >
+                  >
                   <Input />
+                </Form.Item>
+                <Form.Item
+                  label={t('Show in', { ns: 'pageContent' })}
+                  name='pageShowPlace'
+                  rules={[
+                    {
+                      required: true
+                    }
+                  ]}
+                >
+                  <Radio.Group>
+                    {
+                      pageShowPlaces.map(place => (
+                        <Radio value={place.value} key={place.value}>{place.label}</Radio>
+                      ))
+                    }
+                  </Radio.Group>
                 </Form.Item>
                 {renderByPageType(pageType)}
               </div>
-              <SeoForm />
             </Col>
             <Col span={8}>
               <AuditedPageContent />
+              <SeoForm />
             </Col>
           </Row>
         </Spin>

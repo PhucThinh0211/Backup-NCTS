@@ -5,12 +5,14 @@ import {
   PageContentsPagingResponse,
   CreateUpdatePageContentPayload,
 } from '@/services/PageContentService';
+import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
 
 interface PageContentState {
   pageContents?: PageContentsPagingResponse;
   selectedPageContent?: PageContentResponse;
   selectedPageContentDetail?: PageContentResponse;
   queryParams: any;
+  newsTypes?: NewsTypesPagingResponse;
 }
 
 const initialState: PageContentState = {
@@ -59,6 +61,12 @@ const pageContentSlice = createSlice({
     setPageContents: (state, action) => {
       state.pageContents = action.payload;
     },
+    getNewsTypesRequest: (state, action: PayloadAction<any>) => {},
+    setNewsTypes: (state, action) => {
+      state.newsTypes = action.payload;
+    },
+    publishPageRequest: (state, action) => {},
+    unpublishPageRequest: (state, action) => {}
   },
 });
 
