@@ -32,57 +32,48 @@ const responsive = {
   desktopv1: {
     breakpoint: { max: 9000, min: 1900 },
     items: 5,
-    slidesToSlide: 5
+    slidesToSlide: 5,
+    partialVisibilityGutter: 20
   },
   desktopv2: {
     breakpoint: { max: 1900, min: 1600 },
     items: 4,
-    slidesToSlide: 4
+    slidesToSlide: 4,
+    partialVisibilityGutter: 20
   },
   desktopv3: {
     breakpoint: { max: 1600, min: 1200 },
     items: 3,
-    slidesToSlide: 3
+    slidesToSlide: 3,
+    partialVisibilityGutter: 20
   },
   desktopv4: {
     breakpoint: { max: 1200, min: 1024 },
-    items: 2,
-    slidesToSlide: 2
+    items: 3,
+    slidesToSlide: 3,
+    partialVisibilityGutter: 20
   },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
+  tablet1: {
+    breakpoint: { max: 1024, min: 992 },
+    items: 3,
+    slidesToSlide: 3,
+    partialVisibilityGutter: 20
+  },
+  tablet2: {
+    breakpoint: { max: 992, min: 464 },
     items: 2,
-    slidesToSlide: 2
+    slidesToSlide: 2,
+    partialVisibilityGutter: 20
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
-    slidesToSlide: 1
+    slidesToSlide: 1,
+    partialVisibilityGutter: 20
   }
 };
 
 export const NewsSection = () => {
-  const newsResponsiveSettings = [
-    {
-      breakpoint: bootstrapBreakpoints.xxl,
-      settings: {
-        slidesToShow: 3,
-      },
-    },
-    {
-      breakpoint: bootstrapBreakpoints.md,
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-    {
-      breakpoint: 9999,
-      settings: {
-        slidesToShow: 5,
-      },
-    },
-  ];
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['home']);
   const [innerWidth, innerHeight] = useWindowSize();
@@ -196,7 +187,7 @@ export const NewsSection = () => {
           </div>
         ) : (
           <Carousel
-            swipeable={false}
+            swipeable={true}
             draggable={false}
             showDots={true}
             responsive={responsive}
