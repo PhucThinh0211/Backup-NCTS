@@ -74,6 +74,11 @@ export const WebLayout = () => {
             <Button type="text" shape="circle" onClick={searchToggle}>
               <i className="fa-solid fa-magnifying-glass fa-xl" />
             </Button>
+            <a href={`tel:${company?.phone}`}>
+              <Button danger shape='circle'>
+                <i className="fa-solid fa-phone"></i>
+              </Button>
+            </a>
             <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
               <i className="fa-solid fa-bars fa-lg"></i>
             </Button>

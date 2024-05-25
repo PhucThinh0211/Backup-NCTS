@@ -1,5 +1,21 @@
 @import '../../scss/mixin.scss';
 
+.hero-carousel-container {
+    .react-multiple-carousel__arrow {
+        background-color: #00000045;
+        display: none;
+        &:hover {
+          background-color: #ffa600ca;
+        }
+      }
+}
+
+.hero-carousel-container:hover {
+    .react-multiple-carousel__arrow {
+        display: block;
+    }
+}
+
 .banner {
     .bannerOverlay {
         position: absolute;
