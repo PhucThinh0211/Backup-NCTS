@@ -34,44 +34,44 @@ const responsive = {
     breakpoint: { max: 9000, min: 1900 },
     items: 5,
     slidesToSlide: 5,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   desktopv2: {
     breakpoint: { max: 1900, min: 1600 },
     items: 4,
     slidesToSlide: 4,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   desktopv3: {
     breakpoint: { max: 1600, min: 1200 },
     items: 3,
     slidesToSlide: 3,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   desktopv4: {
     breakpoint: { max: 1200, min: 1024 },
     items: 3,
     slidesToSlide: 3,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   tablet1: {
     breakpoint: { max: 1024, min: 992 },
     items: 3,
     slidesToSlide: 3,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   tablet2: {
     breakpoint: { max: 992, min: 464 },
     items: 2,
     slidesToSlide: 2,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 20,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
     slidesToSlide: 1,
-    partialVisibilityGutter: 20
-  }
+    partialVisibilityGutter: 20,
+  },
 };
 
 export const NewsSection = () => {
@@ -141,13 +141,13 @@ export const NewsSection = () => {
         <SessionTitle title={t('News', { ns: 'home' })} />
         <div className="d-flex justify-content-center">
           {innerWidth > bootstrapBreakpoints.sm ? (
-            <Radio.Group value={selectedNewsTypeId} buttonStyle="solid" onChange={onChange}>
-              {allNewsTypesOptions.map((option) => (
-                <Radio.Button value={option.value} key={option.value}>
-                  {option.label}
-                </Radio.Button>
-              ))}
-            </Radio.Group>
+            <Radio.Group
+              options={allNewsTypesOptions}
+              value={selectedNewsTypeId}
+              optionType="button"
+              buttonStyle="solid"
+              onChange={onChange}
+            />
           ) : (
             <Dropdown
               menu={{
@@ -175,15 +175,17 @@ export const NewsSection = () => {
       </div>
       <div className="my-2 slide-card">
         {isNewsLoading ? (
-          <div className="w-100 d-flex mx-auto justify-content-center ">
-            {new Array(3).fill(null).map((_, index) => (
-              <NewsCard loading key={index} />
-            ))}
+          <div className="w-100 d-flex mx-auto justify-content-center" style={{ height: 469 }}>
+            <Carousel responsive={responsive}>
+              {new Array(5).fill(null).map((_, index) => (
+                <NewsCard loading key={index} />
+              ))}
+            </Carousel>
           </div>
         ) : !news?.items?.length ? (
           <div
             className="w-100 d-flex mx-auto justify-content-center align-items-center "
-            style={{ height: 423 }}>
+            style={{ height: 469 }}>
             <Empty />
           </div>
         ) : (
@@ -202,7 +204,7 @@ export const NewsSection = () => {
             containerClass="carousel-container"
             removeArrowOnDeviceType={['tablet', 'mobile']}
             // deviceType={this.props.deviceType}
-            className='news-carousel'
+            className="news-carousel"
             dotListClass="news-carousel-dot-list-style"
             itemClass="carousel-item-padding-40-px">
             {(news?.items || []).map((news, index) => (
