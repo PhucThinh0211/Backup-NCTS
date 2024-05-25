@@ -16,10 +16,13 @@ import {
   RemovingPageContentLoadingKey,
   SavingPageContentLoadingKey,
   GettingPageContentLoadingKey,
+  GettingNewsTypeListLoadingKey,
+  PublishPageContentLoadingKey,
 } from '@/common/loadingKey';
 import { PageContentService } from '@/services/PageContentService';
 import Utils from '@/utils';
 import { SeoService } from '@/services/SEOService';
+import { NewsTypeService } from '@/services/NewsTypeService';
 
 const getPageContentsRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -302,6 +305,118 @@ const getPageContentRequest$: RootEpic = (action$, state$) => {
     })
   );
 };
+const getNewsTypesRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(pageContentActions.getNewsTypesRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...defaultPagingParams,
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingNewsTypeListLoadingKey })],
+        NewsTypeService.Get.getAllNewsTypes({
+          search,
+        }).pipe(
+          mergeMap((newsTypes) => {
+            return [
+              pageContentActions.setNewsTypes(newsTypes),
+            ];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [pageContentActions.setNewsTypes(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingNewsTypeListLoadingKey })]
+      );
+    })
+  );
+};
+const publishPageRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(pageContentActions.publishPageRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        }
+      };
+      const search = {
+        ...defaultPagingParams,
+        ...state.pageContent.queryParams
+      }
+      return concat(
+        [startLoading({ key: PublishPageContentLoadingKey })],
+        PageContentService.Post.publishPage(action.payload, options).pipe(
+          switchMap(publishedPage => {
+            return PageContentService.Get.getAllPageContents({
+              search,
+            }).pipe(
+              mergeMap((pageContentsResult) => {
+                Utils.successNotification();
+                return [
+                  pageContentActions.setPageContents(pageContentsResult),
+                  pageContentActions.setSelectedPageContent(publishedPage),
+                ];
+              }),
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: PublishPageContentLoadingKey })]
+      );
+    })
+  );
+}
+const unpublishPageRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(pageContentActions.unpublishPageRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { locale } = state.persistApp;
+      const options = {
+        headers: {
+          'Accept-Language': locale || 'vi',
+        }
+      };
+      const search = {
+        ...defaultPagingParams,
+        ...state.pageContent.queryParams
+      }
+      return concat(
+        [startLoading({ key: PublishPageContentLoadingKey })],
+        PageContentService.Post.unpublishPage(action.payload, options).pipe(
+          switchMap(publishedPage => {
+            return PageContentService.Get.getAllPageContents({
+              search,
+            }).pipe(
+              mergeMap((pageContentsResult) => {
+                Utils.successNotification();
+                return [
+                  pageContentActions.setPageContents(pageContentsResult),
+                  pageContentActions.setSelectedPageContent(publishedPage),
+                ];
+              }),
+            );
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: PublishPageContentLoadingKey })]
+      );
+    })
+  );
+}
 
 export const pageContentEpics = [
   getPageContentsRequest$,
@@ -309,4 +424,7 @@ export const pageContentEpics = [
   updatePageContentRequest$,
   removePageContentRequest$,
   getPageContentRequest$,
+  getNewsTypesRequest$,
+  publishPageRequest$,
+  unpublishPageRequest$,
 ];

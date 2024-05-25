@@ -26,6 +26,7 @@ export const GettingPageContentListLoadingKey =
   'GettingPageContentListLoadingKey';
 export const SavingPageContentLoadingKey = 'SavingPageContentLoadingKey';
 export const RemovingPageContentLoadingKey = 'RemovingPageContentLoadingKey';
+export const PublishPageContentLoadingKey = 'PublishPageContentLoadingKey';
 
 export const GettingDepartmentLoadingKey = 'GettingDepartmentLoadingKey';
 export const GettingDepartmentListLoadingKey =

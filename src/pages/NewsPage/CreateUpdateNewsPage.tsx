@@ -30,6 +30,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { SeoForm } from './SeoForm';
 import { getEnvVars } from '@/enviroment';
+import Utils from '@/utils';
 
 const { apiUrl } = getEnvVars();
 
@@ -55,6 +56,8 @@ export const CreateUpdateNewsPage = () => {
   const isSubmmiting = useAppSelector(getLoading(SavingContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingContentLoadingKey));
   const isPublishing = useAppSelector(getLoading(PublishContentLoadingKey));
+
+  const newsTitle = Form.useWatch("title", form);
 
   const newsTypesOptions = [...(newsTypes?.items || [])]
     .sort((a, b) => a.sortSeq - b.sortSeq)
@@ -82,6 +85,12 @@ export const CreateUpdateNewsPage = () => {
       setNewsBody('');
     }
   }, [selectedContentDetail]);
+
+  useEffect(() => {
+    if (newsTitle && !selectedContent) {
+      form.setFieldValue('url', '/' + Utils.createSlug(newsTitle));
+    }
+  }, [newsTitle]);
 
   const handleSaveContent = (values: any) => {
     const foundNewsType = (newsTypes?.items || []).find(
@@ -172,7 +181,7 @@ export const CreateUpdateNewsPage = () => {
                     <div>
                       <span>{t('Title', { ns: 'news' })}</span>
                       {' - '}
-                      <span className="uppercase text-red-600">{locale}</span>
+                      <span className="text-uppercase text-danger">{locale}</span>
                     </div>
                   }
                   name="title"
@@ -193,9 +202,32 @@ export const CreateUpdateNewsPage = () => {
                 <Form.Item
                   label={
                     <div>
+                      <span>{t('Url', { ns: 'news' })}</span>
+                      {' - '}
+                      <span className="text-uppercase text-danger">{locale}</span>
+                    </div>
+                  }
+                  name="url"
+                  rules={[
+                    { required: true, message: t('Url required') },
+                    {
+                      max: 500,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 500,
+                      }),
+                    },
+                  ]}>
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  label={
+                    <div>
                       <span>{t('Description', { ns: 'news' })}</span>
                       {' - '}
-                      <span className="uppercase text-red-600">{locale}</span>
+                      <span className="text-uppercase text-danger">{locale}</span>
                     </div>
                   }
                   name="description"

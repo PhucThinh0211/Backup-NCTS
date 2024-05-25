@@ -129,24 +129,34 @@ export const NewsListTable = () => {
     });
 
   const columns: TableColumnsType<ContentResponse> = [
+    // {
+    //   title: t('Photo', { ns: 'news' }),
+    //   dataIndex: 'photoUrl',
+    //   key: 'photoUrl',
+    //   // align: 'center',
+    //   render(value) {
+    //     return (
+    //       value && (
+    //         <Image
+    //           src={`${uploadedPhotoUrl(value)}`}
+    //           style={{
+    //             backgroundColor: '#00000073',
+    //           }}
+    //           height={80}
+    //         />
+    //       )
+    //     );
+    //   },
+    // },
     {
-      title: t('Photo', { ns: 'news' }),
-      dataIndex: 'photoUrl',
-      key: 'photoUrl',
-      // align: 'center',
-      render(value) {
-        return (
-          value && (
-            <Image
-              src={`${uploadedPhotoUrl(value)}`}
-              style={{
-                backgroundColor: '#00000073',
-              }}
-              height={80}
-            />
-          )
-        );
-      },
+      title: t('Publish', { ns: 'common' }),
+      dataIndex: 'published',
+      key: 'published',
+      render: (published) => {
+        return published ? 
+        t('Published', { ns: 'common'}) :
+        t('Draft', { ns: 'common'}) 
+      }
     },
     {
       title: t('Title', { ns: 'news' }),
