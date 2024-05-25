@@ -42,7 +42,7 @@ export const HeroSection = () => {
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
           infinite={true}
-          autoPlay={true}
+          autoPlay={banners.length > 1}
           autoPlaySpeed={5000}
           keyBoardControl={true}
           // customTransition="all .5"
