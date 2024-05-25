@@ -9,7 +9,7 @@ export const SeoForm = () => {
   const locale = useAppSelector(getLocale());
 
   return (
-    <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>
+    <div className='w-100 border-b rounded-2 bg-white p-3 shadow-sm mt-2'>
       <Typography.Title level={5}>{t('SEO', { ns: 'seo' })}</Typography.Title>
       <Form.Item name={'seo'}>
         <Form.Item
@@ -17,7 +17,7 @@ export const SeoForm = () => {
             <div>
               <span>{t('Title', { ns: 'news' })}</span>
               {' - '}
-              <span className='uppercase text-red-600'>{locale}</span>
+              <span className='text-uppercase text-danger'>{locale}</span>
             </div>
           }
           name={['seo', 'title']}
@@ -40,7 +40,7 @@ export const SeoForm = () => {
             <div>
               <span>{t('Description', { ns: 'news' })}</span>
               {' - '}
-              <span className='uppercase text-red-600'>{locale}</span>
+              <span className='text-uppercase text-danger'>{locale}</span>
             </div>
           }
           name={['seo', 'description']}
