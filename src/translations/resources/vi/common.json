@@ -61,5 +61,7 @@
   "Refresh captcha": "Mã xác thực mới",
   "Code": "Mã",
   "Publish": "Xuất bản",
-  "Unpublish": "Hủy xuất bản"
+  "Unpublish": "Hủy xuất bản",
+  "Published": "Đã xuất bản",
+  "Draft": "Nháp"
 }

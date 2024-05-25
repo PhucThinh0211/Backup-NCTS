@@ -26,3 +26,7 @@ export function getSelectedPageContentDetail() {
     (state) => state.selectedPageContentDetail
   );
 }
+
+export function getNewsTypes() {
+  return createSelector([getPageContentState], (state) => state.newsTypes);
+}

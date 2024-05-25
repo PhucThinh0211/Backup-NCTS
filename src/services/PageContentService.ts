@@ -17,6 +17,12 @@ export enum PageContentType {
   LOGIN = 'login',
   REGISTER = 'register',
 }
+
+export enum PageContentShowPlace {
+  INTRODUCTION = 'introduction',
+  SERVICES = 'services',
+}
+
 export interface PageContentsPagingResponse extends PagingResponse {
   items: PageContentResponse[];
 }
@@ -43,6 +49,8 @@ export interface PageContentResponse {
   tags: string | null;
   seoId: string | null;
   seo?: SeoResponse;
+  showInTheIntroduceSection: boolean;
+  showInTheServicesSection: boolean;
 }
 export interface CreateUpdatePageContentPayload {
   pageType: PageContentType;
@@ -56,7 +64,9 @@ export interface CreateUpdatePageContentPayload {
   tags?: string | null;
   published?: boolean;
   seoId?: string | null;
-  seo?: CreateUpdateSeoPayload
+  seo?: CreateUpdateSeoPayload;
+  showInTheIntroduceSection?: boolean;
+  showInTheServicesSection?: boolean;
 }
 export interface CreateUpdatePageContentTranslationPayload {
   language: string;
@@ -93,6 +103,12 @@ class PageContentController {
         options
       );
     },
+    publishPage: (id: string, options?: RequestOptions) => {
+      return HttpClient.post(`${apiUrl}/api/app/page/${id}/publish`, options);
+    },
+    unpublishPage: (id: string, options?: RequestOptions) => {
+      return HttpClient.post(`${apiUrl}/api/app/page/${id}/unpublish`, options);
+    }
   };
 
   public Put = {

@@ -62,5 +62,7 @@
   "Refresh captcha": "Refresh captcha",
   "Code": "Code",
   "Publish": "Publish",
-  "Unpublish": "Unpublish"
+  "Unpublish": "Unpublish",
+  "Published": "Published",
+  "Draft": "Draft"
 }
