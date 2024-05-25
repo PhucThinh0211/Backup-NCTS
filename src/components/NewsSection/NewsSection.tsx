@@ -31,7 +31,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import { getLanguage } from '@/store/persistState';
-import { NewsCard } from '@/components/CarouselCard';
+import { NewsCard } from '@/components/NewsCard';
 import { getLoading } from '@/store/loading';
 
 export const NewsSection = () => {
@@ -119,7 +119,7 @@ export const NewsSection = () => {
   }, [lang, selectedNewsTypeId]);
 
   return (
-    <section style={{ maxWidth: '100%', overflow: 'hidden' }}>
+    <section className='w-100 overflow-hidden'>
       <div className=' px-3 px-lg-5'>
         <SessionTitle title={t('News', { ns: 'home' })} />
         <div className='d-flex justify-content-center'>
@@ -165,7 +165,6 @@ export const NewsSection = () => {
       </div>
       <div
         className='my-4 slide-card'
-        style={{ maxWidth: 1600, marginInline: 'auto' }}
       >
         {isNewsLoading ? (
           <div className='w-100 d-flex mx-auto justify-content-center '>
@@ -176,7 +175,7 @@ export const NewsSection = () => {
         ) : !news?.items?.length ? (
           <div
             className='w-100 d-flex mx-auto justify-content-center align-items-center '
-            style={{ minHeight: 500 }}
+            style={{ height: 423 }}
           >
             <Empty />
           </div>

@@ -1,5 +1,5 @@
 import { QuickLookup } from '@/components';
-import { NewsCard } from '@/components/CarouselCard/NewsCard';
+import { NewsCard } from '@/components/NewsCard/NewsCard';
 import ServiceCard from '@/components/ServiceCard/ServiceCard';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import '@/pages/Home/HomeStyle.css'
