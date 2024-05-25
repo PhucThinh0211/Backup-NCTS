@@ -173,7 +173,7 @@ export const NewsSection = () => {
           )}
         </div>
       </div>
-      <div className="my-4 slide-card">
+      <div className="my-2 slide-card">
         {isNewsLoading ? (
           <div className="w-100 d-flex mx-auto justify-content-center ">
             {new Array(3).fill(null).map((_, index) => (
