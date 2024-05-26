@@ -7,6 +7,15 @@
         &:hover {
           background-color: #ffa600ca;
         }
+    }
+    .hero-carousel-dot-list-style {
+        margin: 10px;
+        li.react-multi-carousel-dot--active {
+          button {
+            background-color: #ffa500;
+            border-color: #ffa500;
+          }
+        }
       }
 }
 

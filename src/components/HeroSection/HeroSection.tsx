@@ -7,6 +7,8 @@ import { Banner } from './components/Banner';
 import { getBanners } from '@/store/publicCms';
 import { useAppSelector } from '@/store/hooks';
 import './Banners.scss';
+import { useWindowSize } from '@/hooks/useWindowSize';
+import { bootstrapBreakpoints } from '@/common';
 
 const responsive = {
   superLargeDesktop: {
@@ -31,6 +33,7 @@ const responsive = {
 
 export const HeroSection = () => {
   const banners = useAppSelector(getBanners());
+  const [innerWidth] = useWindowSize();
 
   return (
     !!banners?.length && (
@@ -38,7 +41,7 @@ export const HeroSection = () => {
         <Carousel
           swipeable={true}
           draggable={false}
-          showDots={false}
+          showDots={innerWidth <= bootstrapBreakpoints.md}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
           infinite={true}
