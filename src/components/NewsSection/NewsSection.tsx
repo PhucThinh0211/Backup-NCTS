@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { parse } from 'node-html-parser';
 import dayjs from 'dayjs';
-import { Dropdown, Empty, Radio, RadioChangeEvent, Space, Typography } from 'antd';
-import { LeftOutlined, RightOutlined, DownOutlined } from '@ant-design/icons';
+import { Dropdown, Empty, Radio, RadioChangeEvent, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './NewsSection.scss';
@@ -77,7 +77,7 @@ const responsive = {
 export const NewsSection = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['home']);
-  const [innerWidth, innerHeight] = useWindowSize();
+  const [innerWidth] = useWindowSize();
 
   const lang = useAppSelector(getLanguage());
   const isNewsLoading = useAppSelector(getLoading(GettingContentListLoadingKey));
@@ -106,15 +106,13 @@ export const NewsSection = () => {
     [selectedNewsTypeId, allNewsTypesOptions]
   );
 
-  const arrowsSettings = {
-    arrows: true,
-    nextArrow: <RightOutlined />,
-    prevArrow: <LeftOutlined />,
-  };
-
   const onChange = (e: RadioChangeEvent) => {
     dispatch(publicCmsActions.setSelectedNewsTypeId(e.target.value));
   };
+
+  const selectBearkingNews = () => {
+    dispatch(publicCmsActions.setSelectedNewsTypeId(undefined));
+  }
 
   useEffect(() => {
     dispatch(
@@ -149,27 +147,40 @@ export const NewsSection = () => {
               onChange={onChange}
             />
           ) : (
-            <Dropdown
-              menu={{
-                items: allNewsTypesOptions.map((option) => ({
-                  label: option.label,
-                  key: option.value || 'all',
-                })),
-                selectable: true,
-                selectedKeys: [selectedNewsTypeId || 'all'],
-                onSelect: ({ key }) => {
-                  dispatch(
-                    publicCmsActions.setSelectedNewsTypeId(key && key !== 'all' ? key : undefined)
-                  );
-                },
-              }}>
-              <Typography.Text strong>
-                <Space>
-                  {selectedNewsType?.label}
-                  <DownOutlined />
-                </Space>
-              </Typography.Text>
-            </Dropdown>
+            <Space className="w-100">
+              <div
+                className={`btn btn-sm text-light rounded-5 ${
+                  selectedNewsTypeId ? 'bg-secondary' : 'bg-info active'
+                }`}
+                onClick={selectBearkingNews}
+              >
+                {t('Breaking News', { ns: 'home' })}
+              </div>
+              <Dropdown
+                menu={{
+                  items: allNewsTypesOptions.map((option) => ({
+                    label: option.value ? option.label : t('More', { ns: 'common' }),
+                    key: option.value || 'all',
+                  })),
+                  selectable: true,
+                  selectedKeys: [selectedNewsTypeId || 'all'],
+                  onSelect: ({ key }) => {
+                    dispatch(
+                      publicCmsActions.setSelectedNewsTypeId(key && key !== 'all' ? key : undefined)
+                    );
+                  },
+                }}>
+                <div
+                  className={`btn btn-sm text-light rounded-5 ${
+                    selectedNewsTypeId ? 'bg-info active' : 'bg-secondary'
+                  }`}>
+                  <Space>
+                    {selectedNewsTypeId ? selectedNewsType?.label : t('More', { ns: 'common' })}
+                    <DownOutlined />
+                  </Space>
+                </div>
+              </Dropdown>
+            </Space>
           )}
         </div>
       </div>
