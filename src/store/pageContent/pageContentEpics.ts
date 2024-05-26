@@ -78,6 +78,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
             const createTranslationInput = {
               language: locale,
               title: createdPageContent.title,
+              description: createdPageContent.description,
               content: createdPageContent.content,
               tags: createdPageContent.tags,
             };
@@ -102,7 +103,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
                       }).pipe(
                         mergeMap((pageContentsResult) => {
                           Utils.successNotification();
-                          return [pageContentActions.setPageContents(pageContentsResult)];
+                          return [pageContentActions.setPageContents(pageContentsResult), pageContentActions.setSelectedPageContent(createdPageContent)];
                         }),
                         catchError((errors) => {
                           Utils.errorHandling(errors);
@@ -123,7 +124,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       pageContentActions.setPageContents(pageContentsResult),
-                      pageContentActions.setSelectedPageContent(undefined),
+                      pageContentActions.setSelectedPageContent(createdPageContent),
                     ];
                   }),
                   catchError((errors) => {
@@ -167,6 +168,7 @@ const updatePageContentRequest$: RootEpic = (action$, state$) => {
             const createTranslationInput = {
               language: locale,
               title: pageContent.title,
+              description: pageContent.description,
               content: pageContent.content || null,
               tags: pageContent.tags || null,
             };

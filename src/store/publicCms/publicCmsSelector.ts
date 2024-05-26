@@ -26,3 +26,11 @@ export function getSelectedNewsTypeId() {
 export function getCaptcha() {
   return createSelector([getState], (state) => state.captcha);
 }
+
+export function getServicePages() {
+  return createSelector([getState], (state) => state.servicePages || []);
+}
+
+export function getIntroducePage() {
+  return createSelector([getState], (state) => state.introducePage);
+}

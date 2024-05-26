@@ -107,8 +107,6 @@
 
 .service-session{
   background-color: #F7F7F7;
-  margin-top: 5%;
-  padding-bottom: 5%;
 }
 
 /* Để tránh chay global cần bọc ant vào trong 1 classNam */
@@ -139,6 +137,7 @@
   height: 300px;
   border-radius: 50%;
   border: 10px solid white;
+  object-fit: cover;
 }
 
 .service-img:hover{
@@ -152,6 +151,7 @@
   }
 .service-card h4 {
   color: #006E9C;
+  font-size: 20px;
 }
 
 .service-card:hover h4,

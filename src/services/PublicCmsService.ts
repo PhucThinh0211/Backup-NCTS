@@ -38,6 +38,12 @@ class PublicCmsController {
     getCaptcha: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/captcha`, options);
     },
+    getServicePages: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/service-pages`, options);
+    },
+    getIntroducePage: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/introduce-page`, options);
+    },
   };
 }
 

@@ -20,7 +20,7 @@ export const PageContentListHeader = () => {
     dispatch(pageContentActions.setSelectedPageContentDetail(undefined));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/pages/create');
+    navigate('/admin/pages/create-or-edit');
   };
 
   return (

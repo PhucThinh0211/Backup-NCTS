@@ -134,7 +134,7 @@ export const NewsSection = () => {
   }, [lang, selectedNewsTypeId]);
 
   return (
-    <section className="w-100 overflow-hidden">
+    <section className="w-100 overflow-hidden pb-5">
       <div className=" px-3 px-lg-5">
         <SessionTitle title={t('News', { ns: 'home' })} />
         <div className="d-flex justify-content-center">

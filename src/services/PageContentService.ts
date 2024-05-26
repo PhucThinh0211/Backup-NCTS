@@ -39,7 +39,9 @@ export interface PageContentResponse {
   published: boolean;
   pageType: PageContentType | null;
   codeType: string | null;
+  photoUrl: string | null;
   title: string | null;
+  description: string | null;
   slug: string | null;
   language: string | null;
   script: string | null;
@@ -55,6 +57,7 @@ export interface PageContentResponse {
 export interface CreateUpdatePageContentPayload {
   pageType: PageContentType;
   title: string;
+  description: string;
   slug: string;
   codeType?: string | null;
   script?: string | null;
