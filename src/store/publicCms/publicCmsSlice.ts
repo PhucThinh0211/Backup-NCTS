@@ -6,9 +6,9 @@ import { BannerResponse } from '@/services/BannerService';
 import { CaptchaResponse } from '@/services/PublicCmsService';
 import { ContentsPagingResponse } from '@/services/ContentService';
 import {
-  NewsTypeResponse,
   NewsTypesPagingResponse,
 } from '@/services/NewsTypeService';
+import { PageContentResponse } from '@/services/PageContentService';
 
 interface publicCmsState {
   company?: CompanyResponse;
@@ -18,11 +18,14 @@ interface publicCmsState {
   newsTypes?: NewsTypesPagingResponse;
   selectedNewsTypeId?: string;
   captcha?: CaptchaResponse;
+  servicePages: PageContentResponse[];
+  introducePage?: PageContentResponse;
 }
 
 const initialState: publicCmsState = {
   menuList: [],
   banners: [],
+  servicePages: []
 };
 
 const publicCmsSlice = createSlice({
@@ -56,6 +59,14 @@ const publicCmsSlice = createSlice({
     setCaptcha: (state, action) => {
       state.captcha = action.payload;
     },
+    getServicePagesRequest: (state) => {},
+    setServicePages: (state, action) => {
+      state.servicePages = action.payload;
+    },
+    getIntroducePageRequest: (state) => {},
+    setIntroducePage: (state, action) => {
+      state.introducePage = action.payload;
+    }
   },
 });
 

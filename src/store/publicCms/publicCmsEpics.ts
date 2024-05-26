@@ -1,4 +1,5 @@
 import { catchError, concat, filter, switchMap } from 'rxjs';
+
 import { RootEpic } from '../types';
 import { publicCmsActions } from './publicCmsSlice';
 import { startLoading, stopLoading } from '../loading';
@@ -7,8 +8,10 @@ import {
   GettingCaptchaLoadingKey,
   GettingCompanyLoadingKey,
   GettingContentListLoadingKey,
+  GettingIntroducePageLoadingKey,
   GettingMenuListLoadingKey,
   GettingNewsTypeListLoadingKey,
+  GettingServicePagesLoadingKey,
 } from '@/common';
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
@@ -53,6 +56,7 @@ const getMenuListRequest$: RootEpic = (action$) => {
     })
   );
 };
+
 const getBannerListRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getBannerListRequest.match),
@@ -102,6 +106,7 @@ const getNewsListRequest$: RootEpic = (action$) => {
     })
   );
 };
+
 const getNewsTypesRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getNewsTypesRequest.match),
@@ -147,6 +152,48 @@ const getCaptchaRequest$: RootEpic = (action$) => {
   );
 };
 
+const getServicePagesRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getServicePagesRequest.match),
+    switchMap(() => {
+      return concat(
+        [startLoading({ key: GettingServicePagesLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getServicePages().pipe(
+          switchMap((pages) => {
+            return [publicCmsActions.setServicePages(pages)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setServicePages([])];
+          })
+        ),
+        [stopLoading({ key: GettingServicePagesLoadingKey })]
+      );
+    })
+  );
+};
+
+const getIntroducePageRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getIntroducePageRequest.match),
+    switchMap(() => {
+      return concat(
+        [startLoading({ key: GettingIntroducePageLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getIntroducePage().pipe(
+          switchMap((pages) => {
+            return [publicCmsActions.setIntroducePage(pages)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setIntroducePage(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingIntroducePageLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -154,4 +201,6 @@ export const publicCmsEpics = [
   getCaptchaRequest$,
   getNewsListRequest$,
   getNewsTypesRequest$,
+  getServicePagesRequest$,
+  getIntroducePageRequest$
 ];

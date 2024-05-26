@@ -78,6 +78,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
             const createTranslationInput = {
               language: locale,
               title: createdPageContent.title,
+              description: createdPageContent.description,
               content: createdPageContent.content,
               tags: createdPageContent.tags,
             };
@@ -167,6 +168,7 @@ const updatePageContentRequest$: RootEpic = (action$, state$) => {
             const createTranslationInput = {
               language: locale,
               title: pageContent.title,
+              description: pageContent.description,
               content: pageContent.content || null,
               tags: pageContent.tags || null,
             };

@@ -43,3 +43,5 @@ export const SavingNewsTypeLoadingKey = 'SavingNewsTypeLoadingKey';
 export const RemovingNewsTypeLoadingKey = 'RemovingNewsTypeLoadingKey';
 
 export const GettingCaptchaLoadingKey = 'GettingCaptchaLoadingKey';
+export const GettingServicePagesLoadingKey = 'GettingServicePagesLoadingKey';
+export const GettingIntroducePageLoadingKey = 'GettingIntroducePageLoadingKey';

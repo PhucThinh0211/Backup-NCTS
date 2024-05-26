@@ -79,7 +79,7 @@ export const WebLayout = () => {
               <i className="fa-solid fa-magnifying-glass fa-xl" />
             </Button> */}
             <a href={`tel:${company?.phone}`}>
-              <Button danger shape='circle'>
+              <Button danger shape="circle">
                 <i className="fa-solid fa-phone"></i>
               </Button>
             </a>
@@ -130,7 +130,8 @@ export const WebLayout = () => {
           alignItems: 'center',
           backgroundColor: 'orange',
           paddingBlock: 14,
-        }}>
+        }}
+        className="px-3 px-lg-5">
         <Space direction="horizontal">
           <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
         </Space>

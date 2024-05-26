@@ -385,6 +385,28 @@ export const CreateUpdatePageContent = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
+                  label={
+                    <div>
+                      <span>{t('Description', { ns: 'news' })}</span>
+                      {' - '}
+                      <span className="text-uppercase text-danger">{locale}</span>
+                    </div>
+                  }
+                  name="description"
+                  rules={[
+                    {
+                      max: 2000,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 2000,
+                      }),
+                    },
+                  ]}>
+                  <Input.TextArea />
+                </Form.Item>
+                <Form.Item
                   label={t('Show in', { ns: 'pageContent' })}
                   name='pageShowPlace'
                   rules={[

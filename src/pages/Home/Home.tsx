@@ -1,6 +1,6 @@
 import { QuickLookup } from '@/components';
 import { NewsCard } from '@/components/NewsCard/NewsCard';
-import ServiceCard from '@/components/ServiceCard/ServiceCard';
+import {ServiceCard} from '@/components';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import '@/pages/Home/HomeStyle.css'
 import { Carousel } from 'antd';

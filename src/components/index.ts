@@ -12,3 +12,4 @@ export * from './SearchForm';
 export * from './HeroSection';
 export * from './NewsCard';
 export * from './ProgressBar';
+export * from './ServiceCard';
