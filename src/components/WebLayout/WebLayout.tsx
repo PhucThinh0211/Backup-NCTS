@@ -122,7 +122,13 @@ export const WebLayout = () => {
             <Outlet />
           </div>
           <FloatButton.Group shape="circle" style={{ right: 24 }}>
-            <FloatButton.BackTop duration={100} visibilityHeight={200} type='primary' icon={<UpOutlined />} />
+            <FloatButton.BackTop
+              duration={100}
+              visibilityHeight={200}
+              type="primary"
+              icon={<UpOutlined />}
+              style={{ opacity: 0.7 }}
+            />
           </FloatButton.Group>
         </Content>
         <AppPanelNav />
