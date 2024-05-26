@@ -18,9 +18,8 @@ export const SearchForm = () => {
       style={{
         width: '100%',
         height: 80,
-        backgroundColor: 'green',
       }}
-      className="d-flex align-items-center px-3 px-lg-5">
+      className="d-flex align-items-center px-3 px-lg-5 bg-info">
       <div style={{ flex: 1, paddingTop: 10 }}>
         <Form layout="inline" autoFocus>
           <Form.Item style={{ flex: 1 }}>
