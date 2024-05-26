@@ -20,8 +20,10 @@ import './webLayout.scss';
 import { AppPanelNav } from './AppPanelNav';
 import { HeroSection } from '../HeroSection';
 import { SearchForm } from '../SearchForm';
+import { ProgressBar } from '../ProgressBar';
+import { getLoading } from '@/store/loading';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 export const WebLayout = () => {
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ export const WebLayout = () => {
   const searchVisibility = useAppSelector(getSearchVisibility());
   const panelNavVisibility = useAppSelector(getPanelVisibility());
   const location = useLocation();
+  const isLoading = useAppSelector(getLoading());
 
   useEffect(() => {
     dispatch(publicCmsActions.getCompanyRequest({}));
@@ -55,6 +58,7 @@ export const WebLayout = () => {
 
   return (
     <Layout>
+      <ProgressBar isAnimating={isLoading} />
       <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
         <div className="h-100">
           <Link to="/">
