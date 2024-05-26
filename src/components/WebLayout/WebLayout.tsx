@@ -75,14 +75,19 @@ export const WebLayout = () => {
             {t('Hotline', { ns: 'common' })}: {company?.phone}
           </span>
           <Space className="d-md-none">
-            <Button type="text" shape="circle" onClick={searchToggle}>
+            {/* <Button type="text" shape="circle" onClick={searchToggle}>
               <i className="fa-solid fa-magnifying-glass fa-xl" />
-            </Button>
+            </Button> */}
             <a href={`tel:${company?.phone}`}>
               <Button danger shape='circle'>
                 <i className="fa-solid fa-phone"></i>
               </Button>
             </a>
+            <Link to="/dang-nhap">
+              <Button type="primary" shape="circle" size="middle">
+                <i className="fa-regular fa-user fa-lg" />
+              </Button>
+            </Link>
             <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
               <i className="fa-solid fa-bars fa-lg"></i>
             </Button>

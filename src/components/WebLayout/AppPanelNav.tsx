@@ -5,7 +5,7 @@ import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getActiveMenuKey, getPanelVisibility, persistStateActions } from '@/store/persistState';
+import { getActiveMenuKey, getPanelVisibility, getSearchVisibility, persistStateActions } from '@/store/persistState';
 
 import { getMenuList } from '@/store/publicCms';
 import { Link, useParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ export const AppPanelNav = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const panelNavVisibility = useAppSelector(getPanelVisibility());
+  const searchVisibility = useAppSelector(getSearchVisibility());
   const menus = useAppSelector(getMenuList());
   const acitveKey = useAppSelector(getActiveMenuKey());
   const { '*': slug } = useParams();
@@ -106,6 +107,11 @@ export const AppPanelNav = () => {
     dispatch(persistStateActions.setPanelNavVisibility(false));
   };
 
+  const searchToggle = () => {
+    dispatch(persistStateActions.setSearchVisible(!searchVisibility));
+    dispatch(persistStateActions.setPanelNavVisibility(false));
+  };
+
   return (
     <Drawer
       title={null}
@@ -120,6 +126,9 @@ export const AppPanelNav = () => {
             <Link to='/dang-nhap'>
               <Button type='primary' onClick={panelNavToggle}>{t('Sign In', { ns: 'common' })}</Button>
             </Link>
+            <Button type="text" shape="circle" onClick={searchToggle}>
+              <i className="fa-solid fa-magnifying-glass fa-xl" />
+            </Button>
             <SwitchLang />
           </Space>
         </div>
