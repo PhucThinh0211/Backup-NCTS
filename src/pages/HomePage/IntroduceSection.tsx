@@ -7,6 +7,7 @@ import { getLanguage } from '@/store/persistState';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import logo from '@/assets/logo.png';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 
 const partner =[
   {
@@ -44,9 +45,9 @@ export const IntroduceSection = () => {
             ))}
           </div>
           <Link className="d-flex justify-content-start mt-5" to="/">
-            <button type="button" className="btn-custom">
-              <h5 className="text-white mb-0">{t('See more', { ns: 'home' })}</h5>
-            </button>
+            <Button size='large' type='primary' className='rounded-5'>
+              {t('See more', { ns: 'home' })}
+            </Button>
           </Link>
         </div>
       </div>

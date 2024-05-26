@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { Button, Flex, Layout, Space, Typography } from 'antd';
+import { Button, Flex, FloatButton, Layout, Space, Typography } from 'antd';
+import { UpOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
@@ -120,6 +121,15 @@ export const WebLayout = () => {
           <div style={{ backgroundColor: '#fefefe' }}>
             <Outlet />
           </div>
+          <FloatButton.Group shape="circle" style={{ right: 24 }}>
+            <FloatButton.BackTop
+              duration={100}
+              visibilityHeight={200}
+              type="primary"
+              icon={<UpOutlined />}
+              style={{ opacity: 0.7 }}
+            />
+          </FloatButton.Group>
         </Content>
         <AppPanelNav />
       </Layout>
