@@ -17,6 +17,7 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@reduxjs/toolkit": "^2.2.2",
+    "@tanem/react-nprogress": "^5.0.51",
     "antd": "^5.15.3",
     "bootstrap": "^5.3.3",
     "i18next": "^23.10.1",

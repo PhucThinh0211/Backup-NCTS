@@ -20,8 +20,10 @@ import './webLayout.scss';
 import { AppPanelNav } from './AppPanelNav';
 import { HeroSection } from '../HeroSection';
 import { SearchForm } from '../SearchForm';
+import { ProgressBar } from '../ProgressBar';
+import { getLoading } from '@/store/loading';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 export const WebLayout = () => {
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ export const WebLayout = () => {
   const searchVisibility = useAppSelector(getSearchVisibility());
   const panelNavVisibility = useAppSelector(getPanelVisibility());
   const location = useLocation();
+  const isLoading = useAppSelector(getLoading());
 
   useEffect(() => {
     dispatch(publicCmsActions.getCompanyRequest({}));
@@ -55,6 +58,7 @@ export const WebLayout = () => {
 
   return (
     <Layout>
+      <ProgressBar isAnimating={isLoading} />
       <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
         <div className="h-100">
           <Link to="/">
@@ -71,14 +75,19 @@ export const WebLayout = () => {
             {t('Hotline', { ns: 'common' })}: {company?.phone}
           </span>
           <Space className="d-md-none">
-            <Button type="text" shape="circle" onClick={searchToggle}>
+            {/* <Button type="text" shape="circle" onClick={searchToggle}>
               <i className="fa-solid fa-magnifying-glass fa-xl" />
-            </Button>
+            </Button> */}
             <a href={`tel:${company?.phone}`}>
               <Button danger shape='circle'>
                 <i className="fa-solid fa-phone"></i>
               </Button>
             </a>
+            <Link to="/dang-nhap">
+              <Button type="primary" shape="circle" size="middle">
+                <i className="fa-regular fa-user fa-lg" />
+              </Button>
+            </Link>
             <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
               <i className="fa-solid fa-bars fa-lg"></i>
             </Button>
