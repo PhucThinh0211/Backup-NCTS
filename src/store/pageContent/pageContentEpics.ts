@@ -102,7 +102,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
                       }).pipe(
                         mergeMap((pageContentsResult) => {
                           Utils.successNotification();
-                          return [pageContentActions.setPageContents(pageContentsResult)];
+                          return [pageContentActions.setPageContents(pageContentsResult), pageContentActions.setSelectedPageContent(createdPageContent)];
                         }),
                         catchError((errors) => {
                           Utils.errorHandling(errors);
@@ -123,7 +123,7 @@ const createPageContentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       pageContentActions.setPageContents(pageContentsResult),
-                      pageContentActions.setSelectedPageContent(undefined),
+                      pageContentActions.setSelectedPageContent(createdPageContent),
                     ];
                   }),
                   catchError((errors) => {

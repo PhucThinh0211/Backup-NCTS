@@ -90,7 +90,7 @@ export const PageContentListTable = () => {
     dispatch(pageContentActions.setSelectedPageContent(pageContent));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/pages/edit');
+    navigate('/admin/pages/create-or-edit');
   };
 
   const confirmRemovePageContent = (pageContent: PageContentResponse) => {
