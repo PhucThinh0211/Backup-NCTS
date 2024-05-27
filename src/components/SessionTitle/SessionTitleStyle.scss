@@ -57,10 +57,13 @@
   }
 }
 @include breakpoint(sm) {
+  .session-title {
+    height: 60px;
+  }
   .bg-layer {
-    font-size: 4rem;
+    font-size: 3rem;
   }
   .title-layer {
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 }

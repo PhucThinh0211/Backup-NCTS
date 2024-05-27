@@ -32,12 +32,12 @@ export const IntroduceSection = () => {
   }, [lang]);
 
   return (
-    <div className="py-5">
+    <div className="py-2">
       <SessionTitle title={t('Instruction', { ns: 'home' })} />
       <div className="container aboutUs-content my-5">
-        <img className="" src={intro?.photoUrl || logo} alt="Intro" />
+        <img className="" src={intro?.photoUrl || logo} alt="Intro" style={{ minHeight: 250 }} />
         <div className="">
-          <h5>{intro?.title}</h5>
+          <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
           <p>{intro?.description}</p>
           <div className="partner d-flex flex-row gap-3">
             {partner.map((i, index) => (
