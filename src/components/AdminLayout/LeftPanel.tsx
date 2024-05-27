@@ -9,6 +9,7 @@ import {
   LeftOutlined,
   HomeOutlined,
   TagsOutlined,
+  SnippetsOutlined,
 } from '@ant-design/icons';
 import { LeftPanelWidth, MenuItem } from '@/common/define';
 import { appActions, getActiveMenu } from '@/store/app';
@@ -69,6 +70,15 @@ export const LeftPanel = (props: SiderProps) => {
         />
       ),
       key: '/admin/news-type',
+    },
+    {
+      label: t('Document types'),
+      icon: (
+        <SnippetsOutlined
+          style={{ fontSize: collapsed ? 16 : 20, color: 'white' }}
+        />
+      ),
+      key: '/admin/document-type',
     },
     {
       label: t('All Files'),

@@ -8,6 +8,7 @@ import department from './department.json';
 import pageContent from './pageContent.json';
 import home from './home.json';
 import newsType from './newsType.json';
+import documentType from './documentType.json';
 
 export default {
   banner,
@@ -20,4 +21,5 @@ export default {
   department,
   pageContent,
   newsType,
+  documentType,
 };

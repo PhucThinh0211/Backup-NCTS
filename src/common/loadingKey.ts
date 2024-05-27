@@ -42,6 +42,12 @@ export const GettingNewsTypeListLoadingKey = 'GettingNewsTypeListLoadingKey';
 export const SavingNewsTypeLoadingKey = 'SavingNewsTypeLoadingKey';
 export const RemovingNewsTypeLoadingKey = 'RemovingNewsTypeLoadingKey';
 
+export const GettingDocumentTypeLoadingKey = 'GettingDocumentTypeLoadingKey';
+export const GettingDocumentTypeListLoadingKey =
+  'GettingDocumentTypeListLoadingKey';
+export const SavingDocumentTypeLoadingKey = 'SavingDocumentTypeLoadingKey';
+export const RemovingDocumentTypeLoadingKey = 'RemovingDocumentTypeLoadingKey';
+
 export const GettingCaptchaLoadingKey = 'GettingCaptchaLoadingKey';
 export const GettingServicePagesLoadingKey = 'GettingServicePagesLoadingKey';
 export const GettingIntroducePageLoadingKey = 'GettingIntroducePageLoadingKey';
