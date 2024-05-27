@@ -36,8 +36,8 @@ export const IntroduceSection = () => {
       <SessionTitle title={t('Instruction', { ns: 'home' })} />
       <div className="container aboutUs-content my-5">
         <div className="row">
-          <img className="col-5 col-md-12 pb-md-3" src={intro?.photoUrl || logo} alt="Intro" style={{ minHeight: 250 }} />
-          <div className="col-7 col-md-12">
+          <img className="col-lg-5 col-md-12 pb-md-3" src={intro?.photoUrl || logo} alt="Intro" style={{ minHeight: 250 }} />
+          <div className="col-lg-7 col-md-12">
             <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
             <p>{intro?.description}</p>
             <div className="partner d-flex flex-row gap-3">
