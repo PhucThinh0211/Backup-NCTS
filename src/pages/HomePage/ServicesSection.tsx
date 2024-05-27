@@ -11,6 +11,7 @@ import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import { ServiceCard } from '@/components';
 import logo from '@/assets/logo.png';
 import { useWindowSize } from '@/hooks/useWindowSize';
+import { uploadedPhotoUrl } from '@/common';
 
 const responsive = {
   desktopv1: {
@@ -93,7 +94,7 @@ export const ServicesSection = () => {
           {services.map((item) => (
             <ServiceCard
               key={item.id}
-              img={item.photoUrl || logo}
+              img={item.photoUrl ? uploadedPhotoUrl(item.photoUrl) : logo}
               url={item.slug || '/'}
               title={item.title || ''}
             />
