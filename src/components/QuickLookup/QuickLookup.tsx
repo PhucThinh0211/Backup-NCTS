@@ -69,7 +69,8 @@ export const QuickLookup = () => {
   }, []);
 
   return (
-    <div id='quickLookup'>
+    <div className='quickLookup bg-opacity-25'>
+      <div className='lookup-layer'></div>
       {innerWidth > bootstrapBreakpoints.md ? (
         <div className='px-2'>
           <Tabs
