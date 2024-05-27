@@ -50,17 +50,20 @@
 
 @include breakpoint(md) {
   .bg-layer {
-    font-size: 5rem;
-  }
-  .title-layer {
-    font-size: 3rem;
-  }
-}
-@include breakpoint(sm) {
-  .bg-layer {
     font-size: 4rem;
   }
   .title-layer {
-    font-size: 2.4rem;
+    font-size: 2rem;
+  }
+}
+@include breakpoint(sm) {
+  .session-title {
+    height: 60px;
+  }
+  .bg-layer {
+    font-size: 3rem;
+  }
+  .title-layer {
+    font-size: 2rem;
   }
 }

@@ -32,23 +32,25 @@ export const IntroduceSection = () => {
   }, [lang]);
 
   return (
-    <div className="py-5">
+    <div className="py-2">
       <SessionTitle title={t('Instruction', { ns: 'home' })} />
       <div className="container aboutUs-content my-5">
-        <img className="" src={intro?.photoUrl || logo} alt="Intro" />
-        <div className="">
-          <h5>{intro?.title}</h5>
-          <p>{intro?.description}</p>
-          <div className="partner d-flex flex-row gap-3">
-            {partner.map((i, index) => (
-              <img src={i.url} key={index} />
-            ))}
+        <div className="row">
+          <img className="col-lg-5 col-md-12 pb-md-3" src={intro?.photoUrl || logo} alt="Intro" style={{ minHeight: 250 }} />
+          <div className="col-lg-7 col-md-12">
+            <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
+            <p>{intro?.description}</p>
+            <div className="partner d-flex flex-row gap-3">
+              {partner.map((i, index) => (
+                <img src={i.url} key={index} />
+              ))}
+            </div>
+            <Link className="d-flex justify-content-start mt-5" to="/">
+              <Button size='large' type='primary' className='rounded-5'>
+                {t('See more', { ns: 'home' })}
+              </Button>
+            </Link>
           </div>
-          <Link className="d-flex justify-content-start mt-5" to="/">
-            <Button size='large' type='primary' className='rounded-5'>
-              {t('See more', { ns: 'home' })}
-            </Button>
-          </Link>
         </div>
       </div>
     </div>

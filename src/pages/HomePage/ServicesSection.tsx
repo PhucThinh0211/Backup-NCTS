@@ -10,6 +10,7 @@ import { getServicePages, publicCmsActions } from '@/store/publicCms';
 import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import { ServiceCard } from '@/components';
 import logo from '@/assets/logo.png';
+import { useWindowSize } from '@/hooks/useWindowSize';
 
 const responsive = {
   desktopv1: {
@@ -61,24 +62,25 @@ export const ServicesSection = () => {
   const { t } = useTranslation();
   const services = useAppSelector(getServicePages());
   const lang = useAppSelector(getLanguage());
+  const [innerWid] = useWindowSize();
 
   useEffect(() => {
     dispatch(publicCmsActions.getServicePagesRequest());
   }, [lang]);
 
   return (
-    <div className="service-session py-5">
+    <div className="service-session py-2">
       <SessionTitle title={t('Quick Access', { ns: 'home' })} />
       <div className="container w-100 justify-content-evenly">
         <Carousel
           swipeable={true}
           draggable={false}
-          showDots={false}
+          showDots={innerWid <= 992}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
           infinite={true}
-          // autoPlay={this.props.deviceType !== 'mobile' ? true : false}
-          autoPlaySpeed={1000}
+          autoPlay={innerWid <= 992 ? true : false}
+          autoPlaySpeed={4000}
           keyBoardControl={true}
           customTransition="all .5"
           transitionDuration={500}
