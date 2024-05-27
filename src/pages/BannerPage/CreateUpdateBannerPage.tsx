@@ -1,6 +1,17 @@
 import { useEffect } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Spin, Typography } from 'antd';
+import {
+  Button,
+  Col,
+  ColorPicker,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Select,
+  Spin,
+  Typography,
+} from 'antd';
 import {
   ArrowLeftOutlined,
   MinusCircleOutlined,
@@ -22,6 +33,9 @@ import { GettingBannerLoadingKey, SavingBannerLoadingKey } from '@/common';
 import { BannerPhotoUrlUploader } from './BannerPhotoUrlUploader';
 import { getLocale } from '@/store/persistState';
 import { BannerHorizontal, BannerVertical } from '@/services/BannerService';
+import Utils from '@/utils';
+
+const defaultColor = '#ffbb29';
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -90,6 +104,10 @@ export const CreateUpdateBannerPage = () => {
     const inputData = {
       ...values,
       photoUrl: bannerPhotoUrl,
+      titleColor: values.titleColor || defaultColor,
+      descriptionColor: values.descriptionColor || defaultColor,
+      buttonColor: values.buttonColor || defaultColor,
+      buttonLabelColor: values.buttonLabelColor || defaultColor,
     };
     if (selectedBanner) {
       // prettier-ignore
@@ -127,10 +145,20 @@ export const CreateUpdateBannerPage = () => {
           </Button>
         </div>
       </div>
-      <Form form={form} layout='vertical' onFinish={handleSaveBanner}>
+      <Form
+        form={form}
+        layout='vertical'
+        onFinish={handleSaveBanner}
+        initialValues={{
+          titleColor: defaultColor,
+          descriptionColor: defaultColor,
+          buttonColor: defaultColor,
+          buttonLabelColor: defaultColor,
+        }}
+      >
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className='mt-2'>
-            <Col span={16}>
+            <Col span={24} md={16}>
               <div className='w-full border-b-gray-500 rounded-2 bg-white p-4 shadow-sm'>
                 <Form.Item
                   name='upload'
@@ -146,65 +174,21 @@ export const CreateUpdateBannerPage = () => {
                 >
                   <BannerPhotoUrlUploader onImageDelete={onImageDelete} />
                 </Form.Item>
-                <Form.Item
-                  label={
-                    <div>
-                      <span>{t('Title', { ns: 'banner' })}</span>
-                      {' - '}
-                      <span className='text-uppercase text-danger'>
-                        {locale}
-                      </span>
-                    </div>
-                  }
-                  name='title'
-                  rules={[
-                    { required: true, message: t('Title required') },
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-                <Row gutter={[10, 10]}>
-                  <Col sm={24} md={12}>
+                <Row gutter={[5, 5]}>
+                  <Col flex={'auto'}>
                     <Form.Item
                       label={
                         <div>
-                          <span>{t('Button label', { ns: 'banner' })}</span>
+                          <span>{t('Title', { ns: 'banner' })}</span>
                           {' - '}
                           <span className='text-uppercase text-danger'>
                             {locale}
                           </span>
                         </div>
                       }
-                      name='buttonLabel'
+                      name='title'
                       rules={[
-                        {
-                          max: 50,
-                          min: 0,
-                          message: t('StringRange', {
-                            ns: 'common',
-                            range1: 0,
-                            range2: 50,
-                          }),
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col sm={24} md={12}>
-                    <Form.Item
-                      label={t('Button link', { ns: 'banner' })}
-                      name='linkButton'
-                      rules={[
+                        { required: true, message: t('Title required') },
                         {
                           max: 500,
                           min: 0,
@@ -219,32 +203,145 @@ export const CreateUpdateBannerPage = () => {
                       <Input />
                     </Form.Item>
                   </Col>
+                  <Col>
+                    <Form.Item
+                      label={
+                        <span style={{ display: 'none' }}>Title color</span>
+                      }
+                      name={'titleColor'}
+                      getValueFromEvent={Utils.getHexStringFromEvent}
+                    >
+                      <ColorPicker showText />
+                    </Form.Item>
+                  </Col>
                 </Row>
-                <Form.Item
-                  label={
-                    <div>
-                      <span>{t('Description', { ns: 'banner' })}</span>
-                      {' - '}
-                      <span className='text-uppercase text-danger'>
-                        {locale}
-                      </span>
-                    </div>
-                  }
-                  name='description'
-                  rules={[
-                    {
-                      max: 2000,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 2000,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input.TextArea />
-                </Form.Item>
+                <Row gutter={[5, 5]}>
+                  <Col flex={'auto'}>
+                    <Form.Item
+                      label={
+                        <div>
+                          <span>{t('Description', { ns: 'banner' })}</span>
+                          {' - '}
+                          <span className='text-uppercase text-danger'>
+                            {locale}
+                          </span>
+                        </div>
+                      }
+                      name='description'
+                      rules={[
+                        {
+                          max: 2000,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 2000,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input.TextArea />
+                    </Form.Item>
+                  </Col>
+                  <Col>
+                    <Form.Item
+                      label={
+                        <span style={{ display: 'none' }}>
+                          Description color
+                        </span>
+                      }
+                      name={'descriptionColor'}
+                      getValueFromEvent={Utils.getHexStringFromEvent}
+                    >
+                      <ColorPicker showText />
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Divider style={{ marginBlock: 8 }} />
+                <Typography.Text strong style={{ fontSize: 18 }}>
+                  {t('Button', { ns: 'common' })}
+                </Typography.Text>
+                <Row gutter={[10, 10]}>
+                  <Col sm={24} xxl={12}>
+                    <Row gutter={[5, 5]}>
+                      <Col flex={'auto'}>
+                        <Form.Item
+                          label={
+                            <div>
+                              <span>{t('Button label', { ns: 'banner' })}</span>
+                              {' - '}
+                              <span className='text-uppercase text-danger'>
+                                {locale}
+                              </span>
+                            </div>
+                          }
+                          name='buttonLabel'
+                          rules={[
+                            {
+                              max: 50,
+                              min: 0,
+                              message: t('StringRange', {
+                                ns: 'common',
+                                range1: 0,
+                                range2: 50,
+                              }),
+                            },
+                          ]}
+                        >
+                          <Input />
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item
+                          label={
+                            <span>{t('Text color', { ns: 'banner' })}</span>
+                          }
+                          name={'buttonLabelColor'}
+                          getValueFromEvent={Utils.getHexStringFromEvent}
+                        >
+                          <ColorPicker showText />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col sm={24} xxl={12}>
+                    <Row gutter={[5, 5]}>
+                      <Col flex={'auto'}>
+                        <Form.Item
+                          label={t('Button link', { ns: 'banner' })}
+                          name='linkButton'
+                          rules={[
+                            {
+                              max: 500,
+                              min: 0,
+                              message: t('StringRange', {
+                                ns: 'common',
+                                range1: 0,
+                                range2: 500,
+                              }),
+                            },
+                          ]}
+                        >
+                          <Input />
+                        </Form.Item>
+                      </Col>
+                      <Col>
+                        <Form.Item
+                          label={
+                            <span>{t('Background', { ns: 'banner' })}</span>
+                          }
+                          name={'buttonColor'}
+                          getValueFromEvent={Utils.getHexStringFromEvent}
+                        >
+                          <ColorPicker showText />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+                <Divider style={{ marginBlock: 8 }} />
+
                 <Form.Item
                   label={t('Horizontal', { ns: 'banner' })}
                   name='horizontal'
@@ -308,7 +405,7 @@ export const CreateUpdateBannerPage = () => {
                 </Form.List>
               </div>
             </Col>
-            <Col span={8}>
+            <Col span={24} md={8}>
               <BannerInformation />
             </Col>
           </Row>
