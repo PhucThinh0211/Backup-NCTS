@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Form, Input, Radio, Row, Select, Space, Spin, TreeSelect, Typography } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Spin,
+  TreeSelect,
+  Typography,
+} from 'antd';
 import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -10,10 +22,16 @@ import {
   getSelectedPageContent,
   getSelectedPageContentDetail,
   getNewsTypes,
+  getPagePhotoUrl,
 } from '@/store/pageContent';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { GettingPageContentLoadingKey, PublishPageContentLoadingKey, SavingPageContentLoadingKey, defaultPagingParams } from '@/common';
+import {
+  GettingPageContentLoadingKey,
+  PublishPageContentLoadingKey,
+  SavingPageContentLoadingKey,
+  defaultPagingParams,
+} from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
 import { AuditedPageContent } from './AuditedPageContent';
@@ -23,8 +41,19 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 
 import Utils from '@/utils';
-import { PageContentShowPlace, PageContentType } from '@/services/PageContentService';
+import {
+  PageContentShowPlace,
+  PageContentType,
+} from '@/services/PageContentService';
 import { SeoForm } from '../NewsPage/SeoForm';
+import { PagePhotoUrlUploader } from './PagePhotoUrlUploader';
+
+const normFile = (e: any) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
 
 export const CreateUpdatePageContent = () => {
   const [pageContentBody, setPageContentBody] = useState('');
@@ -35,7 +64,10 @@ export const CreateUpdatePageContent = () => {
   const language = useAppSelector(getLanguage());
   const locale = useAppSelector(getLocale());
   const selectedPageContent = useAppSelector(getSelectedPageContent());
-  const selectedPageContentDetail = useAppSelector(getSelectedPageContentDetail());
+  const selectedPageContentDetail = useAppSelector(
+    getSelectedPageContentDetail()
+  );
+  const pagePhotoUrl = useAppSelector(getPagePhotoUrl());
   const newsTypes = useAppSelector(getNewsTypes());
   const isSubmmiting = useAppSelector(getLoading(SavingPageContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingPageContentLoadingKey));
@@ -43,29 +75,6 @@ export const CreateUpdatePageContent = () => {
 
   const pageTitle = Form.useWatch('title', form);
   const pageType = Form.useWatch('pageType', form);
-
-  // const newsTypes = [
-  //   {
-  //     label: t('Ncts News', { ns: 'news' }),
-  //     value: 'NctsNews',
-  //   },
-  //   {
-  //     label: t('Customer News', { ns: 'news' }),
-  //     value: 'CustomerNews',
-  //   },
-  //   {
-  //     label: t('Activities News', { ns: 'news' }),
-  //     value: 'ActivitiesNews',
-  //   },
-  //   {
-  //     label: t('Industrial News', { ns: 'news' }),
-  //     value: 'IndustrialNews',
-  //   },
-  //   {
-  //     label: t('Recruitment News', { ns: 'news' }),
-  //     value: 'RecruitmentNews',
-  //   },
-  // ];
 
   const contactTypes = [
     {
@@ -132,15 +141,19 @@ export const CreateUpdatePageContent = () => {
     {
       label: t('Introduction', { ns: 'pageContent' }),
       value: PageContentShowPlace.INTRODUCTION,
+      name: 'showInTheIntroduceSection',
     },
     {
       label: t('Services section', { ns: 'pageContent' }),
       value: PageContentShowPlace.SERVICES,
-    }
+      name: 'showInTheServicesSection',
+    },
   ];
 
   useEffect(() => {
-    dispatch(pageContentActions.getNewsTypesRequest({ params: defaultPagingParams }));
+    dispatch(
+      pageContentActions.getNewsTypesRequest({ params: defaultPagingParams })
+    );
   }, [language]);
 
   useEffect(() => {
@@ -164,12 +177,6 @@ export const CreateUpdatePageContent = () => {
       form.setFieldsValue({
         ...selectedPageContentDetail,
         pageType: selectedPageContentDetail.pageType || PageContentType.DYNAMIC,
-        pageShowPlace:
-          selectedPageContentDetail.showInTheIntroduceSection === true
-            ? PageContentShowPlace.INTRODUCTION
-            : selectedPageContentDetail.showInTheServicesSection === true
-            ? PageContentShowPlace.SERVICES
-            : PageContentShowPlace.INTRODUCTION,
       });
       setPageContentBody(selectedPageContentDetail.content || '');
     } else {
@@ -182,9 +189,11 @@ export const CreateUpdatePageContent = () => {
     const inputData = {
       ...values,
       content: pageContentBody,
-      showInTheIntroduceSection: values?.pageShowPlace === PageContentShowPlace.INTRODUCTION,
-      showInTheServicesSection: values?.pageShowPlace === PageContentShowPlace.SERVICES,
-      seo: !!values.seo && JSON.stringify(values.seo) !== '{}' ? values.seo : undefined  
+      photoUrl: pagePhotoUrl,
+      seo:
+        !!values.seo && JSON.stringify(values.seo) !== '{}'
+          ? values.seo
+          : undefined,
     };
 
     if (selectedPageContentDetail) {
@@ -281,10 +290,14 @@ export const CreateUpdatePageContent = () => {
                 },
               ]}
             >
-              <Select options={[...(newsTypes?.items || [])].sort((a, b) => a.sortSeq - b.sortSeq).map(type => ({
-                label: type.name,
-                value: type.code
-              }))}/>
+              <Select
+                options={[...(newsTypes?.items || [])]
+                  .sort((a, b) => a.sortSeq - b.sortSeq)
+                  .map((type) => ({
+                    label: type.name,
+                    value: type.code,
+                  }))}
+              />
             </Form.Item>
           </>
         );
@@ -303,6 +316,11 @@ export const CreateUpdatePageContent = () => {
     } else {
       dispatch(pageContentActions.unpublishPageRequest(selectedPageContent.id));
     }
+  };
+
+  const onImageDelete = () => {
+    form.setFieldsValue({ upload: undefined });
+    dispatch(pageContentActions.setPagePhotoUrl(undefined));
   };
 
   return (
@@ -324,13 +342,15 @@ export const CreateUpdatePageContent = () => {
         </div>
         <Space>
           <Button
-            type="default"
+            type='default'
             disabled={!selectedPageContent?.id}
             onClick={publishPageContent}
             loading={isPublishing}
-            icon={<CheckOutlined  />}  
+            icon={<CheckOutlined />}
           >
-            {!!selectedPageContent?.published === false ? t('Publish', { ns: 'common' }) : t('Unpublish', { ns: 'common' })}
+            {!!selectedPageContent?.published === false
+              ? t('Publish', { ns: 'common' })
+              : t('Unpublish', { ns: 'common' })}
           </Button>
           <Button type='primary' loading={isSubmmiting} onClick={form.submit}>
             {t('OkText', { ns: 'common' })}
@@ -350,6 +370,20 @@ export const CreateUpdatePageContent = () => {
           <Row gutter={[10, 10]} className='mt-2'>
             <Col span={16}>
               <div className='w-100 border-bottom rounded-2 bg-white p-3 shadow-sm mb-2'>
+                <Form.Item
+                  name='upload'
+                  label={t('Photo', { ns: 'news' })}
+                  valuePropName='fileList'
+                  getValueFromEvent={normFile}
+                  // rules={[
+                  //   {
+                  //     required: !pagePhotoUrl,
+                  //     message: t('Photo url required', { ns: 'pageContent' }),
+                  //   },
+                  // ]}
+                >
+                  <PagePhotoUrlUploader onImageDelete={onImageDelete} />
+                </Form.Item>
                 <Form.Item
                   label={t('Page type', { ns: 'pageContent' })}
                   name='pageType'
@@ -401,7 +435,7 @@ export const CreateUpdatePageContent = () => {
                       }),
                     },
                   ]}
-                  >
+                >
                   <Input />
                 </Form.Item>
                 <Form.Item
@@ -409,10 +443,12 @@ export const CreateUpdatePageContent = () => {
                     <div>
                       <span>{t('Description', { ns: 'news' })}</span>
                       {' - '}
-                      <span className="text-uppercase text-danger">{locale}</span>
+                      <span className='text-uppercase text-danger'>
+                        {locale}
+                      </span>
                     </div>
                   }
-                  name="description"
+                  name='description'
                   rules={[
                     {
                       max: 2000,
@@ -423,11 +459,28 @@ export const CreateUpdatePageContent = () => {
                         range2: 2000,
                       }),
                     },
-                  ]}>
+                  ]}
+                >
                   <Input.TextArea />
                 </Form.Item>
-                <Form.Item
-                  label={t('Show in', { ns: 'pageContent' })}
+                <div>
+                  <Typography.Text strong>
+                    {t('Show in', { ns: 'pageContent' })}
+                  </Typography.Text>
+                </div>
+                <Space>
+                  {pageShowPlaces.map((place) => (
+                    <Form.Item
+                      name={place.name}
+                      key={place.name}
+                      valuePropName='checked'
+                    >
+                      <Checkbox>{place.label}</Checkbox>
+                    </Form.Item>
+                  ))}
+                </Space>
+                {/* <Form.Item
+                  label={}
                   name='pageShowPlace'
                   rules={[
                     {
@@ -442,7 +495,7 @@ export const CreateUpdatePageContent = () => {
                       ))
                     }
                   </Radio.Group>
-                </Form.Item>
+                </Form.Item> */}
                 {renderByPageType(pageType)}
               </div>
             </Col>

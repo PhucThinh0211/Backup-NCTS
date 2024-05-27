@@ -2,26 +2,26 @@ import { Button, Upload, UploadProps, Image, UploadFile } from 'antd';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import { getEnvVars } from '@/enviroment';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { contentActions, getContentPhotoUrl } from '@/store/content';
 import Utils from '@/utils';
 import { UploadChangeParam } from 'antd/es/upload';
 import { uploadedPhotoUrl } from '@/common';
+import { getPagePhotoUrl, pageContentActions } from '@/store/pageContent';
 const { apiUrl } = getEnvVars();
 
-interface NewsPhotoUrlUploaderProps {
+interface PagePhotoUrlUploaderProps {
   onImageDelete?: () => void;
   fileList?: UploadFile[];
   onChange?: (info: UploadChangeParam<UploadFile<any>>) => void;
 }
 
-export const NewsPhotoUrlUploader = ({
+export const PagePhotoUrlUploader = ({
   onImageDelete,
   fileList,
   onChange,
-}: NewsPhotoUrlUploaderProps) => {
+}: PagePhotoUrlUploaderProps) => {
   const dispatch = useAppDispatch();
 
-  const contentPhotoUrl = useAppSelector(getContentPhotoUrl());
+  const pagePhotoUrl = useAppSelector(getPagePhotoUrl());
 
   const uploadProps: UploadProps = {
     fileList,
@@ -39,17 +39,17 @@ export const NewsPhotoUrlUploader = ({
       onChange && onChange(info);
       const { status } = info.file;
       if (status === 'done') {
-        dispatch(contentActions.setContentPhotoUrl(`${info.file.response}`));
+        dispatch(pageContentActions.setPagePhotoUrl(`${info.file.response}`));
       } else if (status === 'error') {
-        dispatch(contentActions.setContentPhotoUrl(undefined));
+        dispatch(pageContentActions.setPagePhotoUrl(undefined));
         Utils.errorHandling(info.file.response);
       }
     },
   };
-  return contentPhotoUrl ? (
+  return pagePhotoUrl ? (
     <div className='d-flex align-items-center justify-content-center position-relative'>
       <Image
-        src={`${uploadedPhotoUrl(contentPhotoUrl)}`}
+        src={`${uploadedPhotoUrl(pagePhotoUrl)}`}
         style={{
           backgroundColor: '#00000073',
           maxHeight: 300,
