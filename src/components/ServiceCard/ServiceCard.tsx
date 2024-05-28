@@ -9,7 +9,7 @@ type Props = {
 
 export const ServiceCard = ({ img, url, title }: Props) => {
   return (
-    <Link className="service-card" to={url}>
+    <Link className="service-card mt-3" to={url}>
       <div className="service-img shadow-sm">
         <img src={img} alt={title} />
       </div>

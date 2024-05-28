@@ -72,7 +72,7 @@ export const ServicesSection = () => {
   return (
     <div className="service-session py-2">
       <SessionTitle title={t('Quick Access', { ns: 'home' })} />
-      <div className="container w-100 justify-content-evenly mt-2 mt-lg-5">
+      <div className="container w-100 justify-content-evenly">
         <Carousel
           swipeable={true}
           draggable={false}
