@@ -13,6 +13,7 @@ interface PageContentState {
   selectedPageContentDetail?: PageContentResponse;
   queryParams: any;
   newsTypes?: NewsTypesPagingResponse;
+  pagePhotoUrl?: string;
 }
 
 const initialState: PageContentState = {
@@ -34,9 +35,13 @@ const pageContentSlice = createSlice({
       action: PayloadAction<PageContentResponse | undefined>
     ) => {
       state.selectedPageContentDetail = action.payload;
+      state.pagePhotoUrl = action.payload?.photoUrl || undefined;
     },
     setQueryParams: (state, action) => {
       state.queryParams = action.payload;
+    },
+    setPagePhotoUrl: (state, action: PayloadAction<string | undefined>) => {
+      state.pagePhotoUrl = action.payload;
     },
     getPageContentsRequest: (state, action: PayloadAction<any>) => {},
     getPageContentRequest: (
@@ -66,7 +71,7 @@ const pageContentSlice = createSlice({
       state.newsTypes = action.payload;
     },
     publishPageRequest: (state, action) => {},
-    unpublishPageRequest: (state, action) => {}
+    unpublishPageRequest: (state, action) => {},
   },
 });
 

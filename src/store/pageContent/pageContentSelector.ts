@@ -6,7 +6,10 @@ import { RootState } from '@/store/types';
 export const getPageContentState = (state: RootState) => state.pageContent;
 
 export function getSelectedPageContent() {
-  return createSelector([getPageContentState], (state) => state.selectedPageContent);
+  return createSelector(
+    [getPageContentState],
+    (state) => state.selectedPageContent
+  );
 }
 
 export function getPageContents() {
@@ -29,4 +32,7 @@ export function getSelectedPageContentDetail() {
 
 export function getNewsTypes() {
   return createSelector([getPageContentState], (state) => state.newsTypes);
+}
+export function getPagePhotoUrl() {
+  return createSelector([getPageContentState], (state) => state.pagePhotoUrl);
 }
