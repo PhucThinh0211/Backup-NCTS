@@ -39,6 +39,8 @@ deploy-job:      # This job runs in the deploy stage.
     - git config --global --add safe.directory /home/hicas-build/NTCS/pvhh-web/
     - git pull
 
+    - rm package-lock.json
+    - rm yarn.lock
     - DOCKER_REGISTRY=dockerhub.anybim.vn docker-compose build
     - docker login -u admin -p Lenotiv@2020 dockerhub.anybim.vn
     - docker tag dockerhub.anybim.vn/view_ncts dockerhub.anybim.vn/view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
