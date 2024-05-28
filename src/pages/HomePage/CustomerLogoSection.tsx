@@ -1,6 +1,4 @@
-import { Carousel } from 'antd';
-
-const partnerSlideShow = [
+const logos = [
   {
     url: 'https://ncts.hicas.vn/api/photo/dowload/4d19ede4-c906-c453-3fc8-3a12ca4faa9b.png',
   },
@@ -56,18 +54,25 @@ const partnerSlideShow = [
 
 export const CustomerLogoSection = () => {
   return (
-    <div className="w-100 pb-3">
-      <Carousel
-        slidesToShow={6}
-        dots={false}
-        autoplay
-        infinite={true}
-        autoplaySpeed={2000}
-        speed={2000}>
-        {partnerSlideShow.map((i, index) => (
-          <img className="imgSlideShow" src={i.url} key={index} />
-        ))}
-      </Carousel>
+    <div className="d-flex w-100">
+      <div className="logos-slider">
+        <div className="logos-slide-track" style={{ width: 200*logos.length  }}>
+          {logos.map((logo, idx) => (
+            <div key={idx} className="logos-slide">
+              <a href="#">
+                <img src={logo.url} alt="logo" />
+              </a>
+            </div>
+          ))}
+          {logos.map((logo, idx) => (
+            <div key={idx} className="logos-slide">
+              <a href="#">
+                <img src={logo.url} alt="logo" />
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
