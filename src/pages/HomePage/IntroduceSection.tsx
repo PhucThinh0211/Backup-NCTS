@@ -41,7 +41,7 @@ export const IntroduceSection = () => {
           <div className="col-lg-7 col-md-12">
             <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
             <div className='w-100 pb-3'>
-              <div className=''>
+              <div className='' style={{ textOverflow: 'ellipsis' }}>
                 {intro?.description}
               </div>
             </div>
