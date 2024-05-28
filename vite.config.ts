@@ -24,9 +24,6 @@ export default defineConfig({
           if (id.includes('lodash')) {
             return '@lodash'
           }
-          if (id.includes('rc-')) {
-            return '@rc';
-          }
           if (id.includes('antd')) {
             return '@antd';
           }
