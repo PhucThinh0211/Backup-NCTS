@@ -21,8 +21,8 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Compiling the code..."
-    - rm package-lock.json
-    - rm yarn.lock
+    - rm -f package-lock.json
+    - rm -f yarn.lock
     - DOCKER_REGISTRY=dockerhub.anybim.vn docker-compose build
     - echo "Compile complete."
   tags:
@@ -39,8 +39,8 @@ deploy-job:      # This job runs in the deploy stage.
     - git config --global --add safe.directory /home/hicas-build/NTCS/pvhh-web/
     - git pull
 
-    - rm package-lock.json
-    - rm yarn.lock
+    - rm -f package-lock.json
+    - rm -f yarn.lock
     - DOCKER_REGISTRY=dockerhub.anybim.vn docker-compose build
     - docker login -u admin -p Lenotiv@2020 dockerhub.anybim.vn
     - docker tag dockerhub.anybim.vn/view_ncts dockerhub.anybim.vn/view_ncts:1.0.0.$(date +%Y%m%d).$CI_JOB_ID
