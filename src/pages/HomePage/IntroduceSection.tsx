@@ -35,18 +35,22 @@ export const IntroduceSection = () => {
   return (
     <div className="py-2">
       <SessionTitle title={t('Instruction', { ns: 'home' })} />
-      <div className="container aboutUs-content my-5">
+      <div className="container aboutUs-content my-2 my-lg-5">
         <div className="row">
-          <img className="col-lg-5 col-md-12 pb-3 pb-lg-3" src={intro?.photoUrl ? uploadedPhotoUrl(intro?.photoUrl) : logo} alt="Intro" style={{ minHeight: 250 }} />
+          <img className="col-lg-5 col-md-12 pb-3 pb-lg-0" src={intro?.photoUrl ? uploadedPhotoUrl(intro?.photoUrl) : logo} alt="Intro" style={{ minHeight: 250 }} />
           <div className="col-lg-7 col-md-12">
             <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
-            <p>{intro?.description}</p>
-            <div className="partner d-flex flex-row gap-3" style={{ maxHeight: 130 }}>
+            <div className='w-100 pb-3'>
+              <div className=''>
+                {intro?.description}
+              </div>
+            </div>
+            <div className="partner d-flex flex-row gap-3">
               {partner.map((i, index) => (
                 <img src={i.url} key={index} />
               ))}
             </div>
-            <Link className="d-flex justify-content-start mt-5" to="/">
+            <Link className="d-flex justify-content-start mt-3" to="/">
               <Button size='large' type='primary' className='rounded-5'>
                 {t('See more', { ns: 'home' })}
               </Button>
