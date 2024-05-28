@@ -12,6 +12,7 @@ import { pageContentReducer } from './pageContent';
 import { departmentReducer } from './department';
 import { publicCmsReducer } from './publicCms';
 import { homeReducers } from './home';
+import { documentTypeReducer } from './documentType';
 import { newsTypeReducer } from './newsType';
 
 const mainReducer = combineReducers({
@@ -28,6 +29,7 @@ const mainReducer = combineReducers({
   pageContent: pageContentReducer,
   department: departmentReducer,
   newsType: newsTypeReducer,
+  documentType: documentTypeReducer,
 });
 
 const rootReducers = (state: any, action: any) => {

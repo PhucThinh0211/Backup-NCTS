@@ -5,6 +5,7 @@
     "Name required": "Menu name is required",
     "Url": "Url",
     "Url required": "Url is required",
+    "Color": "Color",
     "Parent menu": "Parent menu",
     "Parent menu required": "Parent menu is required",
     "Add new menu": "Add new menu",

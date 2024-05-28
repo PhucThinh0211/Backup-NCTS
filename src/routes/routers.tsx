@@ -15,6 +15,10 @@ import { PageContentList } from '@/pages/PageContent';
 import { CreateUpdatePageContent } from '@/pages/PageContent/CreateUpdatePageContent';
 import { DepartmentList } from '@/pages/DeparmentPage';
 import { CreateUpdateDepartmentPage } from '@/pages/DeparmentPage/CreateUpdateDepartmentPage';
+import {
+  CreateUpdateDocumentTypePage,
+  DocumentTypeList,
+} from '@/pages/DocumentTypePage';
 
 type MetaMenu = {
   name?: string;
@@ -68,6 +72,10 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/news-type', name: 'News types', element: <NewsTypeList /> },
       { path: '/admin/news-type/create', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },
       { path: '/admin/news-type/edit', name: 'Edit news type', element: <CreateUpdateNewsTypePage /> },
+      
+      { path: '/admin/document-type', name: 'Document types', element: <DocumentTypeList /> },
+      { path: '/admin/document-type/create', name: 'Create document type', element: <CreateUpdateDocumentTypePage /> },
+      { path: '/admin/document-type/edit', name: 'Edit document type', element: <CreateUpdateDocumentTypePage /> },
       
       {
         path: '/admin/media',

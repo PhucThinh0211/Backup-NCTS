@@ -124,7 +124,10 @@ export default class Utils {
     // TODO:
     notification.error({
       message: i18next.t('notification', { ns }),
-      description: i18next.t('An error occurred while processing your request', { ns }),
+      description: i18next.t(
+        'An error occurred while processing your request',
+        { ns }
+      ),
     });
   }
 
@@ -280,6 +283,9 @@ export default class Utils {
       .replace(/[đĐ]/g, 'd') // Thay ký tự đĐ
       .replace(/([^0-9a-z-\s])/g, '') // xóa ký tự đặt biệt
       .replace(/-+/g, '-'); // Xóa ký tự - liên tiếp
+  };
+  static getHexStringFromEvent = (e: any) => {
+    return e.toHexString();
   };
 }
 
