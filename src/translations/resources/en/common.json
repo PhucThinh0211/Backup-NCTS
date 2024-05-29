@@ -67,5 +67,9 @@
   "Draft": "Draft",
   "More": "More",
   "Home": "Home",
-  "Button": "Button"
+  "Button": "Button",
+  "username": "User name",
+  "Enter user name": "Enter user name",
+  "Not a member": "Not a member?",
+  "Forgot password": "Forgot password?"
 }
