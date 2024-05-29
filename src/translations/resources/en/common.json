@@ -76,5 +76,17 @@
   "Please enter your email to retrieve your password": "Please enter your email to retrieve your password",
   "forgotPasswordDescription": "After you fill in the email we will send you a confirmation code. Please follow the instructions in the email in order to create a new password.",
   "Email address": "Email address",
-  "Send email": "Send email"
+  "Send email": "Send email",
+  "Member registration": "Member registration",
+  "Attachment": "Attachment",
+  "downloadFileToRegisMemeber": "Download a file from {{link}}, and then fill it out and attach it with the form registration",
+  "First name": "First name",
+  "Last name": "Last name",
+  "Birthday": "Birthday",
+  "Gender": "Gender",
+  "Company name": "Company",
+  "Address": "Address",
+  "TaxCode": "Tax ID",
+  "Phone": "Phone",
+  "Purpose": "Purpose"
 }

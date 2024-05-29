@@ -75,5 +75,17 @@
   "Please enter your email to retrieve your password": "Vui lòng nhập email của bạn để lấy lại mật khẩu",
   "forgotPasswordDescription": "Sau khi bạn điền email chúng tôi sẽ gửi đến bạn mã xác nhận. Hãy làm theo hướng dẫn trong email để có thể tạo được mật khẩu mới.",
   "Email address": "Địa chỉ email",
-  "Send email": "Gửi email"
+  "Send email": "Gửi email",
+  "Member registration": "Đăng ký thành viên",
+  "Attachment": "Tài liệu đính kèm",
+  "downloadFileToRegisMemeber": "Bạn lấy biểu mẫu từ {{link}}, điền thông tin và ký xác nhận của đại diện hợp pháp rồi gửi kèm theo đăng ký này để được cấp tài khoản sử dụng",
+  "First name": "Họ",
+  "Last name": "Tên",
+  "Birthday": "Ngày sinh",
+  "Gender": "Giới tính",
+  "Company name": "Công ty",
+  "Address": "Địa chỉ",
+  "TaxCode": "Mã số thuế",
+  "Phone": "Điện thoại",
+  "Purpose": "Mục đích"
 }

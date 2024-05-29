@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { AuthRouteObject } from './AuthRoute';
-import { HomePage, Content, LoginPage, ForgotPassword } from '@/pages';
+import { HomePage, Content, LoginPage, ForgotPassword, SignUp } from '@/pages';
 import { AdminLayout } from '@/components';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
@@ -45,7 +45,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       },
       { path: '/lien-he', name: 'Contact', element: <>Liên hệ</> },
       { path: '/dang-nhap', name: 'Sign In', element: <LoginPage /> },
-      { path: '/dang-ky', name: 'Sign Up', element: <>Đăng ký</> },
+      { path: '/dang-ky', name: 'Sign Up', element: <SignUp /> },
       { path: '/quen-mat-khau', name: 'Forgot password', element: <ForgotPassword /> },
       { path: '/sitemap', name: 'Sitemap', element: <>Sitemap</> },
     ],
