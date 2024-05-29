@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsProps } from 'antd';
@@ -24,6 +24,7 @@ export const QuickLookup = () => {
   const dispatch = useAppDispatch();
   const [innerWidth] = useWindowSize();
   const activeLookupTab = useAppSelector(getTabLookupActive());
+  const lookupDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -52,6 +53,9 @@ export const QuickLookup = () => {
 
   const onChange = (key: string) => {
     dispatch(persistStateActions.setTabLookupActive(key));
+    if (lookupDiv?.current) {
+      window.scrollTo({ top: lookupDiv.current.offsetTop - 200, behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -68,7 +72,7 @@ export const QuickLookup = () => {
   }, []);
 
   return (
-    <div className='quickLookup bg-opacity-25'>
+    <div className='quickLookup bg-opacity-25' ref={lookupDiv}>
       <div className='lookup-layer'></div>
       {innerWidth > bootstrapBreakpoints.md ? (
         <div className='px-2'>
