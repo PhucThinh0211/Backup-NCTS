@@ -14,7 +14,7 @@ import LookUp from './LookUp';
 import { FreightEstimate } from './FreightEstimate';
 import './QuickLookup.scss';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { TopNavHeight, bootstrapBreakpoints } from '@/common';
+import { bootstrapBreakpoints } from '@/common';
 import { QuickLookupMobile } from './QuickLookupMobile';
 import { getTabLookupActive, persistStateActions } from '@/store/persistState';
 import { publicCmsActions } from '@/store/publicCms';
