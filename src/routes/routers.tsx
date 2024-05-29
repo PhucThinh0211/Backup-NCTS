@@ -46,6 +46,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/lien-he', name: 'Contact', element: <>Liên hệ</> },
       { path: '/dang-nhap', name: 'Sign In', element: <LoginPage /> },
       { path: '/dang-ky', name: 'Sign Up', element: <>Đăng ký</> },
+      { path: '/quen-mat-khau', name: 'Forgot password', element: <>Quên mật khẩu</> },
       { path: '/sitemap', name: 'Sitemap', element: <>Sitemap</> },
     ],
   },

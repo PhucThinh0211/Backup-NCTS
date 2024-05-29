@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { GettingCaptchaLoadingKey } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-
+import { Link } from 'react-router-dom';
 
 export const SignIn = () => {
   const { t } = useTranslation();
@@ -83,16 +83,19 @@ export const SignIn = () => {
           </Row>
         </Form.Item>
         <Form.Item>
-          <div className="d-flex justify-content-between ant-form-item-label">
-            <span>
-              {t('Not a member', { ns: 'common' })}{' '}
-              <a href="#!">{t('Sign Up', { ns: 'common' })}</a>
-            </span>
-            <a href="#!">{t('Forgot password', { ns: 'common' })}</a>
+          <div className="d-flex justify-content-between align-items-center ant-form-item-label">
+            <Form.Item name='remember'>
+              <Checkbox>{t('Remember', {ns: 'common'})}</Checkbox>
+            </Form.Item>
+            <Link to='/quen-mat-khau'>{t('Forgot password', { ns: 'common' })}</Link>
           </div>
         </Form.Item>
         <Form.Item>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-between align-items-center ant-form-item-label">
+            <span>
+              {t('Not a member', { ns: 'common' })}{' '}
+              <Link to='/dang-ky'>{t('Sign Up', { ns: 'common' })}</Link>
+            </span>
             <Button type="primary" htmlType="submit" size="middle" className="rounded-5">
               {t('Sign In', { ns: 'common' })}
             </Button>
