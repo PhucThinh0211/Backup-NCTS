@@ -18,6 +18,7 @@ import {
 } from '@/store/persistState';
 import { AppTopNav } from './AppTopNav';
 import './webLayout.scss';
+import './HomeStyle.css';
 import { AppPanelNav } from './AppPanelNav';
 import { HeroSection } from '../HeroSection';
 import { SearchForm } from '../SearchForm';
