@@ -53,7 +53,6 @@ export const PageContentListTable = () => {
 
   useEffect(() => {
     dispatch(pageContentActions.getPageContentsRequest({}));
-    dispatch(pageContentActions.getNewsTypesRequest({ params: defaultPagingParams }));
   }, [language]);
 
   useEffect(() => {

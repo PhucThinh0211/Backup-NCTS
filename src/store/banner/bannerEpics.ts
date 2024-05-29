@@ -254,7 +254,6 @@ const getMenusRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { params } = action.payload;
       const search = {
-        ...state.menu.queryParams,
         ...params,
       };
       return concat(

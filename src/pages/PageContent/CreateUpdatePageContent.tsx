@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   Button,
@@ -23,6 +23,8 @@ import {
   getSelectedPageContentDetail,
   getNewsTypes,
   getPagePhotoUrl,
+  getDocumentTypes,
+  getMenus,
 } from '@/store/pageContent';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
@@ -30,7 +32,8 @@ import {
   GettingPageContentLoadingKey,
   PublishPageContentLoadingKey,
   SavingPageContentLoadingKey,
-  defaultPagingParams,
+  TreeItem,
+  largePagingParams,
 } from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
 
@@ -47,6 +50,7 @@ import {
 } from '@/services/PageContentService';
 import { SeoForm } from '../NewsPage/SeoForm';
 import { PagePhotoUrlUploader } from './PagePhotoUrlUploader';
+import { MenuResponse } from '@/services/MenuService';
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -69,31 +73,18 @@ export const CreateUpdatePageContent = () => {
   );
   const pagePhotoUrl = useAppSelector(getPagePhotoUrl());
   const newsTypes = useAppSelector(getNewsTypes());
+  const menus = useAppSelector(getMenus());
+  const documentTypes = useAppSelector(getDocumentTypes());
   const isSubmmiting = useAppSelector(getLoading(SavingPageContentLoadingKey));
   const isLoading = useAppSelector(getLoading(GettingPageContentLoadingKey));
   const isPublishing = useAppSelector(getLoading(PublishPageContentLoadingKey));
 
-  const pageTitle = Form.useWatch('title', form);
-  const pageType = Form.useWatch('pageType', form);
+  const sortedMenus: MenuResponse[] = useMemo(() => Utils.deepClone(menus?.items || []), [menus]);
+  sortedMenus.sort((a, b) => {
+    return a.sortSeq - b.sortSeq;
+  });
 
-  const contactTypes = [
-    {
-      label: t('Phone', { ns: 'department' }),
-      value: 'Phone',
-    },
-    {
-      label: t('Ext', { ns: 'department' }),
-      value: 'Ext',
-    },
-    {
-      label: t('Fax', { ns: 'department' }),
-      value: 'Fax',
-    },
-    {
-      label: t('Email', { ns: 'department' }),
-      value: 'Email',
-    },
-  ];
+  const pageType = Form.useWatch('pageType', form);
 
   const pageTypes = [
     {
@@ -150,17 +141,24 @@ export const CreateUpdatePageContent = () => {
     },
   ];
 
-  useEffect(() => {
-    dispatch(
-      pageContentActions.getNewsTypesRequest({ params: defaultPagingParams })
-    );
-  }, [language]);
+  const mapTreeToSelectOption = (item: TreeItem<MenuResponse>): any => {
+    return {
+      title: item.label,
+      value: item.id,
+      children: item.children
+        ? item.children.map((child) => mapTreeToSelectOption(child))
+        : undefined,
+    };
+  };
 
   useEffect(() => {
-    if (pageTitle && !selectedPageContent) {
-      form.setFieldValue('slug', '/' + Utils.createSlug(pageTitle));
-    }
-  }, [pageTitle]);
+    dispatch(
+      pageContentActions.getNewsTypesRequest({ params: largePagingParams })
+    );
+    dispatch(pageContentActions.getDocumentTypesRequest({ params: largePagingParams }));
+    dispatch(pageContentActions.getMenusRequest({ params: largePagingParams }));
+  
+  }, [language]);
 
   useEffect(() => {
     if (locale && selectedPageContent) {
@@ -186,16 +184,17 @@ export const CreateUpdatePageContent = () => {
   }, [selectedPageContentDetail]);
 
   const handleSaveContent = (values: any) => {
+    const foundMenu = (menus?.items || []).find(menu => menu.id === values.menuId)
     const inputData = {
       ...values,
       content: pageContentBody,
       photoUrl: pagePhotoUrl,
+      slug: foundMenu?.url,
       seo:
         !!values.seo && JSON.stringify(values.seo) !== '{}'
           ? values.seo
           : undefined,
     };
-
     if (selectedPageContentDetail) {
       // prettier-ignore
       dispatch(pageContentActions.updatePageContentRequest({ pageContentId: selectedPageContentDetail.id, pageContent: { ...selectedPageContentDetail, ...inputData }}));
@@ -272,7 +271,12 @@ export const CreateUpdatePageContent = () => {
                 },
               ]}
             >
-              <Select options={contactTypes} />
+              <Select options={[...(documentTypes?.items || [])]
+                  .sort((a, b) => a.sortSeq - b.sortSeq)
+                  .map((type) => ({
+                    label: type.name,
+                    value: type.code,
+                  }))} />
             </Form.Item>
           </>
         );
@@ -421,24 +425,6 @@ export const CreateUpdatePageContent = () => {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  label={t('Slug', { ns: 'pageContent' })}
-                  name='slug'
-                  rules={[
-                    { required: true, message: t('Slug required') },
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
-                <Form.Item
                   label={
                     <div>
                       <span>{t('Description', { ns: 'news' })}</span>
@@ -462,6 +448,27 @@ export const CreateUpdatePageContent = () => {
                   ]}
                 >
                   <Input.TextArea />
+                </Form.Item>
+                <Form.Item
+                  label={t('Slug', { ns: 'pageContent' })}
+                  name='menuId'
+                  rules={[
+                    { required: true, message: t('Slug required') },
+                    {
+                      max: 500,
+                      min: 0,
+                      message: t('StringRange', {
+                        ns: 'common',
+                        range1: 0,
+                        range2: 500,
+                      }),
+                    },
+                  ]}
+                >
+                  <TreeSelect
+                      treeData={Utils.buildTree(sortedMenus).map((item) => mapTreeToSelectOption(item))}
+                      treeDefaultExpandAll
+                    />
                 </Form.Item>
                 <div>
                   <Typography.Text strong>

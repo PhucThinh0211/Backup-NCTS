@@ -11,6 +11,7 @@ import {
   Typography,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { LookupButton } from './components/LookupButton';
 
 export const FreightEstimate = () => {
   const { t } = useTranslation(['common']);
@@ -26,46 +27,34 @@ export const FreightEstimate = () => {
         <Row gutter={[8, 0]}>
           <Col xs={24} sm={12} md={6}>
             <Form.Item label='Giờ hàng về'>
-              <TimePicker
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <TimePicker className='w-100'/>
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={6}>
             <Form.Item label='Ngày hàng về'>
-              <DatePicker
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <DatePicker className='w-100'/>
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={6}>
             <Form.Item label='Giờ nhận hàng'>
-              <TimePicker
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <TimePicker className='w-100'/>
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={6}>
             <Form.Item label='Ngày nhận hàng'>
-              <DatePicker
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <DatePicker className='w-100'/>
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={[8, 0]}>
           <Col xs={24} sm={12}>
             <Form.Item label='Trọng lượng (kg)'>
-              <Input
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <Input />
             </Form.Item>
           </Col>
           <Col xs={24} sm={12}>
             <Form.Item label='Loại dịch vụ'>
-              <Input
-                style={{ height: '40px', borderRadius: 10, width: '100%' }}
-              />
+              <Input />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -115,9 +104,9 @@ export const FreightEstimate = () => {
           <Col xs={24} sm={8}>
             <Form.Item>
               <Row justify={window.innerWidth < 576 ? 'center' : 'end'}>
-                <Button type='primary' htmlType='submit' size='large' style={{ borderRadius: 20 }}>
+                <LookupButton>
                   {t('Lookup', { ns: 'common' })}
-                </Button>
+                </LookupButton>
               </Row>
             </Form.Item>
           </Col>

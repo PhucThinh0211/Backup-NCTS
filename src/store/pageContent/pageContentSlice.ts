@@ -6,6 +6,8 @@ import {
   CreateUpdatePageContentPayload,
 } from '@/services/PageContentService';
 import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
+import { MenusPagingResponse } from '@/services/MenuService';
+import { DocumentTypesPagingResponse } from '@/services/DocumentTypeService';
 
 interface PageContentState {
   pageContents?: PageContentsPagingResponse;
@@ -14,6 +16,8 @@ interface PageContentState {
   queryParams: any;
   newsTypes?: NewsTypesPagingResponse;
   pagePhotoUrl?: string;
+  menus?: MenusPagingResponse;
+  documentTypes?: DocumentTypesPagingResponse;
 }
 
 const initialState: PageContentState = {
@@ -72,6 +76,14 @@ const pageContentSlice = createSlice({
     },
     publishPageRequest: (state, action) => {},
     unpublishPageRequest: (state, action) => {},
+    getMenusRequest: (state, action: PayloadAction<any>) => {},
+    setMenus: (state, action) => {
+      state.menus = action.payload;
+    },
+    getDocumentTypesRequest: (state, action: PayloadAction<any>) => {},
+    setDocumentTypes: (state, action) => {
+      state.documentTypes = action.payload;
+    },
   },
 });
 
