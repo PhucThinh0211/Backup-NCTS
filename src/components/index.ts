@@ -1,5 +1,4 @@
 export * from './Loading';
-export * from './Layout';
 export * from './AuthProvider';
 export * from './QuickLookup';
 export * from './ReduxStoreProvider';
@@ -13,3 +12,4 @@ export * from './HeroSection';
 export * from './NewsCard';
 export * from './ProgressBar';
 export * from './ServiceCard';
+export * from './Startup';
