@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { AuthRouteObject } from './AuthRoute';
-import { Content, LoginPage } from '@/pages';
+import { HomePage, Content, LoginPage } from '@/pages';
 import { AdminLayout } from '@/components';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
@@ -22,7 +22,6 @@ import {
 } from '@/pages/DocumentTypePage';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
-const Home = lazy(() => import('@/pages/HomePage'));
 
 type MetaMenu = {
   name?: string;
@@ -38,7 +37,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
     name: 'Main',
     element: <WebLayout />,
     children: [
-      { index: true, name: 'Home', element: <Home /> },
+      { index: true, name: 'Home', element: <HomePage /> },
       {
         path: '/trang/*',
         name: 'Page',
