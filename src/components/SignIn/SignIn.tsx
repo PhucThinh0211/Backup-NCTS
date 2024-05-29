@@ -80,7 +80,7 @@ export const SignIn = () => {
           </Row>
         </Form.Item>
         <Form.Item>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between ant-form-item-label">
             <span>
               {t('Not a member', { ns: 'common' })}{' '}
               <a href="#!">{t('Sign Up', { ns: 'common' })}</a>
