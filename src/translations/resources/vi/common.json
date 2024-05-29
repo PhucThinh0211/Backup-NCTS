@@ -66,5 +66,9 @@
   "Draft": "Nháp",
   "More": "Xem thêm",
   "Home": "Trang chủ",
-  "Button": "Nút"
+  "Button": "Nút",
+  "username": "Tên đăng nhập",
+  "Enter user name": "Nhập tên đang nhập",
+  "Not a member": "Không phải thành viên?",
+  "Forgot password": "Quên mật khẩu?"
 }
