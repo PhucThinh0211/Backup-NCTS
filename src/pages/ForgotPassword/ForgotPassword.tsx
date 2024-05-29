@@ -1,5 +1,6 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export const ForgotPassword = () => {
   const { t } = useTranslation();
@@ -21,12 +22,17 @@ export const ForgotPassword = () => {
             name="email"
             required
             rules={[{ required: true }]}>
-            <Input placeholder='example@domain.vn' />
+            <Input placeholder="example@domain.vn" />
           </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              {t('Send email', { ns: 'common' })}
-            </Button>
+          <Form.Item className='d-flex justify-content-end'>
+            <Space>
+              <Link to="/dang-nhap">
+                <Button>{t('Sign In', { ns: 'common' })}</Button>
+              </Link>
+              <Button type="primary" htmlType="submit">
+                {t('Send email', { ns: 'common' })}
+              </Button>
+            </Space>
           </Form.Item>
         </Form>
       </div>
