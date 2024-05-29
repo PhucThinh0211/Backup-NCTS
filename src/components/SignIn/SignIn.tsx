@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
 
 import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { GettingCaptchaLoadingKey } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-import { Link } from 'react-router-dom';
+import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
+import { SEO } from '../Seo';
 
 export const SignIn = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
+  const company = useAppSelector(getCurrentCompany());
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -29,6 +31,7 @@ export const SignIn = () => {
 
   return (
     <div className="d-flex justify-content-center bg-wave p-3 p-lg-5">
+      <SEO title={t('Sign In', { ns: 'common' }) + ' - NCTS'} description={company?.name || t('NctsTitle', {ns: 'common'})} />
       <Form
         layout="vertical"
         onFinish={signInSubmit}
