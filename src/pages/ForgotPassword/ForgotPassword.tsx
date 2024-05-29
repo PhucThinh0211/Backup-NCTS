@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import { Button, Form, Input, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -5,17 +7,25 @@ import { Link } from 'react-router-dom';
 import { SEO } from '@/components';
 import { useAppSelector } from '@/store/hooks';
 import { getCurrentCompany } from '@/store/publicCms';
+import { TopNavHeight } from '@/common';
 
 export const ForgotPassword = () => {
   const { t } = useTranslation();
   const company = useAppSelector(getCurrentCompany());
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef?.current) {
+      window.scrollTo({ top: scrollRef.current.offsetTop - TopNavHeight, behavior: 'smooth' });
+    }
+  }, [scrollRef]);
 
   const retrievePassword = (values: any) => {
     console.log(values);
   };
 
   return (
-    <div className="d-flex justify-content-center bg-wave p-3 p-lg-5">
+    <div className="d-flex justify-content-center bg-wave p-3 p-lg-5" ref={scrollRef}>
       <SEO
         title={t('Forgot password', { ns: 'common' }).replace('?', '') + ' - NCTS'}
         description={company?.name || t('NctsTitle', { ns: 'common' })}

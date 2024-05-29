@@ -87,7 +87,7 @@ export const SignIn = () => {
         </Form.Item>
         <Form.Item>
           <div className="d-flex justify-content-between align-items-center ant-form-item-label">
-            <Form.Item name='remember'>
+            <Form.Item name='remember' valuePropName="checked">
               <Checkbox>{t('Remember', {ns: 'common'})}</Checkbox>
             </Form.Item>
             <Link to='/quen-mat-khau'>{t('Forgot password', { ns: 'common' })}</Link>

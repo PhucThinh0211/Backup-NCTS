@@ -1,11 +1,11 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { GettingCaptchaLoadingKey } from '@/common';
+import { GettingCaptchaLoadingKey, TopNavHeight } from '@/common';
 import { SEO } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
@@ -17,6 +17,13 @@ export const SignUp = () => {
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const company = useAppSelector(getCurrentCompany());
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef?.current) {
+      window.scrollTo({ top: scrollRef.current.offsetTop - TopNavHeight, behavior: 'smooth' });
+    }
+  }, [scrollRef]);
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -29,7 +36,7 @@ export const SignUp = () => {
   return (
     <>
       <SEO title={t('Member registration', { ns: 'common' }) + ' - NCTS'} description={company?.name || t('NctsTitle', {ns: 'common'})} />
-      <div className="d-flex justify-content-center bg-wave p-3 p-lg-5 clearfix">
+      <div className="d-flex justify-content-center bg-wave p-3 p-lg-5 clearfix" ref={scrollRef}>
         <div className="col-12 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
           <p className="h6 text-orange">{t('Member registration', { ns: 'common' })}</p>
           <Form layout="vertical" autoComplete="off">
