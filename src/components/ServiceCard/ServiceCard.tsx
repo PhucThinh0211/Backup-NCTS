@@ -1,4 +1,3 @@
-import '@/pages/Home/HomeStyle.css';
 import { Link } from 'react-router-dom';
 
 type Props = {

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { AwbLookup } from './AwbLookup';
 import { FlightLookup } from './FlightLookup';
 import { InvoicesLookup } from './InvoicesLookup';
-import '@/pages/Home/HomeStyle.css';
 
 function LookUp() {
   const [value, setValue] = useState(1);

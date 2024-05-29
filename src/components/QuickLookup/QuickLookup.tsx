@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { OnlineCheckin } from './OnlineCheckin';
 import LookUp from './LookUp';
 import { FreightEstimate } from './FreightEstimate';
-import '@/pages/Home/HomeStyle.css';
 import './QuickLookup.scss';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { bootstrapBreakpoints } from '@/common';

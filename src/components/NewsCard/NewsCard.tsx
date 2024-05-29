@@ -1,5 +1,4 @@
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons';
-import '@/pages/Home/HomeStyle.css';
 import { Skeleton } from 'antd';
 
 type Props = {
