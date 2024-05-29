@@ -71,5 +71,9 @@
   "Enter user name": "Nhập tên đăng nhập",
   "Not a member": "Không phải thành viên?",
   "Forgot password": "Quên mật khẩu?",
-  "Remember": "Ghi nhớ"
+  "Remember": "Ghi nhớ",
+  "Please enter your email to retrieve your password": "Vui lòng nhập email của bạn để lấy lại mật khẩu",
+  "forgotPasswordDescription": "Sau khi bạn điền email chúng tôi sẽ gửi đến bạn mã xác nhận. Hãy làm theo hướng dẫn trong email để có thể tạo được mật khẩu mới.",
+  "Email address": "Địa chỉ email",
+  "Send email": "Gửi email"
 }
