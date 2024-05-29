@@ -1,10 +1,13 @@
+import { useEffect } from 'react';
+
+import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { useTranslation } from 'react-i18next';
+
 import { GettingCaptchaLoadingKey } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+
 
 export const SignIn = () => {
   const { t } = useTranslation();
