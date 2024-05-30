@@ -44,7 +44,7 @@ export const NewsCard = ({ img, date, author, title, desc, loading, url }: Props
             </div>
             <div>
               {title && (
-                <Link to={url}>
+                <Link to={url} className='text-dark'>
                   <h5 className="cardTitle">{title}</h5>
                 </Link>
               )}
