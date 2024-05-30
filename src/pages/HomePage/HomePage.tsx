@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { getCurrentCompany } from '@/store/publicCms';
 import { ServicesSection } from './ServicesSection';
 import { IntroduceSection } from './IntroduceSection';
-import { CustomerLogoSection } from './CustomerLogoSection';
 
 export const HomePage = () => {
   const { t } = useTranslation();
@@ -36,7 +35,6 @@ export const HomePage = () => {
         <NewsSection />
         <ServicesSection />
         <IntroduceSection />
-        <CustomerLogoSection />
       </div>
     </div>
   );

@@ -37,7 +37,6 @@ export const OnlineCheckin = () => {
           >
             <Input
               placeholder={t('Enter user name', { ns: 'common' })}
-              autoFocus
             />
           </Form.Item>
           <Form.Item

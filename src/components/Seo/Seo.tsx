@@ -13,11 +13,13 @@ interface SeoProps {
 export const SEO = ({ title, description }: SeoProps) => {
   const {t} = useTranslation('common');
   const company = useAppSelector(getCurrentCompany());
+  
+  const customTitle = title || company?.name || t('NctsTitle');
 
   return (
     <Helmet>
       {/* Standard metadata tags */}
-      <title>{title || company?.name || t('NctsTitle')}</title>
+      <title>{customTitle.endsWith('NCTS') ? customTitle : `${customTitle} - NCTS`}</title>
       <meta name="description" content={description || company?.name || t('NctsTitle')} />
       {/* End standard metadata tags */}
     </Helmet>

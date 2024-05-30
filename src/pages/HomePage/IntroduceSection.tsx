@@ -39,7 +39,9 @@ export const IntroduceSection = () => {
         <div className="row">
           <img className="col-lg-5 col-md-12 pb-3 pb-lg-0" src={intro?.photoUrl ? uploadedPhotoUrl(intro?.photoUrl) : logo} alt="Intro" style={{ minHeight: 250 }} />
           <div className="col-lg-7 col-md-12">
-            <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
+            <Link className='text-dark' to={`/trang${intro?.slug || '/'}`}>
+              <h5 style={{ fontSize: 16 }}>{intro?.title}</h5>
+            </Link>
             <div className='w-100 pb-3'>
               <div className='' style={{ textOverflow: 'ellipsis' }}>
                 {intro?.description}
@@ -47,7 +49,7 @@ export const IntroduceSection = () => {
             </div>
             <div className="partner d-flex flex-row gap-3">
               {partner.map((i, index) => (
-                <img src={i.url} key={index} />
+                <img src={i.url} key={index} style={{ height: 70 }} />
               ))}
             </div>
             <Link className="d-flex justify-content-start mt-3" to={`/trang${intro?.slug || '/'}`}>
