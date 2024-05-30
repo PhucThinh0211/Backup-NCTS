@@ -65,12 +65,10 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/company', name: 'Company', element: <CreateUpdateCompanyPage /> },
       
       { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
-      { path: '/admin/menu/create', name: 'Create menu', element: <CreateUpdateMenuPage /> },
-      { path: '/admin/menu/edit', name: 'Edit menu', element: <CreateUpdateMenuPage /> },
+      { path: '/admin/menu/create-or-edit', name: 'Create menu', element: <CreateUpdateMenuPage /> },
       
       { path: '/admin/banners', name: 'Banners', element: <BannerList /> },
-      { path: '/admin/banners/create', name: 'Create banner', element: <CreateUpdateBannerPage /> },
-      { path: '/admin/banners/edit', name: 'Edit banner', element: <CreateUpdateBannerPage /> },
+      { path: '/admin/banners/create-or-edit', name: 'Create banner', element: <CreateUpdateBannerPage /> },
       
       { path: '/admin/pages', name: 'Pages', element: <PageContentList /> },
       { path: '/admin/pages/create-or-edit', name: 'Create pages', element: <CreateUpdatePageContent /> },
@@ -79,12 +77,10 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/news/create-or-edit', name: 'Create or edit news', element: <CreateUpdateNewsPage /> },
       
       { path: '/admin/news-type', name: 'News types', element: <NewsTypeList /> },
-      { path: '/admin/news-type/create', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },
-      { path: '/admin/news-type/edit', name: 'Edit news type', element: <CreateUpdateNewsTypePage /> },
+      { path: '/admin/news-type/create-or-edit', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },
       
       { path: '/admin/document-type', name: 'Document types', element: <DocumentTypeList /> },
-      { path: '/admin/document-type/create', name: 'Create document type', element: <CreateUpdateDocumentTypePage /> },
-      { path: '/admin/document-type/edit', name: 'Edit document type', element: <CreateUpdateDocumentTypePage /> },
+      { path: '/admin/document-type/create-or-edit', name: 'Create document type', element: <CreateUpdateDocumentTypePage /> },
       
       {
         path: '/admin/media',
@@ -98,8 +94,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       },
       
       { path: '/admin/contacts', name: 'Contacts', element: <DepartmentList /> },
-      { path: '/admin/contacts/create', name: 'Add contact', element: <CreateUpdateDepartmentPage /> },
-      { path: '/admin/contacts/edit', name: 'Edit contact', element: <CreateUpdateDepartmentPage /> },
+      { path: '/admin/contacts/create-or-edit', name: 'Add contact', element: <CreateUpdateDepartmentPage /> },
       
       { path: '/admin/members', name: 'Members', element: <>Members</> },
       { path: '/admin/users', name: 'Users', element: <>Users</> },

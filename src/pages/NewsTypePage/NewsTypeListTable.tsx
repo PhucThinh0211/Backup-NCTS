@@ -87,7 +87,7 @@ export const NewsTypeListTable = () => {
     dispatch(newsTypeActions.setSelectedNewsType(newsType));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/news-type/edit');
+    navigate('/admin/news-type/create-or-edit');
   };
 
   const confirmRemoveNewsType = (newsType: NewsTypeResponse) => {

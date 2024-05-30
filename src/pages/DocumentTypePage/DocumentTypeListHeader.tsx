@@ -20,7 +20,7 @@ export const DocumentTypeListHeader = () => {
     dispatch(documentTypeActions.setSelectedDocumentTypeDetail(undefined));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/document-type/create');
+    navigate('/admin/document-type/create-or-edit');
   };
 
   return (

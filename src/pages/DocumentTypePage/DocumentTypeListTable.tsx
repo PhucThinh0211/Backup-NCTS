@@ -90,7 +90,7 @@ export const DocumentTypeListTable = () => {
     dispatch(documentTypeActions.setSelectedDocumentType(documentType));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/document-type/edit');
+    navigate('/admin/document-type/create-or-edit');
   };
 
   const confirmRemoveDocumentType = (documentType: DocumentTypeResponse) => {

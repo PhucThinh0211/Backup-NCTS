@@ -88,7 +88,7 @@ export const BannerListTable = () => {
     dispatch(bannerActions.setSelectedBanner(banner));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/banners/edit');
+    navigate('/admin/banners/create-or-edit');
   };
 
   const confirmRemoveBanner = (banner: BannerResponse) => {
