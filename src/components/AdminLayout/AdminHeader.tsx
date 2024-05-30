@@ -18,7 +18,7 @@ export const AdminHeader = () => {
         background: colorBgContainer,
         height: TopNavHeightAdmin,
       }}
-      className='border-b border-[rgba(5, 5, 5, 0.06)]'
+      className='border-bottom shadow'
     >
       <Row align='middle' justify='space-between' style={{ height: '100%' }}>
         <div className='h-100 pt-1'>
