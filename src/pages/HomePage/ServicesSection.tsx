@@ -95,7 +95,7 @@ export const ServicesSection = () => {
             <ServiceCard
               key={item.id}
               img={item.photoUrl ? uploadedPhotoUrl(item.photoUrl) : logo}
-              url={item.slug || '/'}
+              url={`/trang${item.slug || '/'}`}
               title={item.title || ''}
             />
           ))}
