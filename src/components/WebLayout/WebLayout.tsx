@@ -59,105 +59,107 @@ export const WebLayout = () => {
   };
 
   return (
-    <Layout>
+    <>
       <ProgressBar isAnimating={isLoading} />
-      <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
-        <div className="h-100">
-          <Link to="/">
-            <img
-              src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
-              alt="logo"
-              className="h-75 mt-md-3"
-            />
-          </Link>
-        </div>
-        <AppTopNav />
-        <Flex vertical align="end" style={{ height: '100%' }}>
-          <span style={{ fontWeight: 'bold', color: '#900038' }} className="d-none d-md-flex">
-            {t('Hotline', { ns: 'common' })}: {company?.phone}
-          </span>
-          <Space className="d-md-none">
-            {/* <Button type="text" shape="circle" onClick={searchToggle}>
-              <i className="fa-solid fa-magnifying-glass fa-xl" />
-            </Button> */}
-            <a href={`tel:${company?.phone}`}>
-              <Button danger shape="circle">
-                <i className="fa-solid fa-phone"></i>
-              </Button>
-            </a>
-            <Link to="/dang-nhap">
-              <Button type="primary" shape="circle" size="middle">
-                <i className="fa-regular fa-user fa-lg" />
-              </Button>
+      <Layout style={{ minHeight: '100vh' }}>
+        <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
+          <div className="h-100">
+            <Link to="/">
+              <img
+                src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
+                alt="logo"
+                className="h-75 mt-md-3"
+              />
             </Link>
-            <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
-              <i className="fa-solid fa-bars fa-lg"></i>
-            </Button>
-          </Space>
-          <Space size="middle" className="d-none d-md-flex">
-            <Button
-              type="text"
-              shape="circle"
-              size="middle"
-              className="d-xxl-none"
-              onClick={panelNavToggle}>
-              <i className="fa-solid fa-bars fa-lg"></i>
-            </Button>
-            <Button type="text" shape="circle" onClick={searchToggle}>
-              <i className="fa-solid fa-magnifying-glass fa-xl" />
-            </Button>
-            <Link to="/dang-nhap">
-              <Button type="primary" shape="circle" size="middle">
-                <i className="fa-regular fa-user fa-lg" />
-              </Button>
-            </Link>
-            <SwitchLang />
-          </Space>
-        </Flex>
-      </Header>
-      <Layout hasSider>
-        <Content>
-          {searchVisibility && <SearchForm />}
-          <HeroSection />
-          <div style={{ backgroundColor: '#fefefe' }}>
-            <Outlet />
           </div>
-          <FloatButton.Group shape="circle" style={{ right: 24 }}>
-            <FloatButton.BackTop
-              duration={100}
-              visibilityHeight={200}
-              type="primary"
-              icon={<UpOutlined />}
-              style={{ opacity: 0.7 }}
-            />
-          </FloatButton.Group>
-        </Content>
-        <AppPanelNav />
+          <AppTopNav />
+          <Flex vertical align="end" style={{ height: '100%' }}>
+            <span style={{ fontWeight: 'bold', color: '#900038' }} className="d-none d-md-flex">
+              {t('Hotline', { ns: 'common' })}: {company?.phone}
+            </span>
+            <Space className="d-md-none">
+              {/* <Button type="text" shape="circle" onClick={searchToggle}>
+                <i className="fa-solid fa-magnifying-glass fa-xl" />
+              </Button> */}
+              <a href={`tel:${company?.phone}`}>
+                <Button danger shape="circle">
+                  <i className="fa-solid fa-phone"></i>
+                </Button>
+              </a>
+              <Link to="/dang-nhap">
+                <Button type="primary" shape="circle" size="middle">
+                  <i className="fa-regular fa-user fa-lg" />
+                </Button>
+              </Link>
+              <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
+                <i className="fa-solid fa-bars fa-lg"></i>
+              </Button>
+            </Space>
+            <Space size="middle" className="d-none d-md-flex">
+              <Button
+                type="text"
+                shape="circle"
+                size="middle"
+                className="d-xxl-none"
+                onClick={panelNavToggle}>
+                <i className="fa-solid fa-bars fa-lg"></i>
+              </Button>
+              <Button type="text" shape="circle" onClick={searchToggle}>
+                <i className="fa-solid fa-magnifying-glass fa-xl" />
+              </Button>
+              <Link to="/dang-nhap">
+                <Button type="primary" shape="circle" size="middle">
+                  <i className="fa-regular fa-user fa-lg" />
+                </Button>
+              </Link>
+              <SwitchLang />
+            </Space>
+          </Flex>
+        </Header>
+        <Layout hasSider style={{ backgroundColor: '#fefefe' }}>
+          <Content>
+            {searchVisibility && <SearchForm />}
+            <HeroSection />
+            <div>
+              <Outlet />
+            </div>
+            <FloatButton.Group shape="circle" style={{ right: 24 }}>
+              <FloatButton.BackTop
+                duration={100}
+                visibilityHeight={200}
+                type="primary"
+                icon={<UpOutlined />}
+                style={{ opacity: 0.7 }}
+              />
+            </FloatButton.Group>
+          </Content>
+          <AppPanelNav />
+        </Layout>
+        <Footer
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: 'orange',
+            paddingBlock: 14,
+          }}
+          className="px-3 px-lg-5">
+          <Space direction="horizontal">
+            <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
+          </Space>
+          <Space className="d-none d-xl-flex gap-3">
+            <Link to="/sitemap">
+              <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
+            </Link>
+            <Link to="/trang/contact">
+              <Typography.Text style={{ color: 'white' }}>Contact</Typography.Text>
+            </Link>
+            <Link to="/trang/support">
+              <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
+            </Link>
+          </Space>
+        </Footer>
       </Layout>
-      <Footer
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: 'orange',
-          paddingBlock: 14,
-        }}
-        className="px-3 px-lg-5">
-        <Space direction="horizontal">
-          <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
-        </Space>
-        <Space className="d-none d-xl-flex gap-3">
-          <Link to="/sitemap">
-            <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
-          </Link>
-          <Link to="/trang/contact">
-            <Typography.Text style={{ color: 'white' }}>Contact</Typography.Text>
-          </Link>
-          <Link to="/trang/support">
-            <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
-          </Link>
-        </Space>
-      </Footer>
-    </Layout>
+    </>
   );
 };

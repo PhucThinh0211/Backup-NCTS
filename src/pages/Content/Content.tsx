@@ -35,7 +35,7 @@ export const Content = () => {
       />
       {!pageDetail && <div className="p-3 p-lg-5">Không tìm thấy nội dung</div>}
       {pageDetail?.pageType === 'dynamic' && (
-        <div className="p-3 p-lg-5">
+        <div className="container p-3 p-lg-5">
           <div className='h5 text-orange'>{pageDetail.title}</div>
           <Divider style={{ marginTop: 4 }} />
           <div dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }} />
