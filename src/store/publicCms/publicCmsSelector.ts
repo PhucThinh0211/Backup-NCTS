@@ -34,3 +34,7 @@ export function getServicePages() {
 export function getIntroducePage() {
   return createSelector([getState], (state) => state.introducePage);
 }
+
+export function getSelectedPageDetail() {
+  return createSelector([getState], (state) => state.selectedPageDetail);
+}

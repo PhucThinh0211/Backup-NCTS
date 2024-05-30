@@ -11,6 +11,7 @@ import {
   GettingIntroducePageLoadingKey,
   GettingMenuListLoadingKey,
   GettingNewsTypeListLoadingKey,
+  GettingPageDetailBySlugLoadingKey,
   GettingServicePagesLoadingKey,
 } from '@/common';
 import { PublicCmsService } from '@/services/PublicCmsService';
@@ -194,6 +195,26 @@ const getIntroducePageRequest$: RootEpic = (action$) => {
   );
 };
 
+const getPageDetailBySlugRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getPageDetailBySlugRequest.match),
+    switchMap((action) => {
+      return concat(
+        [startLoading({ key: GettingPageDetailBySlugLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getPageDetailBySlug(action.payload).pipe(
+          switchMap((page) => {
+            return [publicCmsActions.setSelectedPageDetail(page)];
+          }),
+          catchError(() => {
+            return [publicCmsActions.setSelectedPageDetail(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingPageDetailBySlugLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -202,5 +223,6 @@ export const publicCmsEpics = [
   getNewsListRequest$,
   getNewsTypesRequest$,
   getServicePagesRequest$,
-  getIntroducePageRequest$
+  getIntroducePageRequest$,
+  getPageDetailBySlugRequest$
 ];

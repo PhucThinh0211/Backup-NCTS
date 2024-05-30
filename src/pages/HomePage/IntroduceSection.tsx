@@ -50,7 +50,7 @@ export const IntroduceSection = () => {
                 <img src={i.url} key={index} />
               ))}
             </div>
-            <Link className="d-flex justify-content-start mt-3" to="/">
+            <Link className="d-flex justify-content-start mt-3" to={`/trang${intro?.slug || '/'}`}>
               <Button size='large' type='primary' className='rounded-5'>
                 {t('See more', { ns: 'home' })}
               </Button>

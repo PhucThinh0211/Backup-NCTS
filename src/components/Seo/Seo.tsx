@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@/store/hooks';
 import { getCurrentCompany } from '@/store/publicCms';
 interface SeoProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 export const SEO = ({ title, description }: SeoProps) => {

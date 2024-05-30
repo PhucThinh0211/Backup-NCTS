@@ -51,3 +51,4 @@ export const RemovingDocumentTypeLoadingKey = 'RemovingDocumentTypeLoadingKey';
 export const GettingCaptchaLoadingKey = 'GettingCaptchaLoadingKey';
 export const GettingServicePagesLoadingKey = 'GettingServicePagesLoadingKey';
 export const GettingIntroducePageLoadingKey = 'GettingIntroducePageLoadingKey';
+export const GettingPageDetailBySlugLoadingKey = 'GettingPageDetailBySlugLoadingKey';
