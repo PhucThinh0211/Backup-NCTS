@@ -44,6 +44,9 @@ class PublicCmsController {
     getIntroducePage: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/introduce-page`, options);
     },
+    getPageDetailBySlug: (slug: string, options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/page-by-slug?slug=${slug.replace('/trang','')}`, options);
+    },
   };
 }
 

@@ -20,6 +20,7 @@ interface publicCmsState {
   captcha?: CaptchaResponse;
   servicePages: PageContentResponse[];
   introducePage?: PageContentResponse;
+  selectedPageDetail?: PageContentResponse;
 }
 
 const initialState: publicCmsState = {
@@ -66,6 +67,10 @@ const publicCmsSlice = createSlice({
     getIntroducePageRequest: (state) => {},
     setIntroducePage: (state, action) => {
       state.introducePage = action.payload;
+    },
+    getPageDetailBySlugRequest: (state, action) => {},
+    setSelectedPageDetail: (state, action) => {
+      state.selectedPageDetail = action.payload;
     }
   },
 });
