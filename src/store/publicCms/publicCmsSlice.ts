@@ -4,7 +4,7 @@ import { MenuResponse } from '@/services/MenuService';
 import { CompanyResponse } from '@/services/CompanyService';
 import { BannerResponse } from '@/services/BannerService';
 import { CaptchaResponse } from '@/services/PublicCmsService';
-import { ContentsPagingResponse } from '@/services/ContentService';
+import { ContentResponse, ContentsPagingResponse } from '@/services/ContentService';
 import {
   NewsTypesPagingResponse,
 } from '@/services/NewsTypeService';
@@ -21,6 +21,7 @@ interface publicCmsState {
   servicePages: PageContentResponse[];
   introducePage?: PageContentResponse;
   selectedPageDetail?: PageContentResponse;
+  selectedNewsDetail?: ContentResponse;
 }
 
 const initialState: publicCmsState = {
@@ -71,6 +72,10 @@ const publicCmsSlice = createSlice({
     getPageDetailBySlugRequest: (state, action) => {},
     setSelectedPageDetail: (state, action) => {
       state.selectedPageDetail = action.payload;
+    },
+    getNewsDetailBySlugRequest: (state, action) => {},
+    setSelectedNewsDetail: (state, action) => {
+      state.selectedNewsDetail = action.payload;
     }
   },
 });

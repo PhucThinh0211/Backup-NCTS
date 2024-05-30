@@ -38,3 +38,7 @@ export function getIntroducePage() {
 export function getSelectedPageDetail() {
   return createSelector([getState], (state) => state.selectedPageDetail);
 }
+
+export function getSelectedNewsDetail() {
+  return createSelector([getState], (state) => state.selectedNewsDetail);
+}

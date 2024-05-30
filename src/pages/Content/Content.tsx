@@ -30,7 +30,7 @@ export const Content = () => {
   return (
     <>
       <SEO
-        title={pageDetail?.seo?.title || currentMenu?.label}
+        title={pageDetail?.seo?.title || pageDetail?.title || currentMenu?.label}
         description={pageDetail?.seo?.description || ''}
       />
       {!pageDetail && <div className="p-3 p-lg-5">Không tìm thấy nội dung</div>}

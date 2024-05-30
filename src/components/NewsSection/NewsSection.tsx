@@ -28,6 +28,7 @@ import SessionTitle from '@/components/SessionTitle/SessionTitle';
 import { getLanguage } from '@/store/persistState';
 import { NewsCard } from '@/components/NewsCard';
 import { getLoading } from '@/store/loading';
+import Utils from '@/utils';
 
 const responsive = {
   desktopv1: {
@@ -189,7 +190,7 @@ export const NewsSection = () => {
           <div className="w-100 d-flex mx-auto justify-content-center" style={{ height: 469 }}>
             <Carousel responsive={responsive}>
               {new Array(5).fill(null).map((_, index) => (
-                <NewsCard loading key={index} />
+                <NewsCard loading key={index} url='#' />
               ))}
             </Carousel>
           </div>
@@ -221,6 +222,7 @@ export const NewsSection = () => {
             {(news?.items || []).map((news, index) => (
               <NewsCard
                 key={news.id}
+                url={`/tin-tuc/${news.url || Utils.createSlug(news.title || '')}`}
                 img={uploadedPhotoUrl(news.photoUrl || '')}
                 date={
                   news.lastModificationTime
@@ -228,7 +230,7 @@ export const NewsSection = () => {
                     : undefined
                 }
                 title={news.title || undefined}
-                desc={news.body ? parse(news.body) : undefined}
+                desc={parse(news.description || news.body || '')}
               />
             ))}
           </Carousel>
