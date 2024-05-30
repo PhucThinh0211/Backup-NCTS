@@ -24,6 +24,7 @@ import { HeroSection } from '../HeroSection';
 import { SearchForm } from '../SearchForm';
 import { ProgressBar } from '../ProgressBar';
 import { getLoading } from '@/store/loading';
+import { CustomerLogoSection } from './CustomerLogoSection';
 
 const { Header, Content, Footer } = Layout;
 
@@ -116,13 +117,16 @@ export const WebLayout = () => {
             </Space>
           </Flex>
         </Header>
-        <Layout hasSider style={{ backgroundColor: '#fefefe' }}>
-          <Content>
+        <Content className='d-flex align-items-end flex-column bg-white' style={{ height: '100%' }}>
+          <div className='w-100'>
             {searchVisibility && <SearchForm />}
             <HeroSection />
-            <div>
-              <Outlet />
-            </div>
+          </div>
+          <div className='w-100' style={{ flex: 1 }}>
+            <Outlet />
+          </div>
+          <div className='w-100'>
+            <CustomerLogoSection />
             <FloatButton.Group shape="circle" style={{ right: 24 }}>
               <FloatButton.BackTop
                 duration={100}
@@ -132,9 +136,9 @@ export const WebLayout = () => {
                 style={{ opacity: 0.7 }}
               />
             </FloatButton.Group>
-          </Content>
-          <AppPanelNav />
-        </Layout>
+            <AppPanelNav />
+          </div>
+        </Content>
         <Footer
           style={{
             display: 'flex',

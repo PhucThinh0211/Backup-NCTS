@@ -88,7 +88,7 @@ const createDocumentTypeRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       documentTypeActions.setDocumentTypes(documentTypesResult),
-                      documentTypeActions.setSelectedDocumentType(undefined),
+                      documentTypeActions.setSelectedDocumentType(createdDocumentType),
                     ];
                   }),
                   catchError((errors) => {

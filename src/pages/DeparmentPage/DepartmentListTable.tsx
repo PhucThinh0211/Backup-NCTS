@@ -77,7 +77,7 @@ export const DepartmentListTable = () => {
   const editDepartment = (department: DepartmentResponse) => {
     dispatch(persistStateActions.setLocale(language));
     dispatch(departmentActions.setSelectedDepartment(department));
-    navigate('/admin/contacts/edit');
+    navigate('/admin/contacts/create-or-edit');
   };
 
   const confirmRemoveDepartment = (department: DepartmentResponse) => {

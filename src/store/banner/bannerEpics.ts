@@ -93,7 +93,7 @@ const createBannerRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       bannerActions.setBanners(bannersResult),
-                      bannerActions.setSelectedBanner(undefined),
+                      bannerActions.setSelectedBanner(createdBanner),
                     ];
                   }),
                   catchError((errors) => {

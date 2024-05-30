@@ -93,7 +93,7 @@ const createDepartmentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       departmentActions.setDepartments(departmentsResult),
-                      departmentActions.setSelectedDepartment(undefined),
+                      departmentActions.setSelectedDepartment(createdDepartment),
                     ];
                   }),
                   catchError((errors) => {

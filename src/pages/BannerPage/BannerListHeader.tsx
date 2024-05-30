@@ -20,7 +20,7 @@ export const BannerListHeader = () => {
     dispatch(bannerActions.setSelectedBannerDetail(undefined));
     
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/banners/create');
+    navigate('/admin/banners/create-or-edit');
   };
 
   return (
