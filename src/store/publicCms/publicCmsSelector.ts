@@ -42,3 +42,6 @@ export function getSelectedPageDetail() {
 export function getSelectedNewsDetail() {
   return createSelector([getState], (state) => state.selectedNewsDetail);
 }
+export function getDepartments() {
+  return createSelector([getState], (state) => state.departments);
+}

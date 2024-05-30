@@ -223,9 +223,19 @@ const createContactRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { contact, departmentId } = action.payload;
       const { locale } = state.persistApp;
+      const { departments } = state.department;
+      const foundDepartment = (departments?.items || []).find(
+        (department) => department.id === departmentId
+      );
+      const sortSeq = (foundDepartment?.contacts?.length || 0) + 1;
       return concat(
         [startLoading({ key: SavingContactLoadingKey })],
-        DepartmentService.Post.createContacts(departmentId, [contact]).pipe(
+        DepartmentService.Post.createContacts(departmentId, [
+          {
+            ...contact,
+            sortSeq,
+          },
+        ]).pipe(
           switchMap((createdContact) => {
             const createTranslationInput = {
               language: locale,

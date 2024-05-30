@@ -9,6 +9,7 @@ import { getMenuList, getSelectedPageDetail, publicCmsActions } from '@/store/pu
 import { MenuResponse } from '@/services/MenuService';
 import { Divider } from 'antd';
 import { SignUp } from '../SignUp';
+import { ContactPage } from './pages/contact/ContactPage';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ export const Content = () => {
       {pageDetail?.pageType === 'photo' && <div>Thư viện video</div>}
       {pageDetail?.pageType === 'document' && <div>Thư viện video</div>}
       {pageDetail?.pageType === 'news' && <div>Thư viện video</div>}
-      {pageDetail?.pageType === 'contact' && <div>Thư viện video</div>}
+      {pageDetail?.pageType === 'contact' && <ContactPage />}
       {pageDetail?.pageType === 'login' && <SignIn />}
       {pageDetail?.pageType === 'register' && <SignUp />}
     </>
