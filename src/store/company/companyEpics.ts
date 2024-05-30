@@ -90,6 +90,7 @@ const createCompanyRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       companyActions.setCompanies(companysResult),
+                      companyActions.setSelectedCompanyDetail(createdCompany)
                     ];
                   }),
                   catchError((errors) => {
