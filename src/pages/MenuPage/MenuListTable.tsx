@@ -186,7 +186,7 @@ export const MenuListTable = () => {
   const editMenu = (menu: TreeItem<MenuResponse>) => {
     dispatch(persistStateActions.setLocale(language));
     dispatch(menuActions.setSelectedMenu(menu));
-    navigate('/admin/menu/edit');
+    navigate('/admin/menu/create-or-edit');
   };
 
   const confirmRemoveMenu = (menu: TreeItem<MenuResponse>) => {

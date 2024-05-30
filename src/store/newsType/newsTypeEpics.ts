@@ -88,7 +88,7 @@ const createNewsTypeRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       newsTypeActions.setNewsTypes(newsTypesResult),
-                      newsTypeActions.setSelectedNewsType(undefined),
+                      newsTypeActions.setSelectedNewsType(createdNewsType),
                     ];
                   }),
                   catchError((errors) => {

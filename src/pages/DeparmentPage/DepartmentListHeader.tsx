@@ -20,7 +20,7 @@ export const DepartmentListHeader = () => {
     dispatch(departmentActions.setSelectedDepartmentDetail(undefined));
 
     dispatch(persistStateActions.setLocale(language));
-    navigate('/admin/contacts/create');
+    navigate('/admin/contacts/create-or-edit');
   };
 
   return (
