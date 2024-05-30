@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { AuthRouteObject } from './AuthRoute';
-import { HomePage, Content, LoginPage, ForgotPassword, SignUp } from '@/pages';
+import { HomePage, Content, LoginPage, ForgotPassword, SignUp, NewsDetail } from '@/pages';
 import { AdminLayout } from '@/components';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
@@ -42,6 +42,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         path: '/trang/*',
         name: 'Page',
         element: <Content />
+      },
+      {
+        path: '/tin-tuc/*',
+        name: 'News',
+        element: <NewsDetail />
       },
       { path: '/lien-he', name: 'Contact', element: <>Liên hệ</> },
       { path: '/dang-nhap', name: 'Sign In', element: <LoginPage /> },

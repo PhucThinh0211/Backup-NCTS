@@ -1,5 +1,6 @@
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons';
 import { Skeleton } from 'antd';
+import { Link } from 'react-router-dom';
 
 type Props = {
   img?: string;
@@ -8,18 +9,12 @@ type Props = {
   title?: string;
   desc?: any;
   loading?: boolean;
+  url: string;
 };
 
-export const NewsCard = ({
-  img,
-  date,
-  author,
-  title,
-  desc,
-  loading,
-}: Props) => {
+export const NewsCard = ({ img, date, author, title, desc, loading, url }: Props) => {
   return (
-    <div className='cardNews'>
+    <div className="cardNews">
       {loading ? (
         <>
           <Skeleton.Image active />
@@ -27,33 +22,38 @@ export const NewsCard = ({
         </>
       ) : (
         <>
-          <div className='cardImg'>
-            <img src={img} alt={title} />
-          </div>
-          <div className='d-flex flex-column gap-2 p-3'>
-            <div className='d-flex flex-row gap-1 flex-wrap news-meta'>
+          <Link to={url}>
+            <div className="cardImg">
+              <img src={img} alt={title} />
+            </div>
+          </Link>
+          <div className="d-flex flex-column gap-2 p-3">
+            <div className="d-flex flex-row gap-1 flex-wrap news-meta">
               {date && (
-                <div className='d-flex flex-row gap-1'>
+                <div className="d-flex flex-row gap-1">
                   {' '}
                   <CalendarOutlined /> {date}{' '}
                 </div>
               )}
               {author && (
-                <div className='d-flex flex-row gap-1'>
+                <div className="d-flex flex-row gap-1">
                   {' '}
                   <UserOutlined /> {author}{' '}
                 </div>
               )}
             </div>
             <div>
-              {title && <h5 className='cardTitle'>{title}</h5>}
+              {title && (
+                <Link to={url}>
+                  <h5 className="cardTitle">{title}</h5>
+                </Link>
+              )}
               {desc && (
                 <div
-                  className='cardDesc'
+                  className="cardDesc"
                   dangerouslySetInnerHTML={{
                     __html: desc,
-                  }}
-                ></div>
+                  }}></div>
               )}
             </div>
           </div>

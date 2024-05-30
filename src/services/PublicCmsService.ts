@@ -47,6 +47,9 @@ class PublicCmsController {
     getPageDetailBySlug: (slug: string, options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/page-by-slug?slug=${slug.replace('/trang','')}`, options);
     },
+    getNewsDetailBySlug: (slug: string, options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/content-by-slug?slug=${slug.replace('/tin-tuc','')}`, options);
+    },
   };
 }
 

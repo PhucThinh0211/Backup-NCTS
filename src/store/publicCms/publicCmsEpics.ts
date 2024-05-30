@@ -10,6 +10,7 @@ import {
   GettingContentListLoadingKey,
   GettingIntroducePageLoadingKey,
   GettingMenuListLoadingKey,
+  GettingNewsDetailBySlugLoadingKey,
   GettingNewsTypeListLoadingKey,
   GettingPageDetailBySlugLoadingKey,
   GettingServicePagesLoadingKey,
@@ -215,6 +216,26 @@ const getPageDetailBySlugRequest$: RootEpic = (action$) => {
   );
 };
 
+const getNewsDetailBySlugRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getNewsDetailBySlugRequest.match),
+    switchMap((action) => {
+      return concat(
+        [startLoading({ key: GettingNewsDetailBySlugLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getNewsDetailBySlug(action.payload).pipe(
+          switchMap((news) => {
+            return [publicCmsActions.setSelectedNewsDetail(news)];
+          }),
+          catchError(() => {
+            return [publicCmsActions.setSelectedNewsDetail(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingNewsDetailBySlugLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -224,5 +245,6 @@ export const publicCmsEpics = [
   getNewsTypesRequest$,
   getServicePagesRequest$,
   getIntroducePageRequest$,
-  getPageDetailBySlugRequest$
+  getPageDetailBySlugRequest$,
+  getNewsDetailBySlugRequest$
 ];
