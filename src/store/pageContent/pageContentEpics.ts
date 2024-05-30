@@ -18,11 +18,15 @@ import {
   GettingPageContentLoadingKey,
   GettingNewsTypeListLoadingKey,
   PublishPageContentLoadingKey,
+  GettingMenuListLoadingKey,
+  GettingDocumentTypeListLoadingKey,
 } from '@/common/loadingKey';
 import { PageContentService } from '@/services/PageContentService';
 import Utils from '@/utils';
 import { SeoService } from '@/services/SEOService';
 import { NewsTypeService } from '@/services/NewsTypeService';
+import { MenuService } from '@/services/MenuService';
+import { DocumentTypeService } from '@/services/DocumentTypeService';
 
 const getPageContentsRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -420,6 +424,61 @@ const unpublishPageRequest$: RootEpic = (action$, state$) => {
   );
 }
 
+const getMenusRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(pageContentActions.getMenusRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMenuListLoadingKey })],
+        MenuService.Get.getAllMenus({
+          search,
+        }).pipe(
+          mergeMap((menus) => {
+            return [pageContentActions.setMenus(menus)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [pageContentActions.setMenus(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingMenuListLoadingKey })]
+      );
+    })
+  );
+};
+const getDocumentTypesRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(pageContentActions.getDocumentTypesRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingDocumentTypeListLoadingKey })],
+        DocumentTypeService.Get.getAllDocumentTypes({
+          search,
+        }).pipe(
+          mergeMap((documentTypes) => {
+            return [pageContentActions.setDocumentTypes(documentTypes)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [pageContentActions.setDocumentTypes(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingDocumentTypeListLoadingKey })]
+      );
+    })
+  );
+};
+
 export const pageContentEpics = [
   getPageContentsRequest$,
   createPageContentRequest$,
@@ -429,4 +488,6 @@ export const pageContentEpics = [
   getNewsTypesRequest$,
   publishPageRequest$,
   unpublishPageRequest$,
+  getMenusRequest$,
+  getDocumentTypesRequest$,
 ];

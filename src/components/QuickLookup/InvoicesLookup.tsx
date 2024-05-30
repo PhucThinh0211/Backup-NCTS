@@ -1,14 +1,17 @@
-import { Button, Col, Form, Input, Row, Space, Tooltip } from 'antd';
+import { Button, Col, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { LookupButton } from './components/LookupButton';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
+import { GettingCaptchaLoadingKey } from '@/common';
+import { getLoading } from '@/store/loading';
 
 export const InvoicesLookup = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['common']);
   const captcha = useAppSelector(getCaptcha());
+  const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
 
   const refreshCaptcha = () => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -21,50 +24,47 @@ export const InvoicesLookup = () => {
         required
         rules={[{ required: true }]}
       >
-        <Input
-          style={{
-            height: '40px',
-            borderRadius: 10,
-          }}
-        />
+        <Input />
       </Form.Item>
       {/* Verification codes */}
-      <Form.Item label={t('Verification codes', { ns: 'common' })} required>
-        <Row gutter={[10, 10]}>
-          <Col flex='calc(100% - 180px)'>
-            <Form.Item name='verificationCodes' rules={[{ required: true }]}>
+      <Form.Item
+        label={t('Verification codes', { ns: 'common' })}
+        name='verificationCode'
+        required
+        rules={[{ required: true }]}
+      >
+        <Row align='stretch'>
+          <div style={{ flex: 1, marginRight: 8 }}>
+            <Form.Item>
               <Input
-                style={{
-                  height: '40px',
-                  borderRadius: 10,
-                }}
-                placeholder={t('Enter verification codes', { ns: 'common' })}
+                placeholder={t('Enter verification codes', {
+                  ns: 'common',
+                })}
               />
             </Form.Item>
-          </Col>
-          <Col flex='180px'>
-            <div
-              className='verification w-100'
-              style={{
-                height: '40px',
-                borderRadius: 10,
-                alignContent: 'center',
-              }}
-            >
-              <Space>
-                <img
-                  src={`data:image/png;base64,${captcha?.captchBase64Data}`}
-                  alt=''
-                  className='border rounded'
-                />
-                <Tooltip title={t('Refresh captcha', {ns: 'common'})}>
-                  <Button onClick={refreshCaptcha} shape='circle'>
-                    <i className="fa-solid fa-rotate"></i>
-                  </Button>
-                </Tooltip>
-              </Space>
-            </div>
-          </Col>
+          </div>
+          <Space>
+            {fetchingCaptcha ? (
+              <Spin size='small' style={{ width: 110 }} />
+            ) : (
+              <img
+                // prettier-ignore
+                src={captcha?.captchBase64Data ? `data:image/png;base64,${captcha?.captchBase64Data}` : ''}
+                alt='captcha code'
+                className='border rounded'
+                style={{ height: 32 }}
+              />
+            )}
+            <Tooltip title={t('Refresh captcha', { ns: 'common' })}>
+              <Button
+                onClick={refreshCaptcha}
+                shape='circle'
+                disabled={fetchingCaptcha}
+              >
+                <i className='fa-solid fa-rotate'></i>
+              </Button>
+            </Tooltip>
+          </Space>
         </Row>
       </Form.Item>
       {/* Submit button */}

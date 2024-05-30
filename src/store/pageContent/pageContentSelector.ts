@@ -36,3 +36,9 @@ export function getNewsTypes() {
 export function getPagePhotoUrl() {
   return createSelector([getPageContentState], (state) => state.pagePhotoUrl);
 }
+export function getDocumentTypes() {
+  return createSelector([getPageContentState], (state) => state.documentTypes);
+}
+export function getMenus() {
+  return createSelector([getPageContentState], (state) => state.menus);
+}

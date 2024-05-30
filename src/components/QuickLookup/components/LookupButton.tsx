@@ -7,7 +7,6 @@ export const LookupButton = (props: ButtonProps) => {
       type='primary'
       htmlType='submit'
       className='fw-semibold rounded-pill'
-      size='large'
     >
       {props.children}
     </Button>

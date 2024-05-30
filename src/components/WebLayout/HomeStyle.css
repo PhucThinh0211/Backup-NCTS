@@ -213,16 +213,16 @@
   background-color: #006e9c !important;
   color: white !important;
 }
-.flight-lookup .ant-radio-group {
+/* .flight-lookup .ant-radio-group {
   line-height: 40px !important;
   padding-top: 18px;
-}
+} */
 
-.flight-lookup .ant-radio-button-wrapper {
+/* .flight-lookup .ant-radio-button-wrapper {
   height: 40px !important;
   display: inline-flex;
   align-items: center;
-}
+} */
 
 .look-up .ant-radio-wrapper,
 .onlineCheckin .ant-radio-wrapper {
