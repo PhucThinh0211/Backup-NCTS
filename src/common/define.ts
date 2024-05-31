@@ -51,9 +51,9 @@ export type FlattenedItem<T> = {
 } & TreeItem<T>;
 
 export const uploadedPhotoUrl = (fileName: string) =>
-  `${apiUrl}/api/photo/dowload/${fileName}`;
+  fileName ? `${apiUrl}/api/photo/dowload/${fileName}` : '';
 
-export const dateTimeFormat = 'HH:mm:ss DD/MM/YYYY';
+export const dateTimeFormat = 'HH:mm DD/MM/YYYY';
 
 export const bootstrapBreakpoints = {
   xs: 0,
