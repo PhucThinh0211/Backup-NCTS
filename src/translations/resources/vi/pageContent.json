@@ -3,6 +3,8 @@
     "ID": "ID",
     "Title": "Tiêu đề",
     "Title required": "Vui lòng nhập tiêu đề",
+    "Menu": "Danh mục",
+    "Menu required": "Vui lòng chọn danh mục",
     "Slug": "Đường dẫn",
     "Slug required": "Vui lòng nhập đường dẫn",
     "Description": "Mô tả",

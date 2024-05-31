@@ -4,11 +4,13 @@ import { MenuResponse } from '@/services/MenuService';
 import { CompanyResponse } from '@/services/CompanyService';
 import { BannerResponse } from '@/services/BannerService';
 import { CaptchaResponse } from '@/services/PublicCmsService';
-import { ContentResponse, ContentsPagingResponse } from '@/services/ContentService';
 import {
-  NewsTypesPagingResponse,
-} from '@/services/NewsTypeService';
+  ContentResponse,
+  ContentsPagingResponse,
+} from '@/services/ContentService';
+import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
 import { PageContentResponse } from '@/services/PageContentService';
+import { DepartmentsPagingResponse } from '@/services/DepartmentService';
 
 interface publicCmsState {
   company?: CompanyResponse;
@@ -22,12 +24,13 @@ interface publicCmsState {
   introducePage?: PageContentResponse;
   selectedPageDetail?: PageContentResponse;
   selectedNewsDetail?: ContentResponse;
+  departments?: DepartmentsPagingResponse;
 }
 
 const initialState: publicCmsState = {
   menuList: [],
   banners: [],
-  servicePages: []
+  servicePages: [],
 };
 
 const publicCmsSlice = createSlice({
@@ -76,7 +79,11 @@ const publicCmsSlice = createSlice({
     getNewsDetailBySlugRequest: (state, action) => {},
     setSelectedNewsDetail: (state, action) => {
       state.selectedNewsDetail = action.payload;
-    }
+    },
+    getDepartmentsRequest: (state, action) => {},
+    setDepartments: (state, action) => {
+      state.departments = action.payload;
+    },
   },
 });
 

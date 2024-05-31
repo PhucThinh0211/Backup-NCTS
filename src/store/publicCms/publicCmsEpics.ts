@@ -8,6 +8,7 @@ import {
   GettingCaptchaLoadingKey,
   GettingCompanyLoadingKey,
   GettingContentListLoadingKey,
+  GettingDepartmentListLoadingKey,
   GettingIntroducePageLoadingKey,
   GettingMenuListLoadingKey,
   GettingNewsDetailBySlugLoadingKey,
@@ -17,6 +18,7 @@ import {
 } from '@/common';
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
+import { DepartmentService } from '@/services/DepartmentService';
 
 const getCompanyRequest$: RootEpic = (action$) => {
   return action$.pipe(
@@ -236,6 +238,31 @@ const getNewsDetailBySlugRequest$: RootEpic = (action$) => {
   );
 };
 
+const getDepartmentsRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getDepartmentsRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingDepartmentListLoadingKey, type: 'top' })],
+        DepartmentService.Get.getAllDepartments({ search }).pipe(
+          switchMap((departments) => {
+            return [publicCmsActions.setDepartments(departments)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setDepartments(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingDepartmentListLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -246,5 +273,6 @@ export const publicCmsEpics = [
   getServicePagesRequest$,
   getIntroducePageRequest$,
   getPageDetailBySlugRequest$,
-  getNewsDetailBySlugRequest$
+  getNewsDetailBySlugRequest$,
+  getDepartmentsRequest$,
 ];

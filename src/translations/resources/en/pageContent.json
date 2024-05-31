@@ -3,6 +3,8 @@
     "ID": "ID",
     "Title": "Title",
     "Title required": "Title is required",
+    "Menu": "Menu",
+    "Menu required": "Menu is required",
     "Slug": "Url",
     "Slug required": "Url is required",
     "Description": "Description",

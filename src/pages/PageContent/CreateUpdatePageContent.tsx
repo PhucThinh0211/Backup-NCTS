@@ -51,6 +51,9 @@ import {
 import { SeoForm } from '../NewsPage/SeoForm';
 import { PagePhotoUrlUploader } from './PagePhotoUrlUploader';
 import { MenuResponse } from '@/services/MenuService';
+import { getEnvVars } from '@/enviroment';
+
+const { apiUrl } = getEnvVars();
 
 const normFile = (e: any) => {
   if (Array.isArray(e)) {
@@ -84,6 +87,8 @@ export const CreateUpdatePageContent = () => {
     return a.sortSeq - b.sortSeq;
   });
 
+  const pageTitle = Form.useWatch('title', form);
+  const selectedMenuId = Form.useWatch('menuId', form);
   const pageType = Form.useWatch('pageType', form);
 
   const pageTypes = [
@@ -183,13 +188,24 @@ export const CreateUpdatePageContent = () => {
     }
   }, [selectedPageContentDetail]);
 
+  useEffect(() => {
+    if (pageTitle && !selectedPageContent) {
+      form.setFieldValue('slug', '/' + Utils.createSlug(pageTitle));
+    }
+  }, [pageTitle]);
+
+  useEffect(() => {
+    const foundMenu = (menus?.items || []).find(menu => menu.id === selectedMenuId);
+    if (foundMenu?.url && !selectedPageContent) {
+      form.setFieldValue('slug', foundMenu.url);
+    }
+  }, [selectedMenuId]);
+
   const handleSaveContent = (values: any) => {
-    const foundMenu = (menus?.items || []).find(menu => menu.id === values.menuId)
     const inputData = {
       ...values,
       content: pageContentBody,
       photoUrl: pagePhotoUrl,
-      slug: foundMenu?.url,
       seo:
         !!values.seo && JSON.stringify(values.seo) !== '{}'
           ? values.seo
@@ -225,6 +241,9 @@ export const CreateUpdatePageContent = () => {
                   setPageContentBody(data);
                 }}
                 config={{
+                  ckfinder: {
+                    uploadUrl: `${apiUrl}/api/photo/upload-ckeditor`,
+                  },
                   language: {
                     ui: language,
                   },
@@ -450,25 +469,25 @@ export const CreateUpdatePageContent = () => {
                   <Input.TextArea />
                 </Form.Item>
                 <Form.Item
-                  label={t('Slug', { ns: 'pageContent' })}
+                  label={t('Menu', { ns: 'pageContent' })}
                   name='menuId'
-                  rules={[
-                    { required: true, message: t('Slug required') },
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}
                 >
                   <TreeSelect
                       treeData={Utils.buildTree(sortedMenus).map((item) => mapTreeToSelectOption(item))}
                       treeDefaultExpandAll
                     />
+                </Form.Item>
+                <Form.Item
+                  label={t('Slug', { ns: 'pageContent' })}
+                  name='slug'
+                  rules={[
+                    {
+                      required: true,
+                      message: t('Slug required', { ns: 'pageContent' }),
+                    }
+                  ]}
+                >
+                  <Input />
                 </Form.Item>
                 <div>
                   <Typography.Text strong>
