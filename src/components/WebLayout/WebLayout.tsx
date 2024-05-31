@@ -118,7 +118,7 @@ export const WebLayout = () => {
           </Flex>
         </Header>
         <Content className='d-flex align-items-end flex-column bg-white' style={{ height: '100%' }}>
-          <div className='w-100'>
+          <div className='w-100 bg-light'>
             {searchVisibility && <SearchForm />}
             <HeroSection />
           </div>

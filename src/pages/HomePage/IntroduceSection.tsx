@@ -34,7 +34,7 @@ export const IntroduceSection = () => {
 
   return (
     <div className="py-2">
-      <SessionTitle title={t('Instruction', { ns: 'home' })} />
+      <SessionTitle title={t('Instruction', { ns: 'home' })} titleLayer='NCTS' />
       <div className="container aboutUs-content my-2 my-lg-5">
         <div className="row">
           <img className="col-lg-5 col-md-12 pb-3 pb-lg-0" src={intro?.photoUrl ? uploadedPhotoUrl(intro?.photoUrl) : logo} alt="Intro" style={{ minHeight: 250 }} />

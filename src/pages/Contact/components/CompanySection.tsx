@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 
 import { Typography } from 'antd';
+
 import { useAppSelector } from '@/store/hooks';
 import { getCurrentCompany } from '@/store/publicCms';
+import { ContactForm } from './ContactForm';
 
 interface CompanyInformationProps {
   iconClass: string;
@@ -31,7 +33,7 @@ export const CompanySection = () => {
   return (
     <div>
       <div className='d-flex flex-column gap-2 mb-4'>
-        {company?.name && <p className='h4 text-orange'>{company.name}</p>}
+        {company?.name && <p className='h5 text-orange'>{company.name}</p>}
         {company?.email && (
           <CompanyInformation iconClass='fa-solid fa-envelope'>
             <Typography.Text>{company.email}</Typography.Text>
@@ -53,14 +55,9 @@ export const CompanySection = () => {
           </CompanyInformation>
         )}
       </div>
-      {company?.googleMapsEmbed && (
-        <div className='d-flex flex-column'>
-          <div
-            className='google-maps rounded-4'
-            dangerouslySetInnerHTML={{ __html: company.googleMapsEmbed || '' }}
-          />
-        </div>
-      )}
+      <div>
+        <ContactForm />
+      </div>
     </div>
   );
 };
