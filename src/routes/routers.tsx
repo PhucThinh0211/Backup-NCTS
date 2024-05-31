@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 import { AuthRouteObject } from './AuthRoute';
 import { HomePage, Content, LoginPage, ForgotPassword, SignUp, NewsDetail, ContactPage } from '@/pages';
-import { AdminLayout } from '@/components';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
 import { BannerList } from '@/pages/BannerPage';
@@ -22,6 +21,7 @@ import {
 } from '@/pages/DocumentTypePage';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
+const AdminLayout = lazy(() => import('@/components/AdminLayout'));
 
 type MetaMenu = {
   name?: string;

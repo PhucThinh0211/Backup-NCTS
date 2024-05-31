@@ -137,7 +137,7 @@ export const NewsSection = () => {
   return (
     <section className="w-100 overflow-hidden pb-5">
       <div className=" px-3 px-lg-5">
-        <SessionTitle title={t('News', { ns: 'home' })} />
+        <SessionTitle title={t('News', { ns: 'home' })} titleLayer='NCTS' />
         <div className="d-flex justify-content-center">
           {innerWidth > bootstrapBreakpoints.sm ? (
             <Radio.Group
@@ -222,7 +222,7 @@ export const NewsSection = () => {
             {(news?.items || []).map((news, index) => (
               <NewsCard
                 key={news.id}
-                url={`/tin-tuc/${news.url || Utils.createSlug(news.title || '')}`}
+                url={`/tin-tuc${news.url || Utils.createSlug(news.title || '')}`}
                 img={uploadedPhotoUrl(news.photoUrl || '')}
                 date={
                   news.lastModificationTime
