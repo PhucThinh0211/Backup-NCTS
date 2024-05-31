@@ -55,7 +55,6 @@ export const CompanySection = () => {
       </div>
       {company?.googleMapsEmbed && (
         <div className='d-flex flex-column'>
-          <p className='h4 text-orange'>{'Vị trí trên GOOGLE MAPS'}</p>
           <div
             className='google-maps rounded-4'
             dangerouslySetInnerHTML={{ __html: company.googleMapsEmbed || '' }}

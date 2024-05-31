@@ -8,13 +8,13 @@ export const DepartmentsSection = () => {
     <section className='py-2 py-md-5'>
       <Row gutter={[10, 10]}>
         {departments?.items.map((department) => (
-          <Col span={24} sm={12} lg={8} xxl={6}>
+          <Col span={24} sm={12} lg={8} xxl={6} key={department.id}>
             <div>
               {department.name && (
                 <p className='h6 text-orange'>{department.name}</p>
               )}
               {department.contacts.map((contact) => (
-                <div>
+                <div key={contact.id}>
                   {contact.title && (
                     <p>
                       <span>{`${contact.title}: `}</span>

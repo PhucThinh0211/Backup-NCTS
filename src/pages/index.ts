@@ -5,3 +5,4 @@ export * from './Login';
 export * from './ForgotPassword';
 export * from './SignUp';
 export * from './NewsPublic';
+export * from './Contact';

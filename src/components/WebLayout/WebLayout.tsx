@@ -151,7 +151,7 @@ export const WebLayout = () => {
           <Space direction="horizontal">
             <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
           </Space>
-          <Space className="d-none d-xl-flex gap-3">
+          {/* <Space className="d-none d-xl-flex gap-3">
             <Link to="/sitemap">
               <Typography.Text style={{ color: 'white' }}>Sitemap</Typography.Text>
             </Link>
@@ -161,7 +161,7 @@ export const WebLayout = () => {
             <Link to="/trang/support">
               <Typography.Text style={{ color: 'white' }}>Support</Typography.Text>
             </Link>
-          </Space>
+          </Space> */}
         </Footer>
       </Layout>
     </>
