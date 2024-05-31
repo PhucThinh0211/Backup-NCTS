@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { SEO, SignIn } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getActiveMenuKey } from '@/store/persistState';
+import { getActiveMenuKey, getLanguage } from '@/store/persistState';
 import { getMenuList, getSelectedPageDetail, publicCmsActions } from '@/store/publicCms';
 import { MenuResponse } from '@/services/MenuService';
 import { Divider } from 'antd';
 import { SignUp } from '../SignUp';
-import { ContactPage } from './pages/contact/ContactPage';
+import { ContactPage } from '../Contact';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +18,7 @@ export const Content = () => {
   const [currentMenu, setCurrentMenu] = useState<MenuResponse>();
   const location = useLocation();
   const pageDetail = useAppSelector(getSelectedPageDetail());
+  const lang = useAppSelector(getLanguage());
 
   useEffect(() => {
     const activeMenu = menus?.find((x) => x.id === activeMenuKey);
@@ -25,8 +26,9 @@ export const Content = () => {
   }, [activeMenuKey, menus]);
 
   useEffect(() => {
+    window.scroll({ top: 0, behavior: 'smooth' });
     dispatch(publicCmsActions.getPageDetailBySlugRequest(location.pathname));
-  }, [location]);
+  }, [location, lang]);
 
   return (
     <>
@@ -44,8 +46,8 @@ export const Content = () => {
       )}
       {pageDetail?.pageType === 'video' && <div>Thư viện video</div>}
       {pageDetail?.pageType === 'photo' && <div>Thư viện video</div>}
-      {pageDetail?.pageType === 'document' && <div>Thư viện video</div>}
-      {pageDetail?.pageType === 'news' && <div>Thư viện video</div>}
+      {pageDetail?.pageType === 'document' && <div>Thư viện document</div>}
+      {pageDetail?.pageType === 'news' && <div>Tin tức</div>}
       {pageDetail?.pageType === 'contact' && <ContactPage />}
       {pageDetail?.pageType === 'login' && <SignIn />}
       {pageDetail?.pageType === 'register' && <SignUp />}
