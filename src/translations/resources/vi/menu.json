@@ -5,6 +5,8 @@
     "Name required": "Vui lòng nhập tên",
     "Url": "Đường dẫn",
     "Url required": "Vui lòng nhập đường dẫn",
+    "Type": "Loại",
+    "Type required": "Loại is required",
     "Color": "Màu",
     "Parent menu": "Danh mục cha",
     "Parent menu required": "Vui lòng chọn danh mục cha",
