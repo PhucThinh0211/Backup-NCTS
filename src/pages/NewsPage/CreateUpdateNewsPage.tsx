@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Form, Input, Row, Select, Space, Spin, Typography } from 'antd';
-import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
+import { Button, Col, Divider, Form, Input, Row, Select, Space, Spin, Typography } from 'antd';
+import { ArrowLeftOutlined, CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -131,6 +131,11 @@ export const CreateUpdateNewsPage = () => {
     }
   };
 
+  const createContent = () => {
+    dispatch(contentActions.setSelectedContent(undefined));
+    dispatch(contentActions.setSelectedContentDetail(undefined));
+  }
+
   return (
     <div className="p-4">
       <Link to={'/admin/news'} className={'d-flex flex-row align-items-center gap-1 mb-2'}>
@@ -144,6 +149,19 @@ export const CreateUpdateNewsPage = () => {
           </Typography.Title>
         </div>
         <Space>
+          {selectedContent && (
+            <>
+              <Button
+                type='primary'
+                icon={<PlusOutlined />}
+                onClick={createContent}
+                style={{ backgroundColor: '#0c75a0db'}} 
+              >
+                {t('Add news')}
+              </Button>
+              <Divider type='vertical' />
+            </>
+          )}
           <Button
             type="default"
             disabled={!selectedContent?.id}

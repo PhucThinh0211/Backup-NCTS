@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Col,
+  Divider,
   Form,
   Input,
   Row,
@@ -13,7 +14,11 @@ import {
   TreeSelect,
   Typography,
 } from 'antd';
-import { ArrowLeftOutlined, CheckOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  CheckOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -82,7 +87,10 @@ export const CreateUpdatePageContent = () => {
   const isLoading = useAppSelector(getLoading(GettingPageContentLoadingKey));
   const isPublishing = useAppSelector(getLoading(PublishPageContentLoadingKey));
 
-  const sortedMenus: MenuResponse[] = useMemo(() => Utils.deepClone(menus?.items || []), [menus]);
+  const sortedMenus: MenuResponse[] = useMemo(
+    () => Utils.deepClone(menus?.items || []),
+    [menus]
+  );
   sortedMenus.sort((a, b) => {
     return a.sortSeq - b.sortSeq;
   });
@@ -153,6 +161,7 @@ export const CreateUpdatePageContent = () => {
       children: item.children
         ? item.children.map((child) => mapTreeToSelectOption(child))
         : undefined,
+      disabled: !!item.children?.length,
     };
   };
 
@@ -160,9 +169,10 @@ export const CreateUpdatePageContent = () => {
     dispatch(
       pageContentActions.getNewsTypesRequest({ params: largePagingParams })
     );
-    dispatch(pageContentActions.getDocumentTypesRequest({ params: largePagingParams }));
+    dispatch(
+      pageContentActions.getDocumentTypesRequest({ params: largePagingParams })
+    );
     dispatch(pageContentActions.getMenusRequest({ params: largePagingParams }));
-  
   }, [language]);
 
   useEffect(() => {
@@ -195,7 +205,9 @@ export const CreateUpdatePageContent = () => {
   }, [pageTitle]);
 
   useEffect(() => {
-    const foundMenu = (menus?.items || []).find(menu => menu.id === selectedMenuId);
+    const foundMenu = (menus?.items || []).find(
+      (menu) => menu.id === selectedMenuId
+    );
     if (foundMenu?.url && !selectedPageContent) {
       form.setFieldValue('slug', foundMenu.url);
     }
@@ -290,12 +302,14 @@ export const CreateUpdatePageContent = () => {
                 },
               ]}
             >
-              <Select options={[...(documentTypes?.items || [])]
+              <Select
+                options={[...(documentTypes?.items || [])]
                   .sort((a, b) => a.sortSeq - b.sortSeq)
                   .map((type) => ({
                     label: type.name,
                     value: type.code,
-                  }))} />
+                  }))}
+              />
             </Form.Item>
           </>
         );
@@ -346,6 +360,11 @@ export const CreateUpdatePageContent = () => {
     dispatch(pageContentActions.setPagePhotoUrl(undefined));
   };
 
+  const createPageContent = () => {
+    dispatch(pageContentActions.setSelectedPageContent(undefined));
+    dispatch(pageContentActions.setSelectedPageContentDetail(undefined));
+  };
+
   return (
     <div className='p-4'>
       <Link
@@ -364,6 +383,19 @@ export const CreateUpdatePageContent = () => {
           </Typography.Title>
         </div>
         <Space>
+          {selectedPageContent && (
+            <>
+              <Button
+                type='primary'
+                icon={<PlusOutlined />}
+                onClick={createPageContent}
+                style={{ backgroundColor: '#0c75a0db' }}
+              >
+                {t('Add new', { ns: 'pageContent' })}
+              </Button>
+              <Divider type='vertical' />
+            </>
+          )}
           <Button
             type='default'
             disabled={!selectedPageContent?.id}
@@ -473,9 +505,11 @@ export const CreateUpdatePageContent = () => {
                   name='menuId'
                 >
                   <TreeSelect
-                      treeData={Utils.buildTree(sortedMenus).map((item) => mapTreeToSelectOption(item))}
-                      treeDefaultExpandAll
-                    />
+                    treeData={Utils.buildTree(sortedMenus).map((item) =>
+                      mapTreeToSelectOption(item)
+                    )}
+                    treeDefaultExpandAll
+                  />
                 </Form.Item>
                 <Form.Item
                   label={t('Slug', { ns: 'pageContent' })}
@@ -484,7 +518,7 @@ export const CreateUpdatePageContent = () => {
                     {
                       required: true,
                       message: t('Slug required', { ns: 'pageContent' }),
-                    }
+                    },
                   ]}
                 >
                   <Input />

@@ -10,11 +10,12 @@ type Props = {
   desc?: any;
   loading?: boolean;
   url: string;
+  style?: React.CSSProperties;
 };
 
-export const NewsCard = ({ img, date, author, title, desc, loading, url }: Props) => {
+export const NewsCard = ({ img, date, author, title, desc, loading, url, style }: Props) => {
   return (
-    <div className="cardNews">
+    <div className="cardNews" style={style}>
       {loading ? (
         <>
           <Skeleton.Image active />

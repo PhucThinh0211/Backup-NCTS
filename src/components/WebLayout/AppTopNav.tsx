@@ -18,7 +18,7 @@ export const AppTopNav = () => {
   const { '*': slug } = useParams();
 
   useEffect(() => {
-    const selectedMenu = menus.find((x) => (slug ? `/${slug}` : window.location.pathname) === x.url);
+    const selectedMenu = (menus || []).find((x) => (slug ? `/${slug}` : window.location.pathname) === x.url);
     dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || window.location.pathname));
   }, [menus, slug]);
 
@@ -26,7 +26,7 @@ export const AppTopNav = () => {
     if (!menus) {
       return [];
     }
-    const menuList = menus.filter((x) => !x.parentId);
+    const menuList = (menus || []).filter((x) => !x.parentId);
     const navItems: MenuItem[] = menuList.map((x) => {
       if (x.type === 'Link') {
         return {
@@ -85,7 +85,7 @@ export const AppTopNav = () => {
   };
 
   const buildSubmenu = (parent: MenuResponse) => {
-    const menuList = menus.filter((x) => x.parentId === parent.id);
+    const menuList = (menus || []).filter((x) => x.parentId === parent.id);
     const navItems: MenuItem[] = menuList.map((x) => {
       if (x.type === 'Link') {
         return {

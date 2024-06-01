@@ -1,4 +1,5 @@
 import HttpClient from './HttpClient';
+import { NewsTypeResponse } from './NewsTypeService';
 import { CreateUpdateSeoPayload } from './SEOService';
 import { RequestOptions } from './types';
 import { PagingResponse } from '@/common/define';
@@ -32,7 +33,7 @@ export interface ContentResponse {
   title: string | null;
   description: string | null;
   language: string | null;
-  type: ContentType | null;
+  type: string | null;
   body: string | null;
   sortSeq: number;
   url: string | null;
@@ -88,11 +89,17 @@ class ContentController {
       );
     },
     publishContent: (id: string, options?: RequestOptions) => {
-      return HttpClient.post(`${apiUrl}/api/app/content/${id}/publish`, options);
+      return HttpClient.post(
+        `${apiUrl}/api/app/content/${id}/publish`,
+        options
+      );
     },
     unpublishContent: (id: string, options?: RequestOptions) => {
-      return HttpClient.post(`${apiUrl}/api/app/content/${id}/unpublish`, options);
-    }
+      return HttpClient.post(
+        `${apiUrl}/api/app/content/${id}/unpublish`,
+        options
+      );
+    },
   };
 
   public Put = {
