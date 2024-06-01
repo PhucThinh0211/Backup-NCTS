@@ -9,6 +9,7 @@ import {
   Form,
   Input,
   Row,
+  Select,
   Spin,
   TreeSelect,
   Typography,
@@ -34,7 +35,7 @@ import {
 import vi from '@/assets/vn.svg';
 import en from '@/assets/us.svg';
 import { getLocale } from '@/store/persistState';
-import { MenuResponse } from '@/services/MenuService';
+import { MenuResponse, MenuType } from '@/services/MenuService';
 
 const flag = {
   vi,
@@ -63,6 +64,25 @@ export const CreateUpdateMenuPage = () => {
   sortedMenus.sort((a, b) => {
     return a.sortSeq - b.sortSeq;
   });
+
+  const menuTypeOptions = [
+    {
+      label: t('Link', { ns: 'menu' }),
+      value: MenuType.Link,
+    },
+    {
+      label: t('Group', { ns: 'menu' }),
+      value: MenuType.Group,
+    },
+    {
+      label: t('Dropdown', { ns: 'menu' }),
+      value: MenuType.Dropdown,
+    },
+    {
+      label: t('Mega', { ns: 'menu' }),
+      value: MenuType.Mega,
+    },
+  ];
 
   useEffect(() => {
     if (menuTitle && !selectedMenu) {
@@ -174,7 +194,7 @@ export const CreateUpdateMenuPage = () => {
                 <Row>
                   <Col span={24} md={24}>
                     <Form.Item label={t('Type', { ns: 'menu' })} name='type'>
-                      <Input />
+                      <Select options={menuTypeOptions} />
                     </Form.Item>
                     <Form.Item
                       label={t('Name', { ns: 'menu' })}

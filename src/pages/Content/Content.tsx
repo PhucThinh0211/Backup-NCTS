@@ -5,11 +5,16 @@ import { useLocation } from 'react-router-dom';
 import { SEO, SignIn } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getActiveMenuKey, getLanguage } from '@/store/persistState';
-import { getMenuList, getSelectedPageDetail, publicCmsActions } from '@/store/publicCms';
+import {
+  getMenuList,
+  getSelectedPageDetail,
+  publicCmsActions,
+} from '@/store/publicCms';
 import { MenuResponse } from '@/services/MenuService';
 import { Divider } from 'antd';
 import { SignUp } from '../SignUp';
 import { ContactPage } from '../Contact';
+import { NewsPublic } from '..';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -33,12 +38,14 @@ export const Content = () => {
   return (
     <>
       <SEO
-        title={pageDetail?.seo?.title || pageDetail?.title || currentMenu?.label}
+        title={
+          pageDetail?.seo?.title || pageDetail?.title || currentMenu?.label
+        }
         description={pageDetail?.seo?.description || ''}
       />
-      {!pageDetail && <div className="p-3 p-lg-5">Không tìm thấy nội dung</div>}
+      {!pageDetail && <div className='p-3 p-lg-5'>Không tìm thấy nội dung</div>}
       {pageDetail?.pageType === 'dynamic' && (
-        <div className="container p-3 p-lg-5">
+        <div className='container p-3 p-lg-5'>
           <div className='h5 text-orange'>{pageDetail.title}</div>
           <Divider style={{ marginTop: 4 }} />
           <div dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }} />
@@ -47,7 +54,7 @@ export const Content = () => {
       {pageDetail?.pageType === 'video' && <div>Thư viện video</div>}
       {pageDetail?.pageType === 'photo' && <div>Thư viện video</div>}
       {pageDetail?.pageType === 'document' && <div>Thư viện document</div>}
-      {pageDetail?.pageType === 'news' && <div>Tin tức</div>}
+      {pageDetail?.pageType === 'news' && <NewsPublic />}
       {pageDetail?.pageType === 'contact' && <ContactPage />}
       {pageDetail?.pageType === 'login' && <SignIn />}
       {pageDetail?.pageType === 'register' && <SignUp />}
