@@ -118,7 +118,10 @@ export const NewsSection = () => {
   useEffect(() => {
     dispatch(
       publicCmsActions.getNewsTypesRequest({
-        params: defaultPagingParams,
+        params: {
+          ...defaultPagingParams,
+          MaxResultCount: innerWidth >= 768 ? defaultPagingParams.MaxResultCount : 15
+        },
       })
     );
   }, [lang]);
@@ -230,7 +233,7 @@ export const NewsSection = () => {
                     : undefined
                 }
                 title={news.title || undefined}
-                desc={parse(news.description || news.body || '')}
+                desc={parse(news.description || '')}
               />
             ))}
           </Carousel>

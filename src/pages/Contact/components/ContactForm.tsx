@@ -45,7 +45,7 @@ export const ContactForm = () => {
             size="large"
             type="default"
             className="border border-warning"
-            icon={<i className="fa-regular fa-paper-plane" />}>
+            icon={<i className="fa-solid fa-plane"></i>}>
             {t('Send info', { ns: 'common' })}
           </Button>
         </div>
