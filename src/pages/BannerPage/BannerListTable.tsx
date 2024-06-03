@@ -17,11 +17,19 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getBanners, bannerActions } from '@/store/banner';
+import {
+  getBanners,
+  bannerActions,
+  getBannerQueryParams,
+} from '@/store/banner';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { BannerResponse } from '@/services/BannerService';
-import { defaultPagingParams, uploadedPhotoUrl } from '@/common';
+import {
+  defaultPagingParams,
+  largePagingParams,
+  uploadedPhotoUrl,
+} from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 import { SortableRow } from '@/components/SortableRow';
@@ -34,6 +42,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import Utils from '@/utils';
 
 export const BannerListTable = () => {
   const [dataSource, setDataSource] = useState<BannerResponse[]>([]);
@@ -45,13 +54,18 @@ export const BannerListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const banners = useAppSelector(getBanners());
+  const queryParams = useAppSelector(getBannerQueryParams());
   const isLoading = useAppSelector(
     getLoading([GettingBannerListLoadingKey, RemovingBannerLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(bannerActions.getBannersRequest({}));
-    dispatch(bannerActions.getMenusRequest({ MaxResultCount: 1000 }));
+    dispatch(
+      bannerActions.getBannersRequest({
+        params: queryParams || defaultPagingParams,
+      })
+    );
+    dispatch(bannerActions.getMenusRequest({ params: largePagingParams }));
   }, [language]);
 
   useEffect(() => {
@@ -123,6 +137,17 @@ export const BannerListTable = () => {
       total,
       ns: 'common',
     });
+
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      bannerActions.getBannersRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
 
   const columns: TableColumnsType<BannerResponse> = [
     {
@@ -206,9 +231,12 @@ export const BannerListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.MaxResultCount,
-                total: dataSource?.length || 0,
+                ...Utils.parseParamsToPagination(
+                  queryParams || defaultPagingParams
+                ),
+                total: banners?.totalCount,
                 responsive: true,
+                onChange: onPagingChange,
                 showTotal,
               }}
               components={{

@@ -1,9 +1,16 @@
-import  {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Space, Table, TableColumnsType, Tooltip } from 'antd';
+import {
+  Button,
+  PaginationProps,
+  Space,
+  Table,
+  TableColumnsType,
+  Tooltip,
+} from 'antd';
 import useModal from 'antd/es/modal/useModal';
 
 import {
@@ -13,7 +20,11 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getDepartments, departmentActions } from '@/store/department';
+import {
+  getDepartments,
+  departmentActions,
+  getDepartmentQueryParams,
+} from '@/store/department';
 import { DepartmentResponse } from '@/services/DepartmentService';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 import Utils from '@/utils';
@@ -27,6 +38,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { defaultPagingParams } from '@/common';
 
 export const DepartmentListTable = () => {
   const [dataSource, setDataSource] = useState<DepartmentResponse[]>([]);
@@ -39,20 +51,25 @@ export const DepartmentListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const departments = useAppSelector(getDepartments());
+  const queryParams = useAppSelector(getDepartmentQueryParams());
   const isLoading = useAppSelector(
     getLoading([GettingDepartmentListLoadingKey, RemovingDepartmentLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(departmentActions.getDepartmentsRequest({}));
+    dispatch(
+      departmentActions.getDepartmentsRequest({
+        params: queryParams || defaultPagingParams,
+      })
+    );
   }, [language]);
 
   useEffect(() => {
     if (departments) {
-      const sortedDepartments: DepartmentResponse[] = Utils.deepClone(departments?.items || [])
-      sortedDepartments.sort((a, b) => 
-        a.sortSeq - b.sortSeq
-      )
+      const sortedDepartments: DepartmentResponse[] = Utils.deepClone(
+        departments?.items || []
+      );
+      sortedDepartments.sort((a, b) => a.sortSeq - b.sortSeq);
       setDataSource(sortedDepartments);
     }
   }, [departments]);
@@ -63,7 +80,7 @@ export const DepartmentListTable = () => {
         key: 'edit',
         label: t('Edit', { ns: 'common' }),
         icon: <EditOutlined style={{ color: '#1890ff' }} />,
-        onClick: () => editDepartment(record)
+        onClick: () => editDepartment(record),
       },
       {
         key: 'remove',
@@ -72,7 +89,7 @@ export const DepartmentListTable = () => {
         onClick: () => confirmRemoveDepartment(record),
       },
     ];
-  }
+  };
 
   const editDepartment = (department: DepartmentResponse) => {
     dispatch(persistStateActions.setLocale(language));
@@ -129,27 +146,39 @@ export const DepartmentListTable = () => {
       render: (_: any, record: DepartmentResponse) => {
         return (
           <Space>
-            {getMoreActions(record).map((action) => (
-              action.label ? 
+            {getMoreActions(record).map((action) =>
+              action.label ? (
                 <Tooltip title={action.label}>
-                  <Button
-                    {...action}
-                    type='text'
-                    size='small'
-                  />
+                  <Button {...action} type='text' size='small' />
                 </Tooltip>
-              :
-              <Button
-                {...action}
-                type='text'
-                size='small'
-              />
-            ))}
+              ) : (
+                <Button {...action} type='text' size='small' />
+              )
+            )}
           </Space>
         );
       },
     },
   ];
+
+  const showTotal: PaginationProps['showTotal'] = (total, range) =>
+    t('PagingTotal', {
+      range1: range[0],
+      range2: range[1],
+      total,
+      ns: 'common',
+    });
+
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      departmentActions.getDepartmentsRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
 
   const getIds = () => {
     return dataSource.map((item) => item.id);
@@ -174,7 +203,15 @@ export const DepartmentListTable = () => {
             style={{ width: '100%' }}
             size='small'
             scroll={{ x: 1000, y: windowSize[1] - 310 }}
-            pagination={false}
+            pagination={{
+              ...Utils.parseParamsToPagination(
+                queryParams || defaultPagingParams
+              ),
+              total: departments?.totalCount,
+              onChange: onPagingChange,
+              responsive: true,
+              showTotal,
+            }}
             loading={isLoading}
             components={{
               body: {

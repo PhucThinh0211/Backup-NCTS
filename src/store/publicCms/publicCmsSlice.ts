@@ -17,6 +17,7 @@ interface publicCmsState {
   menuList: MenuResponse[];
   banners: BannerResponse[];
   news?: ContentsPagingResponse;
+  latestNews?: ContentsPagingResponse;
   newsTypes?: NewsTypesPagingResponse;
   selectedNewsTypeId?: string;
   captcha?: CaptchaResponse;
@@ -52,6 +53,10 @@ const publicCmsSlice = createSlice({
     getNewsListRequest: (state, action) => {},
     setNewsList: (state, action) => {
       state.news = action.payload;
+    },
+    getLatestNewsListRequest: (state, action) => {},
+    setLatestNewsList: (state, action) => {
+      state.latestNews = action.payload;
     },
     getNewsTypesRequest: (state, action) => {},
     setNewsTypes: (state, action) => {

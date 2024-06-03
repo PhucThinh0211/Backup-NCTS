@@ -17,7 +17,11 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getDocumentTypes, documentTypeActions } from '@/store/documentType';
+import {
+  getDocumentTypes,
+  documentTypeActions,
+  getDocumentTypeQueryParams,
+} from '@/store/documentType';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { DocumentTypeResponse } from '@/services/DocumentTypeService';
@@ -34,6 +38,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import Utils from '@/utils';
 
 export const DocumentTypeListTable = () => {
   const [dataSource, setDataSource] = useState<DocumentTypeResponse[]>([]);
@@ -45,6 +50,7 @@ export const DocumentTypeListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const documentTypes = useAppSelector(getDocumentTypes());
+  const queryParams = useAppSelector(getDocumentTypeQueryParams());
   const isLoading = useAppSelector(
     getLoading([
       GettingDocumentTypeListLoadingKey,
@@ -53,7 +59,11 @@ export const DocumentTypeListTable = () => {
   );
 
   useEffect(() => {
-    dispatch(documentTypeActions.getDocumentTypesRequest({}));
+    dispatch(
+      documentTypeActions.getDocumentTypesRequest({
+        parasm: queryParams || defaultPagingParams,
+      })
+    );
   }, [language]);
 
   useEffect(() => {
@@ -126,6 +136,17 @@ export const DocumentTypeListTable = () => {
       ns: 'common',
     });
 
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      documentTypeActions.getDocumentTypesRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
+
   const columns: TableColumnsType<DocumentTypeResponse> = [
     {
       title: t('Code', { ns: 'common' }),
@@ -189,8 +210,11 @@ export const DocumentTypeListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.MaxResultCount,
-                total: dataSource?.length || 0,
+                ...Utils.parseParamsToPagination(
+                  queryParams || defaultPagingParams
+                ),
+                total: documentTypes?.totalCount,
+                onChange: onPagingChange,
                 responsive: true,
                 showTotal,
               }}
