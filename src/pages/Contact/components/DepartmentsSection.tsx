@@ -16,10 +16,10 @@ export const DepartmentsSection = () => {
               {department.contacts.map((contact) => (
                 <div key={contact.id}>
                   {contact.title && (
-                    <p>
+                    <div>
                       <span>{`${contact.title}: `}</span>
                       {contact.contactNum || ''}
-                    </p>
+                    </div>
                   )}
                 </div>
               ))}
