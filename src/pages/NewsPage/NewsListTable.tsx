@@ -17,7 +17,11 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getContents, contentActions } from '@/store/content';
+import {
+  getContents,
+  contentActions,
+  getContentQueryParams,
+} from '@/store/content';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { ContentResponse } from '@/services/ContentService';
@@ -38,6 +42,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import Utils from '@/utils';
 
 export const NewsListTable = () => {
   const [dataSource, setDataSource] = useState<ContentResponse[]>([]);
@@ -49,12 +54,17 @@ export const NewsListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const contents = useAppSelector(getContents());
+  const queryParams = useAppSelector(getContentQueryParams());
   const isLoading = useAppSelector(
     getLoading([GettingContentListLoadingKey, RemovingContentLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(contentActions.getContentsRequest({}));
+    dispatch(
+      contentActions.getContentsRequest({
+        params: queryParams || defaultPagingParams,
+      })
+    );
     dispatch(contentActions.getNewsTypeRequest({ params: largePagingParams }));
   }, [language]);
 
@@ -128,6 +138,17 @@ export const NewsListTable = () => {
       ns: 'common',
     });
 
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      contentActions.getContentsRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
+
   const columns: TableColumnsType<ContentResponse> = [
     // {
     //   title: t('Photo', { ns: 'news' }),
@@ -153,10 +174,10 @@ export const NewsListTable = () => {
       dataIndex: 'published',
       key: 'published',
       render: (published) => {
-        return published ? 
-        t('Published', { ns: 'common'}) :
-        t('Draft', { ns: 'common'}) 
-      }
+        return published
+          ? t('Published', { ns: 'common' })
+          : t('Draft', { ns: 'common' });
+      },
     },
     {
       title: t('Title', { ns: 'news' }),
@@ -220,8 +241,11 @@ export const NewsListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.MaxResultCount,
+                ...Utils.parseParamsToPagination(
+                  queryParams || defaultPagingParams
+                ),
                 total: dataSource?.length || 0,
+                onChange: onPagingChange,
                 responsive: true,
                 showTotal,
               }}

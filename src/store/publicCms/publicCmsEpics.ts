@@ -111,6 +111,32 @@ const getNewsListRequest$: RootEpic = (action$) => {
   );
 };
 
+const getLatestNewsListRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getLatestNewsListRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+        NewsTypeId: undefined,
+      };
+      return concat(
+        [startLoading({ key: GettingContentListLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getNewsList({ search }).pipe(
+          switchMap((news) => {
+            return [publicCmsActions.setLatestNewsList(news)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setLatestNewsList(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingContentListLoadingKey })]
+      );
+    })
+  );
+};
+
 const getNewsTypesRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getNewsTypesRequest.match),
@@ -275,4 +301,5 @@ export const publicCmsEpics = [
   getPageDetailBySlugRequest$,
   getNewsDetailBySlugRequest$,
   getDepartmentsRequest$,
+  getLatestNewsListRequest$,
 ];

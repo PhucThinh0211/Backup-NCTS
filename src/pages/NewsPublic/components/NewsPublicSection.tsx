@@ -5,8 +5,8 @@ import { NewsCard } from '@/components';
 import { ContentResponse } from '@/services/ContentService';
 import Utils from '@/utils';
 import { Col, Row } from 'antd';
-import { parse } from 'uuid';
 import dayjs from 'dayjs';
+import parse from 'node-html-parser';
 
 interface NewsSectionProps {
   title: ReactNode;
@@ -23,7 +23,7 @@ const convertNewsResponseToNewsData = (news: ContentResponse) => {
       ? dayjs(news.lastModificationTime).format(dateTimeFormat)
       : undefined,
     title: news.title || undefined,
-    // desc: parse(news.description || news.body || ''),
+    desc: parse(news.description || ''),
   };
 };
 
@@ -43,7 +43,7 @@ export const NewsPublicSection = ({
   return (
     <div>
       <div>
-        <p className='h4 text-orange mb-4'>{title}</p>
+        <p className='h5 text-orange mb-3'>{title}</p>
       </div>
       <div>
         <Row gutter={[16, 16]}>

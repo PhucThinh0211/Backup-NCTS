@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -7,16 +7,23 @@ import {
   FileProtectOutlined,
   ArrowRightOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Row, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import { ContentResponse } from '@/services/ContentService';
 import { NewsCard } from '@/components';
-import { uploadedPhotoUrl, dateTimeFormat } from '@/common';
+import {
+  uploadedPhotoUrl,
+  dateTimeFormat,
+  defaultPagingParams,
+} from '@/common';
 import Utils from '@/utils';
 import dayjs from 'dayjs';
+import parse from 'node-html-parser';
+import '../NewsPublic.scss';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { persistStateActions } from '@/store/persistState';
+import { getLatestNewsList, publicCmsActions } from '@/store/publicCms';
 
-interface NewsPublicSiderProps {
-  newsList?: ContentResponse[];
-}
 const convertNewsResponseToNewsData = (news: ContentResponse) => {
   return {
     key: news.id,
@@ -26,7 +33,7 @@ const convertNewsResponseToNewsData = (news: ContentResponse) => {
       ? dayjs(news.lastModificationTime).format(dateTimeFormat)
       : undefined,
     title: news.title || undefined,
-    // desc: parse(news.description || news.body || ''),
+    desc: parse(news.description || ''),
   };
 };
 const cardStyle: React.CSSProperties = {
@@ -36,8 +43,12 @@ const cardStyle: React.CSSProperties = {
   overflow: 'hidden',
 };
 
-export const NewsPublicSider = ({ newsList }: NewsPublicSiderProps) => {
+export const NewsPublicSider = () => {
   const { t } = useTranslation(['common']);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const latestNewsList = useAppSelector(getLatestNewsList());
 
   const items = [
     {
@@ -56,37 +67,62 @@ export const NewsPublicSider = ({ newsList }: NewsPublicSiderProps) => {
       icon: <BarChartOutlined className='text-orange' />,
     },
   ];
+
+  const handleLookupClick = (key: string) => {
+    dispatch(persistStateActions.setTabLookupActive(key));
+    navigate('/', { state: { tab: key } });
+  };
+
+  useEffect(() => {
+    dispatch(
+      publicCmsActions.getLatestNewsListRequest({ params: defaultPagingParams })
+    );
+  }, []);
+
   return (
     <div>
       <div className='mb-2 mb-md-4'>
-        <p className='h4 text-orange mb-4'>Quick lookup</p>
+        <p className='h5 text-orange mb-3'>
+          {t('Quick lookup', { ns: 'common' })}
+        </p>
         <div className='d-flex flex-column gap-3'>
           {items.map((item) => (
-            <div key={item.key} className='bg-white shadow p-3 rounded-3'>
+            <div
+              key={item.key}
+              className='bg-white shadow-sm p-3 rounded-3 lookupItem'
+              onClick={() => handleLookupClick(item.key)}
+            >
               <div className='d-flex flex-row align-items-center gap-2'>
                 {item.icon}
                 <div className='d-flex flex-fill'>
-                  <Typography.Text strong>{item.label}</Typography.Text>
+                  <Typography.Text strong className='lookupName'>
+                    {item.label}
+                  </Typography.Text>
                 </div>
-                <div style={{ height: 32, width: 32 }}>
-                  <Button
+                <div style={{ height: 32, minWidth: 32 }}>
+                  <div className='w-100 h-100 border rounded-circle d-flex align-items-center justify-content-center lookupButton'>
+                    <ArrowRightOutlined style={{ fontSize: 12 }} />
+                  </div>
+                  {/* <Button
                     className='rounded-circle'
                     icon={<ArrowRightOutlined style={{ fontSize: 12 }} />}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      {!!newsList?.length && (
+      {!!latestNewsList?.items?.length && (
         <div>
           <div>
-            <p className='h4 text-orange mb-4'>{'Flash news'}</p>
+            <p className='h5 text-orange mb-3'>
+              {t('Latest news', { ns: 'common' })}
+            </p>
           </div>
           <div>
             <Row gutter={[16, 16]}>
-              {newsList.slice(0, 6).map((news) => (
+              {latestNewsList.items.slice(0, 3).map((news) => (
                 <Col span={24}>
                   <NewsCard
                     {...convertNewsResponseToNewsData(news)}

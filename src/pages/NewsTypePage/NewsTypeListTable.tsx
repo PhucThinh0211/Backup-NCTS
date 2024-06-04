@@ -17,7 +17,11 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getNewsTypes, newsTypeActions } from '@/store/newsType';
+import {
+  getNewsTypeQueryParams,
+  getNewsTypes,
+  newsTypeActions,
+} from '@/store/newsType';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { NewsTypeResponse } from '@/services/NewsTypeService';
@@ -34,6 +38,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import Utils from '@/utils';
 
 export const NewsTypeListTable = () => {
   const [dataSource, setDataSource] = useState<NewsTypeResponse[]>([]);
@@ -45,12 +50,17 @@ export const NewsTypeListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const newsTypes = useAppSelector(getNewsTypes());
+  const queryParams = useAppSelector(getNewsTypeQueryParams());
   const isLoading = useAppSelector(
     getLoading([GettingNewsTypeListLoadingKey, RemovingNewsTypeLoadingKey])
   );
 
   useEffect(() => {
-    dispatch(newsTypeActions.getNewsTypesRequest({}));
+    dispatch(
+      newsTypeActions.getNewsTypesRequest({
+        params: queryParams || defaultPagingParams,
+      })
+    );
   }, [language]);
 
   useEffect(() => {
@@ -123,6 +133,17 @@ export const NewsTypeListTable = () => {
       ns: 'common',
     });
 
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      newsTypeActions.getNewsTypesRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
+
   const columns: TableColumnsType<NewsTypeResponse> = [
     {
       title: t('Code', { ns: 'common' }),
@@ -186,8 +207,11 @@ export const NewsTypeListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.MaxResultCount,
-                total: dataSource?.length || 0,
+                ...Utils.parseParamsToPagination(
+                  queryParams || defaultPagingParams
+                ),
+                total: newsTypes?.totalCount,
+                onChange: onPagingChange,
                 responsive: true,
                 showTotal,
               }}

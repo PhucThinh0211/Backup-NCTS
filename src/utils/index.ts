@@ -1,4 +1,4 @@
-import { FlattenedItem, TreeItem } from '@/common';
+import { FlattenedItem, TreeItem, defaultPagingParams } from '@/common';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { notification } from 'antd';
@@ -286,6 +286,13 @@ export default class Utils {
   };
   static getHexStringFromEvent = (e: any) => {
     return e.toHexString();
+  };
+  static parseParamsToPagination = (queryParams: any) => {
+    return {
+      pageSize:
+        queryParams.MaxResultCount || defaultPagingParams.MaxResultCount,
+      page: queryParams.SkipCount / queryParams.MaxResultCount + 1 || 1,
+    };
   };
 }
 

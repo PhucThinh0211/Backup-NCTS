@@ -1,12 +1,6 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import {
-  Button,
-  PaginationProps,
-  Space,
-  Table,
-  TableColumnsType,
-} from 'antd';
+import { Button, PaginationProps, Space, Table, TableColumnsType } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -16,7 +10,11 @@ import {
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getPageContents, pageContentActions } from '@/store/pageContent';
+import {
+  getPageContentQueryParams,
+  getPageContents,
+  pageContentActions,
+} from '@/store/pageContent';
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { PageContentResponse } from '@/services/PageContentService';
@@ -33,6 +31,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import Utils from '@/utils';
 
 export const PageContentListTable = () => {
   const [dataSource, setDataSource] = useState<PageContentResponse[]>([]);
@@ -44,6 +43,7 @@ export const PageContentListTable = () => {
 
   const language = useAppSelector(getLanguage());
   const pageContents = useAppSelector(getPageContents());
+  const queryParams = useAppSelector(getPageContentQueryParams());
   const isLoading = useAppSelector(
     getLoading([
       GettingPageContentListLoadingKey,
@@ -52,7 +52,11 @@ export const PageContentListTable = () => {
   );
 
   useEffect(() => {
-    dispatch(pageContentActions.getPageContentsRequest({}));
+    dispatch(
+      pageContentActions.getPageContentsRequest({
+        params: queryParams || defaultPagingParams,
+      })
+    );
   }, [language]);
 
   useEffect(() => {
@@ -125,6 +129,17 @@ export const PageContentListTable = () => {
       ns: 'common',
     });
 
+  const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
+    dispatch(
+      pageContentActions.getPageContentsRequest({
+        params: {
+          SkipCount: (page - 1) * pageSize,
+          MaxResultCount: pageSize,
+        },
+      })
+    );
+  };
+
   const columns: TableColumnsType<PageContentResponse> = [
     {
       title: t('Title', { ns: 'pageContent' }),
@@ -188,9 +203,12 @@ export const PageContentListTable = () => {
               size='small'
               scroll={{ x: 1000, y: windowSize[1] - 310 }}
               pagination={{
-                pageSize: defaultPagingParams.MaxResultCount,
-                total: dataSource?.length || 0,
+                ...Utils.parseParamsToPagination(
+                  queryParams || defaultPagingParams
+                ),
+                total: pageContents?.totalCount,
                 responsive: true,
+                onChange: onPagingChange,
                 showTotal,
               }}
               components={{
