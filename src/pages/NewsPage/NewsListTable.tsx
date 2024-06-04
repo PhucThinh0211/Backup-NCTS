@@ -28,7 +28,6 @@ import { ContentResponse } from '@/services/ContentService';
 import {
   defaultPagingParams,
   largePagingParams,
-  uploadedPhotoUrl,
 } from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
@@ -150,35 +149,6 @@ export const NewsListTable = () => {
   };
 
   const columns: TableColumnsType<ContentResponse> = [
-    // {
-    //   title: t('Photo', { ns: 'news' }),
-    //   dataIndex: 'photoUrl',
-    //   key: 'photoUrl',
-    //   // align: 'center',
-    //   render(value) {
-    //     return (
-    //       value && (
-    //         <Image
-    //           src={`${uploadedPhotoUrl(value)}`}
-    //           style={{
-    //             backgroundColor: '#00000073',
-    //           }}
-    //           height={80}
-    //         />
-    //       )
-    //     );
-    //   },
-    // },
-    {
-      title: t('Publish', { ns: 'common' }),
-      dataIndex: 'published',
-      key: 'published',
-      render: (published) => {
-        return published
-          ? t('Published', { ns: 'common' })
-          : t('Draft', { ns: 'common' });
-      },
-    },
     {
       title: t('Title', { ns: 'news' }),
       dataIndex: 'title',
@@ -188,6 +158,16 @@ export const NewsListTable = () => {
       title: t('Description', { ns: 'news' }),
       dataIndex: 'description',
       key: 'description',
+    },
+    {
+      title: t('Publish', { ns: 'common' }),
+      dataIndex: 'published',
+      key: 'published',
+      render: (published) => {
+        return published
+          ? t('Published', { ns: 'common' })
+          : t('Draft', { ns: 'common' });
+      },
     },
     {
       key: 'sort',
