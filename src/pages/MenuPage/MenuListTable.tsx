@@ -245,6 +245,7 @@ export const MenuListTable = () => {
                     {...action}
                     type='text'
                     size='small'
+                    key={action.key}
                   />
                 </Tooltip>
               :
@@ -252,6 +253,7 @@ export const MenuListTable = () => {
                 {...action}
                 type='text'
                 size='small'
+                key={action.key}
               />
             ))}
           </Space>

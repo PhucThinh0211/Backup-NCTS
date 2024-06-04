@@ -22,7 +22,7 @@ interface NewsSectionProps {
 const convertNewsResponseToNewsData = (news: ContentResponse) => {
   return {
     key: news.id,
-    url: `/tin-tuc${news.url || Utils.createSlug(news.title || "")}`,
+    url: `/tin-tuc${news.url || "/" + Utils.createSlug(news.title || "")}`,
     img: uploadedPhotoUrl(news.photoUrl || ""),
     date: news.lastModificationTime
       ? dayjs(news.lastModificationTime).format(dateTimeFormat)

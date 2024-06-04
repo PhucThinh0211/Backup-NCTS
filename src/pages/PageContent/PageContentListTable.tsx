@@ -151,6 +151,16 @@ export const PageContentListTable = () => {
       dataIndex: 'slug',
       key: 'slug',
     },
+    {
+      title: t('Publish', { ns: 'common' }),
+      dataIndex: 'published',
+      key: 'published',
+      render: (published) => {
+        return published
+          ? t('Published', { ns: 'common' })
+          : t('Draft', { ns: 'common' });
+      },
+    },
     // {
     //   key: 'sort',
     //   width: 40,
