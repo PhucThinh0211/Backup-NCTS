@@ -224,7 +224,7 @@ export const NewsSection = () => {
             {(news?.items || []).map((news, index) => (
               <NewsCard
                 key={news.id}
-                url={`/tin-tuc${news.url || Utils.createSlug(news.title || '')}`}
+                url={`/tin-tuc${news.url || ('/' + Utils.createSlug(news.title || ''))}`}
                 img={uploadedPhotoUrl(news.photoUrl || '')}
                 date={
                   news.lastModificationTime
