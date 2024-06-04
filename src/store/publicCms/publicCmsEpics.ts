@@ -1,8 +1,8 @@
-import { catchError, concat, filter, switchMap } from 'rxjs';
+import { catchError, concat, filter, switchMap, withLatestFrom } from "rxjs";
 
-import { RootEpic } from '../types';
-import { publicCmsActions } from './publicCmsSlice';
-import { startLoading, stopLoading } from '../loading';
+import { RootEpic } from "../types";
+import { publicCmsActions } from "./publicCmsSlice";
+import { startLoading, stopLoading } from "../loading";
 import {
   GettingBannerListLoadingKey,
   GettingCaptchaLoadingKey,
@@ -11,21 +11,22 @@ import {
   GettingDepartmentListLoadingKey,
   GettingIntroducePageLoadingKey,
   GettingMenuListLoadingKey,
+  GettingMoreContentListLoadingKey,
   GettingNewsDetailBySlugLoadingKey,
   GettingNewsTypeListLoadingKey,
   GettingPageDetailBySlugLoadingKey,
   GettingServicePagesLoadingKey,
-} from '@/common';
-import { PublicCmsService } from '@/services/PublicCmsService';
-import Utils from '@/utils';
-import { DepartmentService } from '@/services/DepartmentService';
+} from "@/common";
+import { PublicCmsService } from "@/services/PublicCmsService";
+import Utils from "@/utils";
+import { DepartmentService } from "@/services/DepartmentService";
 
 const getCompanyRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getCompanyRequest.match),
     switchMap(() => {
       return concat(
-        [startLoading({ key: GettingCompanyLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingCompanyLoadingKey, type: "top" })],
         PublicCmsService.Get.getCompany().pipe(
           switchMap((company) => {
             return [publicCmsActions.setCompany(company)];
@@ -45,7 +46,7 @@ const getMenuListRequest$: RootEpic = (action$) => {
     filter(publicCmsActions.getMenuListRequest.match),
     switchMap(() => {
       return concat(
-        [startLoading({ key: GettingMenuListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingMenuListLoadingKey, type: "top" })],
         PublicCmsService.Get.getMenuList().pipe(
           switchMap((menus) => {
             return [publicCmsActions.setMenuList(menus)];
@@ -70,7 +71,7 @@ const getBannerListRequest$: RootEpic = (action$) => {
         ...params,
       };
       return concat(
-        [startLoading({ key: GettingBannerListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingBannerListLoadingKey, type: "top" })],
         PublicCmsService.Get.getBannerList({ search }).pipe(
           switchMap((banners) => {
             return [publicCmsActions.setBannerList(banners)];
@@ -95,10 +96,13 @@ const getNewsListRequest$: RootEpic = (action$) => {
         ...params,
       };
       return concat(
-        [startLoading({ key: GettingContentListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingContentListLoadingKey, type: "top" })],
         PublicCmsService.Get.getNewsList({ search }).pipe(
           switchMap((news) => {
-            return [publicCmsActions.setNewsList(news)];
+            return [
+              publicCmsActions.setNewsList(news),
+              publicCmsActions.setNewsParams(search),
+            ];
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);
@@ -106,6 +110,40 @@ const getNewsListRequest$: RootEpic = (action$) => {
           })
         ),
         [stopLoading({ key: GettingContentListLoadingKey })]
+      );
+    })
+  );
+};
+
+const getMoreNewsListRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getMoreNewsListRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const { news } = state.publicCms;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMoreContentListLoadingKey, type: "top" })],
+        PublicCmsService.Get.getNewsList({ search }).pipe(
+          switchMap((newsList) => {
+            return [
+              publicCmsActions.setNewsList({
+                ...news,
+                ...newsList,
+                items: (news?.items || []).concat(newsList?.items || []),
+              }),
+              publicCmsActions.setNewsParams(search),
+            ];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: GettingMoreContentListLoadingKey })]
       );
     })
   );
@@ -121,7 +159,7 @@ const getLatestNewsListRequest$: RootEpic = (action$) => {
         NewsTypeId: undefined,
       };
       return concat(
-        [startLoading({ key: GettingContentListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingContentListLoadingKey, type: "top" })],
         PublicCmsService.Get.getNewsList({ search }).pipe(
           switchMap((news) => {
             return [publicCmsActions.setLatestNewsList(news)];
@@ -146,7 +184,7 @@ const getNewsTypesRequest$: RootEpic = (action$) => {
         ...params,
       };
       return concat(
-        [startLoading({ key: GettingNewsTypeListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingNewsTypeListLoadingKey, type: "top" })],
         PublicCmsService.Get.getNewsTypeList({ search }).pipe(
           switchMap((newsTypes) => {
             return [publicCmsActions.setNewsTypes(newsTypes)];
@@ -187,7 +225,7 @@ const getServicePagesRequest$: RootEpic = (action$) => {
     filter(publicCmsActions.getServicePagesRequest.match),
     switchMap(() => {
       return concat(
-        [startLoading({ key: GettingServicePagesLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingServicePagesLoadingKey, type: "top" })],
         PublicCmsService.Get.getServicePages().pipe(
           switchMap((pages) => {
             return [publicCmsActions.setServicePages(pages)];
@@ -208,7 +246,7 @@ const getIntroducePageRequest$: RootEpic = (action$) => {
     filter(publicCmsActions.getIntroducePageRequest.match),
     switchMap(() => {
       return concat(
-        [startLoading({ key: GettingIntroducePageLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingIntroducePageLoadingKey, type: "top" })],
         PublicCmsService.Get.getIntroducePage().pipe(
           switchMap((pages) => {
             return [publicCmsActions.setIntroducePage(pages)];
@@ -229,7 +267,7 @@ const getPageDetailBySlugRequest$: RootEpic = (action$) => {
     filter(publicCmsActions.getPageDetailBySlugRequest.match),
     switchMap((action) => {
       return concat(
-        [startLoading({ key: GettingPageDetailBySlugLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingPageDetailBySlugLoadingKey, type: "top" })],
         PublicCmsService.Get.getPageDetailBySlug(action.payload).pipe(
           switchMap((page) => {
             return [publicCmsActions.setSelectedPageDetail(page)];
@@ -249,7 +287,7 @@ const getNewsDetailBySlugRequest$: RootEpic = (action$) => {
     filter(publicCmsActions.getNewsDetailBySlugRequest.match),
     switchMap((action) => {
       return concat(
-        [startLoading({ key: GettingNewsDetailBySlugLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingNewsDetailBySlugLoadingKey, type: "top" })],
         PublicCmsService.Get.getNewsDetailBySlug(action.payload).pipe(
           switchMap((news) => {
             return [publicCmsActions.setSelectedNewsDetail(news)];
@@ -273,7 +311,7 @@ const getDepartmentsRequest$: RootEpic = (action$) => {
         ...params,
       };
       return concat(
-        [startLoading({ key: GettingDepartmentListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingDepartmentListLoadingKey, type: "top" })],
         DepartmentService.Get.getAllDepartments({ search }).pipe(
           switchMap((departments) => {
             return [publicCmsActions.setDepartments(departments)];
@@ -302,4 +340,5 @@ export const publicCmsEpics = [
   getNewsDetailBySlugRequest$,
   getDepartmentsRequest$,
   getLatestNewsListRequest$,
+  getMoreNewsListRequest$,
 ];
