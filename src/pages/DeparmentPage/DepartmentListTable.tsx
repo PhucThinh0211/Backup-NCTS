@@ -148,11 +148,11 @@ export const DepartmentListTable = () => {
           <Space>
             {getMoreActions(record).map((action) =>
               action.label ? (
-                <Tooltip title={action.label}>
-                  <Button {...action} type='text' size='small' />
+                <Tooltip title={action.label} key={action.key}>
+                  <Button {...action} type='text' size='small' key={action.key} />
                 </Tooltip>
               ) : (
-                <Button {...action} type='text' size='small' />
+                <Button {...action} type='text' size='small' key={action.key} />
               )
             )}
           </Space>

@@ -119,8 +119,7 @@ export const NewsSection = () => {
     dispatch(
       publicCmsActions.getNewsTypesRequest({
         params: {
-          ...defaultPagingParams,
-          MaxResultCount: innerWidth >= 768 ? defaultPagingParams.MaxResultCount : 15
+          ...defaultPagingParams
         },
       })
     );
@@ -138,7 +137,7 @@ export const NewsSection = () => {
   }, [lang, selectedNewsTypeId]);
 
   return (
-    <section className="w-100 overflow-hidden pb-5">
+    <section className="w-100 overflow-hidden pb-md-3">
       <div className=" px-3 px-lg-5">
         <SessionTitle title={t('News', { ns: 'home' })} titleLayer='NCTS' />
         <div className="d-flex justify-content-center">
@@ -207,7 +206,7 @@ export const NewsSection = () => {
           <Carousel
             swipeable={true}
             draggable={false}
-            showDots={true}
+            showDots={innerWidth >= 768}
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             infinite={true}
@@ -217,7 +216,7 @@ export const NewsSection = () => {
             customTransition="all .5"
             transitionDuration={500}
             containerClass="carousel-container"
-            removeArrowOnDeviceType={['tablet', 'mobile']}
+            // removeArrowOnDeviceType={['tablet', 'mobile']}
             // deviceType={this.props.deviceType}
             className="news-carousel"
             dotListClass="news-carousel-dot-list-style"
@@ -225,7 +224,7 @@ export const NewsSection = () => {
             {(news?.items || []).map((news, index) => (
               <NewsCard
                 key={news.id}
-                url={`/tin-tuc${news.url || Utils.createSlug(news.title || '')}`}
+                url={`/tin-tuc${news.url || ('/' + Utils.createSlug(news.title || ''))}`}
                 img={uploadedPhotoUrl(news.photoUrl || '')}
                 date={
                   news.lastModificationTime
