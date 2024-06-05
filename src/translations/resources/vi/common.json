@@ -46,7 +46,7 @@
   "Online check-in": "Làm thủ tục nhận hàng online",
   "Declare export goods information": "Khai báo thông tin hàng xuất khẩu",
   "Online delivery procedures": "Thủ tục nhận hàng online",
-  "Account" : "Tài khoản",
+  "Account": "Tài khoản",
   "Password": "Mật khẩu",
   "Verification codes": "Mã xác thực",
   "Enter account name": "Nhập tài khoản",
@@ -57,7 +57,7 @@
   "Invoices Lookup": "Tra cứu hóa đơn",
   "E-invoice number": "Mã tra cứu",
   "Invoice date": "Ngày lập hóa đơn",
-  "Please fill in your login information":"Vui lòng điền thông tin đăng nhập",
+  "Please fill in your login information": "Vui lòng điền thông tin đăng nhập",
   "Refresh captcha": "Mã xác thực mới",
   "Code": "Mã",
   "Publish": "Xuất bản",
@@ -97,5 +97,6 @@
   "Activity news": "Tin hoạt động",
   "Customer news": "Tin khách hàng",
   "Latest news": "Tin mới nhất",
-  "Quick lookup": "Tra cứu nhanh"
+  "Quick lookup": "Tra cứu nhanh",
+  "Show more": "Xem thêm"
 }

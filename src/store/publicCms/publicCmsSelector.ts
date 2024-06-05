@@ -1,5 +1,5 @@
-import { RootState } from '@/store/types';
-import { createSelector } from '@reduxjs/toolkit';
+import { RootState } from "@/store/types";
+import { createSelector } from "@reduxjs/toolkit";
 
 export const getState = (state: RootState) => state.publicCms;
 
@@ -15,6 +15,9 @@ export function getBanners() {
 }
 export function getNewsList() {
   return createSelector([getState], (state) => state.news);
+}
+export function getNewsParams() {
+  return createSelector([getState], (state) => state.newsParams);
 }
 export function getNewsTypeList() {
   return createSelector([getState], (state) => state.newsTypes);

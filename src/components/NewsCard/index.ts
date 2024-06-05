@@ -1,1 +1,2 @@
-export * from './NewsCard';
+export * from "./NewsCard";
+export * from "./MiniNewsCard";

@@ -47,14 +47,14 @@
   "Online check-in": "Online check-in",
   "Declare export goods information": "Declare export goods information",
   "Online delivery procedures": "Online delivery procedures",
-  "Account" : "Account",
+  "Account": "Account",
   "Password": "Password",
   "Verification codes": "Captcha code",
   "Enter account name": "Enter account name",
   "Enter password": "Enter password",
   "Enter verification codes": "Enter captcha code",
   "Arrival": "Arrival",
-  "Departure":"Departure",
+  "Departure": "Departure",
   "Invoices Lookup": "Invoices Lookup",
   "E-invoice number": "E-invoice number",
   "Invoice date": "Invoice date",
@@ -98,5 +98,6 @@
   "Activity news": "Activity news",
   "Customer news": "Customer news",
   "Latest news": "Latest news",
-  "Quick lookup": "Quick lookup"
+  "Quick lookup": "Quick lookup",
+  "Show more": "Show more"
 }

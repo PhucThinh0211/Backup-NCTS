@@ -1,22 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { MenuResponse } from '@/services/MenuService';
-import { CompanyResponse } from '@/services/CompanyService';
-import { BannerResponse } from '@/services/BannerService';
-import { CaptchaResponse } from '@/services/PublicCmsService';
+import { MenuResponse } from "@/services/MenuService";
+import { CompanyResponse } from "@/services/CompanyService";
+import { BannerResponse } from "@/services/BannerService";
+import { CaptchaResponse } from "@/services/PublicCmsService";
 import {
   ContentResponse,
   ContentsPagingResponse,
-} from '@/services/ContentService';
-import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
-import { PageContentResponse } from '@/services/PageContentService';
-import { DepartmentsPagingResponse } from '@/services/DepartmentService';
+} from "@/services/ContentService";
+import { NewsTypesPagingResponse } from "@/services/NewsTypeService";
+import { PageContentResponse } from "@/services/PageContentService";
+import { DepartmentsPagingResponse } from "@/services/DepartmentService";
 
 interface publicCmsState {
   company?: CompanyResponse;
   menuList: MenuResponse[];
   banners: BannerResponse[];
   news?: ContentsPagingResponse;
+  newsParams?: any;
   latestNews?: ContentsPagingResponse;
   newsTypes?: NewsTypesPagingResponse;
   selectedNewsTypeId?: string;
@@ -35,7 +36,7 @@ const initialState: publicCmsState = {
 };
 
 const publicCmsSlice = createSlice({
-  name: 'publicCms',
+  name: "publicCms",
   initialState,
   reducers: {
     getCompanyRequest: (state, action) => {},
@@ -54,6 +55,10 @@ const publicCmsSlice = createSlice({
     setNewsList: (state, action) => {
       state.news = action.payload;
     },
+    setNewsParams: (state, action) => {
+      state.newsParams = action.payload;
+    },
+    getMoreNewsListRequest: (state, action) => {},
     getLatestNewsListRequest: (state, action) => {},
     setLatestNewsList: (state, action) => {
       state.latestNews = action.payload;
