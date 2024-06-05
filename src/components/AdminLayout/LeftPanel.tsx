@@ -10,6 +10,8 @@ import {
   HomeOutlined,
   TagsOutlined,
   SnippetsOutlined,
+  LockOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { LeftPanelWidth, MenuItem } from '@/common/define';
 import { appActions, getActiveMenu } from '@/store/app';
@@ -108,6 +110,23 @@ export const LeftPanel = (props: SiderProps) => {
       label: t('Contacts'),
       icon: <img src={ContactSvg} alt='contact icon' />,
       key: '/admin/contacts',
+    },
+    {
+      key: 'administration',
+      label: t('Administration'),
+      type: 'group',
+      children: [
+        {
+          label: t('Roles'),
+          icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+          key: '/admin/roles',
+        },
+        {
+          label: t('Users'),
+          icon: <UserOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+          key: '/admin/users',
+        },
+      ],
     },
     // {
     //   label: t('Members'),

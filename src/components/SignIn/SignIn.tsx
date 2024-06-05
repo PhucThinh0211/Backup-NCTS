@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
 import { SEO } from '../Seo';
+import { identityActions } from '@/store/identity';
 
 export const SignIn = () => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ export const SignIn = () => {
   };
 
   const signInSubmit = (values: any) => {
-    console.log(values);
+    dispatch(identityActions.loginRequest(values))
   };
 
   return (
