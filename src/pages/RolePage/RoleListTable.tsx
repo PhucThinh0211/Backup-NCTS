@@ -1,6 +1,10 @@
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  DeleteOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
 
-import { Button, Space, Table, TableColumnsType } from 'antd';
+import { Button, Space, Table, TableColumnsType, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useWindowSize } from '@/hooks/useWindowSize';
@@ -47,6 +51,11 @@ export const RoleListTable = () => {
       icon: <EditOutlined style={{ color: '#1890ff' }} />,
     },
     {
+      key: 'permissions',
+      label: t('Permissions', { ns: 'common' }),
+      icon: <UnorderedListOutlined style={{ color: '#1890ff' }} />,
+    },
+    {
       key: 'remove',
       label: t('Remove', { ns: 'common' }),
       icon: <DeleteOutlined style={{ color: '#ff4d4f' }} />,
@@ -58,6 +67,9 @@ export const RoleListTable = () => {
       case 'edit':
         editRole(record);
         break;
+      case 'permissions':
+        showRolePermission(record);
+        break;
       default:
         confirmRemoveRole(record);
         break;
@@ -67,6 +79,11 @@ export const RoleListTable = () => {
   const editRole = (role: IRole) => {
     dispatch(identityActions.setRoleSelected(role));
     dispatch(showModal({ key: IdentityModalEnum.createUpdateRoleModal }));
+  };
+
+  const showRolePermission = (role: IRole) => {
+    dispatch(identityActions.setRoleSelected(role));
+    dispatch(showModal({ key: IdentityModalEnum.permissionModal }));
   };
 
   const confirmRemoveRole = (role: IRole) => {
@@ -122,17 +139,19 @@ export const RoleListTable = () => {
     {
       fixed: 'right',
       align: 'right',
-      width: '80px',
+      width: '120px',
       render: (_, record) => {
         return (
           <Space>
             {moreActions.map((action) => (
-              <Button
-                type='text'
-                icon={action.icon}
-                key={action.key}
-                onClick={() => handleMoreActionClick(action.key, record)}
-              />
+              <Tooltip title={t(action.key, { ns: 'common' })}>
+                <Button
+                  type='text'
+                  icon={action.icon}
+                  key={action.key}
+                  onClick={() => handleMoreActionClick(action.key, record)}
+                />
+              </Tooltip>
             ))}
           </Space>
         );

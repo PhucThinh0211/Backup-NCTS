@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   CreateRoleDto,
   CreateUserInput,
-  ILoginInput,
   IRole,
   PagingUsersResponse,
   PermissionQueryParams,
@@ -32,12 +31,6 @@ const identitySlice = createSlice({
   name: 'identity',
   initialState,
   reducers: {
-    loginRequest: (state, action: PayloadAction<ILoginInput>) => {
-      state.errorMessage = '';
-    },
-    loginFailed: (state, action: PayloadAction<string>) => {
-      state.errorMessage = action.payload;
-    },
     getAllRoles: (state) => {},
     setRoles: (state, action) => {
       state.roles = action.payload;

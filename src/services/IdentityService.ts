@@ -9,6 +9,8 @@ export interface ILoginInput {
   username: string;
   password: string;
   remember: boolean;
+  captchaId?: string;
+  captcha?: string;
 }
 
 export interface IRole {

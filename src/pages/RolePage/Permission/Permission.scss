@@ -1,0 +1,11 @@
+.permissionGroup {
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+    &.selected {
+        background-color: rgba(22, 119, 255, 0.08);
+    }
+}

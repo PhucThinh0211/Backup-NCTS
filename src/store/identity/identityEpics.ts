@@ -12,48 +12,13 @@ import {
   IdentityModalEnum,
   identityActions,
 } from './identitySlice';
-import { IdentityService, login } from '@/services/IdentityService';
+import { IdentityService } from '@/services/IdentityService';
 import { startLoading, stopLoading } from '../loading';
 
 import { RootEpic } from '../types';
-import { persistStateActions } from '../persistState';
 import Utils from '@/utils';
 import { hideModal } from '../modal';
 import { defaultPagingParams } from '@/common';
-
-const loginRequest$: RootEpic = (action$, state$) => {
-  return action$.pipe(
-    filter(identityActions.loginRequest.match),
-    withLatestFrom(state$),
-    switchMap(([action]) => {
-      const { username, password, remember } = action.payload;
-      return concat(
-        [startLoading({ key: 'LoginRequest' })],
-        login({ username, password, remember }).pipe(
-          switchMap((res) => {
-            Utils.successNotification();
-            const actionMap: any[] = [
-              persistStateActions.setToken(res.access_token),
-            ];
-            if (remember) {
-              actionMap.push(
-                persistStateActions.setRefreshToken(res.refresh_token)
-              );
-            }
-            return actionMap;
-          }),
-          catchError((errors) => {
-            Utils.errorHandling(errors);
-            return [
-              identityActions.loginFailed(errors.response?.error_description),
-            ];
-          })
-        ),
-        [stopLoading({ key: 'LoginRequest' })]
-      );
-    })
-  );
-};
 
 const getAllRoles$: RootEpic = (action$) => {
   return action$.pipe(
@@ -89,7 +54,7 @@ const createRoleRequest$: RootEpic = (action$, state$) => {
               mergeMap((rolesResult) => {
                 Utils.successNotification();
                 return [
-                  identityActions.setRoles(rolesResult.items),
+                  identityActions.setRoles(rolesResult),
                   hideModal({ key: IdentityModalEnum.createUpdateRoleModal }),
                 ];
               })
@@ -120,7 +85,7 @@ const updateRoleRequest$: RootEpic = (action$, state$) => {
               mergeMap((rolesResult) => {
                 Utils.successNotification();
                 return [
-                  identityActions.setRoles(rolesResult.items),
+                  identityActions.setRoles(rolesResult),
                   hideModal({ key: IdentityModalEnum.createUpdateRoleModal }),
                 ];
               })
@@ -388,7 +353,6 @@ const removeUserRequest$: RootEpic = (action$) => {
 };
 
 export const identityEpics = [
-  loginRequest$,
   getAllRoles$,
   createRoleRequest$,
   updateRoleRequest$,

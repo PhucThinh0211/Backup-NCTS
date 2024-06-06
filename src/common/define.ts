@@ -1,6 +1,7 @@
 import { MenuProps } from 'antd';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { getEnvVars } from '@/enviroment';
+import { JwtPayload } from 'jwt-decode';
 const { apiUrl } = getEnvVars();
 
 export type LanguageType = 'vi' | 'en';
@@ -65,3 +66,11 @@ export const bootstrapBreakpoints = {
   xl: 1200,
   xxl: 1400,
 };
+
+export interface JwtDecoded extends JwtPayload {
+  profile: string;
+  role: string[];
+  orgRoles: string[];
+  orgId: string;
+  CompanyId: number;
+}
