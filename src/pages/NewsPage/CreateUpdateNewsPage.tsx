@@ -26,11 +26,10 @@ import { AuditedNews } from './AuditedNews';
 import { NewsPhotoUrlUploader } from './NewsPhotoUrlUploader';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { SeoForm } from './SeoForm';
 import { getEnvVars } from '@/enviroment';
 import Utils from '@/utils';
+import ClassicEditor from '@/common/ckeditor';
 
 const { apiUrl } = getEnvVars();
 
@@ -275,37 +274,8 @@ export const CreateUpdateNewsPage = () => {
                         const data = editor.getData();
                         setNewsBody(data);
                       }}
-                      config={{
-                        ckfinder: {
-                          uploadUrl: `${apiUrl}/api/photo/upload-ckeditor`,
-                        },
-                        language: {
-                          ui: language,
-                        },
-                        toolbar: {
-                          items: [
-                            'undo',
-                            'redo',
-                            '|',
-                            'heading',
-                            '|',
-                            'bold',
-                            'italic',
-                            '|',
-                            'link',
-                            'insertImage',
-                            'mediaEmbed',
-                            'blockQuote',
-                            '|',
-                            'bulletedList',
-                            'numberedList',
-                            'outdent',
-                            'indent',
-                          ],
-                        },
-                      }}
                       onReady={(editor) => {
-                        console.log('Editor is ready to use!', editor);
+                        editor.setData(newsBody);
                       }}
                     />
                   </Form.Item>
