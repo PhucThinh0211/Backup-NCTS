@@ -14,50 +14,43 @@ import { getLoading } from '@/store/loading';
 import useModal from 'antd/es/modal/useModal';
 import { useEffect, useState } from 'react';
 
-import { IRole } from '@/services/IdentityService';
+import { UserResponse } from '@/services/IdentityService';
 import {
   IdentityLoadingEnum,
   IdentityModalEnum,
-  createRolesSelector,
+  createUsersSelector,
   identityActions,
   usernameAdmin,
 } from '@/store/identity';
 import { showModal } from '@/store/modal';
-export const RoleListTable = () => {
-  const [dataSource, setDataSource] = useState<IRole[]>([]);
+import { defaultPagingParams } from '@/common';
+export const UserListTable = () => {
+  const [dataSource, setDataSource] = useState<UserResponse[]>([]);
   const [modal, contextHolder] = useModal();
   const { t } = useTranslation(['common']);
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
-  const roles = useAppSelector(createRolesSelector());
-  const isLoading = useAppSelector(
-    getLoading([IdentityLoadingEnum.fetchAllRoles])
-  );
+  const users = useAppSelector(createUsersSelector());
+  const isLoading = useAppSelector(getLoading([IdentityLoadingEnum.getUsers]));
 
   useEffect(() => {
-    dispatch(identityActions.getAllRoles());
+    dispatch(identityActions.getUsersRequest(defaultPagingParams));
   }, []);
 
   useEffect(() => {
-    if (roles) {
-      setDataSource(roles?.items || []);
+    if (users) {
+      setDataSource(users?.items || []);
     }
-  }, [roles]);
+  }, [users]);
 
-  const getMoreActions = (record: IRole) => {
+  const getMoreActions = (record: UserResponse) => {
     const moreActions = [
       {
         key: 'edit',
         label: t('Edit', { ns: 'common' }),
         icon: <EditOutlined style={{ color: '#1890ff' }} />,
-        onClick: () => editRole(record),
-      },
-      {
-        key: 'permissions',
-        label: t('Permissions', { ns: 'common' }),
-        icon: <UnorderedListOutlined style={{ color: '#1890ff' }} />,
-        onClick: () => showRolePermission(record),
+        onClick: () => editUser(record),
       },
       {
         key: 'remove',
@@ -69,31 +62,26 @@ export const RoleListTable = () => {
             }}
           />
         ),
-        onClick: () => confirmRemoveRole(record),
+        onClick: () => confirmRemoveUser(record),
         disabled: record.name === usernameAdmin,
       },
     ];
     return moreActions;
   };
 
-  const editRole = (role: IRole) => {
-    dispatch(identityActions.setRoleSelected(role));
-    dispatch(showModal({ key: IdentityModalEnum.createUpdateRoleModal }));
+  const editUser = (user: UserResponse) => {
+    dispatch(identityActions.setUserSelected(user));
+    dispatch(showModal({ key: IdentityModalEnum.userModal }));
   };
 
-  const showRolePermission = (role: IRole) => {
-    dispatch(identityActions.setRoleSelected(role));
-    dispatch(showModal({ key: IdentityModalEnum.permissionModal }));
-  };
-
-  const confirmRemoveRole = (role: IRole) => {
+  const confirmRemoveUser = (user: UserResponse) => {
     modal.confirm({
       title: t('Notification'),
       content: (
         <div
           dangerouslySetInnerHTML={{
             __html: t('ConfirmRemove', {
-              name: `<strong>"${role.name}"</strong>`,
+              name: `<strong>"${user.name}"</strong>`,
             }),
           }}
         />
@@ -101,14 +89,14 @@ export const RoleListTable = () => {
       centered: true,
       closable: true,
       onOk: (close) => {
-        handleRemoveRole(role.id);
+        handleRemoveUser(user.id);
         close();
       },
     });
   };
 
-  const handleRemoveRole = (roleId: string) => {
-    dispatch(identityActions.deleteRoleRequest(roleId));
+  const handleRemoveUser = (userId: string) => {
+    dispatch(identityActions.removeUserRequest(userId));
   };
 
   // const showTotal: PaginationProps['showTotal'] = (total, range) =>
@@ -121,7 +109,7 @@ export const RoleListTable = () => {
 
   // const onPagingChange: PaginationProps['onChange'] = (page, pageSize) => {
   //   dispatch(
-  //     roleActions.getRolesRequest({
+  //     userActions.getUsersRequest({
   //       params: {
   //         SkipCount: (page - 1) * pageSize,
   //         MaxResultCount: pageSize,
@@ -130,9 +118,9 @@ export const RoleListTable = () => {
   //   );
   // };
 
-  const columns: TableColumnsType<IRole> = [
+  const columns: TableColumnsType<UserResponse> = [
     {
-      title: t('Role name', { ns: 'common' }),
+      title: t('User name', { ns: 'common' }),
       dataIndex: 'name',
       key: 'name',
     },

@@ -174,6 +174,7 @@ export const PermissionModal = () => {
       open={visible}
       confirmLoading={confirmLoading}
       onCancel={handleClose}
+      onOk={handleUpdatePermissions}
     >
       <Spin spinning={loadingPermissions}>
         <Row gutter={[10, 10]}>

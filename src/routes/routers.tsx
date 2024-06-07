@@ -28,6 +28,7 @@ import {
   DocumentTypeList,
 } from '@/pages/DocumentTypePage';
 import { RolePage } from '@/pages/RolePage';
+import { UserPage } from '@/pages/UsersPage';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -107,7 +108,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       
       { path: '/admin/members', name: 'Members', element: <>Members</> },
       { path: '/admin/roles', name: 'Roles', element: <RolePage /> },
-      { path: '/admin/users', name: 'Users', element: <>Users</> },
+      { path: '/admin/users', name: 'Users', element: <UserPage /> },
       { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]
   },

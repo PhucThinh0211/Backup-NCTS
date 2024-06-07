@@ -189,7 +189,7 @@ const getUsersRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
     filter(identityActions.getUsersRequest.match),
     switchMap((action) => {
-      return IdentityService.Get.fetchUsers(action.payload).pipe(
+      return IdentityService.Get.fetchUsers({ search: action.payload }).pipe(
         mergeMap((users) => {
           return [
             identityActions.setUsers(users),
