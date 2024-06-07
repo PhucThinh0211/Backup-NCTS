@@ -45,8 +45,6 @@ import { getLanguage, getLocale } from '@/store/persistState';
 import { AuditedPageContent } from './AuditedPageContent';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 
 import Utils from '@/utils';
 import {
@@ -57,6 +55,7 @@ import { SeoForm } from '../NewsPage/SeoForm';
 import { PagePhotoUrlUploader } from './PagePhotoUrlUploader';
 import { MenuResponse } from '@/services/MenuService';
 import { getEnvVars } from '@/enviroment';
+import ClassicEditor from '@/common/ckeditor';
 
 const { apiUrl } = getEnvVars();
 
@@ -252,37 +251,8 @@ export const CreateUpdatePageContent = () => {
                   const data = editor.getData();
                   setPageContentBody(data);
                 }}
-                config={{
-                  ckfinder: {
-                    uploadUrl: `${apiUrl}/api/photo/upload-ckeditor`,
-                  },
-                  language: {
-                    ui: language,
-                  },
-                  toolbar: {
-                    items: [
-                      'undo',
-                      'redo',
-                      '|',
-                      'heading',
-                      '|',
-                      'bold',
-                      'italic',
-                      '|',
-                      'link',
-                      'insertImage',
-                      'mediaEmbed',
-                      'blockQuote',
-                      '|',
-                      'bulletedList',
-                      'numberedList',
-                      'outdent',
-                      'indent',
-                    ],
-                  },
-                }}
                 onReady={(editor) => {
-                  console.log('Editor is ready to use!', editor);
+                  editor.setData(pageContentBody)
                 }}
               />
             </div>
