@@ -1,6 +1,8 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import './App.css';
+import "@/common/featureTextRich.css";
+import "@/common/ckcontent.css";
 import { ThemeCustomization } from '@/themes';
 import { AppRouter } from './routes';
 import { AuthProvider, ReduxStoreProvider } from './components';
