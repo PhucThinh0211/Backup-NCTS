@@ -48,7 +48,7 @@ export const Content = () => {
         <div className='container p-3 p-lg-5'>
           <div className='h5 text-orange'>{pageDetail.title}</div>
           <Divider style={{ marginTop: 4 }} />
-          <div dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }} />
+          <div className='ck-content' dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }} />
         </div>
       )}
       {pageDetail?.pageType === 'video' && <div>Thư viện video</div>}

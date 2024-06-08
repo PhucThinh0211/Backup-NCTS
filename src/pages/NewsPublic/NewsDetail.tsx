@@ -27,7 +27,7 @@ export const NewsDetail = () => {
         <div className="h5 text-orange">
           <div className='h5 text-orange'>{newsDetail.title}</div>
           <Divider style={{ marginTop: 4 }}/>
-          <div dangerouslySetInnerHTML={{ __html: newsDetail.body || '' }} />
+          <div className='ck-content' dangerouslySetInnerHTML={{ __html: newsDetail.body || '' }} />
         </div>
       )}
     </div>
