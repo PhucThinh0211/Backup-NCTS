@@ -18,8 +18,10 @@ import { Checkbox, Col, Divider, Form, Modal, Row, Spin } from 'antd';
 import React, { useEffect } from 'react';
 import { PermissionGroup } from './PermissionGroup';
 import './Permission.scss';
+import { useTranslation } from 'react-i18next';
 
 export const PermissionModal = () => {
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
@@ -170,7 +172,7 @@ export const PermissionModal = () => {
 
   return (
     <Modal
-      title={`Permission - ${selectedRole?.name}`}
+      title={`${t('Permission')} - ${selectedRole?.name}`}
       open={visible}
       confirmLoading={confirmLoading}
       onCancel={handleClose}
@@ -194,7 +196,7 @@ export const PermissionModal = () => {
                   }
                   onClick={handelGrantAllPermissions}
                 >
-                  Grant all permission
+                  {t('Grant all permission')}
                 </Checkbox>
               </div>
               <Divider className='my-2' />
@@ -223,7 +225,7 @@ export const PermissionModal = () => {
                   }
                   onClick={handleCheckAllGroup}
                 >
-                  Select all
+                  {t('Select all')}
                 </Checkbox>
               </div>
               <Divider className='my-2' />

@@ -102,5 +102,19 @@
   "Show more": "Show more",
   "edit": "Edit",
   "permissions": "Permissions",
-  "remove": "Delete"
+  "remove": "Delete",
+  "Active": "Active",
+  "Lock account after failed login attempts": "Lock account after failed login attempts",
+  "Update": "Update",
+  "Add new": "Add new",
+  "User information": "User information",
+  "Roles": "Roles",
+  "Role name": "Role name",
+  "Enter role name": "Enter role name",
+  "_Default": "_Default",
+  "Public": "Public",
+  "Permission": "Permission",
+  "Grant all permission": "Grant all permission",
+  "Select all": "Select all",
+  "Valid password": "Password must have at least one character, one capital character, one special character and has a minimum length of 6 characters"
 }

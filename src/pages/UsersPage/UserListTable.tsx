@@ -120,9 +120,9 @@ export const UserListTable = () => {
 
   const columns: TableColumnsType<UserResponse> = [
     {
-      title: t('User name', { ns: 'common' }),
-      dataIndex: 'name',
-      key: 'name',
+      title: t('username', { ns: 'common' }),
+      dataIndex: 'userName',
+      key: 'userName',
     },
     {
       fixed: 'right',
@@ -131,9 +131,9 @@ export const UserListTable = () => {
       render: (_, record) => {
         return (
           <Space>
-            {getMoreActions(record).map((action) => (
-              <Tooltip title={t(action.key, { ns: 'common' })}>
-                <Button {...action} type='text' />
+            {getMoreActions(record).map(({ key, ...rest }) => (
+              <Tooltip title={t(key, { ns: 'common' })}>
+                <Button {...rest} type='text' />
               </Tooltip>
             ))}
           </Space>

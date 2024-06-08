@@ -587,17 +587,9 @@
     "@ckeditor/ckeditor5-ui" "41.4.2"
     ckeditor5 "41.4.2"
 
-"@ckeditor/ckeditor5-source-editing@41.4.2":
+"@ckeditor/ckeditor5-source-editing@41.4.2", "@ckeditor/ckeditor5-source-editing@^41.4.2":
   version "41.4.2"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-41.4.2.tgz"
-  integrity sha512-TnBJLLEU5dckalm8KZP/xC0kLMeNDVTrWUp8iCLcmLoe9xlt/wIO8VzLVPW+WjgzSZ7Yq+vrzHaCyJRVxuDsBQ==
-  dependencies:
-    "@ckeditor/ckeditor5-theme-lark" "41.4.2"
-    ckeditor5 "41.4.2"
-
-"@ckeditor/ckeditor5-source-editing@^41.4.2":
-  version "41.4.2"
-  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-source-editing/-/ckeditor5-source-editing-41.4.2.tgz#9cad1fe7a97a84630a205215c264b8cbc57e1a10"
   integrity sha512-TnBJLLEU5dckalm8KZP/xC0kLMeNDVTrWUp8iCLcmLoe9xlt/wIO8VzLVPW+WjgzSZ7Yq+vrzHaCyJRVxuDsBQ==
   dependencies:
     "@ckeditor/ckeditor5-theme-lark" "41.4.2"

@@ -47,8 +47,8 @@ export const CreateUpdateRoleModal = () => {
     <Modal
       title={
         selectedRole
-          ? t('Update role', { ns: 'common' })
-          : t('Add new role', { ns: 'common' })
+          ? t('Update', { ns: 'common' })
+          : t('Add new', { ns: 'common' })
       }
       open={isModalOpen}
       okText={t('OkText', { ns: 'common' })}
@@ -68,10 +68,13 @@ export const CreateUpdateRoleModal = () => {
         <Row>
           <Col span={24} md={24}>
             <Form.Item
-              label={t('Role name', { ns: 'menu' })}
+              label={t('Role name', { ns: 'common' })}
               name='name'
               rules={[
-                { required: true, message: t('Name required', { ns: 'menu' }) },
+                {
+                  required: true,
+                  message: t('Enter role name', { ns: 'common' }),
+                },
               ]}
             >
               <Input />

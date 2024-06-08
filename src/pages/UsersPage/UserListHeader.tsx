@@ -8,7 +8,7 @@ import { IdentityModalEnum, identityActions } from '@/store/identity';
 import { showModal } from '@/store/modal';
 
 export const UserListHeader = () => {
-  const { t } = useTranslation('user');
+  const { t } = useTranslation('common');
   const activeMenu = useAppSelector(getActiveMenu());
   const dispatch = useAppDispatch();
 
