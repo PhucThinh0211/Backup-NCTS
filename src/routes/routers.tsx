@@ -1,6 +1,14 @@
 import { lazy } from 'react';
 import { AuthRouteObject } from './AuthRoute';
-import { HomePage, Content, LoginPage, ForgotPassword, SignUp, NewsDetail, ContactPage } from '@/pages';
+import {
+  HomePage,
+  Content,
+  LoginPage,
+  ForgotPassword,
+  SignUp,
+  NewsDetail,
+  ContactPage,
+} from '@/pages';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
 import { BannerList } from '@/pages/BannerPage';
@@ -19,6 +27,8 @@ import {
   CreateUpdateDocumentTypePage,
   DocumentTypeList,
 } from '@/pages/DocumentTypePage';
+import { RolePage } from '@/pages/RolePage';
+import { UserPage } from '@/pages/UsersPage';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -97,7 +107,8 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/contacts/create-or-edit', name: 'Add contact', element: <CreateUpdateDepartmentPage /> },
       
       { path: '/admin/members', name: 'Members', element: <>Members</> },
-      { path: '/admin/users', name: 'Users', element: <>Users</> },
+      { path: '/admin/roles', name: 'Roles', element: <RolePage /> },
+      { path: '/admin/users', name: 'Users', element: <UserPage /> },
       { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]
   },

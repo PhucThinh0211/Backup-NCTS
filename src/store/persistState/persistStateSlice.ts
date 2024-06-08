@@ -8,6 +8,8 @@ interface PersistAppState {
   panelNavVisibility: boolean;
   activeMenuKey: string;
   tabLoolupActive: string;
+  token?: string;
+  refreshToken?: string;
 }
 
 const initialState: PersistAppState = {
@@ -16,7 +18,7 @@ const initialState: PersistAppState = {
   searchVisibility: false,
   panelNavVisibility: false,
   activeMenuKey: '/',
-  tabLoolupActive: 'online-check-in'
+  tabLoolupActive: 'online-check-in',
 };
 
 const persistStateSlice = createSlice({
@@ -40,7 +42,13 @@ const persistStateSlice = createSlice({
     },
     setTabLookupActive: (state, action) => {
       state.tabLoolupActive = action.payload;
-    }
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload;
+    },
   },
 });
 

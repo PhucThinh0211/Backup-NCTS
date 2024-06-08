@@ -27,9 +27,9 @@ const ENV: EnvVars = {
     checkInUrl: 'https://checkin.tingconnect.com',
     oAuthConfig: {
       issuer: apiUrl,
-      clientId: 'CXM',
-      scope: 'offline_access API',
-      clientSecret: 'ConstruxivViewersecret',
+      clientId: 'Tracking_App',
+      scope: 'offline_access Tracking',
+      // clientSecret: 'ConstruxivViewersecret',
     },
     localization: {
       defaultResourceName: 'hicas',

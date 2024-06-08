@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
 import { SEO } from '../Seo';
+import { appActions } from '@/store/app';
 
 export const SignIn = () => {
   const { t } = useTranslation();
@@ -26,7 +27,12 @@ export const SignIn = () => {
   };
 
   const signInSubmit = (values: any) => {
-    console.log(values);
+    dispatch(appActions.loginRequest({
+      input: {
+        ...values,
+        captchaId: captcha?.captchaId
+      }
+    }))
   };
 
   return (
@@ -56,7 +62,7 @@ export const SignIn = () => {
         </Form.Item>
         <Form.Item
           label={t('Verification codes', { ns: 'common' })}
-          name="captchaCode"
+          name="captcha"
           required
           rules={[{ required: true }]}>
           <Row align="stretch">

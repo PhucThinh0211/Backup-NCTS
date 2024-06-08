@@ -5,16 +5,17 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { getAuthRouters } from './AuthRoute';
 import { routers } from './routers';
 import { Loading, Startup } from '@/components';
-import { useAuth } from '@/hooks';
 import { NotAuth } from '@/pages';
+import { useAppSelector } from '@/store/hooks';
+import { getCurrentUser } from '@/store/app';
 
 export const AppRouter = () => {
-  const auth = useAuth();
+  const currentUser = useAppSelector(getCurrentUser());
 
   const _routers = getAuthRouters({
     routers,
     noAuthElement: () => <NotAuth />,
-    auth: auth.user?.roles || [],
+    auth: currentUser?.roles || [],
   });
 
   return (

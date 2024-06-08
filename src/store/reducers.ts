@@ -14,6 +14,7 @@ import { publicCmsReducer } from './publicCms';
 import { homeReducers } from './home';
 import { documentTypeReducer } from './documentType';
 import { newsTypeReducer } from './newsType';
+import { identityReducer } from './identity';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -30,6 +31,7 @@ const mainReducer = combineReducers({
   department: departmentReducer,
   newsType: newsTypeReducer,
   documentType: documentTypeReducer,
+  identity: identityReducer,
 });
 
 const rootReducers = (state: any, action: any) => {
