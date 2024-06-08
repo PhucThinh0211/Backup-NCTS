@@ -34,7 +34,7 @@ export const MiniNewsCard = ({
         <div className='cardImg'>
           <img src={img} alt={title} />
         </div>
-        <div className='d-flex flex-column gap-2 py-3 px-1'>
+        <div className='d-flex flex-column gap-2 py-1 py-md-3 px-1'>
           <div>
             {title && (
               <Link to={url} className='text-dark'>
