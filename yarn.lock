@@ -301,6 +301,14 @@
     ckeditor5 "41.4.2"
     lodash-es "4.17.21"
 
+"@ckeditor/ckeditor5-collaboration-core@41.4.2":
+  version "41.4.2"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-collaboration-core/-/ckeditor5-collaboration-core-41.4.2.tgz#4beed360bb5c1f8ad56910112eac962f94d59d7b"
+  integrity sha512-JL/g9AHjrx0kUowzC3z3TNRp94LO2HPvD5q8V3c8quLwXEEPh2zTCshRaXPbMpOgofWSnpNP6wmYyVHzJVJB8g==
+  dependencies:
+    ckeditor5 "41.4.2"
+    date-fns "2.30.0"
+
 "@ckeditor/ckeditor5-core@41.4.2":
   version "41.4.2"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-41.4.2.tgz"
@@ -404,7 +412,7 @@
     ckeditor5 "41.4.2"
     lodash-es "4.17.21"
 
-"@ckeditor/ckeditor5-font@41.4.2":
+"@ckeditor/ckeditor5-font@41.4.2", "@ckeditor/ckeditor5-font@^41.4.2":
   version "41.4.2"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-font/-/ckeditor5-font-41.4.2.tgz"
   integrity sha512-++7oIK+MXtHGUQkqmXgZqGDBCEsHCuGkss43goGZ97PcRwLegnDRInowj3K/r3nwQcts1VAWnnLCnCSSYbcGIQ==
@@ -602,7 +610,7 @@
   dependencies:
     ckeditor5 "41.4.2"
 
-"@ckeditor/ckeditor5-style@41.4.2":
+"@ckeditor/ckeditor5-style@41.4.2", "@ckeditor/ckeditor5-style@^41.4.2":
   version "41.4.2"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-style/-/ckeditor5-style-41.4.2.tgz"
   integrity sha512-q39mtg1kBrmJ8XA7XbOy4HhVzrICvt0KS484d5c3NaX7JetwapAM/QfWDGfMToMukzFcntaGt0be5Bwja0LJSw==
@@ -618,6 +626,15 @@
     "@ckeditor/ckeditor5-ui" "41.4.2"
     ckeditor5 "41.4.2"
     lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-template@^41.4.2":
+  version "41.4.2"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-template/-/ckeditor5-template-41.4.2.tgz#08d5ef56de89bfcad502eae880c09cdaa6778069"
+  integrity sha512-D73sWOuiGMm/STRVl3LIphnfVTtBqOs34v4RMufHPnXrvAYTonNdjwFEsq7MnZ/w4iKPIEnoz0npTKgIRaLUEw==
+  dependencies:
+    "@ckeditor/ckeditor5-ui" "41.4.2"
+    ckeditor5 "41.4.2"
+    ckeditor5-collaboration "41.4.2"
 
 "@ckeditor/ckeditor5-theme-lark@41.4.2", "@ckeditor/ckeditor5-theme-lark@^41.4.2":
   version "41.4.2"
@@ -1640,6 +1657,13 @@ chalk@^4.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
+ckeditor5-collaboration@41.4.2:
+  version "41.4.2"
+  resolved "https://registry.yarnpkg.com/ckeditor5-collaboration/-/ckeditor5-collaboration-41.4.2.tgz#7b2982691a919f09129d014ede71c35122eb46cf"
+  integrity sha512-j7xPz1+8NxUsUb8sRmz67qvOl3f+Pyf3GJMTueQ23WUGOBb2k1i8tsc3MSWDCvVkAcegvTatZkmmhBsd8/vXzg==
+  dependencies:
+    "@ckeditor/ckeditor5-collaboration-core" "41.4.2"
+
 ckeditor5@41.4.2:
   version "41.4.2"
   resolved "https://registry.npmjs.org/ckeditor5/-/ckeditor5-41.4.2.tgz"
@@ -1817,6 +1841,13 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+date-fns@2.30.0:
+  version "2.30.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 dayjs@^1.11.10:
   version "1.11.11"
