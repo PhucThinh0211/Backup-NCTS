@@ -54,8 +54,8 @@ export const RoleListTable = () => {
         onClick: () => editRole(record),
       },
       {
-        key: 'permissions',
-        label: t('Permissions', { ns: 'common' }),
+        key: 'permission',
+        label: t('Permission', { ns: 'common' }),
         icon: <UnorderedListOutlined style={{ color: '#1890ff' }} />,
         onClick: () => showRolePermission(record),
       },
@@ -143,9 +143,9 @@ export const RoleListTable = () => {
       render: (_, record) => {
         return (
           <Space>
-            {getMoreActions(record).map((action) => (
-              <Tooltip title={t(action.key, { ns: 'common' })}>
-                <Button {...action} type='text' />
+            {getMoreActions(record).map(({ key, ...rest }) => (
+              <Tooltip key={key} title={t(rest.label, { ns: 'common' })}>
+                <Button {...rest} type='text' />
               </Tooltip>
             ))}
           </Space>

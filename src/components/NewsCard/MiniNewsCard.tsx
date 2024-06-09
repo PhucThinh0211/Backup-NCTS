@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Skeleton } from "antd";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Skeleton } from 'antd';
 
 type Props = {
   img?: string;
@@ -30,20 +30,20 @@ export const MiniNewsCard = ({
     </div>
   ) : (
     <Link to={url}>
-      <div className="cardNews mini" style={style}>
-        <div className="cardImg">
+      <div className='cardNewsMini' style={style}>
+        <div className='cardImg'>
           <img src={img} alt={title} />
         </div>
-        <div className="d-flex flex-column gap-2 py-3 px-1">
+        <div className='d-flex flex-column gap-2 py-1 py-md-3 px-1'>
           <div>
             {title && (
-              <Link to={url} className="text-dark">
-                <h5 className="cardTitle">{title}</h5>
+              <Link to={url} className='text-dark'>
+                <h5 className='cardTitle'>{title}</h5>
               </Link>
             )}
             {desc && (
               <div
-                className="cardDesc"
+                className='cardDesc'
                 dangerouslySetInnerHTML={{
                   __html: desc,
                 }}

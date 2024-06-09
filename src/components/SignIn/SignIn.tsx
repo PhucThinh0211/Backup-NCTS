@@ -42,6 +42,9 @@ export const SignIn = () => {
         layout="vertical"
         onFinish={signInSubmit}
         autoComplete="off"
+        initialValues={{
+          remember: false,
+        }}
         className="col-12 col-md-7 col-lg-5 col-xl-4 col-xxl-3">
         <p className="h6 text-orange">
           {t('Please fill in your login information', { ns: 'common' })}
@@ -58,7 +61,7 @@ export const SignIn = () => {
           name="password"
           required
           rules={[{ required: true }]}>
-          <Input placeholder={t('Enter password', { ns: 'common' })} />
+          <Input.Password placeholder={t('Enter password', { ns: 'common' })} />
         </Form.Item>
         <Form.Item
           label={t('Verification codes', { ns: 'common' })}

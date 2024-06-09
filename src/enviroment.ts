@@ -8,11 +8,11 @@ interface EnvVars {
 interface EnvVar {
   identityUrl: string;
   apiUrl: string;
-  checkInUrl: string;
   oAuthConfig: {
     issuer: string;
     clientId: string;
     scope: string;
+    scopeOffline: string;
     clientSecret?: string;
   };
   localization: {
@@ -23,13 +23,13 @@ interface EnvVar {
 const ENV: EnvVars = {
   dev: {
     identityUrl: 'https://ncts.hicas.vn',
-    apiUrl,
-    checkInUrl: 'https://checkin.tingconnect.com',
+    apiUrl: 'https://ncts.hicas.vn',
     oAuthConfig: {
-      issuer: apiUrl,
+      issuer: 'https://ncts.hicas.vn',
       clientId: 'Tracking_App',
-      scope: 'offline_access Tracking',
-      // clientSecret: 'ConstruxivViewersecret',
+      scope: 'Tracking',
+      scopeOffline: 'offline_access Tracking',
+      clientSecret: 'we2gth#',
     },
     localization: {
       defaultResourceName: 'hicas',
@@ -37,13 +37,13 @@ const ENV: EnvVars = {
   },
   prod: {
     identityUrl: 'https://ncts.hicas.vn',
-    apiUrl,
-    checkInUrl: 'https://checkin.tingconnect.com',
+    apiUrl: 'https://ncts.hicas.vn',
     oAuthConfig: {
-      issuer: apiUrl,
-      clientId: 'CXM',
-      scope: 'offline_access API',
-      clientSecret: 'ConstruxivViewersecret',
+      issuer: 'https://ncts.hicas.vn',
+      clientId: 'Tracking_App',
+      scope: 'Tracking',
+      scopeOffline: 'offline_access Tracking',
+      clientSecret: 'we2gth#',
     },
     localization: {
       defaultResourceName: 'hicas',

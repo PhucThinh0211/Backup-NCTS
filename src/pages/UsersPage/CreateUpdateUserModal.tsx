@@ -1,4 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import {
+  Checkbox,
+  Col,
+  Form,
+  FormProps,
+  Input,
+  Modal,
+  Row,
+  Spin,
+  Tabs,
+  Tooltip,
+} from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+
 import { CreateUserInput, IRole } from '@/services/IdentityService';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   IdentityLoadingEnum,
@@ -10,12 +28,10 @@ import {
 } from '@/store/identity';
 import { getLoading } from '@/store/loading';
 import { getModalVisible, hideModal } from '@/store/modal';
-import { Checkbox, Col, Form, Input, Modal, Row, Spin, Tabs } from 'antd';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const CreateUpdateUserModal = () => {
   const { t } = useTranslation(['common']);
+  const [tabActiveKey, setTabActiveKey] = useState('1');
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
 
@@ -89,12 +105,17 @@ export const CreateUpdateUserModal = () => {
     dispatch(identityActions.createUserRequest(inputData));
   };
 
+  const onFinishFailed: FormProps<any>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+    setTabActiveKey('1');
+  };
+
   return (
     <Modal
       title={
         selectedUser
-          ? t('Update user', { ns: 'common' })
-          : t('Add new user', { ns: 'common' })
+          ? t('Update', { ns: 'common' })
+          : t('Add new', { ns: 'common' })
       }
       open={isModalOpen}
       okText={t('OkText', { ns: 'common' })}
@@ -105,7 +126,8 @@ export const CreateUpdateUserModal = () => {
     >
       <Spin spinning={isLoading}>
         <Tabs
-          defaultActiveKey='1'
+          activeKey={tabActiveKey}
+          onChange={setTabActiveKey}
           items={[
             {
               label: t('User information'),
@@ -118,26 +140,37 @@ export const CreateUpdateUserModal = () => {
                     ...selectedUser,
                   }}
                   onFinish={handleSaveUser}
+                  onFinishFailed={onFinishFailed}
+                  autoComplete='off'
                 >
                   <Form.Item
-                    label={t('User name', { ns: 'common' })}
+                    label={t('username', { ns: 'common' })}
                     name='userName'
                     rules={[
                       {
                         required: true,
-                        message: t('Name required', { ns: 'common' }),
+                        message: t('Enter user name', { ns: 'common' }),
                       },
                     ]}
                   >
                     <Input />
                   </Form.Item>
                   <Form.Item
-                    label={t('Password', { ns: 'common' })}
+                    label={
+                      <>
+                        {t('Password', { ns: 'common' })}{' '}
+                        <Tooltip title={t('Valid password', { ns: 'common' })}>
+                          <QuestionCircleOutlined
+                            style={{ marginLeft: 6, fontSize: 12 }}
+                          />
+                        </Tooltip>
+                      </>
+                    }
                     name='password'
                     rules={[
                       {
                         required: true,
-                        message: t('Password required', { ns: 'common' }),
+                        message: t('Enter password', { ns: 'common' }),
                       },
                     ]}
                   >
@@ -146,7 +179,7 @@ export const CreateUpdateUserModal = () => {
                   <Row gutter={[10, 10]}>
                     <Col span={24} sm={12}>
                       <Form.Item
-                        label={t('Name', { ns: 'common' })}
+                        label={t('Last name', { ns: 'common' })}
                         name='name'
                       >
                         <Input />
@@ -154,7 +187,7 @@ export const CreateUpdateUserModal = () => {
                     </Col>
                     <Col span={24} sm={12}>
                       <Form.Item
-                        label={t('Surname', { ns: 'common' })}
+                        label={t('First name', { ns: 'common' })}
                         name='surname'
                       >
                         <Input />
@@ -179,7 +212,7 @@ export const CreateUpdateUserModal = () => {
                     <Input />
                   </Form.Item>
                   <Form.Item
-                    label={t('Phone number', { ns: 'common' })}
+                    label={t('Phone', { ns: 'common' })}
                     name='phoneNumber'
                   >
                     <Input />

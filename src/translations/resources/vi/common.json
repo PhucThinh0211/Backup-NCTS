@@ -100,6 +100,19 @@
   "Quick lookup": "Tra cứu nhanh",
   "Show more": "Xem thêm",
   "edit": "Sửa",
-  "permissions": "Phân quyền",
-  "remove": "Xóa"
+  "remove": "Xóa",
+  "Active": "Kích hoạt",
+  "Lock account after failed login attempts": "Khóa tài khoản sau khi thử đăng nhập không thành công",
+  "Update": "Cập nhật",
+  "Add new": "Thêm mới",
+  "User information": "Thông tin người dùng",
+  "Roles": "Vai trò",
+  "Role name": "Tên vai trò",
+  "Enter role name": "Nhập tên",
+  "_Default": "Mặc định",
+  "Public": "Công khai",
+  "Permission": "Phân quyền",
+  "Grant all permission": "Phân toàn quyền",
+  "Select all": "Chọn tất cả",
+  "Valid password": "Mật khẩu phải ít nhất 6 kí tự., Mật khẩu phải có ít nhất một ký tự không phải là chữ và số., Mật khẩu phải có ít nhất một chữ thường ('a'-'z')., Mật khẩu phải có ít nhất một chữ hoa ('A'-'Z')."
 }

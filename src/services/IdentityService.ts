@@ -123,13 +123,13 @@ export interface CreateUserInput {
 const getLoginData = (inputValues: any) => {
   const formData: any = {
     grant_type: 'password',
-    scope: oAuthConfig.scope,
+    scope: inputValues?.remember ? oAuthConfig.scopeOffline : oAuthConfig.scope,
     client_id: oAuthConfig.clientId,
     ...inputValues,
   };
 
-  if (oAuthConfig.clientSecret)
-    formData['client_secret'] = oAuthConfig.clientSecret;
+  // if (oAuthConfig.clientSecret)
+  //   formData['client_secret'] = oAuthConfig.clientSecret;
 
   // prettier-ignore
   return Object.entries(formData).map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`).join('&');

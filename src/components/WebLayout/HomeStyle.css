@@ -45,13 +45,16 @@
   margin-block: 10px;
   margin-inline: 1rem;
 }
-.cardNews.mini {
+.cardNewsMini {
+  display: flex;
   flex-direction: row;
+  gap: 10px;
 }
 .cardNews:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.cardNews:hover .cardTitle {
+.cardNews:hover .cardTitle,
+.cardNewsMini:hover .cardTitle {
   color: #edaa3b;
 }
 
@@ -68,10 +71,14 @@
   overflow: hidden;
   border-radius: 5px 5px 0 0;
 }
-.cardNews.mini .cardImg {
+.cardNewsMini .cardImg {
   height: 100%;
-  min-width: 120px;
-  max-width: 45%;
+  display: flex;
+  min-width: 40%;
+  max-width: 40%;
+  box-shadow: rgba(0, 0, 0, 0.096) 0px 1px 4px;
+  border-radius: 0;
+  background-color: white;
 }
 .news-meta {
   font-size: 13px;
@@ -105,17 +112,17 @@
   line-height: 1.4em;
   min-height: 60px;
 }
-.cardNews.mini .cardTitle {
-  max-height: 2em;
-  line-height: 1em;
+.cardNewsMini .cardTitle {
+  max-height: 2.6em;
+  line-height: 1.3em;
   transition: all 200ms ease-in-out;
   font-size: 14px;
   min-height: 25px;
 }
 
-.cardNews.mini .cardDesc {
-  max-height: 2.4em;
-  line-height: 0.8em;
+.cardNewsMini .cardDesc {
+  max-height: 3.6em;
+  line-height: 1.2em;
   min-height: 40px;
 }
 
