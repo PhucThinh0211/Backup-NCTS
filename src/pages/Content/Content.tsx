@@ -11,10 +11,16 @@ import {
   publicCmsActions,
 } from '@/store/publicCms';
 import { MenuResponse } from '@/services/MenuService';
-import { Divider } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import { SignUp } from '../SignUp';
 import { ContactPage } from '../Contact';
 import { NewsPublic } from '..';
+import { PageContentType } from '@/services/PageContentService';
+import { NewsPublicSider } from '../NewsPublic/components/NewsPublicSider';
+import { InvestorNews } from '../InvestorRelations';
+import { SkateholderMeetings } from '../InvestorRelations/SkateholderMeetings';
+import { FinancialReports } from '../InvestorRelations/FinancialReports';
+import { AnnualReports } from '../InvestorRelations/AnnualReports';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -44,20 +50,51 @@ export const Content = () => {
         description={pageDetail?.seo?.description || ''}
       />
       {!pageDetail && <div className='p-3 p-lg-5'>Không tìm thấy nội dung</div>}
-      {pageDetail?.pageType === 'dynamic' && (
+      {pageDetail?.pageType === PageContentType.DYNAMIC && (
         <div className='container p-3 p-lg-5'>
-          <div className='h5 text-orange'>{pageDetail.title}</div>
-          <Divider style={{ marginTop: 4 }} />
-          <div className='ck-content' dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }} />
+          <Row gutter={[30, 10]}>
+            <Col span={24} md={14} lg={16}>
+              <div className='h5 text-orange'>{pageDetail.title}</div>
+              <Divider style={{ marginTop: 4 }} />
+              <div
+                className='ck-content'
+                dangerouslySetInnerHTML={{ __html: pageDetail.content || '' }}
+              />
+            </Col>
+            <Col span={24} md={10} lg={8}>
+              <NewsPublicSider />
+            </Col>
+          </Row>
         </div>
       )}
-      {pageDetail?.pageType === 'video' && <div>Thư viện video</div>}
-      {pageDetail?.pageType === 'photo' && <div>Thư viện video</div>}
-      {pageDetail?.pageType === 'document' && <div>Thư viện document</div>}
-      {pageDetail?.pageType === 'news' && <NewsPublic />}
-      {pageDetail?.pageType === 'contact' && <ContactPage />}
-      {pageDetail?.pageType === 'login' && <SignIn />}
-      {pageDetail?.pageType === 'register' && <SignUp />}
+      {pageDetail?.pageType === PageContentType.VIDEO && (
+        <div>Thư viện video</div>
+      )}
+      {pageDetail?.pageType === PageContentType.PHOTO && (
+        <div>Thư viện video</div>
+      )}
+      {pageDetail?.pageType === PageContentType.DOCUMENT && (
+        <div>Thư viện document</div>
+      )}
+      {pageDetail?.pageType === PageContentType.NEWS && <NewsPublic />}
+      {pageDetail?.pageType === PageContentType.CONTACT && <ContactPage />}
+      {pageDetail?.pageType === PageContentType.LOGIN && <SignIn />}
+      {pageDetail?.pageType === PageContentType.REGISTER && <SignUp />}
+      {pageDetail?.pageType === PageContentType.INVESTOR_NEWS && (
+        <InvestorNews />
+      )}
+      {pageDetail?.pageType === PageContentType.SHAREHOLDER_MEETINGS && (
+        <SkateholderMeetings />
+      )}
+      {pageDetail?.pageType === PageContentType.FINANCIAL_REPORTS && (
+        <FinancialReports />
+      )}
+      {pageDetail?.pageType === PageContentType.ANNUAL_REPORTS && (
+        <AnnualReports />
+      )}
+      {pageDetail?.pageType === PageContentType.CORPORATE_GOVERNANCE && (
+        <>Quản trị công ty</>
+      )}
     </>
   );
 };
