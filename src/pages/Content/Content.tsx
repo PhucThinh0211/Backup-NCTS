@@ -17,10 +17,13 @@ import { ContactPage } from '../Contact';
 import { NewsPublic } from '..';
 import { PageContentType } from '@/services/PageContentService';
 import { NewsPublicSider } from '../NewsPublic/components/NewsPublicSider';
-import { InvestorNews } from '../InvestorRelations';
-import { SkateholderMeetings } from '../InvestorRelations/SkateholderMeetings';
-import { FinancialReports } from '../InvestorRelations/FinancialReports';
-import { AnnualReports } from '../InvestorRelations/AnnualReports';
+import {
+  InvestorNews,
+  AnnualReports,
+  FinancialReports,
+  SkateholderMeetings,
+  CorporateGovernance,
+} from '../InvestorRelations';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -93,7 +96,7 @@ export const Content = () => {
         <AnnualReports />
       )}
       {pageDetail?.pageType === PageContentType.CORPORATE_GOVERNANCE && (
-        <>Quản trị công ty</>
+        <CorporateGovernance />
       )}
     </>
   );
