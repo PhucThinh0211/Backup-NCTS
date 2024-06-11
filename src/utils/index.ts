@@ -15,8 +15,13 @@ export default class Utils {
     const persistState = localStorage.getItem('persist:root');
     const rootState = persistState ? JSON.parse(persistState) : {};
     /* prettier-ignore */
-    const persistAppState: any = rootState['persistApp'] ? JSON.parse(rootState['persistApp']) : {};
-    return persistAppState;
+    const appState: any = rootState['app'] ? JSON.parse(rootState['app']) : {};
+    const persistAppState = rootState['persistApp'] ? JSON.parse(rootState['persistApp']) : {};
+    return {
+      rootState,
+      access_token: appState['auth']?.['token'],
+      language: persistAppState['language'],
+    };
   }
 
   static isTokenValid(token: string) {
