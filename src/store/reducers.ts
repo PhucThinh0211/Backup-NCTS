@@ -15,6 +15,7 @@ import { homeReducers } from './home';
 import { documentTypeReducer } from './documentType';
 import { newsTypeReducer } from './newsType';
 import { identityReducer } from './identity';
+import { mediaReducer } from './media';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -32,6 +33,7 @@ const mainReducer = combineReducers({
   newsType: newsTypeReducer,
   documentType: documentTypeReducer,
   identity: identityReducer,
+  media: mediaReducer,
 });
 
 const rootReducers = (state: any, action: any) => {
