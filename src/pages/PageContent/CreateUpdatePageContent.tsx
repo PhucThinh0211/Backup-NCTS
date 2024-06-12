@@ -138,6 +138,32 @@ export const CreateUpdatePageContent = () => {
         },
       ],
     },
+    {
+      label: t('Investor relations', { ns: 'pageContent' }),
+      value: PageContentType.INVESTOR_RELATIONS,
+      children: [
+        {
+          label: t('Investor news', { ns: 'pageContent' }),
+          value: PageContentType.INVESTOR_NEWS,
+        },
+        {
+          label: t('Shareholder meetings', { ns: 'pageContent' }),
+          value: PageContentType.SHAREHOLDER_MEETINGS,
+        },
+        {
+          label: t('Financial reports', { ns: 'pageContent' }),
+          value: PageContentType.FINANCIAL_REPORTS,
+        },
+        {
+          label: t('Annual reports', { ns: 'pageContent' }),
+          value: PageContentType.ANNUAL_REPORTS,
+        },
+        {
+          label: t('Corporate governance', { ns: 'pageContent' }),
+          value: PageContentType.CORPORATE_GOVERNANCE,
+        },
+      ],
+    },
   ];
 
   const pageShowPlaces = [
@@ -252,7 +278,7 @@ export const CreateUpdatePageContent = () => {
                   setPageContentBody(data);
                 }}
                 onReady={(editor) => {
-                  editor.setData(pageContentBody)
+                  editor.setData(pageContentBody);
                 }}
               />
             </div>

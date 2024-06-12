@@ -16,6 +16,12 @@ export enum PageContentType {
   CONTACT = 'contact',
   LOGIN = 'login',
   REGISTER = 'register',
+  INVESTOR_RELATIONS = 'investor_relations',
+  INVESTOR_NEWS = 'investor-news',
+  SHAREHOLDER_MEETINGS = 'shareholder-meetings',
+  FINANCIAL_REPORTS = 'financial-reports',
+  ANNUAL_REPORTS = 'annual-reports',
+  CORPORATE_GOVERNANCE = 'corporate-governance',
 }
 
 export enum PageContentShowPlace {
@@ -83,8 +89,14 @@ class PageContentController {
     getAllPageContents: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/page`, options);
     },
-    getPageContentById: (pagePageContentId: string, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/page/${pagePageContentId}`, options);
+    getPageContentById: (
+      pagePageContentId: string,
+      options?: RequestOptions
+    ) => {
+      return HttpClient.get(
+        `${apiUrl}/api/app/page/${pagePageContentId}`,
+        options
+      );
     },
   };
 
@@ -111,7 +123,7 @@ class PageContentController {
     },
     unpublishPage: (id: string, options?: RequestOptions) => {
       return HttpClient.post(`${apiUrl}/api/app/page/${id}/unpublish`, options);
-    }
+    },
   };
 
   public Put = {
@@ -129,7 +141,10 @@ class PageContentController {
   };
 
   public delete = {
-    removePageContent: (pagePageContentId: string, options?: RequestOptions) => {
+    removePageContent: (
+      pagePageContentId: string,
+      options?: RequestOptions
+    ) => {
       return HttpClient.delete(
         `${apiUrl}/api/app/page/${pagePageContentId}`,
         options
