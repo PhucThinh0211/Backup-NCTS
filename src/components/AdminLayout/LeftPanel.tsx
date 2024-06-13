@@ -13,7 +13,7 @@ import {
   LockOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { LeftPanelWidth, MenuItem } from '@/common/define';
+import { LeftPanelWidth, MenuItem, TopNavHeightAdmin } from '@/common/define';
 import { appActions, getActiveMenu } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import MenuSvg from '@/assets/menu.svg';
@@ -188,6 +188,7 @@ export const LeftPanel = (props: SiderProps) => {
       width={LeftPanelWidth}
       onCollapse={setCollapsed}
       className={`border-end leftSider overflow-y-auto custom_scrollbar pb-2`}
+      style={{ maxHeight: `calc(100dvh - ${TopNavHeightAdmin}px)` }}
       {...rest}
     >
       <div

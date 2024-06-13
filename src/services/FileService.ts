@@ -36,6 +36,7 @@ export interface FileResponse {
   fileExtension: string;
   location: string;
   public: boolean;
+  isFolder?: boolean;
 }
 
 export interface FolderResponse {
@@ -53,6 +54,7 @@ export interface FolderResponse {
   description: string;
   parentId: string;
   files: FileResponse[];
+  isFolder?: boolean;
 }
 
 export interface CreateUpdateFolderPayload {

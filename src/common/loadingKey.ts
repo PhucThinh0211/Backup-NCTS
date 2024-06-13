@@ -12,7 +12,8 @@ export const RemovingBannerLoadingKey = 'RemovingBannerLoadingKey';
 
 export const GettingContentLoadingKey = 'GettingContentLoadingKey';
 export const GettingContentListLoadingKey = 'GettingContentListLoadingKey';
-export const GettingMoreContentListLoadingKey = 'GettingMoreContentListLoadingKey';
+export const GettingMoreContentListLoadingKey =
+  'GettingMoreContentListLoadingKey';
 export const SavingContentLoadingKey = 'SavingContentLoadingKey';
 export const RemovingContentLoadingKey = 'RemovingContentLoadingKey';
 export const PublishContentLoadingKey = 'PublishContentLoadingKey';
@@ -52,5 +53,12 @@ export const RemovingDocumentTypeLoadingKey = 'RemovingDocumentTypeLoadingKey';
 export const GettingCaptchaLoadingKey = 'GettingCaptchaLoadingKey';
 export const GettingServicePagesLoadingKey = 'GettingServicePagesLoadingKey';
 export const GettingIntroducePageLoadingKey = 'GettingIntroducePageLoadingKey';
-export const GettingPageDetailBySlugLoadingKey = 'GettingPageDetailBySlugLoadingKey';
-export const GettingNewsDetailBySlugLoadingKey = 'GettingNewsDetailBySlugLoadingKey';
+export const GettingPageDetailBySlugLoadingKey =
+  'GettingPageDetailBySlugLoadingKey';
+export const GettingNewsDetailBySlugLoadingKey =
+  'GettingNewsDetailBySlugLoadingKey';
+
+export const GettingMediaLoadingKey = 'GettingMediaLoadingKey';
+export const GettingMediaListLoadingKey = 'GettingMediaListLoadingKey';
+export const SavingMediaLoadingKey = 'SavingMediaLoadingKey';
+export const RemovingMediaLoadingKey = 'RemovingMediaLoadingKey';
