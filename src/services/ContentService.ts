@@ -38,6 +38,7 @@ export interface ContentResponse {
   sortSeq: number;
   url: string | null;
   seoId: string | null;
+  viewsCount: number;
 }
 export interface CreateUpdateContentPayload {
   newsTypeId: string;

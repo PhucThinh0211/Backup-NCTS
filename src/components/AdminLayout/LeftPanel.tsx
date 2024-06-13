@@ -89,6 +89,10 @@ export const LeftPanel = (props: SiderProps) => {
       popupClassName: 'leftSider_subMenu',
       children: [
         {
+          label: t('Documents'),
+          key: '/admin/media/documents',
+        },
+        {
           label: t('Photos'),
           key: '/admin/media/photos',
         },

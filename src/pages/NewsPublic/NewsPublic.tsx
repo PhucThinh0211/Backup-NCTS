@@ -1,30 +1,30 @@
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row } from 'antd';
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   getNewsList,
   getNewsParams,
   getNewsTypeList,
   getSelectedPageDetail,
   publicCmsActions,
-} from "@/store/publicCms";
+} from '@/store/publicCms';
 
-import { NewsPublicSection } from "./components/NewsPublicSection";
-import { NewsPublicSider } from "./components/NewsPublicSider";
+import { NewsPublicSection } from './components/NewsPublicSection';
+import { NewsPublicSider } from './components/NewsPublicSider';
 import {
   GettingMoreContentListLoadingKey,
   defaultPagingParams,
   largePagingParams,
-} from "@/common";
-import { getLanguage } from "@/store/persistState";
-import { NewsTypeResponse } from "@/services/NewsTypeService";
-import { getLoading } from "@/store/loading";
+} from '@/common';
+import { getLanguage } from '@/store/persistState';
+import { NewsTypeResponse } from '@/services/NewsTypeService';
+import { getLoading } from '@/store/loading';
 
 export const NewsPublic = () => {
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
 
   const lang = useAppSelector(getLanguage());
@@ -73,9 +73,9 @@ export const NewsPublic = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#80808008" }}>
-      <div className="container py-2 py-md-5">
-        <Row gutter={[30, 10]}>
+    <div style={{ backgroundColor: '#80808008' }}>
+      <div className='container py-2 py-md-5'>
+        <Row gutter={[50, 10]}>
           <Col span={24} md={14} lg={16}>
             {foundNewsType && (
               <div>
@@ -86,13 +86,13 @@ export const NewsPublic = () => {
                 {!!news?.items?.length &&
                   newsParams?.SkipCount + newsParams?.MaxResultCount <
                     news.totalCount && (
-                    <div className="w-100 mb-2 mt-4 d-flex flex-row justify-content-center">
+                    <div className='w-100 mb-2 mt-4 d-flex flex-row justify-content-center'>
                       <Button
-                        type="primary"
+                        type='primary'
                         loading={isFetchingMore}
                         onClick={() => getMoreNewsRequest(foundNewsType)}
                       >
-                        {t("Show more", { ns: "common" })}
+                        {t('Show more', { ns: 'common' })}
                       </Button>
                     </div>
                   )}
