@@ -6,6 +6,7 @@ import { getModalVisible, hideModal } from '@/store/modal';
 import { useTranslation } from 'react-i18next';
 import { getFolderPath, getMediaType, mediaActions } from '@/store/media';
 import { getLoading } from '@/store/loading';
+import { MediaType } from '@/services/FileService';
 
 export const CreateUpdateFolderModal = () => {
   const { t } = useTranslation(['media']);
@@ -40,12 +41,18 @@ export const CreateUpdateFolderModal = () => {
       onOk={handleOk}
       confirmLoading={isSaving}
     >
-      <p className='h5 text-orange'>{t('Create folder')}</p>
+      <p className='h6 text-orange'>
+        {[MediaType.PHOTOS, MediaType.VIDEOS].some((type) => type === mediaType)
+          ? t('Create album')
+          : t('Create folder')}
+      </p>
       <Form
         form={form}
         onFinish={handleSaveFolder}
         initialValues={{ name: 'Untitled' }}
         layout='vertical'
+        autoComplete='off'
+        autoCorrect='off'
       >
         <Form.Item
           label={t('Name')}

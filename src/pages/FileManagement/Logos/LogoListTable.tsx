@@ -5,12 +5,12 @@ import { FolderResponse } from '@/services/FileService';
 import { Table, TableColumnsType, Typography } from 'antd';
 import Utils from '@/utils';
 import { useTranslation } from 'react-i18next';
-import { DocumentListToolbar } from './DocumentListToolbar';
+import { LogoListToolbar } from './LogoListToolbar';
 import { useEffect, useState } from 'react';
-import { GettingMediaListLoadingKey } from '@/common';
 import { getLoading } from '@/store/loading';
+import { GettingMediaListLoadingKey } from '@/common';
 
-export const DocumentListTable = () => {
+export const LogoListTable = () => {
   const { t } = useTranslation(['media']);
   const dispatch = useAppDispatch();
   const [dataSource, setDataSource] = useState<any[]>([]);
@@ -95,7 +95,7 @@ export const DocumentListTable = () => {
 
   return (
     <div style={{ padding: 10 }}>
-      <DocumentListToolbar />
+      <LogoListToolbar />
       <Table
         columns={columns}
         dataSource={dataSource}

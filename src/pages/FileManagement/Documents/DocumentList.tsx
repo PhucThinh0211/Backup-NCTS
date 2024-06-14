@@ -22,6 +22,7 @@ export const DocumentList = () => {
   }, [lang]);
 
   useEffect(() => {
+    dispatch(mediaActions.setFolderPath([]));
     dispatch(
       mediaActions.getFoldersRequest({
         params: {

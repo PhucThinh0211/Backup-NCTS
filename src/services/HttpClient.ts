@@ -132,7 +132,9 @@ class HttpInterceptor {
     body?: any,
     options?: RequestOptions
   ) {
-    const newBody = trimAll(body);
+    // const newBody = trimAll(body);
+    const newBody = body;
+
     return httpRequest(url, { ...options, method, body: newBody });
   }
 
