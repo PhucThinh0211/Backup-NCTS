@@ -9,6 +9,7 @@ import pageContent from './pageContent.json';
 import home from './home.json';
 import newsType from './newsType.json';
 import documentType from './documentType.json';
+import webTrack from "./webTrack.json";
 import media from './media.json';
 
 export default {
@@ -23,5 +24,6 @@ export default {
   pageContent,
   newsType,
   documentType,
+  webTrack,
   media,
 };
