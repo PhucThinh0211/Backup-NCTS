@@ -1,20 +1,20 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 import {
   uploadedPhotoUrl,
   dateTimeFormat,
   bootstrapBreakpoints,
-} from "@/common";
-import { MiniNewsCard, NewsCard } from "@/components";
-import { ContentResponse } from "@/services/ContentService";
-import Utils from "@/utils";
-import { Col, Row } from "antd";
-import dayjs from "dayjs";
-import parse from "node-html-parser";
-import { useWindowSize } from "@/hooks/useWindowSize";
+} from '@/common';
+import { MiniNewsCard, NewsCard } from '@/components';
+import { ContentResponse } from '@/services/ContentService';
+import Utils from '@/utils';
+import { Col, Empty, Row } from 'antd';
+import dayjs from 'dayjs';
+import parse from 'node-html-parser';
+import { useWindowSize } from '@/hooks/useWindowSize';
 
 interface NewsSectionProps {
-  title: ReactNode;
+  title?: ReactNode;
   mainNews?: ContentResponse;
   newsList: ContentResponse[];
 }
@@ -22,21 +22,21 @@ interface NewsSectionProps {
 const convertNewsResponseToNewsData = (news: ContentResponse) => {
   return {
     key: news.id,
-    url: `/tin-tuc${news.url || "/" + Utils.createSlug(news.title || "")}`,
-    img: uploadedPhotoUrl(news.photoUrl || ""),
+    url: `/tin-tuc${news.url || '/' + Utils.createSlug(news.title || '')}`,
+    img: uploadedPhotoUrl(news.photoUrl || ''),
     date: news.lastModificationTime
       ? dayjs(news.lastModificationTime).format(dateTimeFormat)
       : undefined,
     title: news.title || undefined,
-    desc: parse(news.description || ""),
+    desc: parse(news.description || ''),
   };
 };
 
 const cardStyle: React.CSSProperties = {
   margin: 0,
   borderRadius: 8,
-  height: "100%",
-  overflow: "hidden",
+  height: '100%',
+  overflow: 'hidden',
 };
 
 export const NewsPublicSection = ({
@@ -48,10 +48,13 @@ export const NewsPublicSection = ({
   const hasMainNews = !!mainNews;
   return (
     <div>
+      {title && (
+        <div>
+          <p className='h5 text-orange mb-3'>{title}</p>
+        </div>
+      )}
       <div>
-        <p className="h5 text-orange mb-3">{title}</p>
-      </div>
-      <div>
+        {!newsList.length && <Empty />}
         <Row gutter={[16, 16]}>
           {hasMainNews && (
             <Col span={24} md={24} lg={16}>

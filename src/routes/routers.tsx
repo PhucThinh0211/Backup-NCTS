@@ -30,6 +30,13 @@ import {
 } from '@/pages/DocumentTypePage';
 import { RolePage } from '@/pages/RolePage';
 import { UserPage } from '@/pages/UsersPage';
+import {
+  DocumentList,
+  PhotoList,
+  VideoList,
+  CertificateList,
+  LogoList,
+} from '@/pages/FileManagement';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -102,10 +109,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         path: '/admin/media',
         name: 'Media',
         children: [
-          { path: '/admin/media/photos', name: 'Photos', element: <>Photos</> },
-          { path: '/admin/media/videos', name: 'Video', element: <>Videos</> },
-          { path: '/admin/media/certifications', name: 'Certifications', element: <>Certifications</> },
-          { path: '/admin/media/partnersLogo', name: 'PartnersLogo', element: <>Partners Logo</> },
+          { path: '/admin/media/documents', name: 'Documents', element: <DocumentList /> },
+          { path: '/admin/media/photos', name: 'Photos', element: <PhotoList /> },
+          { path: '/admin/media/videos', name: 'Video', element: <VideoList /> },
+          { path: '/admin/media/certifications', name: 'Certifications', element: <CertificateList /> },
+          { path: '/admin/media/partnersLogo', name: 'PartnersLogo', element: <LogoList /> },
         ]
       },
       

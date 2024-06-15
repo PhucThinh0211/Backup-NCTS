@@ -1,0 +1,14 @@
+{
+    "Name": "Tên",
+    "Size": "Kích cỡ",
+    "Upload": "Tải tệp lên",
+    "Create folder": "Tạo thư mục",
+    "Create album": "Tạo bộ sưu tập",
+    "File": "Tệp tin",
+    "Select file": "Chọn tệp tin",
+    "File required": "Vui lòng chọn tệp tin",
+    "Code required": "Vui lòng chọn code",
+    "Name required": "Vui lòng nhập tên",
+    "Document type": "Loại biểu mẫu",
+    "Document type required": "Vui lòng chọn loại biểu mẫu"
+}
