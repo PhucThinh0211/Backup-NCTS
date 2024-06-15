@@ -294,6 +294,22 @@ export default class Utils {
       page: queryParams.SkipCount / queryParams.MaxResultCount + 1 || 1,
     };
   };
+  static readableFileSize(attachmentSize: number) {
+    const DEFAULT_SIZE = 0;
+    const fileSize = attachmentSize ?? DEFAULT_SIZE;
+
+    if (!fileSize) {
+      return `${DEFAULT_SIZE} KB`;
+    }
+
+    const sizeInKb = fileSize / 1024;
+
+    if (sizeInKb > 1024) {
+      return `${(sizeInKb / 1024).toFixed(2)} MB`;
+    } else {
+      return `${sizeInKb.toFixed(2)} KB`;
+    }
+  }
 }
 
 export const trimAll = (obj: any) => {

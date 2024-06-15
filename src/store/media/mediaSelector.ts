@@ -9,3 +9,9 @@ export function getFolders() {
 export function getMediaType() {
   return createSelector([getMediaState], (state) => state.mediaType);
 }
+export function getFolderPath() {
+  return createSelector([getMediaState], (state) => state.folderPath);
+}
+export function getDocumentTypes() {
+  return createSelector([getMediaState], (state) => state.documentTypes);
+}
