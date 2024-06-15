@@ -8,6 +8,7 @@ import {
   SignUp,
   NewsDetail,
   ContactPage,
+  QuickLookupPage,
 } from '@/pages';
 import { Navigate } from 'react-router-dom';
 import { MenuList } from '@/pages/MenuPage';
@@ -52,6 +53,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         path: '/trang/*',
         name: 'Page',
         element: <Content />
+      },
+      {
+        path: '/tra-cuu-thong-tin',
+        name: 'Lookup',
+        element: <QuickLookupPage />
       },
       {
         path: '/tin-tuc/*',

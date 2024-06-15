@@ -79,56 +79,63 @@ export default class Utils {
     console.log(JSON.stringify(error));
     if (error.errorCode && error.msg) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t(error.msg, { ns }),
+      });
+      return;
+    }
+    if (error.response?.error?.message) {
+      notification.error({
+        message: i18next.t('notification', { ns: 'common' }),
+        description: i18next.t(error.response?.error?.message, { ns }),
       });
       return;
     }
     if (typeof error.response === 'string') {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t(error.response, { ns }),
       });
       return;
     }
     if (error.status === 401) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t('Token expired', { ns }),
       });
       return;
     }
     if (error.status === 404) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t(error.message || 'Not Found', { ns }),
       });
       return;
     }
     if (error.status === 403) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t('Forbidden', { ns }),
       });
       return;
     }
     if (error?.response?.error_description) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t(error.response.error_description, { ns }),
       });
       return;
     }
     if (error.response?.error) {
       notification.error({
-        message: i18next.t('notification', { ns }),
+        message: i18next.t('notification', { ns: 'common' }),
         description: i18next.t(error.response?.error.details, { ns }),
       });
       return;
     }
     // TODO:
     notification.error({
-      message: i18next.t('notification', { ns }),
+      message: i18next.t('notification', { ns: 'common' }),
       description: i18next.t(
         'An error occurred while processing your request',
         { ns }
@@ -138,7 +145,7 @@ export default class Utils {
 
   static successNotification(message?: string, ns = 'common') {
     notification.success({
-      message: i18next.t('notification', { ns }),
+      message: i18next.t('notification', { ns: 'common' }),
       description: i18next.t(message || 'Saved successfully', { ns }),
     });
   }

@@ -13,6 +13,7 @@ import { homeEpics } from './home';
 import { newsTypeEpics } from './newsType';
 import { documentTypeEpics } from './documentType';
 import { identityEpics } from './identity/identityEpics';
+import { webTrackEpics } from './webTrack';
 
 const rootEpics = combineEpics(
   ...persistStateEpics,
@@ -27,7 +28,8 @@ const rootEpics = combineEpics(
   ...publicCmsEpics,
   ...newsTypeEpics,
   ...documentTypeEpics,
-  ...identityEpics
+  ...identityEpics,
+  ...webTrackEpics
 );
 
 export default rootEpics;

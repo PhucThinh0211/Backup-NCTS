@@ -9,6 +9,7 @@ import pageContent from './pageContent.json';
 import home from './home.json';
 import newsType from './newsType.json';
 import documentType from './documentType.json';
+import webTrack from "./webTrack.json";
 
 export default {
   banner,
@@ -22,4 +23,5 @@ export default {
   pageContent,
   newsType,
   documentType,
+  webTrack
 };

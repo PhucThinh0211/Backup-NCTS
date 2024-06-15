@@ -15,6 +15,7 @@ import { homeReducers } from './home';
 import { documentTypeReducer } from './documentType';
 import { newsTypeReducer } from './newsType';
 import { identityReducer } from './identity';
+import { webTrackReducer } from './webTrack/webTrackSlice';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -32,6 +33,7 @@ const mainReducer = combineReducers({
   newsType: newsTypeReducer,
   documentType: documentTypeReducer,
   identity: identityReducer,
+  webTrack: webTrackReducer
 });
 
 const rootReducers = (state: any, action: any) => {
