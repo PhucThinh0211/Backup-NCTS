@@ -16,3 +16,6 @@ export function getAppConfig() {
 export function getCurrentUser() {
   return createSelector([getAppState], (state) => state.currentUser);
 }
+export function getActiveLookup() {
+  return createSelector([getAppState], (state) => state.activeLookup);
+}

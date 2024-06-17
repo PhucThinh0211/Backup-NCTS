@@ -4,8 +4,14 @@ import { ILoginInput } from '@/services/IdentityService';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 
+export enum LookupType {
+  AWB = 1,
+  FLIGHT = 2,
+  INVOICE = 3,
+}
 interface AppState {
   activeMenu?: any;
+  activeLookup?: LookupType;
   auth?: {
     remember?: boolean;
     user?: any;
@@ -20,7 +26,9 @@ interface AppState {
   currentUser?: any;
 }
 
-const initialState: AppState = {};
+const initialState: AppState = {
+  activeLookup: LookupType.AWB,
+};
 
 const appSlice = createSlice({
   name: 'app',
@@ -64,6 +72,9 @@ const appSlice = createSlice({
     },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
+    },
+    setActiveLookup: (state, action) => {
+      state.activeLookup = action.payload;
     },
   },
 });

@@ -36,7 +36,7 @@ export const FlightLookup = () => {
         >
           <Col xs={{ flex: '100%'}} md={{ flex: 'auto'}}>
             <Row gutter={[8, 0]}>
-              <Col  span={24} sm={12}>
+              <Col  span={24} sm={14}>
                 <Form.Item
                   label={t("Carrier", { ns: "common" })}
                   required
@@ -45,7 +45,7 @@ export const FlightLookup = () => {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={24} sm={12}>
+              <Col span={24} sm={10}>
                 <Form.Item
                   name="dateFlight"
                   label={t("Flight date", { ns: "common" })}

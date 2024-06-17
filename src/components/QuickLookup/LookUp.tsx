@@ -4,47 +4,73 @@ import { useTranslation } from 'react-i18next';
 import { AwbLookup } from './AwbLookup';
 import { FlightLookup } from './FlightLookup';
 import { InvoicesLookup } from './InvoicesLookup';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { LookupType, appActions, getActiveLookup } from '@/store/app';
 
 function LookUp() {
-  const [value, setValue] = useState(1);
   const { t } = useTranslation(['common']);
+  const dispatch = useAppDispatch();
+
+  const activeLookup = useAppSelector(getActiveLookup());
 
   const handleOnChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+    const lookupValue = e.target.value;
+    dispatch(appActions.setActiveLookup(lookupValue));
+  };
+
+  const radioOptions = [
+    {
+      label: t('AWB', { ns: 'common' }),
+      value: LookupType.AWB,
+    },
+    {
+      label: t('Flight', { ns: 'common' }),
+      value: LookupType.FLIGHT,
+    },
+    {
+      label: t('E-Invoice', { ns: 'common' }),
+      value: LookupType.INVOICE,
+    },
+  ];
+
+  const renderLookupForm = (lookupType: LookupType) => {
+    switch (lookupType) {
+      case LookupType.AWB:
+        return <AwbLookup />;
+
+      case LookupType.FLIGHT:
+        return <FlightLookup />;
+
+      case LookupType.INVOICE:
+        return <InvoicesLookup />;
+
+      default:
+        break;
+    }
   };
 
   return (
     <div className=' container-md look-up'>
       <Radio.Group
-        value={value}
+        value={activeLookup}
         onChange={handleOnChange}
         className='d-flex justify-content-between flex-column flex-sm-row mb-3 gap-xl-5'
       >
-        <Radio value={1}>
-          <span style={{ fontWeight: value === 1 ? 600 : 'normal' }}>
-            {t('AWB', { ns: 'common' })}{' '}
-          </span>
-        </Radio>
-        <Radio value={2}>
-          {' '}
-          <span style={{ fontWeight: value === 2 ? 600 : 'normal' }}>
-            {t('Flight', { ns: 'common' })}
-          </span>
-        </Radio>
-        <Radio value={3}>
-          {' '}
-          <span style={{ fontWeight: value === 3 ? 600 : 'normal' }}>
-            {t('E-Invoice', { ns: 'common' })}
-          </span>
-        </Radio>
+        {radioOptions.map(({ label, value }) => (
+          <Radio key={value} value={value}>
+            <span
+              style={{ fontWeight: value === activeLookup ? 500 : 'normal' }}
+            >
+              {label}{' '}
+            </span>
+          </Radio>
+        ))}
       </Radio.Group>
-      <div className='d-flex justify-content-center'>
-        <div className='LookupContent'>
-          {value === 1 && <AwbLookup />}
-          {value === 2 && <FlightLookup />}
-          {value === 3 && <InvoicesLookup />}
+      {activeLookup && (
+        <div className='d-flex justify-content-center'>
+          <div className='LookupContent'>{renderLookupForm(activeLookup)}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

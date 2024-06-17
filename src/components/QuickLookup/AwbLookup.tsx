@@ -1,4 +1,14 @@
-import { Button, Col, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputRef,
+  Row,
+  Space,
+  Spin,
+  Tooltip,
+} from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -6,6 +16,16 @@ import { getLoading, startLoading } from '@/store/loading';
 import { LookupButton } from './components/LookupButton';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 import { GettingCaptchaLoadingKey } from '@/common';
+import { useRef } from 'react';
+
+const INPUT_LENGTH = {
+  AWB_PFX: {
+    MAX: 3,
+  },
+  AWB_NUM: {
+    MAX: 8,
+  },
+};
 
 export const AwbLookup = () => {
   const { t } = useTranslation(['common']);
@@ -13,12 +33,29 @@ export const AwbLookup = () => {
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
 
+  const awbInputRef = useRef<InputRef>(null);
+  const captchaInputRef = useRef<InputRef>(null);
+
   const handleLookup = () => {
     dispatch(startLoading({ key: 'testLoadingKey' }));
   };
 
   const refreshCaptcha = () => {
     dispatch(publicCmsActions.getCaptchaRequest());
+  };
+
+  const onAwbPfxKeyUp = (e: any) => {
+    const value = e.target.value;
+    if (value?.length >= INPUT_LENGTH.AWB_PFX.MAX) {
+      if (awbInputRef.current) awbInputRef.current.focus();
+    }
+  };
+
+  const onAwbNumKeyUp = (e: any) => {
+    const value = e.target.value;
+    if (value?.length >= INPUT_LENGTH.AWB_NUM.MAX) {
+      if (captchaInputRef.current) captchaInputRef.current.focus();
+    }
   };
 
   return (
@@ -32,7 +69,7 @@ export const AwbLookup = () => {
       <Form.Item className='d-flex flex-column '>
         <Form.Item label={t('AWB number', { ns: 'common' })} required>
           <Row gutter={[10, 10]}>
-            <Col span={24} sm={8}>
+            <Col span={8} sm={8}>
               <Form.Item
                 name='awbPfx'
                 rules={[
@@ -42,10 +79,14 @@ export const AwbLookup = () => {
                   },
                 ]}
               >
-                <Input placeholder='Prefix' />
+                <Input
+                  placeholder='Prefix'
+                  maxLength={INPUT_LENGTH.AWB_PFX.MAX}
+                  onKeyUp={onAwbPfxKeyUp}
+                />
               </Form.Item>
             </Col>
-            <Col span={24} sm={16}>
+            <Col span={16} sm={16}>
               <Form.Item
                 name='awbNum'
                 rules={[
@@ -55,7 +96,12 @@ export const AwbLookup = () => {
                   },
                 ]}
               >
-                <Input placeholder='AWB#' />
+                <Input
+                  placeholder='AWB#'
+                  ref={awbInputRef}
+                  maxLength={INPUT_LENGTH.AWB_NUM.MAX}
+                  onKeyUp={onAwbNumKeyUp}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -74,6 +120,7 @@ export const AwbLookup = () => {
                 placeholder={t('Enter verification codes', {
                   ns: 'common',
                 })}
+                ref={captchaInputRef}
               />
             </Form.Item>
           </div>
