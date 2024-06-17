@@ -1,9 +1,19 @@
-import { Button, Col, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputRef,
+  Row,
+  Space,
+  Spin,
+  Tooltip,
+} from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getLoading, startLoading } from '@/store/loading';
+import { getLoading } from '@/store/loading';
 import { LookupButton } from './components/LookupButton';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 import { useRef } from 'react';
@@ -21,6 +31,7 @@ const INPUT_LENGTH = {
 
 export const AwbLookup = () => {
   const { t } = useTranslation(['common']);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
@@ -54,7 +65,7 @@ export const AwbLookup = () => {
   const onAwbNumKeyUp = (e: any) => {
     const value = e.target.value;
 
-    if (value?.length >= INPUT_LENGTH.AA.MAX) {
+    if (value?.length >= INPUT_LENGTH.AWB_NUM.MAX) {
       if (captchaInputRef.current) captchaInputRef.current.focus();
     }
   };
@@ -151,7 +162,9 @@ export const AwbLookup = () => {
       </Form.Item>
       <Form.Item noStyle>
         <div className='w-100 align-self-end pt-1'>
-          <LookupButton>{t('Lookup', { ns: 'common' })}</LookupButton>
+          <LookupButton loading={lookupLoading}>
+            {t('Lookup', { ns: 'common' })}
+          </LookupButton>
         </div>
       </Form.Item>
     </Form>
