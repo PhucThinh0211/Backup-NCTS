@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { GettingCaptchaLoadingKey } from '@/common';
@@ -16,7 +16,9 @@ export const SignIn = () => {
   const dispatch = useAppDispatch();
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
+  const loading = useAppSelector(getLoading('login'));
   const company = useAppSelector(getCurrentCompany());
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -31,7 +33,8 @@ export const SignIn = () => {
       input: {
         ...values,
         captchaId: captcha?.captchaId
-      }
+      },
+      callback: () => { navigate('/phuc-vu-khach-hang') }
     }))
   };
 
@@ -65,7 +68,7 @@ export const SignIn = () => {
         </Form.Item>
         <Form.Item
           label={t('Verification codes', { ns: 'common' })}
-          name="captcha"
+          name="captchaCode"
           required
           rules={[{ required: true }]}>
           <Row align="stretch">
@@ -108,7 +111,7 @@ export const SignIn = () => {
               {t('Not a member', { ns: 'common' })}{' '}
               <Link to='/dang-ky'>{t('Sign Up', { ns: 'common' })}</Link>
             </span>
-            <Button type="primary" htmlType="submit" size="middle" className="rounded-5">
+            <Button type="primary" htmlType="submit" size="middle" className="rounded-5" loading={loading}>
               {t('Sign In', { ns: 'common' })}
             </Button>
           </div>

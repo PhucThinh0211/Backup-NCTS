@@ -14,6 +14,7 @@ import { setToken } from '@/services/HttpClient';
 import { login } from '@/services/IdentityService';
 import Utils from '@/utils';
 import { getApplicationConfiguration } from '@/services/AppConfigService';
+import { publicCmsActions } from '../publicCms';
 
 const loginRequest$: RootEpic = (action$) => {
   return action$.pipe(
@@ -48,9 +49,8 @@ const loginRequest$: RootEpic = (action$) => {
             );
           }),
           catchError((error) => {
-            console.log(error);
-            Utils.errorHandling(error);
-            return [stopLoading({ key: 'login' })];
+            Utils.errorHandling(error, 'webTrack');
+            return [publicCmsActions.getCaptchaRequest(), stopLoading({ key: 'login' })];
           }),
           finalize(() => {
             if (success && callback) {

@@ -67,6 +67,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         element: <QuickLookupPage />
       },
       {
+        path: '/phuc-vu-khach-hang',
+        name: 'Customers',
+        element: <div className='container py-3'>Phục vụ khách hàng</div>
+      },
+      {
         path: '/tin-tuc/*',
         name: 'News',
         element: <NewsDetail />
