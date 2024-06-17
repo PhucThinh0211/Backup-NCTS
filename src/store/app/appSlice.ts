@@ -5,9 +5,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 
 export enum LookupType {
-  AWB = 1,
-  FLIGHT = 2,
-  INVOICE = 3,
+  AWB = '1',
+  FLIGHT = '2',
+  INVOICE = '3',
 }
 interface AppState {
   activeMenu?: any;

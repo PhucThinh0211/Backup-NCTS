@@ -8,6 +8,12 @@ export function getCarriers() {
   return createSelector([getAppState], (state) => state.carriers || []);
 }
 
+export function getLookupAwbPayload() {
+  return createSelector([getAppState], (state) => state.lookupawbPayload);
+}
 export function getLookupAwbResult() {
-  return createSelector([getAppState], (state) => state.loopkupawbResults || []);
+  return createSelector(
+    [getAppState],
+    (state) => state.loopkupawbResults || []
+  );
 }

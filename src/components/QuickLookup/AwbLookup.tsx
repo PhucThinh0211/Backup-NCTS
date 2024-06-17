@@ -18,7 +18,7 @@ import { LookupButton } from './components/LookupButton';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 import { useRef } from 'react';
 import { GettingCaptchaLoadingKey, lookupAwbLoadingKey } from '@/common';
-import { webTrackActions } from '@/store/webTrack';
+import { getLookupAwbPayload, webTrackActions } from '@/store/webTrack';
 
 const INPUT_LENGTH = {
   AWB_PFX: {
@@ -33,6 +33,8 @@ export const AwbLookup = () => {
   const { t } = useTranslation(['common']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const lookupAwbPayload = useAppSelector(getLookupAwbPayload());
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const lookupLoading = useAppSelector(getLoading(lookupAwbLoadingKey));
@@ -46,6 +48,7 @@ export const AwbLookup = () => {
       CaptchaId: captcha?.captchaId,
       CaptchaCode: values.verificationCode,
     };
+    dispatch(webTrackActions.setLookupAwbPayload(values));
     dispatch(
       webTrackActions.lookupAwbRequest({ lookupInput: lookupPayload, navigate })
     );
@@ -75,6 +78,10 @@ export const AwbLookup = () => {
       requiredMark
       layout='vertical'
       autoComplete='off'
+      initialValues={{
+        ...lookupAwbPayload,
+        verificationCode: undefined,
+      }}
       onFinish={handleLookup}
       className='w-100'
     >

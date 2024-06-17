@@ -1,9 +1,16 @@
-import { catchError, concat, filter, finalize, mergeMap, switchMap } from 'rxjs';
+import {
+  catchError,
+  concat,
+  filter,
+  finalize,
+  mergeMap,
+  switchMap,
+} from 'rxjs';
 
 import { RootEpic } from '../types';
 import { webTrackActions } from './webTrackSlice';
 import { startLoading, stopLoading } from '../loading';
-import { lookupAwbLoadingKey } from '@/common';
+import { GettingCarriersLoadingKey, lookupAwbLoadingKey } from '@/common';
 import { WebTrackService } from '@/services/WebTrackService';
 import { publicCmsActions } from '../publicCms';
 import Utils from '@/utils';
@@ -21,11 +28,17 @@ const lookupAwbRequest: RootEpic = (action$) => {
         WebTrackService.Get.lookupAwb(options).pipe(
           mergeMap((awb) => {
             console.log(awb);
-            return [webTrackActions.setLookupAwbResults(awb), publicCmsActions.getCaptchaRequest()];
+            return [
+              webTrackActions.setLookupAwbResults(awb),
+              publicCmsActions.getCaptchaRequest(),
+            ];
           }),
           catchError((error) => {
             Utils.errorHandling(error, 'webTrack');
-            return [webTrackActions.setLookupAwbResults(undefined), publicCmsActions.getCaptchaRequest()];
+            return [
+              webTrackActions.setLookupAwbResults(undefined),
+              publicCmsActions.getCaptchaRequest(),
+            ];
           }),
           finalize(() => {
             if (navigate) {
@@ -39,4 +52,25 @@ const lookupAwbRequest: RootEpic = (action$) => {
   );
 };
 
-export const webTrackEpics = [lookupAwbRequest];
+const getCarriersRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(webTrackActions.getCarriersRequest.match),
+    switchMap((action) => {
+      return concat(
+        [startLoading({ key: GettingCarriersLoadingKey })],
+        WebTrackService.Get.getCarriers().pipe(
+          mergeMap((carriers) => {
+            return [webTrackActions.setCarriers(carriers)];
+          }),
+          catchError((error) => {
+            Utils.errorHandling(error, 'webTrack');
+            return [webTrackActions.setCarriers([])];
+          })
+        ),
+        [stopLoading({ key: GettingCarriersLoadingKey })]
+      );
+    })
+  );
+};
+
+export const webTrackEpics = [lookupAwbRequest, getCarriersRequest$];
