@@ -15,6 +15,7 @@ import { homeReducers } from './home';
 import { documentTypeReducer } from './documentType';
 import { newsTypeReducer } from './newsType';
 import { identityReducer } from './identity';
+import { webTrackReducer } from './webTrack/webTrackSlice';
 import { mediaReducer } from './media';
 
 const mainReducer = combineReducers({
@@ -33,6 +34,7 @@ const mainReducer = combineReducers({
   newsType: newsTypeReducer,
   documentType: documentTypeReducer,
   identity: identityReducer,
+  webTrack: webTrackReducer,
   media: mediaReducer,
 });
 

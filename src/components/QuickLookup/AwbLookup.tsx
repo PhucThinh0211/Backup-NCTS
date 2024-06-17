@@ -1,22 +1,14 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  InputRef,
-  Row,
-  Space,
-  Spin,
-  Tooltip,
-} from 'antd';
+import { Button, Col, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading, startLoading } from '@/store/loading';
 import { LookupButton } from './components/LookupButton';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-import { GettingCaptchaLoadingKey } from '@/common';
 import { useRef } from 'react';
+import { GettingCaptchaLoadingKey, lookupAwbLoadingKey } from '@/common';
+import { webTrackActions } from '@/store/webTrack';
 
 const INPUT_LENGTH = {
   AWB_PFX: {
@@ -32,12 +24,20 @@ export const AwbLookup = () => {
   const dispatch = useAppDispatch();
   const captcha = useAppSelector(getCaptcha());
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
+  const lookupLoading = useAppSelector(getLoading(lookupAwbLoadingKey));
 
   const awbInputRef = useRef<InputRef>(null);
   const captchaInputRef = useRef<InputRef>(null);
 
-  const handleLookup = () => {
-    dispatch(startLoading({ key: 'testLoadingKey' }));
+  const handleLookup = (values: any) => {
+    const lookupPayload = {
+      AWB_NO: `${values.awbPfx}${values.awbNum}`,
+      CaptchaId: captcha?.captchaId,
+      CaptchaCode: values.verificationCode,
+    };
+    dispatch(
+      webTrackActions.lookupAwbRequest({ lookupInput: lookupPayload, navigate })
+    );
   };
 
   const refreshCaptcha = () => {
@@ -53,7 +53,8 @@ export const AwbLookup = () => {
 
   const onAwbNumKeyUp = (e: any) => {
     const value = e.target.value;
-    if (value?.length >= INPUT_LENGTH.AWB_NUM.MAX) {
+
+    if (value?.length >= INPUT_LENGTH.AA.MAX) {
       if (captchaInputRef.current) captchaInputRef.current.focus();
     }
   };

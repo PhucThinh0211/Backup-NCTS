@@ -58,9 +58,9 @@ export const extractHeaders = (
   }
 
   const state = Utils.getPersistAppState();
-  const { auth } = state;
-  if (auth?.token && !newHeaders['authorization']) {
-    newHeaders['authorization'] = `Bearer ${auth?.token}`;
+  const { access_token } = state;
+  if (access_token && !newHeaders['authorization']) {
+    newHeaders['authorization'] = `Bearer ${access_token}`;
   }
 
   if (!newHeaders['Accept-Language'] && acceptLanguage) {

@@ -13,6 +13,7 @@ import { homeEpics } from './home';
 import { newsTypeEpics } from './newsType';
 import { documentTypeEpics } from './documentType';
 import { identityEpics } from './identity/identityEpics';
+import { webTrackEpics } from './webTrack';
 import { mediaEpics } from './media';
 
 const rootEpics = combineEpics(
@@ -29,6 +30,7 @@ const rootEpics = combineEpics(
   ...newsTypeEpics,
   ...documentTypeEpics,
   ...identityEpics,
+  ...webTrackEpics,
   ...mediaEpics
 );
 

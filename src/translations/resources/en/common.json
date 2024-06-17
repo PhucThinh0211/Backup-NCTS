@@ -117,5 +117,17 @@
   "Permission": "Permission",
   "Grant all permission": "Grant all permission",
   "Select all": "Select all",
-  "Valid password": "Password must have at least one character, one capital character, one special character and has a minimum length of 6 characters"
+  "Valid password": "Password must have at least one character, one capital character, one special character and has a minimum length of 6 characters",
+  "No": "No",
+  "Flight no": "Flight No",
+  "Route": "Route",
+  "Pieces": "Pieces",
+  "Weight": "Weight",
+  "Nature": "Nature",
+  "Status": "Status",
+  "Remark": "Remark",
+  "Shipper": "Shipper",
+  "Consignee": "Consignee",
+  "Customs status": "Customs status",
+  "Lookup results": "Lookup results"
 }
