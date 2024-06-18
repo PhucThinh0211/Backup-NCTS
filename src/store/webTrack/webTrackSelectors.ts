@@ -17,3 +17,10 @@ export function getLookupAwbResult() {
     (state) => state.loopkupawbResults || []
   );
 }
+
+export function getLookupFlightPayload() {
+  return createSelector([getAppState], (state) => state.lookupFlightPayload);
+}
+export function getLookupFlightResult() {
+  return createSelector([getAppState], (state) => state.lookupFlightResults);
+}

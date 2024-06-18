@@ -4,6 +4,7 @@ import { Tabs, TabsProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AwbLookupResult } from './components/AwbLookupResult';
 import { FlightLookupResult } from './components/FlightLookupResult';
+import { InvoiceLookupResult } from './components/InvoiceLookupResult';
 
 export const QuickLookupPage = () => {
   const { t } = useTranslation(['common']);
@@ -23,7 +24,7 @@ export const QuickLookupPage = () => {
     {
       key: LookupType.INVOICE,
       label: t('E-Invoice', { ns: 'common' }),
-      children: <AwbLookupResult />,
+      children: <InvoiceLookupResult />,
     },
   ];
   const activeLookup = useAppSelector(getActiveLookup());

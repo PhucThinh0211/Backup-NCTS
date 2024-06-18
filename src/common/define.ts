@@ -21,6 +21,12 @@ export interface CustomIconComponentProps {
   style?: React.CSSProperties;
 }
 
+export const ALL_OPTIONS = 'ALL_OPTIONS';
+
+export const defaultNctsPagingParams = {
+  pageSize: 20,
+  pageNumber: 1,
+};
 export const defaultPagingParams = {
   SkipCount: 0,
   MaxResultCount: 25,

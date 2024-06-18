@@ -18,11 +18,30 @@ export interface AwbResponse {
   consignee: string | null;
   customs_status: string | null;
 }
+export interface FlightLookupResponse {
+  carrier: string | null;
+  flidate: string;
+  aircraft: string | null;
+  flightno: string | null;
+  flitime: string | null;
+  attime: string | null;
+  status: string | null;
+  route: string | null;
+}
+export interface FlightLookupPagingResponse {
+  data: FlightLookupResponse[];
+  total: number;
+}
+export interface CarrierResponse {
+  carrier: string | null;
+  code: string | null;
+  name: string | null;
+}
 
 class WebTrackController {
   public Get = {
     getCarriers: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/web-track/carries`, options);
+      return HttpClient.get(`${apiUrl}/api/app/web-track/carriers`, options);
     },
     lookupAwb: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/web-track/lookup-awb`, options);

@@ -10,7 +10,11 @@ import {
 import { RootEpic } from '../types';
 import { webTrackActions } from './webTrackSlice';
 import { startLoading, stopLoading } from '../loading';
-import { GettingCarriersLoadingKey, lookupAwbLoadingKey } from '@/common';
+import {
+  GettingCarriersLoadingKey,
+  lookupAwbLoadingKey,
+  lookupFlightLoadingKey,
+} from '@/common';
 import { WebTrackService } from '@/services/WebTrackService';
 import { publicCmsActions } from '../publicCms';
 import Utils from '@/utils';
@@ -52,6 +56,42 @@ const lookupAwbRequest: RootEpic = (action$) => {
   );
 };
 
+const lookupFlightRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(webTrackActions.lookupFlightRequest.match),
+    switchMap((action) => {
+      const { lookupInput, navigate } = action.payload;
+      const options = {
+        search: lookupInput,
+      };
+      return concat(
+        [startLoading({ key: lookupFlightLoadingKey })],
+        WebTrackService.Get.lookupFlights(options).pipe(
+          mergeMap((flights) => {
+            return [
+              webTrackActions.setLookupFlightResults(flights),
+              publicCmsActions.getCaptchaRequest(),
+            ];
+          }),
+          catchError((error) => {
+            Utils.errorHandling(error, 'webTrack');
+            return [
+              webTrackActions.setLookupFlightResults(undefined),
+              publicCmsActions.getCaptchaRequest(),
+            ];
+          }),
+          finalize(() => {
+            if (navigate) {
+              navigate('/tra-cuu-thong-tin');
+            }
+          })
+        ),
+        [stopLoading({ key: lookupFlightLoadingKey })]
+      );
+    })
+  );
+};
+
 const getCarriersRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(webTrackActions.getCarriersRequest.match),
@@ -73,4 +113,8 @@ const getCarriersRequest$: RootEpic = (action$) => {
   );
 };
 
-export const webTrackEpics = [lookupAwbRequest, getCarriersRequest$];
+export const webTrackEpics = [
+  lookupAwbRequest,
+  getCarriersRequest$,
+  lookupFlightRequest$,
+];

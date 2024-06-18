@@ -127,5 +127,8 @@
   "Shipper": "Người gửi",
   "Consignee": "Người nhận",
   "Customs status": "Trạng thái HQ",
-  "Lookup results": "Kết quả tra cứu"
+  "Lookup results": "Kết quả tra cứu",
+  "Carrier required": "Vui lòng chọn hãng bay",
+  "Aircraft": "Kiểu máy bay",
+  "Date": "Ngày"
 }

@@ -109,7 +109,7 @@ export const AwbLookupResult = () => {
       <div
         className='mx-auto my-2'
         style={{
-          maxWidth: 550,
+          maxWidth: 450,
           backgroundColor: 'white',
           borderRadius: 8,
           filter: 'drop-shadow(0 20px 30px rgba(0, 0, 0, .1))',
