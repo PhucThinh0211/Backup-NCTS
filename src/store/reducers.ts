@@ -41,6 +41,9 @@ const mainReducer = combineReducers({
 const rootReducers = (state: any, action: any) => {
   // reset store if logout
   if (action.type === 'app/logout') {
+    localStorage.removeItem('remember');
+    localStorage.removeItem('persistWhitelist');
+    
     state = {
       persistApp: state.persistApp,
     };
