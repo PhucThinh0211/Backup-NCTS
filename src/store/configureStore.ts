@@ -7,11 +7,22 @@ import rootEpics from './epics';
 import rootReducers from './reducers';
 import { RootState } from './types';
 
+export const createPersistConfig = (whitelist: string[]) => ({
+  key: 'root',
+  storage,
+  whitelist,
+});
+
 const storeConfig = (config: any) => {
+  const whitelistSaved =
+    localStorage.getItem('remember') === 'true'
+      ? JSON.parse(localStorage.getItem('persistWhitelist') || '[]')
+      : [];
   const persistConfig = {
     key: 'root',
     storage,
     ...config,
+    whitelist: [...config.whitelist, ...whitelistSaved],
   };
 
   const persistedReducer = persistReducer(persistConfig, rootReducers);
@@ -20,7 +31,7 @@ const storeConfig = (config: any) => {
   const store = configureStore({
     reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: getDefaultMiddleware => {
+    middleware: (getDefaultMiddleware) => {
       const middlewares = getDefaultMiddleware({
         serializableCheck: false,
       }).concat(epicMiddleware);
