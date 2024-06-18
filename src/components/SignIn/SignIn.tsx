@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { GettingCaptchaLoadingKey } from '@/common';
@@ -10,6 +10,8 @@ import { getLoading } from '@/store/loading';
 import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
 import { SEO } from '../Seo';
 import { appActions } from '@/store/app';
+import { reconfigurePersistor } from '@/store/reconfigurePersistor';
+import { defaultPersistConfig, persistConfigStorage } from '@/store';
 
 export const SignIn = () => {
   const { t } = useTranslation();
@@ -19,6 +21,7 @@ export const SignIn = () => {
   const loading = useAppSelector(getLoading('login'));
   const company = useAppSelector(getCurrentCompany());
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
@@ -29,18 +32,32 @@ export const SignIn = () => {
   };
 
   const signInSubmit = (values: any) => {
-    dispatch(appActions.loginRequest({
-      input: {
-        ...values,
-        captchaId: captcha?.captchaId
-      },
-      callback: () => { navigate('/phuc-vu-khach-hang') }
-    }))
+    dispatch(
+      appActions.loginRequest({
+        input: {
+          ...values,
+          captchaId: captcha?.captchaId,
+        },
+        callback: () => {
+          navigate(location?.state?.from?.pathname || '/phuc-vu-khach-hang', { replace: true });
+        },
+      })
+    );
+  };
+
+  const rememberChange = (evt: any) => {
+    localStorage.setItem('remember', evt.target.checked);
+    evt.target.checked
+      ? reconfigurePersistor(persistConfigStorage.whitelist)
+      : reconfigurePersistor(defaultPersistConfig.whitelist);
   };
 
   return (
     <div className="d-flex justify-content-center bg-wave p-3 p-lg-5">
-      <SEO title={t('Sign In', { ns: 'common' }) + ' - NCTS'} description={company?.name || t('NctsTitle', {ns: 'common'})} />
+      <SEO
+        title={t('Sign In', { ns: 'common' }) + ' - NCTS'}
+        description={company?.name || t('NctsTitle', { ns: 'common' })}
+      />
       <Form
         layout="vertical"
         onFinish={signInSubmit}
@@ -99,19 +116,24 @@ export const SignIn = () => {
         </Form.Item>
         <Form.Item>
           <div className="d-flex justify-content-between align-items-center ant-form-item-label">
-            <Form.Item name='remember' valuePropName="checked">
-              <Checkbox>{t('Remember', {ns: 'common'})}</Checkbox>
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox onChange={rememberChange}>{t('Remember', { ns: 'common' })}</Checkbox>
             </Form.Item>
-            <Link to='/quen-mat-khau'>{t('Forgot password', { ns: 'common' })}</Link>
+            <Link to="/quen-mat-khau">{t('Forgot password', { ns: 'common' })}</Link>
           </div>
         </Form.Item>
         <Form.Item>
           <div className="d-flex justify-content-between align-items-center ant-form-item-label">
             <span>
               {t('Not a member', { ns: 'common' })}{' '}
-              <Link to='/dang-ky'>{t('Sign Up', { ns: 'common' })}</Link>
+              <Link to="/dang-ky">{t('Sign Up', { ns: 'common' })}</Link>
             </span>
-            <Button type="primary" htmlType="submit" size="middle" className="rounded-5" loading={loading}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="middle"
+              className="rounded-5"
+              loading={loading}>
               {t('Sign In', { ns: 'common' })}
             </Button>
           </div>

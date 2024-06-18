@@ -37,6 +37,7 @@ import {
   CertificateList,
   LogoList,
 } from '@/pages/FileManagement';
+import { RequireAuth } from '@/components';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -69,7 +70,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       {
         path: '/phuc-vu-khach-hang',
         name: 'Customers',
-        element: <div className='container py-3'>Phục vụ khách hàng</div>
+        element: <RequireAuth><div className='container py-3'>Phục vụ khách hàng</div></RequireAuth>
       },
       {
         path: '/tin-tuc/*',
@@ -87,7 +88,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
     path: '/admin',
     name: 'Admin',
     // Layout cho trang Quản trị web
-    element: <AdminLayout />,
+    element: <RequireAuth><AdminLayout /></RequireAuth>,
     children: [
       { index: true, element: <Navigate to={'/admin/company'} /> },
       { path: '/admin/company', name: 'Company', element: <CreateUpdateCompanyPage /> },

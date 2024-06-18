@@ -14,3 +14,4 @@ export * from './ProgressBar';
 export * from './ServiceCard';
 export * from './Startup';
 export * from './SignIn';
+export * from './RequireAuth';
