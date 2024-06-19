@@ -1,6 +1,6 @@
 import { persistReducer } from 'redux-persist';
 import { createPersistConfig } from './configureStore';
-import { store } from './';
+import { store, persistor } from './';
 import rootReducers from './reducers';
 
 export const reconfigurePersistor = (whitelist: string[]) => {
@@ -8,4 +8,5 @@ export const reconfigurePersistor = (whitelist: string[]) => {
   const newPersistConfig = createPersistConfig(whitelist);
   const newPersistedReducer = persistReducer(newPersistConfig, rootReducers);
   store.replaceReducer(newPersistedReducer);
+  persistor.persist();
 };
