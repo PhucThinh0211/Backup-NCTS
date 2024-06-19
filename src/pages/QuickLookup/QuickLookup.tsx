@@ -35,7 +35,7 @@ export const QuickLookupPage = () => {
 
   return (
     <div
-      className='container-fluid px-1 px-md-3'
+      className='container px-2 px-md-3'
       style={{ backgroundColor: '#fefefe' }}
     >
       <Tabs items={items} activeKey={activeLookup} onChange={handleChange} />

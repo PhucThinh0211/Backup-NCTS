@@ -8,6 +8,10 @@ export function getCarriers() {
   return createSelector([getAppState], (state) => state.carriers || []);
 }
 
+export function getClassList() {
+  return createSelector([getAppState], (state) => state.classList || []);
+}
+
 export function getLookupAwbPayload() {
   return createSelector([getAppState], (state) => state.lookupawbPayload);
 }
@@ -23,4 +27,11 @@ export function getLookupFlightPayload() {
 }
 export function getLookupFlightResult() {
   return createSelector([getAppState], (state) => state.lookupFlightResults);
+}
+
+export function getFreightEstimatePayload() {
+  return createSelector([getAppState], (state) => state.freightEstimatePayload);
+}
+export function getFreightEstimateResult() {
+  return createSelector([getAppState], (state) => state.freightEstimateResults);
 }

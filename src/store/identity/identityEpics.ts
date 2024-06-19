@@ -285,10 +285,10 @@ const updateUserRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(identityActions.updateUserRequest.match),
     switchMap((action) => {
-      const { id, data } = action.payload;
+      const { id, input } = action.payload;
       return concat(
         [startLoading({ key: IdentityLoadingEnum.updateUser })],
-        IdentityService.Put.updateUser(id, data).pipe(
+        IdentityService.Put.updateUser(id, input).pipe(
           mergeMap((res) => {
             Utils.successNotification();
             return IdentityService.Get.fetchUsers({

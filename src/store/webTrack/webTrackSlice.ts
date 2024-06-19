@@ -1,7 +1,9 @@
 import {
   AwbResponse,
   CarrierResponse,
+  ClassResponse,
   FlightLookupPagingResponse,
+  FreightEstimateResponse,
 } from '@/services/WebTrackService';
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -11,10 +13,14 @@ interface WebTrackState {
   lookupawbPayload?: any;
   lookupFlightResults?: FlightLookupPagingResponse;
   lookupFlightPayload?: any;
+  classList: ClassResponse[];
+  freightEstimateResults?: FreightEstimateResponse;
+  freightEstimatePayload?: any;
 }
 
 const initialState: WebTrackState = {
   carriers: [],
+  classList: [],
 };
 
 const webTrackSlice = createSlice({
@@ -38,6 +44,17 @@ const webTrackSlice = createSlice({
     getCarriersRequest: (state, action) => {},
     setCarriers: (state, action) => {
       state.carriers = action.payload;
+    },
+    estimateFreightRequest: (state, action) => {},
+    setFreightEstimateResults: (state, action) => {
+      state.freightEstimateResults = action.payload;
+    },
+    setFreightEstimatePayload: (state, action) => {
+      state.freightEstimatePayload = action.payload;
+    },
+    getClassListRequest: (state) => {},
+    setClassList: (state, action) => {
+      state.classList = action.payload;
     },
   },
 });
