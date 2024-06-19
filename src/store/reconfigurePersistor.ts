@@ -3,10 +3,10 @@ import { createPersistConfig } from './configureStore';
 import { store, persistor } from './';
 import rootReducers from './reducers';
 
-export const reconfigurePersistor = async (whitelist: string[]) => {
+export const reconfigurePersistor = (whitelist: string[]) => {
   localStorage.setItem('persistWhitelist', JSON.stringify(whitelist));
-  const newPersistConfig = await createPersistConfig(whitelist);
-  const newPersistedReducer = await persistReducer(newPersistConfig, rootReducers);
-  await store.replaceReducer(newPersistedReducer);
-  await persistor.persist();
+  const newPersistConfig = createPersistConfig(whitelist);
+  const newPersistedReducer = persistReducer(newPersistConfig, rootReducers);
+  store.replaceReducer(newPersistedReducer);
+  persistor.persist();
 };
