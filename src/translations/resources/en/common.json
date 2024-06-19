@@ -53,8 +53,8 @@
   "Enter account name": "Enter account name",
   "Enter password": "Enter password",
   "Enter verification codes": "Enter captcha code",
-  "Arrival": "Arrival",
-  "Departure": "Departure",
+  "Arrival": "Inbound",
+  "Departure": "Outbound",
   "Invoices Lookup": "Invoices Lookup",
   "E-invoice number": "E-invoice number",
   "Invoice date": "Invoice date",
@@ -130,5 +130,8 @@
   "Consignee": "Consignee",
   "Customs status": "Customs status",
   "Lookup results": "Lookup results",
+  "Carrier required": "Carrier required",
+  "Aircraft": "Aircraft",
+  "Date": "Date",
   "Sign out": "Sign out"
 }
