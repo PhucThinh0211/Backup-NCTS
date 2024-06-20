@@ -15,3 +15,4 @@ export * from './ServiceCard';
 export * from './Startup';
 export * from './SignIn';
 export * from './RequireAuth';
+export * from './ButtonWithPermisstion';

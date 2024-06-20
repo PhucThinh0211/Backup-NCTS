@@ -99,27 +99,28 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { index: true, element: <Navigate to={'/admin/company'} /> },
       { path: '/admin/company', name: 'Company', element: <CreateUpdateCompanyPage /> },
       
-      { path: '/admin/menu', name: 'Menu', element: <MenuList /> },
-      { path: '/admin/menu/create-or-edit', name: 'Create menu', element: <CreateUpdateMenuPage /> },
+      { path: '/admin/menu', name: 'Menu', auth: 'CMS.Menus', element: <MenuList /> },
+      { path: '/admin/menu/create-or-edit', name: 'Create menu', auth: ['CMS.Menus.Create', 'CMS.Menus.Edit'], element: <CreateUpdateMenuPage /> },
       
-      { path: '/admin/banners', name: 'Banners', element: <BannerList /> },
-      { path: '/admin/banners/create-or-edit', name: 'Create banner', element: <CreateUpdateBannerPage /> },
+      { path: '/admin/banners', name: 'Banners', auth: 'CMS.Banners', element: <BannerList /> },
+      { path: '/admin/banners/create-or-edit', name: 'Create banner', auth: ['CMS.Banners.Create', 'CMS.Banners.Edit'], element: <CreateUpdateBannerPage /> },
       
-      { path: '/admin/pages', name: 'Pages', element: <PageContentList /> },
-      { path: '/admin/pages/create-or-edit', name: 'Create pages', element: <CreateUpdatePageContent /> },
+      { path: '/admin/pages', name: 'Pages', auth: 'CMS.Pages', element: <PageContentList /> },
+      { path: '/admin/pages/create-or-edit', name: 'Create pages', auth: ['CMS.Pages.Create', 'CMS.Pages.Edit'], element: <CreateUpdatePageContent /> },
       
-      { path: '/admin/news', name: 'News', element: <NewsList /> },
-      { path: '/admin/news/create-or-edit', name: 'Create or edit news', element: <CreateUpdateNewsPage /> },
+      { path: '/admin/news', name: 'News', auth: 'CMS.News', element: <NewsList /> },
+      { path: '/admin/news/create-or-edit', name: 'Create or edit news', auth: ['CMS.News.Create', 'CMS.News.Edit'], element: <CreateUpdateNewsPage /> },
       
-      { path: '/admin/news-type', name: 'News types', element: <NewsTypeList /> },
-      { path: '/admin/news-type/create-or-edit', name: 'Create news type', element: <CreateUpdateNewsTypePage /> },
+      { path: '/admin/news-type', name: 'News types', auth: 'CMS.NewsTypes', element: <NewsTypeList /> },
+      { path: '/admin/news-type/create-or-edit', name: 'Create news type', auth: ['CMS.NewsTypes.Create', 'CMS.NewsTypes.Edit'], element: <CreateUpdateNewsTypePage /> },
       
-      { path: '/admin/document-type', name: 'Document types', element: <DocumentTypeList /> },
-      { path: '/admin/document-type/create-or-edit', name: 'Create document type', element: <CreateUpdateDocumentTypePage /> },
+      { path: '/admin/document-type', name: 'Document types', auth: 'CMS.DocumentTypes', element: <DocumentTypeList /> },
+      { path: '/admin/document-type/create-or-edit', name: 'Create document type', auth: ['CMS.DocumentTypes.Create', 'CMS.DocumentTypes.Edit'], element: <CreateUpdateDocumentTypePage /> },
       
       {
         path: '/admin/media',
         name: 'Media',
+        auth: 'CMS.Files',
         children: [
           { path: '/admin/media/documents', name: 'Documents', element: <DocumentList /> },
           { path: '/admin/media/photos', name: 'Photos', element: <PhotoList /> },
@@ -129,11 +130,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         ]
       },
       
-      { path: '/admin/contacts', name: 'Contacts', element: <DepartmentList /> },
-      { path: '/admin/contacts/create-or-edit', name: 'Add contact', element: <CreateUpdateDepartmentPage /> },
+      { path: '/admin/contacts', name: 'Contacts', auth: 'CMS.Departments', element: <DepartmentList /> },
+      { path: '/admin/contacts/create-or-edit', name: 'Add contact', auth: ['CMS.Departments.Create', 'CMS.Departments.Edit'], element: <CreateUpdateDepartmentPage /> },
       
       { path: '/admin/members', name: 'Members', element: <>Members</> },
-      { path: '/admin/roles', name: 'Roles', element: <RolePage /> },
+      { path: '/admin/roles', name: 'Roles', auth: 'AbpIdentity.Roles', element: <RolePage /> },
       { path: '/admin/users', name: 'Users', element: <UserPage /> },
       { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]

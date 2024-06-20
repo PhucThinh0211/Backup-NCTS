@@ -7,15 +7,15 @@ import { routers } from './routers';
 import { Loading, Startup } from '@/components';
 import { NotAuth } from '@/pages';
 import { useAppSelector } from '@/store/hooks';
-import { getCurrentUser } from '@/store/app';
+import { getGrantedPolicies } from '@/store/app';
 
 export const AppRouter = () => {
-  const currentUser = useAppSelector(getCurrentUser());
+  const grantedPolicies = useAppSelector(getGrantedPolicies());
 
   const _routers = getAuthRouters({
     routers,
     noAuthElement: () => <NotAuth />,
-    auth: currentUser?.roles || [],
+    auth: Object.keys(grantedPolicies) || [],
   });
 
   return (
