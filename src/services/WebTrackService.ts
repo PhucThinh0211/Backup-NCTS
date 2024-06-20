@@ -37,11 +37,23 @@ export interface CarrierResponse {
   code: string | null;
   name: string | null;
 }
+export interface ClassResponse {
+  class: string | null;
+  name: string | null;
+}
+export interface FreightEstimateResponse {
+  service: string | null;
+  money: number;
+  tax: number;
+}
 
 class WebTrackController {
   public Get = {
     getCarriers: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/web-track/carriers`, options);
+    },
+    getClassList: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/web-track/class-list`, options);
     },
     lookupAwb: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/web-track/lookup-awb`, options);
@@ -49,6 +61,15 @@ class WebTrackController {
     lookupFlights: (options?: RequestOptions) => {
       return HttpClient.get(
         `${apiUrl}/api/app/web-track/lookup-flights`,
+        options
+      );
+    },
+  };
+  public Post = {
+    estimateFreight: (input: any, options?: RequestOptions) => {
+      return HttpClient.post(
+        `${apiUrl}/api/app/web-track/freight-estimate`,
+        input,
         options
       );
     },

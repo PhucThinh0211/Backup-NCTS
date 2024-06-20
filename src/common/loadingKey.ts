@@ -1,6 +1,8 @@
 export const lookupAwbLoadingKey = 'lookupAwbLoadingKey';
 export const lookupFlightLoadingKey = 'lookupFlightLoadingKey';
+export const EstimatingChargeLoadingKey = 'EstimatingChargeLoadingKey';
 export const GettingCarriersLoadingKey = 'GettingCarriersLoadingKey';
+export const GettingClassListLoadingKey = 'GettingClassListLoadingKey';
 
 export const GettingMenuLoadingKey = 'GettingMenuLoadingKey';
 export const GettingMenuListLoadingKey = 'GettingMenuListLoadingKey';

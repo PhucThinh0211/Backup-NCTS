@@ -1,24 +1,16 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  InputRef,
-  Row,
-  Space,
-  Spin,
-  Tooltip,
-} from 'antd';
+import { useRef } from 'react';
+import { Col, Form, Input, InputRef, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { LookupButton } from './components/LookupButton';
-import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-import { useRef } from 'react';
-import { GettingCaptchaLoadingKey, lookupAwbLoadingKey } from '@/common';
+import { getCaptcha } from '@/store/publicCms';
+import { bootstrapBreakpoints, lookupAwbLoadingKey } from '@/common';
+import { useWindowSize } from '@/hooks';
 import { getLookupAwbPayload, webTrackActions } from '@/store/webTrack';
+import { CaptchaInput } from '../Captcha/CaptchaInput';
+import { LookupButton } from './components/LookupButton';
 
 const INPUT_LENGTH = {
   AWB_PFX: {
@@ -33,10 +25,10 @@ export const AwbLookup = () => {
   const { t } = useTranslation(['common']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [innerWidth] = useWindowSize();
 
   const lookupAwbPayload = useAppSelector(getLookupAwbPayload());
   const captcha = useAppSelector(getCaptcha());
-  const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const lookupLoading = useAppSelector(getLoading(lookupAwbLoadingKey));
 
   const awbInputRef = useRef<InputRef>(null);
@@ -52,10 +44,6 @@ export const AwbLookup = () => {
     dispatch(
       webTrackActions.lookupAwbRequest({ lookupInput: lookupPayload, navigate })
     );
-  };
-
-  const refreshCaptcha = () => {
-    dispatch(publicCmsActions.getCaptchaRequest());
   };
 
   const onAwbPfxKeyUp = (e: any) => {
@@ -85,95 +73,67 @@ export const AwbLookup = () => {
       onFinish={handleLookup}
       className='w-100'
     >
-      <Form.Item className='d-flex flex-column '>
-        <Form.Item label={t('AWB number', { ns: 'common' })} required>
-          <Row gutter={[10, 10]}>
-            <Col span={8} sm={8}>
-              <Form.Item
-                name='awbPfx'
-                rules={[
-                  {
-                    pattern: /^[\d]{0,3}$/,
-                    message: 'Value must be 3 numbers',
-                  },
-                ]}
-              >
-                <Input
-                  placeholder='Prefix'
-                  maxLength={INPUT_LENGTH.AWB_PFX.MAX}
-                  onKeyUp={onAwbPfxKeyUp}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={16} sm={16}>
-              <Form.Item
-                name='awbNum'
-                rules={[
-                  {
-                    pattern: /^[\d]{0,8}$/,
-                    message: 'Value must be 8 numbers',
-                  },
-                ]}
-              >
-                <Input
-                  placeholder='AWB#'
-                  ref={awbInputRef}
-                  maxLength={INPUT_LENGTH.AWB_NUM.MAX}
-                  onKeyUp={onAwbNumKeyUp}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Form.Item>
-      <Form.Item
-        label={t('Verification codes', { ns: 'common' })}
-        name='verificationCode'
-        required
-        rules={[{ required: true }]}
-      >
-        <Row align='stretch'>
-          <div style={{ flex: 1, marginRight: 8 }}>
-            <Form.Item>
-              <Input
-                placeholder={t('Enter verification codes', {
-                  ns: 'common',
-                })}
-                ref={captchaInputRef}
-              />
+      <Row gutter={[10, 10]}>
+        <Col span={24} md={10}>
+          <Form.Item label={t('AWB number', { ns: 'common' })} required>
+            <Row gutter={[10, 10]}>
+              <Col span={8} sm={10}>
+                <Form.Item
+                  name='awbPfx'
+                  rules={[
+                    {
+                      pattern: /^[\d]{0,3}$/,
+                      message: 'Value must be 3 numbers',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder='Prefix'
+                    maxLength={INPUT_LENGTH.AWB_PFX.MAX}
+                    onKeyUp={onAwbPfxKeyUp}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={16} sm={14}>
+                <Form.Item
+                  name='awbNum'
+                  rules={[
+                    {
+                      pattern: /^[\d]{0,8}$/,
+                      message: 'Value must be 8 numbers',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder='AWB#'
+                    ref={awbInputRef}
+                    maxLength={INPUT_LENGTH.AWB_NUM.MAX}
+                    onKeyUp={onAwbNumKeyUp}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Col>
+        <Col span={24} md={10}>
+          <CaptchaInput />
+        </Col>
+        <Col span={24} md={4}>
+          <div className='d-flex justify-content-center'>
+            <Form.Item
+              label={
+                innerWidth > bootstrapBreakpoints.md ? (
+                  <p className='invisible m-0'>Button</p>
+                ) : undefined
+              }
+            >
+              <LookupButton loading={lookupLoading}>
+                {t('Lookup', { ns: 'common' })}
+              </LookupButton>
             </Form.Item>
           </div>
-          <Space>
-            {fetchingCaptcha ? (
-              <Spin size='small' style={{ width: 110 }} />
-            ) : (
-              <img
-                // prettier-ignore
-                src={captcha?.captchBase64Data ? `data:image/png;base64,${captcha?.captchBase64Data}` : ''}
-                alt='captcha code'
-                className='border rounded'
-                style={{ height: 32 }}
-              />
-            )}
-            <Tooltip title={t('Refresh captcha', { ns: 'common' })}>
-              <Button
-                onClick={refreshCaptcha}
-                shape='circle'
-                disabled={fetchingCaptcha}
-              >
-                <i className='fa-solid fa-rotate'></i>
-              </Button>
-            </Tooltip>
-          </Space>
-        </Row>
-      </Form.Item>
-      <Form.Item noStyle>
-        <div className='w-100 align-self-end pt-1'>
-          <LookupButton loading={lookupLoading}>
-            {t('Lookup', { ns: 'common' })}
-          </LookupButton>
-        </div>
-      </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 };

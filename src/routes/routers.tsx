@@ -38,6 +38,7 @@ import {
   LogoList,
 } from '@/pages/FileManagement';
 import { RequireAuth } from '@/components';
+import { EstimateChargePage } from '@/pages/EstimateCharge';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -66,6 +67,11 @@ export const routers: MetaMenuAuthRouteObject[] = [
         path: '/tra-cuu-thong-tin',
         name: 'Lookup',
         element: <QuickLookupPage />
+      },
+      {
+        path: '/tinh-phi-hang-nhap',
+        name: 'EstimateCharge',
+        element: <EstimateChargePage />
       },
       {
         path: '/phuc-vu-khach-hang',

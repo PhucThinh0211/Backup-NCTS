@@ -120,11 +120,11 @@ export const LeftPanel = (props: SiderProps) => {
       label: t('Administration'),
       type: 'group',
       children: [
-        {
-          label: t('Roles'),
-          icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-          key: '/admin/roles',
-        },
+        // {
+        //   label: t('Roles'),
+        //   icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+        //   key: '/admin/roles',
+        // },
         {
           label: t('Users'),
           icon: <UserOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
