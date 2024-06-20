@@ -133,7 +133,6 @@ export const CreateUpdateMenuPage = () => {
         ? values.iconColor
         : values.iconColor.toHexString(),
     };
-    console.log(inputData);
     if (values.url && !values.url.startsWith('/')) {
       inputData.url = '/' + values.url.trim();
     }

@@ -36,7 +36,7 @@ export const NewsPublic = () => {
     getLoading(GettingMoreContentListLoadingKey)
   );
 
-  const foundNewsType = (newsTypes?.items || []).find(
+  const foundNewsType = (newsTypes || []).find(
     (newsType) => newsType.code === pageDetail?.codeType
   );
 

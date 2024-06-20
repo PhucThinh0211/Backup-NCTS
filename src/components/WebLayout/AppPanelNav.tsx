@@ -5,12 +5,19 @@ import type { MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getActiveMenuKey, getPanelVisibility, getSearchVisibility, persistStateActions } from '@/store/persistState';
+import {
+  getActiveMenuKey,
+  getPanelVisibility,
+  getSearchVisibility,
+  persistStateActions,
+} from '@/store/persistState';
 
 import { getMenuList } from '@/store/publicCms';
 import { Link, useParams } from 'react-router-dom';
 import { MenuResponse } from '@/services/MenuService';
 import { SwitchLang } from '../SwitchLang';
+import { getCurrentUser } from '@/store/app';
+import { ProfileDropdown } from './ProfileDropdown';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -21,13 +28,18 @@ export const AppPanelNav = () => {
   const searchVisibility = useAppSelector(getSearchVisibility());
   const menus = useAppSelector(getMenuList());
   const acitveKey = useAppSelector(getActiveMenuKey());
+  const currentUser = useAppSelector(getCurrentUser());
   const { '*': slug } = useParams();
 
   useEffect(() => {
     const selectedMenu = (menus || []).find(
       (x) => (slug ? `/${slug}` : window.location.pathname) === x.url
     );
-    dispatch(persistStateActions.setActiveMenuKey(selectedMenu?.id || window.location.pathname));
+    dispatch(
+      persistStateActions.setActiveMenuKey(
+        selectedMenu?.id || window.location.pathname
+      )
+    );
   }, [menus, slug]);
 
   const buildAppNav = () => {
@@ -42,7 +54,10 @@ export const AppPanelNav = () => {
           label: (
             <Link to={x.url === '/' ? '/' : `/trang${x.url}`}>
               {x.icons && (
-                <i className={x.icons} style={{ marginRight: 8, color: x.iconColor || 'orange' }} />
+                <i
+                  className={x.icons}
+                  style={{ marginRight: 8, color: x.iconColor || 'orange' }}
+                />
               )}
               {x.label}
             </Link>
@@ -54,7 +69,12 @@ export const AppPanelNav = () => {
         title: x.label,
         label: (
           <Space>
-            {x.icons && <i className={x.icons} style={{ color: x.iconColor || 'orange' }} />}
+            {x.icons && (
+              <i
+                className={x.icons}
+                style={{ color: x.iconColor || 'orange' }}
+              />
+            )}
             <span>{x.label}</span>
           </Space>
         ),
@@ -73,7 +93,10 @@ export const AppPanelNav = () => {
           label: (
             <Link to={x.url === '/' ? '/' : `/trang${x.url}`}>
               {x.icons && (
-                <i className={x.icons} style={{ marginRight: 8, color: x.iconColor || 'orange' }} />
+                <i
+                  className={x.icons}
+                  style={{ marginRight: 8, color: x.iconColor || 'orange' }}
+                />
               )}
               {x.label}
             </Link>
@@ -87,7 +110,10 @@ export const AppPanelNav = () => {
         label: (
           <Space>
             {x.icons ? (
-              <i className={x.icons} style={{ color: x.iconColor || 'orange' }} />
+              <i
+                className={x.icons}
+                style={{ color: x.iconColor || 'orange' }}
+              />
             ) : undefined}
             <span>{x.label}</span>
           </Space>
@@ -118,29 +144,37 @@ export const AppPanelNav = () => {
       closable={true}
       onClose={panelNavToggle}
       open={panelNavVisibility}
-      size="large"
+      size='large'
       zIndex={9999}
       extra={
-        <div className="d-flex justify-content-between align-items-center">
+        <div className='d-flex justify-content-between align-items-center'>
           <Space>
-            <Link to='/dang-nhap'>
-              <Button type='primary' onClick={panelNavToggle}>{t('Sign In', { ns: 'common' })}</Button>
-            </Link>
-            <Button type="text" shape="circle" onClick={searchToggle}>
-              <i className="fa-solid fa-magnifying-glass fa-xl" />
+            {currentUser?.isAuthenticated ? (
+              <ProfileDropdown />
+            ) : (
+              <Link to='/dang-nhap'>
+                <Button type='primary' onClick={panelNavToggle}>
+                  {t('Sign In', { ns: 'common' })}
+                </Button>
+              </Link>
+            )}
+
+            <Button type='text' shape='circle' onClick={searchToggle}>
+              <i className='fa-solid fa-magnifying-glass fa-xl' />
             </Button>
             <SwitchLang />
           </Space>
         </div>
       }
-      placement="right"
-      className="web-panel-nav">
+      placement='right'
+      className='web-panel-nav'
+    >
       <Menu
-        className="web-panel-nav"
+        className='web-panel-nav'
         onClick={onClick}
         style={{ width: '100%' }}
         selectedKeys={[acitveKey]}
-        mode="inline"
+        mode='inline'
         items={buildAppNav()}
       />
     </Drawer>

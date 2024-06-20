@@ -44,7 +44,6 @@ const appSlice = createSlice({
     loginSuccess: (state, action) => {
       const { loginResponse, loginData } = action.payload;
       const { access_token, refresh_token } = loginResponse;
-      console.log(action.payload, access_token);
 
       const decoded: JwtDecoded = jwtDecode(access_token);
       setToken(access_token);

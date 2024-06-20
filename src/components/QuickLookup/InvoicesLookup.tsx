@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row} from 'antd';
+import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { LookupButton } from './components/LookupButton';
@@ -24,12 +24,12 @@ export const InvoicesLookup = () => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={24} sm={16} md={12} lg={14}>
+        <Col span={24} sm={16} md={12} lg={12}>
           {/* Verification codes */}
           <CaptchaInput />
         </Col>
         {/* Submit button */}
-        <Col span={24} md={4} lg={2}>
+        <Col span={24} md={4}>
           <div className='d-flex justify-content-center'>
             <Form.Item
               label={

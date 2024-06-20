@@ -25,6 +25,8 @@ import { SearchForm } from '../SearchForm';
 import { ProgressBar } from '../ProgressBar';
 import { getLoading } from '@/store/loading';
 import { CustomerLogoSection } from './CustomerLogoSection';
+import { getCurrentUser } from '@/store/app';
+import { ProfileDropdown } from './ProfileDropdown';
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,6 +37,7 @@ export const WebLayout = () => {
   const company = useAppSelector(getCurrentCompany());
   const searchVisibility = useAppSelector(getSearchVisibility());
   const panelNavVisibility = useAppSelector(getPanelVisibility());
+  const currentUser = useAppSelector(getCurrentUser());
   const location = useLocation();
   const isLoading = useAppSelector(getLoading());
 
@@ -45,8 +48,8 @@ export const WebLayout = () => {
 
   useEffect(() => {
     const params = {
-      // pageUrl: window.location.href,
-      pageUrl: 'https://sit.ntcs.hicas.vn',
+      pageUrl: window.location.href,
+      // pageUrl: 'https://sit.ntcs.hicas.vn',
     };
     dispatch(publicCmsActions.getBannerListRequest({ params }));
   }, [lang, location]);
@@ -63,61 +66,83 @@ export const WebLayout = () => {
     <>
       <ProgressBar isAnimating={isLoading} />
       <Layout style={{ minHeight: '100vh' }}>
-        <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
-          <div className="h-100">
-            <Link to="/">
+        <Header className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow'>
+          <div className='h-100'>
+            <Link to='/'>
               <img
-                src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
-                alt="logo"
-                className="h-75 mt-md-3"
+                src={
+                  company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo
+                }
+                alt='logo'
+                className='h-75 mt-md-3'
               />
             </Link>
           </div>
           <AppTopNav />
-          <Flex vertical align="end" style={{ height: '100%' }}>
-            <span style={{ fontWeight: 'bold', color: '#900038' }} className="d-none d-md-flex">
+          <Flex vertical align='end' style={{ height: '100%' }}>
+            <span
+              style={{ fontWeight: 'bold', color: '#900038' }}
+              className='d-none d-md-flex'
+            >
               {t('Hotline', { ns: 'common' })}: {company?.phone}
             </span>
-            <Space className="d-md-none">
+            <Space className='d-md-none'>
               {/* <Button type="text" shape="circle" onClick={searchToggle}>
                 <i className="fa-solid fa-magnifying-glass fa-xl" />
               </Button> */}
               <a href={`tel:${company?.phone}`}>
-                <Button danger shape="circle">
-                  <i className="fa-solid fa-phone"></i>
+                <Button danger shape='circle'>
+                  <i className='fa-solid fa-phone'></i>
                 </Button>
               </a>
-              <Link to="/dang-nhap">
-                <Button type="primary" shape="circle" size="middle">
-                  <i className="fa-regular fa-user fa-lg" />
-                </Button>
-              </Link>
-              <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
-                <i className="fa-solid fa-bars fa-lg"></i>
+              {currentUser?.isAuthenticated ? (
+                <ProfileDropdown />
+              ) : (
+                <Link to='/dang-nhap'>
+                  <Button type='primary' shape='circle' size='middle'>
+                    <i className='fa-regular fa-user fa-lg' />
+                  </Button>
+                </Link>
+              )}
+              <Button
+                type='text'
+                shape='circle'
+                size='middle'
+                onClick={panelNavToggle}
+              >
+                <i className='fa-solid fa-bars fa-lg'></i>
               </Button>
             </Space>
-            <Space size="middle" className="d-none d-md-flex">
+            <Space size='middle' className='d-none d-md-flex'>
               <Button
-                type="text"
-                shape="circle"
-                size="middle"
-                className="d-xxl-none"
-                onClick={panelNavToggle}>
-                <i className="fa-solid fa-bars fa-lg"></i>
+                type='text'
+                shape='circle'
+                size='middle'
+                className='d-xxl-none'
+                onClick={panelNavToggle}
+              >
+                <i className='fa-solid fa-bars fa-lg'></i>
               </Button>
-              <Button type="text" shape="circle" onClick={searchToggle}>
-                <i className="fa-solid fa-magnifying-glass fa-xl" />
+              <Button type='text' shape='circle' onClick={searchToggle}>
+                <i className='fa-solid fa-magnifying-glass fa-xl' />
               </Button>
-              <Link to="/dang-nhap">
-                <Button type="primary" shape="circle" size="middle">
-                  <i className="fa-regular fa-user fa-lg" />
-                </Button>
-              </Link>
+              {currentUser?.isAuthenticated ? (
+                <ProfileDropdown />
+              ) : (
+                <Link to='/dang-nhap'>
+                  <Button type='primary' shape='circle' size='middle'>
+                    <i className='fa-regular fa-user fa-lg' />
+                  </Button>
+                </Link>
+              )}
               <SwitchLang />
             </Space>
           </Flex>
         </Header>
-        <Content className='d-flex align-items-end flex-column bg-white' style={{ height: '100%' }}>
+        <Content
+          className='d-flex align-items-end flex-column bg-white'
+          style={{ height: '100%' }}
+        >
           <div className='w-100 bg-light'>
             {searchVisibility && <SearchForm />}
             <HeroSection />
@@ -127,11 +152,11 @@ export const WebLayout = () => {
           </div>
           <div className='w-100'>
             <CustomerLogoSection />
-            <FloatButton.Group shape="circle" style={{ right: 24 }}>
+            <FloatButton.Group shape='circle' style={{ right: 24 }}>
               <FloatButton.BackTop
                 duration={100}
                 visibilityHeight={200}
-                type="primary"
+                type='primary'
                 icon={<UpOutlined />}
                 style={{ opacity: 0.7 }}
               />
@@ -147,9 +172,12 @@ export const WebLayout = () => {
             backgroundColor: 'orange',
             paddingBlock: 14,
           }}
-          className="px-3 px-lg-5">
-          <Space direction="horizontal">
-            <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
+          className='px-3 px-lg-5'
+        >
+          <Space direction='horizontal'>
+            <Typography.Text
+              style={{ color: 'white' }}
+            >{`Copyright © NCTS`}</Typography.Text>
           </Space>
           {/* <Space className="d-none d-xl-flex gap-3">
             <Link to="/sitemap">

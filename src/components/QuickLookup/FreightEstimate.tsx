@@ -82,7 +82,7 @@ export const FreightEstimate = () => {
           <h5 style={{ color: '#FFB629' }}>{t('Estimate charge')}</h5>
         </Row>
         <Row gutter={[10, 0]}>
-          <Col xs={10} sm={12} md={6} xxl={4}>
+          <Col xs={10} sm={12} md={6}>
             <Form.Item
               label={t('Arrival Time')}
               name={'leavetime'}
@@ -95,7 +95,7 @@ export const FreightEstimate = () => {
               <TimePicker className='w-100' format={timeFormat} />
             </Form.Item>
           </Col>
-          <Col xs={14} sm={12} md={6} xxl={4}>
+          <Col xs={14} sm={12} md={6}>
             <Form.Item
               label={t('Arrival Date')}
               name={'leavedate'}
@@ -108,7 +108,7 @@ export const FreightEstimate = () => {
               <DatePicker className='w-100' format={dateFormat} />
             </Form.Item>
           </Col>
-          <Col xs={10} sm={12} md={6} xxl={4}>
+          <Col xs={10} sm={12} md={6}>
             <Form.Item
               label={t('Collection Time')}
               name={'accepttime'}
@@ -121,7 +121,7 @@ export const FreightEstimate = () => {
               <TimePicker className='w-100' format={timeFormat} />
             </Form.Item>
           </Col>
-          <Col xs={14} sm={12} md={6} xxl={4}>
+          <Col xs={14} sm={12} md={6}>
             <Form.Item
               label={t('Collection Date')}
               name={'acceptdate'}
@@ -134,7 +134,7 @@ export const FreightEstimate = () => {
               <DatePicker className='w-100' format={dateFormat} />
             </Form.Item>
           </Col>
-          <Col xs={24} sm={12} xxl={4}>
+          <Col xs={24} sm={12}>
             <Form.Item
               label={t('Weight')}
               name={'weight'}
@@ -148,10 +148,11 @@ export const FreightEstimate = () => {
                 controls={false}
                 className='w-100'
                 placeholder='Kg?'
+                min={0}
               />
             </Form.Item>
           </Col>
-          <Col xs={24} sm={12} xxl={4}>
+          <Col xs={24} sm={12}>
             <Form.Item
               label={t('Kind of goods')}
               name={'class'}
@@ -225,7 +226,7 @@ export const FreightEstimate = () => {
               </Col>
             </Row>
           </Col>
-          <Col xs={24} md={18}>
+          <Col xs={24} md={20}>
             <CaptchaInput />
           </Col>
           <Col span={24} md={4}>

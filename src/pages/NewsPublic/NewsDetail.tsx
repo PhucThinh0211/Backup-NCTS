@@ -41,7 +41,7 @@ export const NewsDetail = () => {
   }, [location, lang]);
 
   useEffect(() => {
-    const foundNewsType = (newsTypeList?.items || []).find(
+    const foundNewsType = (newsTypeList || []).find(
       (type) => type.code === newsDetail?.type
     );
     if (foundNewsType) {

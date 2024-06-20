@@ -19,11 +19,13 @@ import React, { useEffect } from 'react';
 import { PermissionGroup } from './PermissionGroup';
 import './Permission.scss';
 import { useTranslation } from 'react-i18next';
+import { useWindowSize } from '@/hooks';
 
 export const PermissionModal = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
+  const windowSize = useWindowSize();
 
   const visible = useAppSelector(
     getModalVisible(IdentityModalEnum.permissionModal)
@@ -104,44 +106,7 @@ export const PermissionModal = () => {
     );
     const per = group.permissions.find((x) => x.name === permission.name)!;
     per.isGranted = !permission.isGranted;
-
-    const childPers = group.permissions.filter((x) =>
-      x.parentName?.includes(per.name)
-    );
-    childPers.forEach((childPer) => {
-      childPer.isGranted = !permission.isGranted;
-    });
     //
-    storePermissionGroups(group);
-  };
-
-  const handleCheckChildGroup = (permission: PermissionResult) => {
-    if (!selectedGroup?.permissions) {
-      return;
-    }
-    const group: PermissionGroupResult = JSON.parse(
-      JSON.stringify(selectedGroup)
-    );
-    const per = group.permissions.find((x) => x.name === permission.name)!;
-    per.isGranted = !permission.isGranted;
-    const parentPer = group.permissions.find((x) =>
-      per.parentName?.includes(x.name)
-    );
-    //
-    if (parentPer) {
-      const siblingPers = group.permissions.filter((x) =>
-        x.parentName?.includes(parentPer.name)
-      );
-      if (siblingPers.filter((childPer) => childPer.isGranted).length === 0) {
-        parentPer.isGranted = false;
-      }
-      if (
-        siblingPers.filter((childPer) => childPer.isGranted).length ===
-        siblingPers.length
-      ) {
-        parentPer.isGranted = true;
-      }
-    }
     storePermissionGroups(group);
   };
 
@@ -210,6 +175,18 @@ export const PermissionModal = () => {
       confirmLoading={confirmLoading}
       onCancel={handleClose}
       onOk={handleUpdatePermissions}
+      centered
+      className='py-2 custom_scrollbar'
+      styles={{
+        body: {
+          maxHeight: windowSize[1] - 150,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+        },
+      }}
+      classNames={{
+        body: 'custom_scrollbar',
+      }}
     >
       <Spin spinning={loadingPermissions}>
         <Row gutter={[10, 10]}>
@@ -270,19 +247,12 @@ export const PermissionModal = () => {
                       selectedGroup?.permissions?.filter((x) =>
                         x.parentName?.includes(per.name)
                       ) || [];
-                    const grantedChildPer = childPers.filter(
-                      (childPer) => childPer.isGranted
-                    );
 
                     return (
                       <React.Fragment key={per.name}>
                         <Checkbox
                           checked={per.isGranted}
                           onClick={() => handleCheckGroup(per)}
-                          indeterminate={
-                            grantedChildPer.length > 0 &&
-                            grantedChildPer.length < childPers.length
-                          }
                         >
                           {per.displayName}
                         </Checkbox>
@@ -291,7 +261,7 @@ export const PermissionModal = () => {
                             <Checkbox
                               key={childPer.name}
                               checked={childPer.isGranted}
-                              onClick={() => handleCheckChildGroup(childPer)}
+                              onClick={() => handleCheckGroup(childPer)}
                             >
                               {childPer.displayName}
                             </Checkbox>

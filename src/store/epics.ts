@@ -15,6 +15,7 @@ import { documentTypeEpics } from './documentType';
 import { identityEpics } from './identity/identityEpics';
 import { webTrackEpics } from './webTrack';
 import { mediaEpics } from './media';
+import { customerServiceEpics } from './customerService';
 
 const rootEpics = combineEpics(
   ...persistStateEpics,
@@ -31,7 +32,8 @@ const rootEpics = combineEpics(
   ...documentTypeEpics,
   ...identityEpics,
   ...webTrackEpics,
-  ...mediaEpics
+  ...mediaEpics,
+  ...customerServiceEpics
 );
 
 export default rootEpics;

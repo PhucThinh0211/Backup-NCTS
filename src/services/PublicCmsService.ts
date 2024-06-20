@@ -33,22 +33,40 @@ class PublicCmsController {
       );
     },
     getNewsTypeList: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/news-type`, options);
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
     },
     getCaptcha: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/captcha`, options);
     },
     getServicePages: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/public-cms/service-pages`, options);
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/service-pages`,
+        options
+      );
     },
     getIntroducePage: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/public-cms/introduce-page`, options);
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/introduce-page`,
+        options
+      );
     },
     getPageDetailBySlug: (slug: string, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/public-cms/page-by-slug?slug=${slug.replace('/trang','')}`, options);
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/page-by-slug?slug=${slug.replace(
+          '/trang',
+          ''
+        )}`,
+        options
+      );
     },
     getNewsDetailBySlug: (slug: string, options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/public-cms/content-by-slug?slug=${slug.replace('/tin-tuc','')}`, options);
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/content-by-slug?slug=${slug.replace(
+          '/tin-tuc',
+          ''
+        )}`,
+        options
+      );
     },
   };
 }

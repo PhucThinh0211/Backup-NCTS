@@ -31,7 +31,7 @@ export const SkateholderMeetings = () => {
   const newsTypes = useAppSelector(getNewsTypeList());
   const pageDetail = useAppSelector(getSelectedPageDetail());
 
-  const foundNewsType = (newsTypes?.items || []).find(
+  const foundNewsType = (newsTypes || []).find(
     (newsType) => newsType.code === newsTypeCode
   );
 
