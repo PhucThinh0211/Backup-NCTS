@@ -36,6 +36,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TreeItem } from '@/common';
 import { getLanguage, persistStateActions } from '@/store/persistState';
+import { usePermission } from '@/hooks/usePermission';
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   'data-row-key': string;
 }
@@ -165,20 +166,24 @@ export const MenuListTable = () => {
     }
   }, [menus, queryParams]);
 
+  const editable = usePermission('CMS.Menus.Edit');
+  const deletable = usePermission('CMS.Menus.Delete');
+
   const getMoreActions = (record: TreeItem<MenuResponse>) => {
     return [
       {
         key: 'edit',
         label: t('Edit', { ns: 'common' }),
         icon: <EditOutlined style={{ color: '#1890ff' }} />,
-        onClick: () => editMenu(record)
+        onClick: () => editMenu(record),
+        disabled: !editable
       },
       {
         key: 'remove',
         label: t('Remove', { ns: 'common' }),
         icon: <DeleteOutlined style={{ color: record.children?.length ? 'grey' : '#ff4d4f' }} />,
         onClick: () => confirmRemoveMenu(record),
-        disabled: !!record.children?.length
+        disabled: !!record.children?.length || !deletable
       },
     ];
   }

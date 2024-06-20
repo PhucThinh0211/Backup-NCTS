@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Row, Space, Typography } from 'antd';
+import { Row, Space, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { getActiveMenu } from '@/store/app';
@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { menuActions } from '@/store/menu';
 import { getLanguage, persistStateActions } from '@/store/persistState';
+import { ButtonWithPermisstion } from '@/components';
 
 export const MenuListHeader = () => {
   const { t } = useTranslation('menu');
@@ -31,15 +32,9 @@ export const MenuListHeader = () => {
         </Typography.Title>
       </Space>
       <Space>
-        <Button type='primary' icon={<PlusOutlined />} onClick={createMenu}>
+        <ButtonWithPermisstion policyKey='CMS.Menus.Create' type='primary' icon={<PlusOutlined />} onClick={createMenu}>
           {t('Add new menu')}
-        </Button>
-        {/* <Button
-          icon={<DashOutlined />}
-          onClick={() => {
-            Utils.developingNotification();
-          }}
-        /> */}
+        </ButtonWithPermisstion>
       </Space>
     </Row>
   );
