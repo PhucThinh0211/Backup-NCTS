@@ -90,13 +90,11 @@ export const FlightLookupResult = () => {
   return (
     <>
       <div
-        className='mx-auto my-2'
+        className='mx-auto my-2 px-3 py-2 px-md-4 py-md-3'
         style={{
-          maxWidth: 450,
           backgroundColor: 'white',
           borderRadius: 8,
           filter: 'drop-shadow(0 14px 30px rgba(0, 0, 0, .1))',
-          padding: '25px 30px',
         }}
       >
         <FlightLookup />

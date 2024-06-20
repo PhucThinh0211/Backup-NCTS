@@ -131,5 +131,11 @@
   "Carrier required": "Vui lòng chọn hãng bay",
   "Aircraft": "Kiểu máy bay",
   "Date": "Ngày",
-  "Sign out": "Đăng xuất"
+  "Sign out": "Đăng xuất",
+  "All": "Tất cả",
+  "Arrival Time": "Giờ hàng về",
+  "Arrival Date": "Ngày hàng về",
+  "Collection Time": "Giờ nhận hàng",
+  "Collection Date": "Ngày nhận hàng",
+  "Kind of goods": "Loại dịch vụ"
 }

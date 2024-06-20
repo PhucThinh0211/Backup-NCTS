@@ -133,5 +133,11 @@
   "Carrier required": "Carrier required",
   "Aircraft": "Aircraft",
   "Date": "Date",
-  "Sign out": "Sign out"
+  "Sign out": "Sign out",
+  "All": "All",
+  "Arrival Time": "Arrival Time",
+  "Arrival Date": "Arrival Date",
+  "Collection Time": "Collection Time",
+  "Collection Date": "Collection Date",
+  "Kind of goods": "Kind of goods"
 }

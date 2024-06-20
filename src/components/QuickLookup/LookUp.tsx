@@ -54,7 +54,7 @@ function LookUp() {
       <Radio.Group
         value={activeLookup}
         onChange={handleOnChange}
-        className='d-flex justify-content-between flex-column flex-sm-row mb-3 gap-xl-5'
+        className='d-flex justify-content-start flex-column flex-sm-row mb-3 gap-xl-5'
       >
         {radioOptions.map(({ label, value }) => (
           <Radio key={value} value={value}>

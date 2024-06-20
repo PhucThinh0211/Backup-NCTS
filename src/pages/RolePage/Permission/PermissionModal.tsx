@@ -104,11 +104,44 @@ export const PermissionModal = () => {
     );
     const per = group.permissions.find((x) => x.name === permission.name)!;
     per.isGranted = !permission.isGranted;
-    if (per.isGranted && per.parentName) {
-      const parent = group.permissions.find((x) => x.name === per.parentName)!;
-      parent.isGranted = true;
-    }
+
+    const childPers = group.permissions.filter((x) =>
+      x.parentName?.includes(per.name)
+    );
+    childPers.forEach((childPer) => {
+      childPer.isGranted = !permission.isGranted;
+    });
     //
+    storePermissionGroups(group);
+  };
+
+  const handleCheckChildGroup = (permission: PermissionResult) => {
+    if (!selectedGroup?.permissions) {
+      return;
+    }
+    const group: PermissionGroupResult = JSON.parse(
+      JSON.stringify(selectedGroup)
+    );
+    const per = group.permissions.find((x) => x.name === permission.name)!;
+    per.isGranted = !permission.isGranted;
+    const parentPer = group.permissions.find((x) =>
+      per.parentName?.includes(x.name)
+    );
+    //
+    if (parentPer) {
+      const siblingPers = group.permissions.filter((x) =>
+        x.parentName?.includes(parentPer.name)
+      );
+      if (siblingPers.filter((childPer) => childPer.isGranted).length === 0) {
+        parentPer.isGranted = false;
+      }
+      if (
+        siblingPers.filter((childPer) => childPer.isGranted).length ===
+        siblingPers.length
+      ) {
+        parentPer.isGranted = true;
+      }
+    }
     storePermissionGroups(group);
   };
 
@@ -232,29 +265,41 @@ export const PermissionModal = () => {
               <div>
                 {selectedGroup?.permissions
                   ?.filter((x) => !x.parentName)
-                  ?.map((per) => (
-                    <React.Fragment key={per.name}>
-                      <Checkbox
-                        checked={per.isGranted}
-                        onClick={() => handleCheckGroup(per)}
-                      >
-                        {per.displayName}
-                      </Checkbox>
-                      <div className='d-flex flex-column gap-2 ms-4 mt-2 my-3'>
-                        {selectedGroup?.permissions
-                          ?.filter((x) => x.parentName?.includes(per.name))
-                          ?.map((childPer) => (
+                  ?.map((per) => {
+                    const childPers =
+                      selectedGroup?.permissions?.filter((x) =>
+                        x.parentName?.includes(per.name)
+                      ) || [];
+                    const grantedChildPer = childPers.filter(
+                      (childPer) => childPer.isGranted
+                    );
+
+                    return (
+                      <React.Fragment key={per.name}>
+                        <Checkbox
+                          checked={per.isGranted}
+                          onClick={() => handleCheckGroup(per)}
+                          indeterminate={
+                            grantedChildPer.length > 0 &&
+                            grantedChildPer.length < childPers.length
+                          }
+                        >
+                          {per.displayName}
+                        </Checkbox>
+                        <div className='d-flex flex-column gap-2 ms-4 mt-2 my-3'>
+                          {childPers?.map((childPer) => (
                             <Checkbox
                               key={childPer.name}
                               checked={childPer.isGranted}
-                              onClick={() => handleCheckGroup(childPer)}
+                              onClick={() => handleCheckChildGroup(childPer)}
                             >
                               {childPer.displayName}
                             </Checkbox>
                           ))}
-                      </div>
-                    </React.Fragment>
-                  ))}
+                        </div>
+                      </React.Fragment>
+                    );
+                  })}
               </div>
             </div>
           </Col>
