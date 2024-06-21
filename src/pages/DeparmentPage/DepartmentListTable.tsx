@@ -38,7 +38,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { defaultPagingParams } from '@/common';
+import { defaultPagingParams, largePagingParams } from '@/common';
 
 export const DepartmentListTable = () => {
   const [dataSource, setDataSource] = useState<DepartmentResponse[]>([]);
@@ -59,20 +59,27 @@ export const DepartmentListTable = () => {
   useEffect(() => {
     dispatch(
       departmentActions.getDepartmentsRequest({
-        params: queryParams || defaultPagingParams,
+        params: queryParams || largePagingParams,
       })
     );
   }, [language]);
 
   useEffect(() => {
     if (departments) {
-      const sortedDepartments: DepartmentResponse[] = Utils.deepClone(
+      let sortedDepartments: DepartmentResponse[] = Utils.deepClone(
         departments?.items || []
       );
       sortedDepartments.sort((a, b) => a.sortSeq - b.sortSeq);
+      if (queryParams?.search) {
+        sortedDepartments = sortedDepartments.filter((item) => {
+          return item.name
+            .toLowerCase()
+            .includes(queryParams.search.toLowerCase());
+        });
+      }
       setDataSource(sortedDepartments);
     }
-  }, [departments]);
+  }, [departments, queryParams]);
 
   const getMoreActions = (record: DepartmentResponse) => {
     return [
@@ -149,7 +156,12 @@ export const DepartmentListTable = () => {
             {getMoreActions(record).map((action) =>
               action.label ? (
                 <Tooltip title={action.label} key={action.key}>
-                  <Button {...action} type='text' size='small' key={action.key} />
+                  <Button
+                    {...action}
+                    type='text'
+                    size='small'
+                    key={action.key}
+                  />
                 </Tooltip>
               ) : (
                 <Button {...action} type='text' size='small' key={action.key} />
@@ -202,16 +214,17 @@ export const DepartmentListTable = () => {
             columns={columns}
             style={{ width: '100%' }}
             size='small'
-            scroll={{ x: 1000, y: windowSize[1] - 310 }}
-            pagination={{
-              ...Utils.parseParamsToPagination(
-                queryParams || defaultPagingParams
-              ),
-              total: departments?.totalCount,
-              onChange: onPagingChange,
-              responsive: true,
-              showTotal,
-            }}
+            scroll={{ x: 500, y: windowSize[1] - 310 }}
+            // pagination={{
+            //   ...Utils.parseParamsToPagination(
+            //     queryParams || defaultPagingParams
+            //   ),
+            //   total: departments?.totalCount,
+            //   onChange: onPagingChange,
+            //   responsive: true,
+            //   showTotal,
+            // }}
+            pagination={false}
             loading={isLoading}
             components={{
               body: {

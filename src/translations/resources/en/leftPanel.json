@@ -16,5 +16,9 @@
     "Members": "Members",
     "Administration": "Administration",
     "Roles": "Roles",
-    "Users": "Users"
+    "Users": "Users",
+    "Account": "Account",
+    "Service": "Service",
+    "Import": "Import",
+    "Export": "Export"
 }

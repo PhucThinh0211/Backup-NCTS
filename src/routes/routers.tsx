@@ -39,6 +39,7 @@ import {
 } from '@/pages/FileManagement';
 import { RequireAuth } from '@/components';
 import { EstimateChargePage } from '@/pages/EstimateCharge';
+import { AccountPage } from '@/pages/CustomerService/Account';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -81,11 +82,31 @@ export const routers: MetaMenuAuthRouteObject[] = [
         name: 'Customers',
         element: <RequireAuth><CustomerServiceLayout /></RequireAuth>,
         children: [
-          { index: true, element: <Navigate to={'/phuc-vu-khach-hang/account'} /> },
+          { index: true, element: <Navigate to={'/phuc-vu-khach-hang/tai-khoan'} /> },
           {
-            path: '/phuc-vu-khach-hang/account',
+            path: '/phuc-vu-khach-hang/tai-khoan',
             name: 'Account',
-            element: <>Account</>
+            element: <AccountPage />
+          },
+          {
+            path: '/phuc-vu-khach-hang/dich-vu',
+            name: 'Service',
+            element: <>Dịch vụ</>
+          },
+          {
+            path: '/phuc-vu-khach-hang/hang-xuat',
+            name: 'Export',
+            element: <>Hàng xuất</>
+          },
+          {
+            path: '/phuc-vu-khach-hang/hang-nhap',
+            name: 'Import',
+            element: <>Hàng nhập</>
+          },
+          {
+            path: '/phuc-vu-khach-hang/doi-mat-khau',
+            name: 'Change Password',
+            element: <>Đổi mật khẩu</>
           },
         ]
       },

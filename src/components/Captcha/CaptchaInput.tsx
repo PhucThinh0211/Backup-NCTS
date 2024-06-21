@@ -2,15 +2,16 @@ import { GettingCaptchaLoadingKey } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
-import { Form, Row, Input, Space, Spin, Tooltip, Button } from 'antd';
-import { useEffect } from 'react';
+import { Form, Row, Input, Space, Spin, Tooltip, Button, InputRef } from 'antd';
+import { RefObject, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface CaptchaInputProps {
   name?: string;
+  inputRef?: RefObject<InputRef>;
 }
 
-export const CaptchaInput = ({ name }: CaptchaInputProps) => {
+export const CaptchaInput = ({ name, inputRef }: CaptchaInputProps) => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
 
@@ -36,6 +37,7 @@ export const CaptchaInput = ({ name }: CaptchaInputProps) => {
         <div style={{ flex: 1, marginRight: 8 }}>
           <Form.Item>
             <Input
+              ref={inputRef}
               placeholder={t('Enter verification codes', {
                 ns: 'common',
               })}

@@ -116,7 +116,7 @@ export const AwbLookup = () => {
           </Form.Item>
         </Col>
         <Col span={24} md={10}>
-          <CaptchaInput />
+          <CaptchaInput inputRef={captchaInputRef} />
         </Col>
         <Col span={24} md={4}>
           <div className='d-flex justify-content-center'>

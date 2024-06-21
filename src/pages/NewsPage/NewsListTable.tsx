@@ -25,10 +25,7 @@ import {
 import useModal from 'antd/es/modal/useModal';
 import { useNavigate } from 'react-router-dom';
 import { ContentResponse } from '@/services/ContentService';
-import {
-  defaultPagingParams,
-  largePagingParams,
-} from '@/common';
+import { defaultPagingParams, largePagingParams } from '@/common';
 import { useEffect, useState } from 'react';
 import { getLanguage, persistStateActions } from '@/store/persistState';
 import { SortableRow } from '@/components/SortableRow';
@@ -169,12 +166,12 @@ export const NewsListTable = () => {
           : t('Draft', { ns: 'common' });
       },
     },
-    {
-      key: 'sort',
-      width: 40,
-      fixed: 'right',
-      align: 'center',
-    },
+    // {
+    //   key: 'sort',
+    //   width: 40,
+    //   fixed: 'right',
+    //   align: 'center',
+    // },
     {
       fixed: 'right',
       align: 'right',

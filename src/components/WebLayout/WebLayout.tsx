@@ -86,7 +86,7 @@ export const WebLayout = () => {
             >
               {t('Hotline', { ns: 'common' })}: {company?.phone}
             </span>
-            <Space className='d-md-none'>
+            <div className='d-md-none d-flex align-items-center gap-2'>
               {/* <Button type="text" shape="circle" onClick={searchToggle}>
                 <i className="fa-solid fa-magnifying-glass fa-xl" />
               </Button> */}
@@ -112,8 +112,8 @@ export const WebLayout = () => {
               >
                 <i className='fa-solid fa-bars fa-lg'></i>
               </Button>
-            </Space>
-            <Space size='middle' className='d-none d-md-flex'>
+            </div>
+            <div className='d-none d-md-flex gap-3 align-items-center'>
               <Button
                 type='text'
                 shape='circle'
@@ -136,7 +136,7 @@ export const WebLayout = () => {
                 </Link>
               )}
               <SwitchLang />
-            </Space>
+            </div>
           </Flex>
         </Header>
         <Content

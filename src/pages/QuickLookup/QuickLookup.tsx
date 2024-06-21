@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AwbLookupResult } from './components/AwbLookupResult';
 import { FlightLookupResult } from './components/FlightLookupResult';
 import { InvoiceLookupResult } from './components/InvoiceLookupResult';
+import { NCTS_InvoiceUrl } from '@/common';
 
 export const QuickLookupPage = () => {
   const { t } = useTranslation(['common']);
@@ -30,6 +31,10 @@ export const QuickLookupPage = () => {
   const activeLookup = useAppSelector(getActiveLookup());
 
   const handleChange = (key: string) => {
+    if (key === LookupType.INVOICE) {
+      window.open(NCTS_InvoiceUrl, '_blank');
+      return;
+    }
     dispatch(appActions.setActiveLookup(key));
   };
 

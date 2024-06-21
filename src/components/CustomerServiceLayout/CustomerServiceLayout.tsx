@@ -30,13 +30,11 @@ export const CustomerServiceLayout = () => {
             margin: 0,
             minHeight: `calc(100vh - ${TopNavHeight}px)`,
             maxHeight: `calc(100vh - ${TopNavHeight}px)`,
-            padding: '2rem',
-            // overflow: 'auto',
+            padding: '2rem 1rem',
+            overflow: 'auto',
           }}
         >
-          <Content className='w-100 h-100 overflow-auto rounded-2 custom_scrollbar bg-white '>
-            <Outlet />
-          </Content>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

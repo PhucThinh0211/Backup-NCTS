@@ -16,5 +16,10 @@
     "Members": "Thành viên",
     "Administration": "Quản trị",
     "Roles": "Vai trò",
-    "Users": "Người dùng"
+    "Users": "Người dùng",
+    "Account": "Thông tin tài khoản",
+    "Service": "Thông tin dịch vụ",
+    "Import": "Hàng nhập",
+    "Export": "Hàng xuất",
+    "Change password": "Đổi mật khẩu"
 }

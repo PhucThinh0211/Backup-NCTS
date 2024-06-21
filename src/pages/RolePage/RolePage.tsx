@@ -19,7 +19,7 @@ export const RolePage = () => {
     <>
       {roleModalVisible && <CreateUpdateRoleModal />}
       {permissionModalVisible && <PermissionModal />}
-      <RoleListHeader />
+      {/* <RoleListHeader /> */}
       <RoleListTable />
     </>
   );

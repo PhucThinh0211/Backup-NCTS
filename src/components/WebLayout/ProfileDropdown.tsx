@@ -1,5 +1,7 @@
-import { getCurrentUser } from '@/store/app';
-import { useAppSelector } from '@/store/hooks';
+import { defaultPersistConfig } from '@/store';
+import { appActions, getCurrentUser } from '@/store/app';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import Utils from '@/utils';
 import { Avatar, Divider, Dropdown, MenuProps, theme, Typography } from 'antd';
 import React from 'react';
@@ -12,40 +14,38 @@ const { useToken } = theme;
 
 export const ProfileDropdown = () => {
   const { token } = useToken();
-  const { t } = useTranslation(['common']);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation(['common', 'leftPanel']);
   const currentUser = useAppSelector(getCurrentUser());
   const navigate = useNavigate();
 
+  const signout = () => {
+    reconfigurePersistor(defaultPersistConfig.whitelist);
+    dispatch(appActions.logout({ callback: () => navigate('/') }));
+  };
+
   const items: MenuProps['items'] = [
     {
-      label: t('Account'),
+      label: t('Account', { ns: 'leftPanel' }),
       key: '1',
       icon: <i className='fa-solid fa-user' style={{ color: '#ffa500' }} />,
       onClick: () => {
-        navigate('/phuc-vu-khach-hang');
+        navigate('/phuc-vu-khach-hang/tai-khoan');
       },
     },
     {
-      label: t('Services'),
+      label: t('Service', { ns: 'leftPanel' }),
       key: '2',
       icon: (
         <i className='fa-brands fa-servicestack' style={{ color: '#ffa500' }} />
       ),
       onClick: () => {
-        navigate('/phuc-vu-khach-hang');
+        navigate('/phuc-vu-khach-hang/dich-vu');
       },
     },
     {
-      label: t('Import'),
+      label: t('Export', { ns: 'leftPanel' }),
       key: '3',
-      icon: <i className='fa-solid fa-coins' style={{ color: '#ffa500' }} />,
-      onClick: () => {
-        navigate('/phuc-vu-khach-hang');
-      },
-    },
-    {
-      label: t('Export'),
-      key: '4',
       icon: (
         <i
           className='fa-solid fa-plane-departure'
@@ -53,17 +53,26 @@ export const ProfileDropdown = () => {
         />
       ),
       onClick: () => {
-        navigate('/phuc-vu-khach-hang');
+        navigate('/phuc-vu-khach-hang/hang-xuat');
+      },
+    },
+    {
+      label: t('Import', { ns: 'leftPanel' }),
+      key: '4',
+      icon: <i className='fa-solid fa-coins' style={{ color: '#ffa500' }} />,
+      onClick: () => {
+        navigate('/phuc-vu-khach-hang/hang-nhap');
       },
     },
     {
       type: 'divider',
     },
     {
-      label: t('Logout'),
+      label: t('Sign out'),
       key: 'logout',
       icon: <i className='fa-solid fa-right-from-bracket' />,
       danger: true,
+      onClick: signout,
     },
   ];
 
@@ -93,6 +102,7 @@ export const ProfileDropdown = () => {
     >
       <Avatar
         gap={2}
+        size={26}
         style={{
           backgroundColor: Utils.stringToColour(currentUser.name),
           cursor: 'pointer',
