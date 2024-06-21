@@ -1,36 +1,28 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { GettingCaptchaLoadingKey, rememberMe } from '@/common';
+import { rememberMe } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
+import { getCaptcha, getCurrentCompany } from '@/store/publicCms';
 import { SEO } from '../Seo';
 import { appActions } from '@/store/app';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import { defaultPersistConfig, persistConfigStorage } from '@/store';
+import { CaptchaInput } from '../Captcha';
 
 export const SignIn = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const captcha = useAppSelector(getCaptcha());
-  const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const loading = useAppSelector(getLoading('login'));
   const company = useAppSelector(getCurrentCompany());
   const navigate = useNavigate();
   const location = useLocation();
   const [settingPersistConfig, setSettingPersistConfig] = useState(false);
-
-  useEffect(() => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  }, []);
-
-  const getCaptchaCode = () => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  };
 
   const signInSubmit = (values: any) => {
     dispatch(
@@ -38,6 +30,7 @@ export const SignIn = () => {
         input: {
           ...values,
           captchaId: captcha?.captchaId,
+          captchaCode: values.verificationCode,
         },
         callback: (pathname?: string) => {
           navigate(location?.state?.from?.pathname || pathname || '/phuc-vu-khach-hang', {
@@ -106,7 +99,10 @@ export const SignIn = () => {
             rules={[{ required: true }]}>
             <Input.Password placeholder={t('Enter password', { ns: 'common' })} />
           </Form.Item>
-          <Form.Item
+          <Form.Item noStyle>
+            <CaptchaInput />
+          </Form.Item>
+          {/* <Form.Item
             label={t('Verification codes', { ns: 'common' })}
             name="captchaCode"
             required
@@ -136,7 +132,7 @@ export const SignIn = () => {
                 </Tooltip>
               </Space>
             </Row>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item>
             <div className="d-flex justify-content-between align-items-center ant-form-item-label">
               <Form.Item name="remember" valuePropName="checked">
