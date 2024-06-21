@@ -18,6 +18,7 @@ import { identityReducer } from './identity';
 import { webTrackReducer } from './webTrack/webTrackSlice';
 import { mediaReducer } from './media';
 import { customerServiceReducer } from './customerService';
+import { rememberMe } from '@/common';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -43,7 +44,7 @@ const mainReducer = combineReducers({
 const rootReducers = (state: any, action: any) => {
   // reset store if logout
   if (action.type === 'app/logout') {
-    localStorage.removeItem('remember');
+    localStorage.removeItem(rememberMe);
     localStorage.removeItem('persistWhitelist');
 
     state = {

@@ -1,11 +1,4 @@
-import {
-  catchError,
-  concat,
-  filter,
-  finalize,
-  mergeMap,
-  switchMap,
-} from 'rxjs';
+import { catchError, concat, filter, finalize, mergeMap, switchMap } from 'rxjs';
 
 import { appActions } from './appSlice';
 import { startLoading, stopLoading } from '../loading';
@@ -22,6 +15,7 @@ const loginRequest$: RootEpic = (action$) => {
     switchMap((action) => {
       const { input, callback } = action.payload;
       let success = false;
+      let appConfig: any = {};
       return concat(
         [startLoading({ key: 'login' })],
         login(input).pipe(
@@ -41,11 +35,14 @@ const loginRequest$: RootEpic = (action$) => {
             return getApplicationConfiguration({
               token: loginResponse.access_token,
             }).pipe(
-              mergeMap((config) => [
-                ...actionMap,
-                appActions.setAppConfig(config),
-                appActions.setCurrentUser(config?.currentUser),
-              ])
+              mergeMap((config) => {
+                appConfig = config;
+                return [
+                  ...actionMap,
+                  appActions.setAppConfig(config),
+                  appActions.setCurrentUser(config?.currentUser),
+                ];
+              })
             );
           }),
           catchError((error) => {
@@ -54,7 +51,9 @@ const loginRequest$: RootEpic = (action$) => {
           }),
           finalize(() => {
             if (success && callback) {
-              callback();
+              const grantedPolicies = appConfig?.auth?.grantedPolicies || {};
+              const cmsUser = Object.keys(grantedPolicies).some((x) => x.startsWith('CMS.'));
+              cmsUser ? callback('/admin') : callback();
             }
           })
         )

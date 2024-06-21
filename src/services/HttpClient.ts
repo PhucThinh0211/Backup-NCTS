@@ -2,11 +2,7 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { ajax, AjaxError, AjaxResponse } from 'rxjs/ajax';
 import { catchError, finalize, map, switchMap, take } from 'rxjs/operators';
 
-import {
-  buildRequestUrl,
-  extractHeaders,
-  removeCustomKeys,
-} from './HttpHelper';
+import { buildRequestUrl, extractHeaders, removeCustomKeys } from './HttpHelper';
 import { RequesterConfig, RequestOptions } from './types';
 import { AppStore } from '@/store';
 import { trimAll } from '@/utils';
@@ -29,6 +25,7 @@ const mapResponse = map((x: AjaxResponse<any>, index) => x.response);
 
 const tokenSubject = new BehaviorSubject<string | null>(null);
 let isRefreshing = false;
+let refreshTokenSuccess = false;
 const requestQueue: any[] = [];
 
 export const setToken = (token: string | null) => {
@@ -54,11 +51,7 @@ const handleTokenRefresh = (): Observable<string> => {
   );
 };
 
-const sendHttpRequest = (
-  url: string,
-  options: RequestOptions,
-  headers?: any
-) => {
+const sendHttpRequest = (url: string, options: RequestOptions, headers?: any) => {
   const ajaxRequest = removeCustomKeys(options);
   return ajax({ url, headers, ...ajaxRequest }).pipe(mapResponse);
 };
@@ -66,17 +59,12 @@ const sendHttpRequest = (
 const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
   const mergedConfig: RequesterConfig = { includeJSONHeaders: true };
   const rUrl = buildRequestUrl(url, options.search);
-  const rHeaders = extractHeaders(
-    options,
-    Boolean(mergedConfig.includeJSONHeaders)
-  );
+  const rHeaders = extractHeaders(options, Boolean(mergedConfig.includeJSONHeaders));
 
   return tokenSubject.pipe(
     take(1),
     switchMap((token) => {
-      const headersWithToken = token
-        ? { ...rHeaders, Authorization: `Bearer ${token}` }
-        : rHeaders;
+      const headersWithToken = token ? { ...rHeaders, Authorization: `Bearer ${token}` } : rHeaders;
       return sendHttpRequest(rUrl, options, headersWithToken).pipe(
         catchError((error: AjaxError) => {
           const state = store.getState();
@@ -87,6 +75,7 @@ const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
               return handleTokenRefresh().pipe(
                 switchMap((newToken: string) => {
                   isRefreshing = false;
+                  refreshTokenSuccess = true;
                   const updatedHeaders = {
                     ...rHeaders,
                     Authorization: `Bearer ${newToken}`,
@@ -95,22 +84,26 @@ const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
                 }),
                 catchError((refreshError) => {
                   isRefreshing = false;
+                  refreshTokenSuccess = false;
                   return throwError(() => refreshError);
                 }),
                 finalize(() => {
                   isRefreshing = false;
-                  const newRequests = requestQueue.map((queuedRequest) => {
-                    return () => queuedRequest();
-                  });
-                  requestQueue.length = 0;
-                  newRequests.forEach((queuedRequest) => queuedRequest());
+                  if (refreshTokenSuccess) {
+                    const newRequests = requestQueue.map((queuedRequest) => {
+                      return () => queuedRequest();
+                    });
+                    requestQueue.length = 0;
+                    newRequests.forEach((queuedRequest) => queuedRequest());
+                  } else {
+                    requestQueue.length = 0;
+                    store.dispatch(appActions.logout({}));
+                  }
                 })
               );
             } else {
               return new Observable<any>((observer) => {
-                requestQueue.push(() =>
-                  httpRequest(url, options).subscribe(observer)
-                );
+                requestQueue.push(() => httpRequest(url, options).subscribe(observer));
               });
             }
           }
@@ -126,12 +119,7 @@ const httpRequest = (url: string, options: RequestOptions): Observable<any> => {
 };
 
 class HttpInterceptor {
-  request(
-    method: HttpMethod,
-    url: string,
-    body?: any,
-    options?: RequestOptions
-  ) {
+  request(method: HttpMethod, url: string, body?: any, options?: RequestOptions) {
     // const newBody = trimAll(body);
     const newBody = body;
 

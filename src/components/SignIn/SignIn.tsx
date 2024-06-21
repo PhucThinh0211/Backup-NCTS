@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { GettingCaptchaLoadingKey } from '@/common';
+import { GettingCaptchaLoadingKey, rememberMe } from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
 import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
@@ -38,15 +38,15 @@ export const SignIn = () => {
           ...values,
           captchaId: captcha?.captchaId,
         },
-        callback: () => {
-          navigate(location?.state?.from?.pathname || '/phuc-vu-khach-hang', { replace: true });
+        callback: (pathname?: string) => {
+          navigate(location?.state?.from?.pathname || pathname || '/phuc-vu-khach-hang', { replace: true });
         },
       })
     );
   };
 
   const rememberChange = (evt: any) => {
-    localStorage.setItem('remember', evt.target.checked);
+    localStorage.setItem(rememberMe, evt.target.checked);
     evt.target.checked
       ? reconfigurePersistor(persistConfigStorage.whitelist)
       : reconfigurePersistor(defaultPersistConfig.whitelist);
@@ -63,7 +63,7 @@ export const SignIn = () => {
         onFinish={signInSubmit}
         autoComplete="off"
         initialValues={{
-          remember: false,
+          remember: localStorage.getItem(rememberMe) === 'true' || false,
         }}
         className="col-12 col-md-7 col-lg-5 col-xl-4 col-xxl-3">
         <p className="h6 text-orange">
