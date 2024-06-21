@@ -53,9 +53,6 @@ export const QuickLookup = () => {
 
   const onChange = (key: string) => {
     dispatch(persistStateActions.setTabLookupActive(key));
-    if (lookupDiv?.current) {
-      window.scrollTo({ top: lookupDiv.current.offsetTop - 200, behavior: "smooth" });
-    }
   };
 
   useEffect(() => {
