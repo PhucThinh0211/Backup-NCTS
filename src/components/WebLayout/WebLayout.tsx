@@ -107,13 +107,6 @@ export const WebLayout = () => {
               </Button>
             </Space>
             <Space size="middle" className="d-none d-md-flex">
-              {cmsUser && (
-                <Link to="/admin">
-                  <Button size="middle" type="primary" danger>
-                    Admin
-                  </Button>
-                </Link>
-              )}
               <Button
                 type="text"
                 shape="circle"
@@ -122,6 +115,13 @@ export const WebLayout = () => {
                 onClick={panelNavToggle}>
                 <i className="fa-solid fa-bars fa-lg"></i>
               </Button>
+              {cmsUser && (
+                <Link to="/admin">
+                  <Button size="middle" type="primary" danger>
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Button type="text" shape="circle" onClick={searchToggle}>
                 <i className="fa-solid fa-magnifying-glass fa-xl" />
               </Button>
