@@ -7,6 +7,7 @@ const { apiUrl } = getEnvVars();
 export interface CaptchaResponse {
   captchaId: string;
   captchBase64Data: string;
+  expirationTime: string;
 }
 
 class PublicCmsController {
