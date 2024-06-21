@@ -139,5 +139,6 @@
   "Arrival Date": "Arrival Date",
   "Collection Time": "Collection Time",
   "Collection Date": "Collection Date",
-  "Kind of goods": "Kind of goods"
+  "Kind of goods": "Kind of goods",
+  "The specified refresh token has already been redeemed.": "The specified refresh token has already been redeemed."
 }

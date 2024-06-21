@@ -82,3 +82,5 @@ export interface JwtDecoded extends JwtPayload {
   orgId: string;
   CompanyId: number;
 }
+
+export const rememberMe = 'remember_me';

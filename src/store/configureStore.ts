@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import rootEpics from './epics';
 import rootReducers from './reducers';
 import { RootState } from './types';
+import { rememberMe } from '@/common';
 
 export const createPersistConfig = (whitelist: string[]) => ({
   key: 'root',
@@ -15,7 +16,7 @@ export const createPersistConfig = (whitelist: string[]) => ({
 
 const storeConfig = (config: any) => {
   const whitelistSaved =
-    localStorage.getItem('remember') === 'true'
+    localStorage.getItem(rememberMe) === 'true'
       ? JSON.parse(localStorage.getItem('persistWhitelist') || '[]')
       : [];
   const persistConfig = {

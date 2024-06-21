@@ -137,5 +137,6 @@
   "Arrival Date": "Ngày hàng về",
   "Collection Time": "Giờ nhận hàng",
   "Collection Date": "Ngày nhận hàng",
-  "Kind of goods": "Loại dịch vụ"
+  "Kind of goods": "Loại dịch vụ",
+  "The specified refresh token has already been redeemed.": "Mã khóa làm mới đã thay đổi."
 }

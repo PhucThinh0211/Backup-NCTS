@@ -39,7 +39,7 @@ const appSlice = createSlice({
     },
     loginRequest: (
       state,
-      action: PayloadAction<{ input: ILoginInput; callback?: VoidFunction }>
+      action: PayloadAction<{ input: ILoginInput; callback?: any }>
     ) => {},
     loginSuccess: (state, action) => {
       const { loginResponse, loginData } = action.payload;
