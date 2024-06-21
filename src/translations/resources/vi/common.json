@@ -139,5 +139,6 @@
   "Collection Date": "Ngày nhận hàng",
   "Kind of goods": "Loại dịch vụ",
   "Change password": "Đổi mật khẩu",
-  "Hello": "Xin chào"
+  "Hello": "Xin chào",
+  "The specified refresh token has already been redeemed.": "Mã khóa làm mới đã thay đổi."
 }

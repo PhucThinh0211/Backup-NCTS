@@ -4,6 +4,7 @@ import { getLoading } from '@/store/loading';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 import { Form, Row, Input, Space, Spin, Tooltip, Button, InputRef } from 'antd';
 import { RefObject, useEffect } from 'react';
+import Utils from '@/utils';
 import { useTranslation } from 'react-i18next';
 
 interface CaptchaInputProps {
@@ -22,9 +23,17 @@ export const CaptchaInput = ({ name, inputRef }: CaptchaInputProps) => {
     dispatch(publicCmsActions.getCaptchaRequest());
   };
 
+  const getCaptchaNeeded = () => {
+    const now = Date();
+    const expiresIn = captcha ? new Date(captcha.expirationTime) : now;
+    if (!captcha || now >= expiresIn) {
+      dispatch(publicCmsActions.getCaptchaRequest());
+    }
+  };
+
   useEffect(() => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  }, []);
+    getCaptchaNeeded();
+  }, [captcha]);
 
   return (
     <Form.Item
@@ -41,6 +50,7 @@ export const CaptchaInput = ({ name, inputRef }: CaptchaInputProps) => {
               placeholder={t('Enter verification codes', {
                 ns: 'common',
               })}
+              onFocus={getCaptchaNeeded}
             />
           </Form.Item>
         </div>

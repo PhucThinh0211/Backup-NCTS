@@ -141,5 +141,6 @@
   "Collection Date": "Collection Date",
   "Kind of goods": "Kind of goods",
   "Change password": "Change Password",
-  "Hello": "Hello"
+  "Hello": "Hello",
+  "The specified refresh token has already been redeemed.": "The specified refresh token has already been redeemed."
 }

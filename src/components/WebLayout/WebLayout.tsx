@@ -25,7 +25,7 @@ import { SearchForm } from '../SearchForm';
 import { ProgressBar } from '../ProgressBar';
 import { getLoading } from '@/store/loading';
 import { CustomerLogoSection } from './CustomerLogoSection';
-import { getCurrentUser } from '@/store/app';
+import { getCurrentUser, getGrantedPolicies } from '@/store/app';
 import { ProfileDropdown } from './ProfileDropdown';
 
 const { Header, Content, Footer } = Layout;
@@ -40,6 +40,11 @@ export const WebLayout = () => {
   const currentUser = useAppSelector(getCurrentUser());
   const location = useLocation();
   const isLoading = useAppSelector(getLoading());
+  const grantedPolicies = useAppSelector(getGrantedPolicies());
+
+  const cmsUser = Object.keys(grantedPolicies).some((x) =>
+    x.startsWith('CMS.')
+  );
 
   useEffect(() => {
     dispatch(publicCmsActions.getCompanyRequest({}));
@@ -123,6 +128,13 @@ export const WebLayout = () => {
               >
                 <i className='fa-solid fa-bars fa-lg'></i>
               </Button>
+              {cmsUser && (
+                <Link to='/admin'>
+                  <Button size='middle' type='primary' danger>
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Button type='text' shape='circle' onClick={searchToggle}>
                 <i className='fa-solid fa-magnifying-glass fa-xl' />
               </Button>
