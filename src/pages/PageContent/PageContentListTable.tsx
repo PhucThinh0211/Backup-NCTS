@@ -239,7 +239,6 @@ export const PageContentListTable = () => {
       setDataSource((previous) => {
         const activeIndex = previous.findIndex(({ id }) => id === active.id);
         const overIndex = previous.findIndex(({ id }) => id === over?.id);
-        console.log({ active, over });
 
         return arrayMove(previous, activeIndex, overIndex);
       });

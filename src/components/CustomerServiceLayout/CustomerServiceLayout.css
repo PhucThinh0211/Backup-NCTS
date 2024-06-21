@@ -1,0 +1,20 @@
+.pvkh_leftSider .ant-menu:not(.ant-menu-inline-collapsed) .ant-menu-item,
+.pvkh_leftSider_subMenu.ant-menu:not(.ant-menu-inline-collapsed) .ant-menu-item {
+    height: 46px !important;
+}
+.pvkh_leftSider .ant-menu-item-selected,
+.pvkh_leftSider_subMenu .ant-menu-item-selected {
+    background-color: #0000000f !important;
+    color: black !important;
+}
+.pvkh_leftSider .ant-menu-sub{
+    background-color: transparent !important;
+}
+.pvkh_leftSider .ant-menu-item-icon {
+    height: 18px;
+    width: 18px;
+    object-fit: cover;
+}
+.pvkh_leftSider_subMenu {
+    z-index: 999;
+}

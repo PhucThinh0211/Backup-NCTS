@@ -17,6 +17,7 @@ import { newsTypeReducer } from './newsType';
 import { identityReducer } from './identity';
 import { webTrackReducer } from './webTrack/webTrackSlice';
 import { mediaReducer } from './media';
+import { customerServiceReducer } from './customerService';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -36,6 +37,7 @@ const mainReducer = combineReducers({
   identity: identityReducer,
   webTrack: webTrackReducer,
   media: mediaReducer,
+  pvkhCustomerService: customerServiceReducer,
 });
 
 const rootReducers = (state: any, action: any) => {
@@ -43,7 +45,7 @@ const rootReducers = (state: any, action: any) => {
   if (action.type === 'app/logout') {
     localStorage.removeItem('remember');
     localStorage.removeItem('persistWhitelist');
-    
+
     state = {
       persistApp: state.persistApp,
     };

@@ -86,7 +86,7 @@ export const NewsSection = () => {
   const newsTypes = useAppSelector(getNewsTypeList());
   const selectedNewsTypeId = useAppSelector(getSelectedNewsTypeId());
 
-  const newsTypeOptions = [...(newsTypes?.items || [])]
+  const newsTypeOptions = [...(newsTypes || [])]
     .sort((a, b) => a.sortSeq - b.sortSeq)
     .map((newsType) => ({
       label: newsType.name,

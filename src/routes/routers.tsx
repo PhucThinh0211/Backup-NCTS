@@ -42,6 +42,9 @@ import { EstimateChargePage } from '@/pages/EstimateCharge';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
+const CustomerServiceLayout = lazy(
+  () => import('@/components/CustomerServiceLayout')
+);
 
 type MetaMenu = {
   name?: string;
@@ -76,7 +79,15 @@ export const routers: MetaMenuAuthRouteObject[] = [
       {
         path: '/phuc-vu-khach-hang',
         name: 'Customers',
-        element: <RequireAuth><div className='container py-3'>Phục vụ khách hàng</div></RequireAuth>
+        element: <RequireAuth><CustomerServiceLayout /></RequireAuth>,
+        children: [
+          { index: true, element: <Navigate to={'/phuc-vu-khach-hang/account'} /> },
+          {
+            path: '/phuc-vu-khach-hang/account',
+            name: 'Account',
+            element: <>Account</>
+          },
+        ]
       },
       {
         path: '/tin-tuc/*',

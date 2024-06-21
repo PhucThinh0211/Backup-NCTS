@@ -33,7 +33,6 @@ const lookupAwbRequest: RootEpic = (action$) => {
         [startLoading({ key: lookupAwbLoadingKey })],
         WebTrackService.Get.lookupAwb(options).pipe(
           mergeMap((awb) => {
-            console.log(awb);
             return [
               webTrackActions.setLookupAwbResults(awb),
               publicCmsActions.getCaptchaRequest(),

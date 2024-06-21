@@ -8,7 +8,7 @@ import {
   ContentResponse,
   ContentsPagingResponse,
 } from '@/services/ContentService';
-import { NewsTypesPagingResponse } from '@/services/NewsTypeService';
+import { NewsTypeResponse } from '@/services/NewsTypeService';
 import { PageContentResponse } from '@/services/PageContentService';
 import { DepartmentsPagingResponse } from '@/services/DepartmentService';
 
@@ -21,7 +21,7 @@ interface publicCmsState {
   investorNews?: ContentsPagingResponse;
   investorNewsParams?: any;
   latestNews?: ContentsPagingResponse;
-  newsTypes?: NewsTypesPagingResponse;
+  newsTypes?: NewsTypeResponse[];
   selectedNewsTypeId?: string;
   captcha?: CaptchaResponse;
   servicePages: PageContentResponse[];

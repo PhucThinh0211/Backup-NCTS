@@ -14,7 +14,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { LeftPanelWidth, MenuItem, TopNavHeightAdmin } from '@/common/define';
-import { appActions, getActiveMenu } from '@/store/app';
+import { customerServiceActions, getActiveMenu } from '@/store/customerService';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import MenuSvg from '@/assets/menu.svg';
 import BannerSvg from '@/assets/banner.svg';
@@ -26,8 +26,6 @@ import ContactSvg from '@/assets/contact.svg';
 // import UserSvg from '@/assets/user.svg';
 
 const { Sider } = Layout;
-
-const DEV_ROUTES = ['/admin/roles'];
 
 export const LeftPanel = (props: SiderProps) => {
   const { ...rest } = props;
@@ -42,109 +40,54 @@ export const LeftPanel = (props: SiderProps) => {
 
   const adminMenu: MenuItem[] = [
     {
-      label: t('Company'),
+      label: t('Account'),
       icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/admin/company',
+      key: '/phuc-vu-khach-hang/account',
     },
     {
-      label: t('Menu'),
-      icon: <img src={MenuSvg} alt='menu icon' />,
-      key: '/admin/menu',
-    },
-    {
-      label: t('Banners'),
-      icon: <img src={BannerSvg} alt='banner icon' />,
-      key: '/admin/banners',
-    },
-    {
-      label: t('Pages'),
-      icon: <img src={PageSvg} alt='page icon' />,
-      key: '/admin/pages',
-    },
-    {
-      label: t('News'),
-      icon: <img src={BlogSvg} alt='blog icon' />,
-      key: '/admin/news',
-    },
-    {
-      label: t('News types'),
-      icon: (
-        <TagsOutlined
-          style={{ fontSize: collapsed ? 16 : 20, color: 'white' }}
-        />
-      ),
-      key: '/admin/news-type',
-    },
-    {
-      label: t('Document types'),
-      icon: (
-        <SnippetsOutlined
-          style={{ fontSize: collapsed ? 16 : 20, color: 'white' }}
-        />
-      ),
-      key: '/admin/document-type',
-    },
-    {
-      label: t('All Files'),
-      icon: <img src={MediaSvg} alt='media icon' />,
-      key: '/admin/media',
+      label: t('Import'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+      key: '/phuc-vu-khach-hang/import',
       popupClassName: 'leftSider_subMenu',
       children: [
         {
-          label: t('Documents'),
-          key: '/admin/media/documents',
+          label: t('Goods information'),
+          key: '/phuc-vu-khach-hang/import/goods',
         },
         {
-          label: t('Photos'),
-          key: '/admin/media/photos',
+          label: t('Import notifications'),
+          key: '/phuc-vu-khach-hang/import/bills',
         },
         {
-          label: t('Videos'),
-          key: '/admin/media/videos',
+          label: t('Instorage good'),
+          key: '/phuc-vu-khach-hang/import/instorage',
         },
         {
-          label: t('Certifications'),
-          key: '/admin/media/certifications',
-        },
-        {
-          label: t("Partners's logo"),
-          key: '/admin/media/partnersLogo',
+          label: t('HAWB service charge'),
+          key: '/phuc-vu-khach-hang/import/hawb-service-charge',
         },
       ],
     },
     {
-      label: t('Contacts'),
-      icon: <img src={ContactSvg} alt='contact icon' />,
-      key: '/admin/contacts',
+      label: t('Export'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+      key: '/phuc-vu-khach-hang/export',
     },
     {
-      key: 'administration',
-      label: t('Administration'),
-      type: 'group',
-      children: [
-        {
-          label: t('Roles'),
-          icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-          key: '/admin/roles',
-          disabled: true,
-        },
-        {
-          label: t('Users'),
-          icon: <UserOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-          key: '/admin/users',
-        },
-      ],
+      label: t('Flight'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+      key: '/phuc-vu-khach-hang/flight',
     },
-    // {
-    //   label: t('Members'),
-    //   icon: <img src={MemberSvg} alt='member icon' />,
-    //   key: '/admin/members',
-    // },
-    // {
-    //   label: t('Users'),
-    //   icon: <img src={UserSvg} alt='user icon' />,
-    //   key: '/admin/users',
-    // },
+    {
+      label: t('Customs History'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+      key: '/phuc-vu-khach-hang/customs-history',
+    },
+    {
+      label: t('Change password'),
+      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+      key: '/phuc-vu-khach-hang/change-password',
+    },
   ];
 
   useEffect(() => {
@@ -153,13 +96,13 @@ export const LeftPanel = (props: SiderProps) => {
     for (const item of menus) {
       if (item?.key === pathname) {
         const { label, key } = item;
-        dispatch(appActions.setActiveMenu({ label, key }));
+        dispatch(customerServiceActions.setPVKHActiveMenu({ label, key }));
       }
       if (item?.children) {
         for (const child of item.children) {
           if (child.key === pathname) {
             const { label, key } = child;
-            dispatch(appActions.setActiveMenu({ label, key }));
+            dispatch(customerServiceActions.setPVKHActiveMenu({ label, key }));
             if (!collapsed) {
               setOpenKeys([item.key]);
             }
@@ -190,13 +133,18 @@ export const LeftPanel = (props: SiderProps) => {
       collapsed={collapsed}
       width={LeftPanelWidth}
       onCollapse={setCollapsed}
-      className={`border-end leftSider overflow-y-auto custom_scrollbar pb-2`}
-      style={{ maxHeight: `calc(100dvh - ${TopNavHeightAdmin}px)` }}
+      className={`pvkh_leftSider overflow-y-auto custom_scrollbar pb-2`}
+      style={{
+        maxHeight: `calc(100dvh - ${TopNavHeightAdmin}px)`,
+        backgroundColor: 'transparent',
+      }}
       {...rest}
     >
       <div
         className={`d-flex flex-column justify-content-center ${
-          collapsed ? 'align-items-center my-2' : 'align-items-end m-2 mb-0'
+          collapsed
+            ? 'align-items-center my-2'
+            : 'align-items-end m-2 mb-0 mx-3'
         }`}
       >
         <Button
@@ -224,7 +172,6 @@ export const LeftPanel = (props: SiderProps) => {
           style={{
             background: 'transparent',
           }}
-          theme='dark'
         />
       </div>
     </Sider>
