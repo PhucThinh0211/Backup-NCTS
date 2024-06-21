@@ -74,7 +74,7 @@ export const SignIn = () => {
           name="username"
           required
           rules={[{ required: true }]}>
-          <Input placeholder={t('Enter user name', { ns: 'common' })} autoFocus />
+          <Input placeholder={t('Enter user name', { ns: 'common' })} />
         </Form.Item>
         <Form.Item
           label={t('Password', { ns: 'common' })}

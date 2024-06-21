@@ -5,7 +5,7 @@ import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { GettingCaptchaLoadingKey, TopNavHeight } from '@/common';
+import { GettingCaptchaLoadingKey  } from '@/common';
 import { SEO } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
@@ -18,12 +18,6 @@ export const SignUp = () => {
   const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const company = useAppSelector(getCurrentCompany());
   const scrollRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (scrollRef?.current) {
-      window.scrollTo({ top: scrollRef.current.offsetTop - TopNavHeight, behavior: 'smooth' });
-    }
-  }, [scrollRef]);
 
   useEffect(() => {
     dispatch(publicCmsActions.getCaptchaRequest());
