@@ -11,6 +11,7 @@ import newsType from './newsType.json';
 import documentType from './documentType.json';
 import webTrack from "./webTrack.json";
 import media from './media.json';
+import adminSetting from './adminSetting.json';
 
 export default {
   banner,
@@ -26,4 +27,5 @@ export default {
   documentType,
   webTrack,
   media,
+  adminSetting,
 };

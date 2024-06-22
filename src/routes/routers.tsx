@@ -40,6 +40,7 @@ import {
 import { RequireAuth } from '@/components';
 import { EstimateChargePage } from '@/pages/EstimateCharge';
 import { AccountPage } from '@/pages/CustomerService/Account';
+import { Emaling } from '@/pages/Emailing';
 
 const WebLayout = lazy(() => import('@/components/WebLayout'));
 const AdminLayout = lazy(() => import('@/components/AdminLayout'));
@@ -168,6 +169,7 @@ export const routers: MetaMenuAuthRouteObject[] = [
       { path: '/admin/members', name: 'Members', element: <>Members</> },
       { path: '/admin/roles', name: 'Roles', auth: 'AbpIdentity.Roles', element: <RolePage /> },
       { path: '/admin/users', name: 'Users', element: <UserPage /> },
+      { path: '/admin/emailing', name: 'Emailing', element: <Emaling /> },
       { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]
   },
