@@ -4,10 +4,11 @@ import { Col, Row } from 'antd';
 
 export const DepartmentsSection = () => {
   const departments = useAppSelector(getDepartments());
+
   return (
     <section className='py-2 py-md-5'>
       <Row gutter={[10, 10]}>
-        {departments?.items.map((department) => (
+        {departments?.map((department) => (
           <Col span={24} sm={12} lg={8} xxl={6} key={department.id}>
             <div>
               {department.name && (

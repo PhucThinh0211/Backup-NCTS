@@ -10,7 +10,7 @@ import {
 } from '@/services/ContentService';
 import { NewsTypeResponse } from '@/services/NewsTypeService';
 import { PageContentResponse } from '@/services/PageContentService';
-import { DepartmentsPagingResponse } from '@/services/DepartmentService';
+import { DepartmentResponse } from '@/services/DepartmentService';
 
 interface publicCmsState {
   company?: CompanyResponse;
@@ -28,7 +28,7 @@ interface publicCmsState {
   introducePage?: PageContentResponse;
   selectedPageDetail?: PageContentResponse;
   selectedNewsDetail?: ContentResponse;
-  departments?: DepartmentsPagingResponse;
+  departments?: DepartmentResponse[];
 }
 
 const initialState: publicCmsState = {

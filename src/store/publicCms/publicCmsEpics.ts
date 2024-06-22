@@ -341,7 +341,7 @@ const getDepartmentsRequest$: RootEpic = (action$) => {
       };
       return concat(
         [startLoading({ key: GettingDepartmentListLoadingKey, type: 'top' })],
-        DepartmentService.Get.getAllDepartments({ search }).pipe(
+        PublicCmsService.Get.getAllDepartments({ search }).pipe(
           switchMap((departments) => {
             return [publicCmsActions.setDepartments(departments)];
           }),
