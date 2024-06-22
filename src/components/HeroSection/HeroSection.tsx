@@ -8,7 +8,8 @@ import { getBanners } from '@/store/publicCms';
 import { useAppSelector } from '@/store/hooks';
 import './Banners.scss';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { bootstrapBreakpoints } from '@/common';
+import { bootstrapBreakpoints, uploadedPhotoUrl } from '@/common';
+import { PreCacheImg } from '../WebLayout/PreCacheImg';
 
 const responsive = {
   superLargeDesktop: {
@@ -38,6 +39,7 @@ export const HeroSection = () => {
   return (
     !!banners?.length && (
       <div style={{ minHeight: 50 }}>
+        <PreCacheImg images={banners.map(x => x.photoUrl ? uploadedPhotoUrl(x.photoUrl) : '' )} />
         <Carousel
           swipeable={banners.length > 1}
           draggable={false}
