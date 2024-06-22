@@ -4,7 +4,6 @@ import { getLoading } from '@/store/loading';
 import { getCaptcha, publicCmsActions } from '@/store/publicCms';
 import { Form, Row, Input, Space, Spin, Tooltip, Button, InputRef } from 'antd';
 import { RefObject, useEffect } from 'react';
-import Utils from '@/utils';
 import { useTranslation } from 'react-i18next';
 
 interface CaptchaInputProps {
@@ -24,7 +23,7 @@ export const CaptchaInput = ({ name, inputRef }: CaptchaInputProps) => {
   };
 
   const getCaptchaNeeded = () => {
-    const now = Date();
+    const now = new Date();
     const expiresIn = captcha ? new Date(captcha.expirationTime) : now;
     if (!captcha || now >= expiresIn) {
       dispatch(publicCmsActions.getCaptchaRequest());

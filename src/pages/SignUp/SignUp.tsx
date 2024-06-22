@@ -1,31 +1,18 @@
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
-import { Button, Form, Input, Row, Space, Spin, Tooltip } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { GettingCaptchaLoadingKey  } from '@/common';
-import { SEO } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { getLoading } from '@/store/loading';
-import { getCaptcha, getCurrentCompany, publicCmsActions } from '@/store/publicCms';
+import { CaptchaInput, SEO } from '@/components';
+import { useAppSelector } from '@/store/hooks';
+import { getCurrentCompany } from '@/store/publicCms';
 
 export const SignUp = () => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const captcha = useAppSelector(getCaptcha());
-  const fetchingCaptcha = useAppSelector(getLoading(GettingCaptchaLoadingKey));
   const company = useAppSelector(getCurrentCompany());
   const scrollRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  }, []);
-
-  const fetchCaptchaCode = () => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  };
 
   return (
     <>
@@ -139,36 +126,8 @@ export const SignUp = () => {
             <Form.Item label={t('Purpose', { ns: 'common' })}>
               <Input />
             </Form.Item>
-            <Form.Item
-              label={t('Verification codes', { ns: 'common' })}
-              name="captchaCode"
-              required
-              rules={[{ required: true }]}>
-              <Row align="stretch">
-                <div style={{ flex: 1, marginRight: 8 }}>
-                  <Form.Item>
-                    <Input placeholder={t('Enter verification codes', { ns: 'common' })} />
-                  </Form.Item>
-                </div>
-                <Space>
-                  {fetchingCaptcha ? (
-                    <Spin size="small" style={{ width: 110 }} />
-                  ) : (
-                    <img
-                      // prettier-ignore
-                      src={captcha?.captchBase64Data ? `data:image/png;base64,${captcha?.captchBase64Data}` : ''}
-                      alt="captcha code"
-                      className="border rounded"
-                      style={{ height: 32 }}
-                    />
-                  )}
-                  <Tooltip title={t('Refresh captcha', { ns: 'common' })}>
-                    <Button onClick={fetchCaptchaCode} shape="circle" disabled={fetchingCaptcha}>
-                      <i className="fa-solid fa-rotate"></i>
-                    </Button>
-                  </Tooltip>
-                </Space>
-              </Row>
+            <Form.Item noStyle>
+              <CaptchaInput />
             </Form.Item>
             <Form.Item className="d-flex justify-content-start mt-3">
               <Space>
