@@ -39,9 +39,9 @@ export const HeroSection = () => {
     !!banners?.length && (
       <div style={{ minHeight: 50 }}>
         <Carousel
-          swipeable={true}
+          swipeable={banners.length > 1}
           draggable={false}
-          showDots={innerWidth <= bootstrapBreakpoints.md}
+          showDots={banners.length > 1 && innerWidth <= bootstrapBreakpoints.md}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
           infinite={true}
@@ -51,7 +51,7 @@ export const HeroSection = () => {
           // customTransition="all .5"
           transitionDuration={500}
           containerClass="hero-carousel-container"
-          arrows={true}
+          arrows={banners.length > 1}
           removeArrowOnDeviceType={["tablet", "mobile"]}
           // deviceType={this.props.deviceType}
           dotListClass="hero-carousel-dot-list-style"
