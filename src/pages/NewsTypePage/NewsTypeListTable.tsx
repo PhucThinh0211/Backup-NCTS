@@ -205,7 +205,7 @@ export const NewsTypeListTable = () => {
               columns={columns}
               style={{ width: '100%' }}
               size='small'
-              scroll={{ x: 1000, y: windowSize[1] - 310 }}
+              scroll={{ x: 500, y: windowSize[1] - 310 }}
               pagination={{
                 ...Utils.parseParamsToPagination(
                   queryParams || defaultPagingParams

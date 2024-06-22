@@ -83,4 +83,6 @@ export interface JwtDecoded extends JwtPayload {
   CompanyId: number;
 }
 
+export const NCTS_InvoiceUrl =
+  'https://hanghoanoibai-tt78.vnpt-invoice.com.vn/HomeNoLogin/SearchByFkey';
 export const rememberMe = 'remember_me';

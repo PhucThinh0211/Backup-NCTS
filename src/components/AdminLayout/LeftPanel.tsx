@@ -122,12 +122,12 @@ export const LeftPanel = (props: SiderProps) => {
       label: t('Administration'),
       type: 'group',
       children: [
-        {
-          label: t('Roles'),
-          icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-          key: '/admin/roles',
-          disabled: true,
-        },
+        // {
+        //   label: t('Roles'),
+        //   icon: <LockOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+        //   key: '/admin/roles',
+        //   disabled: true,
+        // },
         {
           label: t('Users'),
           icon: <UserOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
@@ -150,22 +150,29 @@ export const LeftPanel = (props: SiderProps) => {
   useEffect(() => {
     const { pathname } = location;
     const menus: any = adminMenu;
+    let foundMenu = null;
     for (const item of menus) {
       if (item?.key === pathname) {
-        const { label, key } = item;
-        dispatch(appActions.setActiveMenu({ label, key }));
+        foundMenu = item;
+        // const { label, key } = item;
+        // dispatch(appActions.setActiveMenu({ label, key }));
       }
       if (item?.children) {
         for (const child of item.children) {
           if (child.key === pathname) {
-            const { label, key } = child;
-            dispatch(appActions.setActiveMenu({ label, key }));
+            foundMenu = child;
             if (!collapsed) {
               setOpenKeys([item.key]);
             }
           }
         }
       }
+    }
+    if (foundMenu) {
+      const { label, key } = foundMenu;
+      dispatch(appActions.setActiveMenu({ label, key }));
+    } else {
+      dispatch(appActions.setActiveMenu(undefined));
     }
   }, [location, collapsed]);
 

@@ -1,35 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Layout, Menu, MenuProps, SiderProps } from 'antd';
+import { Layout, Menu, MenuProps, SiderProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import {
-  RightOutlined,
-  LeftOutlined,
-  HomeOutlined,
-  TagsOutlined,
-  SnippetsOutlined,
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { LeftPanelWidth, MenuItem, TopNavHeightAdmin } from '@/common/define';
+import { LeftPanelWidth, MenuItem, TopNavHeight } from '@/common/define';
 import { customerServiceActions, getActiveMenu } from '@/store/customerService';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import MenuSvg from '@/assets/menu.svg';
-import BannerSvg from '@/assets/banner.svg';
-import PageSvg from '@/assets/page.svg';
-import BlogSvg from '@/assets/blog.svg';
-import MediaSvg from '@/assets/media.svg';
-import ContactSvg from '@/assets/contact.svg';
-// import MemberSvg from '@/assets/member.svg';
-// import UserSvg from '@/assets/user.svg';
+import { defaultPersistConfig } from '@/store';
+import { appActions, getCurrentUser } from '@/store/app';
+import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 
 const { Sider } = Layout;
 
 export const LeftPanel = (props: SiderProps) => {
   const { ...rest } = props;
-  const { t } = useTranslation(['leftPanel']);
+  const { t } = useTranslation(['leftPanel', 'common']);
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,56 +24,68 @@ export const LeftPanel = (props: SiderProps) => {
   const [openKeys, setOpenKeys] = useState(['/']);
 
   const activeMenu = useAppSelector(getActiveMenu());
+  const currentUser = useAppSelector(getCurrentUser());
 
   const adminMenu: MenuItem[] = [
     {
-      label: t('Account'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/account',
+      label: t('Account', { ns: 'leftPanel' }),
+      icon: <i className='fa-solid fa-user'></i>,
+      key: '/phuc-vu-khach-hang/tai-khoan',
     },
     {
-      label: t('Import'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/import',
+      label: t('Service', { ns: 'leftPanel' }),
+      icon: (
+        <i
+          className='fa-solid fa-layer-group'
+          style={{ transform: 'translateX(-2px)' }}
+        ></i>
+      ),
+      key: '/phuc-vu-khach-hang/dich-vu',
+    },
+    {
+      label: t('Import', { ns: 'leftPanel' }),
+      icon: <i className='fa-solid fa-box'></i>,
+      key: '/phuc-vu-khach-hang/hang-nhap',
       popupClassName: 'leftSider_subMenu',
       children: [
         {
           label: t('Goods information'),
-          key: '/phuc-vu-khach-hang/import/goods',
+          key: '/phuc-vu-khach-hang/hang-nhap/goods',
         },
         {
           label: t('Import notifications'),
-          key: '/phuc-vu-khach-hang/import/bills',
+          key: '/phuc-vu-khach-hang/hang-nhap/bills',
         },
         {
           label: t('Instorage good'),
-          key: '/phuc-vu-khach-hang/import/instorage',
+          key: '/phuc-vu-khach-hang/hang-nhap/instorage',
         },
         {
           label: t('HAWB service charge'),
-          key: '/phuc-vu-khach-hang/import/hawb-service-charge',
+          key: '/phuc-vu-khach-hang/hang-nhap/hawb-service-charge',
         },
       ],
     },
     {
-      label: t('Export'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/export',
+      label: t('Export', { ns: 'leftPanel' }),
+      icon: (
+        <i
+          className='fa-solid fa-dolly'
+          style={{ transform: 'translateX(-2px)' }}
+        ></i>
+      ),
+      key: '/phuc-vu-khach-hang/hang-xuat',
     },
     {
-      label: t('Flight'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/flight',
+      label: t('Change password', { ns: 'common' }),
+      icon: <i className='fa-solid fa-lock'></i>,
+      key: '/phuc-vu-khach-hang/doi-mat-khau',
     },
     {
-      label: t('Customs History'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/customs-history',
-    },
-    {
-      label: t('Change password'),
-      icon: <HomeOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
-      key: '/phuc-vu-khach-hang/change-password',
+      label: t('Sign out', { ns: 'common' }),
+      icon: <i className='fa-solid fa-arrow-right-from-bracket'></i>,
+      key: 'logout',
+      danger: true,
     },
   ];
 
@@ -112,8 +111,17 @@ export const LeftPanel = (props: SiderProps) => {
     }
   }, [location, collapsed]);
 
+  const signout = () => {
+    reconfigurePersistor(defaultPersistConfig.whitelist);
+    dispatch(appActions.logout({ callback: () => navigate('/') }));
+  };
+
   const onClickMenu = (menu: any) => {
     const { key } = menu;
+    if (key === 'logout') {
+      signout();
+      return;
+    }
     navigate(key);
   };
 
@@ -121,13 +129,8 @@ export const LeftPanel = (props: SiderProps) => {
     setOpenKeys(keys);
   };
 
-  const handleLeftPanelVisibility = () => {
-    setCollapsed((prev) => !prev);
-  };
-
   return (
     <Sider
-      breakpoint='lg'
       trigger={null}
       collapsible
       collapsed={collapsed}
@@ -135,32 +138,18 @@ export const LeftPanel = (props: SiderProps) => {
       onCollapse={setCollapsed}
       className={`pvkh_leftSider overflow-y-auto custom_scrollbar pb-2`}
       style={{
-        maxHeight: `calc(100dvh - ${TopNavHeightAdmin}px)`,
+        maxHeight: `calc(100dvh - ${TopNavHeight}px)`,
         backgroundColor: 'transparent',
       }}
       {...rest}
     >
-      <div
-        className={`d-flex flex-column justify-content-center ${
-          collapsed
-            ? 'align-items-center my-2'
-            : 'align-items-end m-2 mb-0 mx-3'
-        }`}
-      >
-        <Button
-          shape='circle'
-          size='small'
-          onClick={handleLeftPanelVisibility}
-          icon={
-            collapsed ? (
-              <RightOutlined style={{ fontSize: 11 }} />
-            ) : (
-              <LeftOutlined style={{ fontSize: 11 }} />
-            )
-          }
-        />
-      </div>
-      <div className={'mh-100 flex-column relative p-3 pt-0'}>
+      <div className={'mh-100 flex-column relative px-3 pt-4'}>
+        <div className='px-1'>
+          <p className='mb-2'>
+            {t('Hello', { ns: 'common' })},{' '}
+            <span className='bold'>{currentUser.name}</span>
+          </p>
+        </div>
         <Menu
           mode='inline'
           onClick={onClickMenu}
@@ -171,6 +160,7 @@ export const LeftPanel = (props: SiderProps) => {
           inlineIndent={15}
           style={{
             background: 'transparent',
+            border: 'none',
           }}
         />
       </div>

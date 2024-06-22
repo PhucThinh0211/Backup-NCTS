@@ -2,5 +2,6 @@
   "Captcha don't match": "Mã xác thực không đúng",
   "Captcha not empty": "Mã xác thực không được rỗng",
   "Captcha timeout expired": "Mã xác thực đã hết hạn",
-  "Not Found": "Không tìm thấy dữ liệu theo điều kiện lọc"
+  "Not Found": "Không tìm thấy dữ liệu theo điều kiện lọc",
+  "Invalid username or password!": "Tên đăng nhập hoặc mật khẩu không đúng"
 }

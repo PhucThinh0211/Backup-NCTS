@@ -42,7 +42,9 @@ export const WebLayout = () => {
   const isLoading = useAppSelector(getLoading());
   const grantedPolicies = useAppSelector(getGrantedPolicies());
 
-  const cmsUser = Object.keys(grantedPolicies).some((x) => x.startsWith('CMS.'));
+  const cmsUser = Object.keys(grantedPolicies).some((x) =>
+    x.startsWith('CMS.')
+  );
 
   useEffect(() => {
     dispatch(publicCmsActions.getCompanyRequest({}));
@@ -69,90 +71,104 @@ export const WebLayout = () => {
     <>
       <ProgressBar isAnimating={isLoading} />
       <Layout style={{ minHeight: '100vh' }}>
-        <Header className="web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow">
-          <div className="h-100">
-            <Link to="/">
+        <Header className='web-header sticky-top bg-white d-flex justify-content-between align-items-center px-3 px-lg-5 z-3 shadow'>
+          <div className='h-100'>
+            <Link to='/'>
               <img
-                src={company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo}
-                alt="logo"
-                className="h-75 mt-md-3"
+                src={
+                  company?.logoUrl ? uploadedPhotoUrl(company.logoUrl) : logo
+                }
+                alt='logo'
+                className='h-75 mt-md-3'
               />
             </Link>
           </div>
           <AppTopNav />
-          <Flex vertical align="end" style={{ height: '100%' }}>
-            <span style={{ fontWeight: 'bold', color: '#900038' }} className="d-none d-md-flex">
+          <Flex vertical align='end' style={{ height: '100%' }}>
+            <span
+              style={{ fontWeight: 'bold', color: '#900038' }}
+              className='d-none d-md-flex'
+            >
               {t('Hotline', { ns: 'common' })}: {company?.phone}
             </span>
-            <Space className="d-md-none">
+            <div className='d-md-none d-flex align-items-center gap-2'>
               {/* <Button type="text" shape="circle" onClick={searchToggle}>
                 <i className="fa-solid fa-magnifying-glass fa-xl" />
               </Button> */}
               <a href={`tel:${company?.phone}`}>
-                <Button danger shape="circle">
-                  <i className="fa-solid fa-phone"></i>
+                <Button danger shape='circle'>
+                  <i className='fa-solid fa-phone'></i>
                 </Button>
               </a>
               {currentUser?.isAuthenticated ? (
                 <ProfileDropdown />
               ) : (
-                <Link to="/dang-nhap">
-                  <Button type="primary" shape="circle" size="middle">
-                    <i className="fa-regular fa-user fa-lg" />
+                <Link to='/dang-nhap'>
+                  <Button type='primary' shape='circle' size='middle'>
+                    <i className='fa-regular fa-user fa-lg' />
                   </Button>
                 </Link>
               )}
-              <Button type="text" shape="circle" size="middle" onClick={panelNavToggle}>
-                <i className="fa-solid fa-bars fa-lg"></i>
-              </Button>
-            </Space>
-            <Space size="middle" className="d-none d-md-flex">
               <Button
-                type="text"
-                shape="circle"
-                size="middle"
-                className="d-xxl-none"
-                onClick={panelNavToggle}>
-                <i className="fa-solid fa-bars fa-lg"></i>
+                type='text'
+                shape='circle'
+                size='middle'
+                onClick={panelNavToggle}
+              >
+                <i className='fa-solid fa-bars fa-lg'></i>
+              </Button>
+            </div>
+            <div className='d-none d-md-flex gap-3 align-items-center'>
+              <Button
+                type='text'
+                shape='circle'
+                size='middle'
+                className='d-xxl-none'
+                onClick={panelNavToggle}
+              >
+                <i className='fa-solid fa-bars fa-lg'></i>
               </Button>
               {cmsUser && (
-                <Link to="/admin">
-                  <Button size="middle" type="primary" danger>
+                <Link to='/admin'>
+                  <Button size='middle' type='primary' danger>
                     Admin
                   </Button>
                 </Link>
               )}
-              <Button type="text" shape="circle" onClick={searchToggle}>
-                <i className="fa-solid fa-magnifying-glass fa-xl" />
+              <Button type='text' shape='circle' onClick={searchToggle}>
+                <i className='fa-solid fa-magnifying-glass fa-xl' />
               </Button>
               {currentUser?.isAuthenticated ? (
                 <ProfileDropdown />
               ) : (
-                <Link to="/dang-nhap">
-                  <Button type="primary" shape="circle" size="middle">
-                    <i className="fa-regular fa-user fa-lg" />
+                <Link to='/dang-nhap'>
+                  <Button type='primary' shape='circle' size='middle'>
+                    <i className='fa-regular fa-user fa-lg' />
                   </Button>
                 </Link>
               )}
               <SwitchLang />
-            </Space>
+            </div>
           </Flex>
         </Header>
-        <Content className="d-flex align-items-end flex-column bg-white" style={{ height: '100%' }}>
-          <div className="w-100 bg-light">
+        <Content
+          className='d-flex align-items-end flex-column bg-white'
+          style={{ height: '100%' }}
+        >
+          <div className='w-100 bg-light'>
             {searchVisibility && <SearchForm />}
             <HeroSection />
           </div>
-          <div className="w-100" style={{ flex: 1 }}>
+          <div className='w-100' style={{ flex: 1 }}>
             <Outlet />
           </div>
-          <div className="w-100">
+          <div className='w-100'>
             <CustomerLogoSection />
-            <FloatButton.Group shape="circle" style={{ right: 24 }}>
+            <FloatButton.Group shape='circle' style={{ right: 24 }}>
               <FloatButton.BackTop
                 duration={100}
                 visibilityHeight={200}
-                type="primary"
+                type='primary'
                 icon={<UpOutlined />}
                 style={{ opacity: 0.7 }}
               />
@@ -168,9 +184,12 @@ export const WebLayout = () => {
             backgroundColor: 'orange',
             paddingBlock: 14,
           }}
-          className="px-3 px-lg-5">
-          <Space direction="horizontal">
-            <Typography.Text style={{ color: 'white' }}>{`Copyright © NCTS`}</Typography.Text>
+          className='px-3 px-lg-5'
+        >
+          <Space direction='horizontal'>
+            <Typography.Text
+              style={{ color: 'white' }}
+            >{`Copyright © NCTS`}</Typography.Text>
           </Space>
           {/* <Space className="d-none d-xl-flex gap-3">
             <Link to="/sitemap">

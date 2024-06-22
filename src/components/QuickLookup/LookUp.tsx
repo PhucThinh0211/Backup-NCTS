@@ -6,6 +6,7 @@ import { FlightLookup } from './FlightLookup';
 import { InvoicesLookup } from './InvoicesLookup';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { LookupType, appActions, getActiveLookup } from '@/store/app';
+import { NCTS_InvoiceUrl } from '@/common';
 
 function LookUp() {
   const { t } = useTranslation(['common']);
@@ -15,6 +16,10 @@ function LookUp() {
 
   const handleOnChange = (e: RadioChangeEvent) => {
     const lookupValue = e.target.value;
+    if (lookupValue === LookupType.INVOICE) {
+      window.open(NCTS_InvoiceUrl, '_blank');
+      return;
+    }
     dispatch(appActions.setActiveLookup(lookupValue));
   };
 

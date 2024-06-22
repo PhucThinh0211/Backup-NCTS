@@ -68,11 +68,6 @@ export const AwbLookupResult = () => {
       key: 'cweight',
     },
     {
-      title: t('Weight'),
-      dataIndex: 'cweight',
-      key: 'cweight',
-    },
-    {
       title: t('Nature'),
       dataIndex: 'nature',
       key: 'nature',
