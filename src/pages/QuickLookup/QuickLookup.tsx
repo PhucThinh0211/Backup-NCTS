@@ -6,6 +6,8 @@ import { AwbLookupResult } from './components/AwbLookupResult';
 import { FlightLookupResult } from './components/FlightLookupResult';
 import { InvoiceLookupResult } from './components/InvoiceLookupResult';
 import { NCTS_InvoiceUrl } from '@/common';
+import { Helmet } from 'react-helmet-async';
+import { SEO } from '@/components';
 
 export const QuickLookupPage = () => {
   const { t } = useTranslation(['common']);
@@ -43,6 +45,7 @@ export const QuickLookupPage = () => {
       className='container px-2 px-md-3'
       style={{ backgroundColor: '#fefefe' }}
     >
+      <SEO title={t('Lookup information')} />
       <Tabs items={items} activeKey={activeLookup} onChange={handleChange} />
     </div>
   );
