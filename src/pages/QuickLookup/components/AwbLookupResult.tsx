@@ -6,7 +6,6 @@ import { Divider, Empty, Table, TableColumnsType } from 'antd';
 import { AwbLookup } from '@/components/QuickLookup/AwbLookup';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { publicCmsActions } from '@/store/publicCms';
 import { getLookupAwbResult, webTrackActions } from '@/store/webTrack';
 import Utils from '@/utils';
 import { AwbResponse } from '@/services/WebTrackService';
@@ -18,7 +17,6 @@ export const AwbLookupResult = () => {
   const awbList = useAppSelector(getLookupAwbResult());
 
   useEffect(() => {
-    dispatch(publicCmsActions.getCaptchaRequest());
     return () => {
       dispatch(webTrackActions.setLookupAwbResults(undefined));
     };

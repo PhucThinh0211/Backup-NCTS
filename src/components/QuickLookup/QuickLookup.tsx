@@ -17,7 +17,6 @@ import { useWindowSize } from '@/hooks/useWindowSize';
 import { bootstrapBreakpoints } from '@/common';
 import { QuickLookupMobile } from './QuickLookupMobile';
 import { getTabLookupActive, persistStateActions } from '@/store/persistState';
-import { publicCmsActions } from '@/store/publicCms';
 
 export const QuickLookup = () => {
   const { t } = useTranslation(['common']);
@@ -25,10 +24,6 @@ export const QuickLookup = () => {
   const [innerWidth] = useWindowSize();
   const activeLookupTab = useAppSelector(getTabLookupActive());
   const lookupDiv = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    dispatch(publicCmsActions.getCaptchaRequest());
-  }, []);
 
   const items: TabsProps['items'] = [
     {

@@ -102,37 +102,6 @@ export const SignIn = () => {
           <Form.Item noStyle>
             <CaptchaInput />
           </Form.Item>
-          {/* <Form.Item
-            label={t('Verification codes', { ns: 'common' })}
-            name="captchaCode"
-            required
-            rules={[{ required: true }]}>
-            <Row align="stretch">
-              <div style={{ flex: 1, marginRight: 8 }}>
-                <Form.Item>
-                  <Input placeholder={t('Enter verification codes', { ns: 'common' })} />
-                </Form.Item>
-              </div>
-              <Space>
-                {fetchingCaptcha ? (
-                  <Spin size="small" style={{ width: 110 }} />
-                ) : (
-                  <img
-                    // prettier-ignore
-                    src={captcha?.captchBase64Data ? `data:image/png;base64,${captcha?.captchBase64Data}` : ''}
-                    alt="captcha code"
-                    className="border rounded"
-                    style={{ height: 32 }}
-                  />
-                )}
-                <Tooltip title={t('Refresh captcha', { ns: 'common' })}>
-                  <Button onClick={getCaptchaCode} shape="circle" disabled={fetchingCaptcha}>
-                    <i className="fa-solid fa-rotate"></i>
-                  </Button>
-                </Tooltip>
-              </Space>
-            </Row>
-          </Form.Item> */}
           <Form.Item>
             <div className="d-flex justify-content-between align-items-center ant-form-item-label">
               <Form.Item name="remember" valuePropName="checked">
