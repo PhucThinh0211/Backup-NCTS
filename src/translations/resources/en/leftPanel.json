@@ -20,5 +20,6 @@
     "Account": "Account",
     "Service": "Service",
     "Import": "Import",
-    "Export": "Export"
+    "Export": "Export",
+    "Emailing": "Emailing"
 }
