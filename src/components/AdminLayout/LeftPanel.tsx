@@ -10,7 +10,7 @@ import {
   HomeOutlined,
   TagsOutlined,
   SnippetsOutlined,
-  LockOutlined,
+  MailOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { LeftPanelWidth, MenuItem, TopNavHeightAdmin } from '@/common/define';
@@ -128,6 +128,11 @@ export const LeftPanel = (props: SiderProps) => {
         //   key: '/admin/roles',
         //   disabled: true,
         // },
+        {
+          label: t('Emailing'),
+          icon: <MailOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,
+          key: '/admin/emailing',
+        },
         {
           label: t('Users'),
           icon: <UserOutlined style={{ fontSize: collapsed ? 16 : 20 }} />,

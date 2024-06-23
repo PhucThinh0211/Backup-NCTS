@@ -66,3 +66,6 @@ export const GettingMediaLoadingKey = 'GettingMediaLoadingKey';
 export const GettingMediaListLoadingKey = 'GettingMediaListLoadingKey';
 export const SavingMediaLoadingKey = 'SavingMediaLoadingKey';
 export const RemovingMediaLoadingKey = 'RemovingMediaLoadingKey';
+
+export const GettingEmailSettingLoadingKey = 'GettingEmailSettingLoadingKey';
+export const SavingEmailSettingLoadingKey = 'SavingEmailSettingLoadingKey';

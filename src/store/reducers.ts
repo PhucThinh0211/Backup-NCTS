@@ -19,6 +19,7 @@ import { webTrackReducer } from './webTrack/webTrackSlice';
 import { mediaReducer } from './media';
 import { customerServiceReducer } from './customerService';
 import { rememberMe } from '@/common';
+import { adminSettingReducer } from './adminSetting';
 
 const mainReducer = combineReducers({
   persistApp: persistStateReducer,
@@ -39,6 +40,7 @@ const mainReducer = combineReducers({
   webTrack: webTrackReducer,
   media: mediaReducer,
   pvkhCustomerService: customerServiceReducer,
+  adminSetting: adminSettingReducer,
 });
 
 const rootReducers = (state: any, action: any) => {
