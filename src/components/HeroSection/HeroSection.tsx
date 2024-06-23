@@ -8,7 +8,8 @@ import { getBanners } from '@/store/publicCms';
 import { useAppSelector } from '@/store/hooks';
 import './Banners.scss';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { bootstrapBreakpoints } from '@/common';
+import { bootstrapBreakpoints, uploadedPhotoUrl } from '@/common';
+import { PreCacheImg } from '../WebLayout/PreCacheImg';
 
 const responsive = {
   superLargeDesktop: {
@@ -38,10 +39,11 @@ export const HeroSection = () => {
   return (
     !!banners?.length && (
       <div style={{ minHeight: 50 }}>
+        <PreCacheImg images={banners.map(x => x.photoUrl ? uploadedPhotoUrl(x.photoUrl) : '' )} />
         <Carousel
-          swipeable={true}
+          swipeable={banners.length > 1}
           draggable={false}
-          showDots={innerWidth <= bootstrapBreakpoints.md}
+          showDots={banners.length > 1 && innerWidth <= bootstrapBreakpoints.md}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
           infinite={true}
@@ -51,7 +53,7 @@ export const HeroSection = () => {
           // customTransition="all .5"
           transitionDuration={500}
           containerClass="hero-carousel-container"
-          arrows={true}
+          arrows={banners.length > 1}
           removeArrowOnDeviceType={["tablet", "mobile"]}
           // deviceType={this.props.deviceType}
           dotListClass="hero-carousel-dot-list-style"
