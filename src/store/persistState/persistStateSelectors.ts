@@ -16,7 +16,17 @@ export function getSearchVisibility() {
 }
 
 export function getPanelVisibility() {
-  return createSelector([getState], (state) => state.panelNavVisibility || false);
+  return createSelector(
+    [getState],
+    (state) => state.panelNavVisibility || false
+  );
+}
+
+export function getCustomerPanelVisibility() {
+  return createSelector(
+    [getState],
+    (state) => state.customerPanelNavVisibility || false
+  );
 }
 
 export function getActiveMenuKey() {
@@ -24,6 +34,8 @@ export function getActiveMenuKey() {
 }
 
 export function getTabLookupActive() {
-  return createSelector([getState], (state) => state.tabLoolupActive || 'online-check-in');
+  return createSelector(
+    [getState],
+    (state) => state.tabLoolupActive || 'online-check-in'
+  );
 }
-

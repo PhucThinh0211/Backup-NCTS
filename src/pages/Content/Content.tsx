@@ -24,6 +24,7 @@ import {
   SkateholderMeetings,
   CorporateGovernance,
 } from '../InvestorRelations';
+import { PhotoGallery } from '../PhotoGallery/PhotoGallery';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -70,12 +71,8 @@ export const Content = () => {
           </Row>
         </div>
       )}
-      {pageDetail?.pageType === PageContentType.VIDEO && (
-        <div>Thư viện video</div>
-      )}
-      {pageDetail?.pageType === PageContentType.PHOTO && (
-        <div>Thư viện video</div>
-      )}
+      {pageDetail?.pageType === PageContentType.VIDEO && <PhotoGallery />}
+      {pageDetail?.pageType === PageContentType.PHOTO && <PhotoGallery />}
       {pageDetail?.pageType === PageContentType.DOCUMENT && (
         <div>Thư viện document</div>
       )}

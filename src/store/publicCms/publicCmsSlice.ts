@@ -11,6 +11,7 @@ import {
 import { NewsTypeResponse } from '@/services/NewsTypeService';
 import { PageContentResponse } from '@/services/PageContentService';
 import { DepartmentResponse } from '@/services/DepartmentService';
+import { FolderResponse } from '@/services/FileService';
 
 interface publicCmsState {
   company?: CompanyResponse;
@@ -29,12 +30,18 @@ interface publicCmsState {
   selectedPageDetail?: PageContentResponse;
   selectedNewsDetail?: ContentResponse;
   departments?: DepartmentResponse[];
+  photos?: FolderResponse[];
+  selectedPhotoAlbum?: FolderResponse;
+  videos?: FolderResponse[];
+  selectedVideosAlbum?: FolderResponse;
 }
 
 const initialState: publicCmsState = {
   menuList: [],
   banners: [],
   servicePages: [],
+  photos: [],
+  videos: [],
 };
 
 const publicCmsSlice = createSlice({
@@ -102,6 +109,20 @@ const publicCmsSlice = createSlice({
     getDepartmentsRequest: (state, action) => {},
     setDepartments: (state, action) => {
       state.departments = action.payload;
+    },
+    getPhotosRequest: (state, action) => {},
+    setPhotos: (state, action) => {
+      state.photos = action.payload;
+    },
+    getVideosRequest: (state, action) => {},
+    setVideos: (state, action) => {
+      state.videos = action.payload;
+    },
+    setSelectedPhotoAlbum: (state, action) => {
+      state.selectedPhotoAlbum = action.payload;
+    },
+    setSelectedVideoAlbum: (state, action) => {
+      state.selectedVideosAlbum = action.payload;
     },
   },
 });

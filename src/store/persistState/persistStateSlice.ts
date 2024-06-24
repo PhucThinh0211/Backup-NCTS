@@ -6,6 +6,7 @@ interface PersistAppState {
   locale: LanguageType;
   searchVisibility: boolean;
   panelNavVisibility: boolean;
+  customerPanelNavVisibility: boolean;
   activeMenuKey: string;
   tabLoolupActive: string;
   token?: string;
@@ -17,6 +18,7 @@ const initialState: PersistAppState = {
   locale: 'vi',
   searchVisibility: false,
   panelNavVisibility: false,
+  customerPanelNavVisibility: false,
   activeMenuKey: '/',
   tabLoolupActive: 'online-check-in',
 };
@@ -36,6 +38,9 @@ const persistStateSlice = createSlice({
     },
     setPanelNavVisibility: (state, action) => {
       state.panelNavVisibility = action.payload;
+    },
+    setCustomerPanelNavVisibility: (state, action) => {
+      state.customerPanelNavVisibility = action.payload;
     },
     setActiveMenuKey: (state, action) => {
       state.activeMenuKey = action.payload;
