@@ -41,6 +41,52 @@ export const LeftPanel = (props: SiderProps) => {
         ></i>
       ),
       key: '/phuc-vu-khach-hang/dich-vu',
+      children: [
+        {
+          label: t('Goods information'),
+          key: '/phuc-vu-khach-hang/dich-vu/thong-tin-hang-hoa',
+        },
+        {
+          label: t('Register vehicle'),
+          key: '/phuc-vu-khach-hang/dich-vu/hang-trong-kho',
+        },
+        {
+          label: t('Instorage good'),
+          key: '/phuc-vu-khach-hang/dich-vu/bang-ke-su-dung-dich-vu',
+        },
+        {
+          label: t('HAWB service charge'),
+          key: '/phuc-vu-khach-hang/dich-vu/san-luong-chuyen-bay',
+        },
+        {
+          label: t('Goods information'),
+          key: '/phuc-vu-khach-hang/dich-vu/phuc-vu-chuyen-bay',
+        },
+        {
+          label: t('Register vehicle'),
+          key: '/phuc-vu-khach-hang/dich-vu/bang-ke-hang-hoa',
+        },
+        {
+          label: t('Instorage good'),
+          key: '/phuc-vu-khach-hang/dich-vu/manifest-chuyen-bay',
+        },
+        {
+          label: t('HAWB service charge'),
+          key: '/phuc-vu-khach-hang/dich-vu/lich-bay',
+        },
+        {
+          label: t('Goods information'),
+          key: '/phuc-vu-khach-hang/dich-vu/lich-su-truyen-nhan-hai-quan',
+        },
+        {
+          label: t('Register vehicle'),
+          key: '/phuc-vu-khach-hang/dich-vu/khao-sat',
+        },
+        {
+          label: t('Instorage good'),
+          key: '/phuc-vu-khach-hang/dich-vu/dang-ky-nhan-vien',
+        },
+      ],
     },
     {
       label: t('Import', { ns: 'leftPanel' }),
@@ -50,19 +96,19 @@ export const LeftPanel = (props: SiderProps) => {
       children: [
         {
           label: t('Goods information'),
-          key: '/phuc-vu-khach-hang/hang-nhap/goods',
+          key: '/phuc-vu-khach-hang/hang-nhap/lo-hang-uy-quyen',
         },
         {
-          label: t('Import notifications'),
-          key: '/phuc-vu-khach-hang/hang-nhap/bills',
+          label: t('Register vehicle'),
+          key: '/phuc-vu-khach-hang/hang-nhap/dang-ky-xe',
         },
         {
           label: t('Instorage good'),
-          key: '/phuc-vu-khach-hang/hang-nhap/instorage',
+          key: '/phuc-vu-khach-hang/hang-nhap/hang-trong-kho',
         },
         {
           label: t('HAWB service charge'),
-          key: '/phuc-vu-khach-hang/hang-nhap/hawb-service-charge',
+          key: '/phuc-vu-khach-hang/hang-nhap/phieu-thong-bao-hang-den',
         },
       ],
     },
@@ -75,6 +121,28 @@ export const LeftPanel = (props: SiderProps) => {
         ></i>
       ),
       key: '/phuc-vu-khach-hang/hang-xuat',
+      children: [
+        {
+          label: t('Khao báo hàng xuất'),
+          key: '/phuc-vu-khach-hang/hang-xuat/khai-bao-hang-xuat',
+        },
+        {
+          label: t('Danh sách hàng xuất'),
+          key: '/phuc-vu-khach-hang/hang-xuat/danh-sach-hang-xuat',
+        },
+        {
+          label: t('Đnagw ký xe vào kho'),
+          key: '/phuc-vu-khach-hang/hang-xuat/dang-ky-xe-vao-kho',
+        },
+        {
+          label: t('HAWB service charge'),
+          key: '/phuc-vu-khach-hang/hang-xuat/danh-sach-xe-da-dang-ky',
+        },
+        {
+          label: t('Address book'),
+          key: '/phuc-vu-khach-hang/hang-xuat/so-dia-chi',
+        },
+      ],
     },
     {
       label: t('Change password', { ns: 'common' }),

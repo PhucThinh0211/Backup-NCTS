@@ -1,10 +1,10 @@
-import { FlattenedItem, TreeItem, defaultPagingParams } from '@/common';
-import { UniqueIdentifier } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
-import { notification } from 'antd';
-import i18next from 'i18next';
-import { jwtDecode } from 'jwt-decode';
-import { v4 as uuidv4 } from 'uuid';
+import { FlattenedItem, TreeItem, defaultPagingParams } from "@/common";
+import { UniqueIdentifier } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
+import { notification } from "antd";
+import i18next from "i18next";
+import { jwtDecode } from "jwt-decode";
+import { v4 as uuidv4 } from "uuid";
 
 export default class Utils {
   static deepClone(obj: any) {
@@ -12,20 +12,22 @@ export default class Utils {
   }
 
   static getPersistAppState() {
-    const persistState = localStorage.getItem('persist:root');
+    const persistState = localStorage.getItem("persist:root");
     const rootState = persistState ? JSON.parse(persistState) : {};
     /* prettier-ignore */
     const appState: any = rootState['app'] ? JSON.parse(rootState['app']) : {};
-    const persistAppState = rootState['persistApp'] ? JSON.parse(rootState['persistApp']) : {};
+    const persistAppState = rootState["persistApp"]
+      ? JSON.parse(rootState["persistApp"])
+      : {};
     return {
       rootState,
-      access_token: appState['auth']?.['token'],
-      language: persistAppState['language'],
+      access_token: appState["auth"]?.["token"],
+      language: persistAppState["language"],
     };
   }
 
   static isTokenValid(token: string) {
-    if (!token || typeof token !== 'string') {
+    if (!token || typeof token !== "string") {
       return false;
     }
 
@@ -60,14 +62,14 @@ export default class Utils {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     const colour = (hash & 0x00ffffff).toString(16).toUpperCase();
-    return '#' + '00000'.substring(0, 6 - colour.length) + colour;
+    return "#" + "00000".substring(0, 6 - colour.length) + colour;
   };
 
   static spitFullNameIntoFirstMiddleLastName = (name: string) => {
-    const parts = name.split(' ');
-    const firstName = parts.length > 0 ? parts.pop()?.trim() : '';
-    const lastName = parts.length > 0 ? parts.shift()?.trim() : '';
-    const middleName = parts.join(' ')?.trim();
+    const parts = name.split(" ");
+    const firstName = parts.length > 0 ? parts.pop()?.trim() : "";
+    const lastName = parts.length > 0 ? parts.shift()?.trim() : "";
+    const middleName = parts.join(" ")?.trim();
     return {
       firstName,
       middleName,
@@ -75,78 +77,78 @@ export default class Utils {
     };
   };
 
-  static errorHandling(error: any, ns = 'common') {
+  static errorHandling(error: any, ns = "common") {
     console.log(JSON.stringify(error));
     if (error.errorCode && error.msg) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
+        message: i18next.t("notification", { ns: "common" }),
         description: i18next.t(error.msg, { ns }),
       });
       return;
     }
     if (error.response?.error?.message) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
+        message: i18next.t("notification", { ns: "common" }),
         description: i18next.t(error.response?.error?.message, { ns }),
       });
       return;
     }
-    if (typeof error.response === 'string') {
+    if (typeof error.response === "string") {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
+        message: i18next.t("notification", { ns: "common" }),
         description: i18next.t(error.response, { ns }),
       });
       return;
     }
     if (error.status === 401) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
-        description: i18next.t('Token expired', { ns }),
+        message: i18next.t("notification", { ns: "common" }),
+        description: i18next.t("Token expired", { ns }),
       });
       return;
     }
     if (error.status === 404) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
-        description: i18next.t(error.message || 'Not Found', { ns }),
+        message: i18next.t("notification", { ns: "common" }),
+        description: i18next.t(error.message || "Not Found", { ns }),
       });
       return;
     }
     if (error.status === 403) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
-        description: i18next.t('Forbidden', { ns }),
+        message: i18next.t("notification", { ns: "common" }),
+        description: i18next.t("Forbidden", { ns }),
       });
       return;
     }
     if (error?.response?.error_description) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
+        message: i18next.t("notification", { ns: "common" }),
         description: i18next.t(error.response.error_description, { ns }),
       });
       return;
     }
     if (error.response?.error) {
       notification.error({
-        message: i18next.t('notification', { ns: 'common' }),
+        message: i18next.t("notification", { ns: "common" }),
         description: i18next.t(error.response?.error.details, { ns }),
       });
       return;
     }
     // TODO:
     notification.error({
-      message: i18next.t('notification', { ns: 'common' }),
+      message: i18next.t("notification", { ns: "common" }),
       description: i18next.t(
-        'An error occurred while processing your request',
+        "An error occurred while processing your request",
         { ns }
       ),
     });
   }
 
-  static successNotification(message?: string, ns = 'common') {
+  static successNotification(message?: string, ns = "common") {
     notification.success({
-      message: i18next.t('notification', { ns: 'common' }),
-      description: i18next.t(message || 'Saved successfully', { ns }),
+      message: i18next.t("notification", { ns: "common" }),
+      description: i18next.t(message || "Saved successfully", { ns }),
     });
   }
 
@@ -169,7 +171,7 @@ export default class Utils {
   ) => {
     return [lastName?.trim(), middleName?.trim(), firstName?.trim()]
       .filter((x) => x)
-      .join(' ');
+      .join(" ");
   };
 
   static getDragDepth(offset: number, indentationWidth: number) {
@@ -269,7 +271,7 @@ export default class Utils {
     }, []);
   }
   static buildTree(flattenedItems: any[]) {
-    const root = { id: 'root', children: [] } as any;
+    const root = { id: "root", children: [] } as any;
     const nodes = { [root.id]: root };
     const items = flattenedItems.map((item) => ({ ...item, children: [] }));
 
@@ -288,13 +290,13 @@ export default class Utils {
     return input
       .toLowerCase()
       .trim()
-      .replace(/[\s_-]+/g, '-') // Xóa khoảng trắng thay bằng ký tự -
-      .replace(/^-+|-+$/g, '') // xóa phần dư - ở đầu & cuối
-      .normalize('NFD') // chuyển chuỗi sang unicode tổ hợp
-      .replace(/[\u0300-\u036f]/g, '') // xóa các ký tự dấu sau khi tách tổ hợp
-      .replace(/[đĐ]/g, 'd') // Thay ký tự đĐ
-      .replace(/([^0-9a-z-\s])/g, '') // xóa ký tự đặt biệt
-      .replace(/-+/g, '-'); // Xóa ký tự - liên tiếp
+      .replace(/[\s_-]+/g, "-") // Xóa khoảng trắng thay bằng ký tự -
+      .replace(/^-+|-+$/g, "") // xóa phần dư - ở đầu & cuối
+      .normalize("NFD") // chuyển chuỗi sang unicode tổ hợp
+      .replace(/[\u0300-\u036f]/g, "") // xóa các ký tự dấu sau khi tách tổ hợp
+      .replace(/[đĐ]/g, "d") // Thay ký tự đĐ
+      .replace(/([^0-9a-z-\s])/g, "") // xóa ký tự đặt biệt
+      .replace(/-+/g, "-"); // Xóa ký tự - liên tiếp
   };
   static getHexStringFromEvent = (e: any) => {
     return e.toHexString();
@@ -303,7 +305,7 @@ export default class Utils {
     return {
       pageSize:
         queryParams.MaxResultCount || defaultPagingParams.MaxResultCount,
-      page: queryParams.SkipCount / queryParams.MaxResultCount + 1 || 1,
+      current: queryParams.SkipCount / queryParams.MaxResultCount + 1 || 1,
     };
   };
   static readableFileSize(attachmentSize: number) {
@@ -329,15 +331,15 @@ export const trimAll = (obj: any) => {
     return obj;
   }
   const objType = typeof obj;
-  if (objType === 'string') {
-    return obj ? obj.trim() : '';
+  if (objType === "string") {
+    return obj ? obj.trim() : "";
   }
-  if (objType === 'object' && !Array.isArray(obj)) {
+  if (objType === "object" && !Array.isArray(obj)) {
     const newObj = Utils.deepClone(obj);
     for (const [key, value] of Object.entries(obj)) {
-      if (typeof value === 'string') {
-        newObj[key] = value ? value.trim() : '';
-      } else if (typeof value === 'object') {
+      if (typeof value === "string") {
+        newObj[key] = value ? value.trim() : "";
+      } else if (typeof value === "object") {
         newObj[key] = trimAll(value);
       }
     }
@@ -347,9 +349,9 @@ export const trimAll = (obj: any) => {
     const newArray = Utils.deepClone(obj);
     for (let index = 0; index < newArray.length; index++) {
       const value = newArray[index];
-      if (typeof value === 'string') {
-        newArray[index] = value ? value.trim() : '';
-      } else if (typeof value === 'object') {
+      if (typeof value === "string") {
+        newArray[index] = value ? value.trim() : "";
+      } else if (typeof value === "object") {
         newArray[index] = trimAll(value);
       }
     }
