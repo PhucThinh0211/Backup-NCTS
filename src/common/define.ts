@@ -64,7 +64,7 @@ export const setCurrentPath = (path: string) => {
   currentPath = path;
 }
 
-export const preloadImages = new Map<string, any>();
+export const preloadImages = new Map<string, HTMLImageElement>();
 
 export const uploadedPhotoUrl = (fileName: string) =>
   fileName ? `${apiUrl}/api/photo/dowload/${fileName}` : '';
