@@ -168,8 +168,8 @@ export const routers: MetaMenuAuthRouteObject[] = [
       
       { path: '/admin/members', name: 'Members', element: <>Members</> },
       { path: '/admin/roles', name: 'Roles', auth: 'AbpIdentity.Roles', element: <RolePage /> },
-      { path: '/admin/users', name: 'Users', element: <UserPage /> },
-      { path: '/admin/emailing', name: 'Emailing', element: <Emaling /> },
+      { path: '/admin/users', name: 'Users', auth: 'AbpIdentity.Users', element: <UserPage /> },
+      { path: '/admin/emailing', name: 'Emailing', auth: 'SettingManagement.Emailing', element: <Emaling /> },
       { path: '/admin/*', name: 'Not found', element: <>Not found</> },
     ]
   },
