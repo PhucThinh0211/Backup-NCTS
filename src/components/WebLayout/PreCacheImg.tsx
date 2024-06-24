@@ -13,6 +13,8 @@ export const PreCacheImg = ({ images }: ImgCacheProps) => {
       if (!preImg) {
         image = new Image(); // eslint-disable-line no-undef
         image.src = images[i];
+        image.style.display = 'none';
+        document.body.appendChild(image); // chrome
         preloadImages.set(imgSrc, image);
       }
     }
