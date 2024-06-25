@@ -51,6 +51,7 @@ const rootReducers = (state: any, action: any) => {
 
     state = {
       persistApp: state.persistApp,
+      publicCms: state.publicCms
     };
   }
 

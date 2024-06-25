@@ -5,13 +5,15 @@ import logo from '@/assets/logo.png';
 import { TopNavHeightAdmin } from '@/common';
 import { SwitchLang } from '@/components';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { appActions } from '@/store/app';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import { defaultPersistConfig } from '@/store';
+import { getTabLookupActive } from '@/store/persistState';
 
 export const AdminHeader = () => {
   const { t } = useTranslation(['common']);
+  const tabLookupActive = useAppSelector(getTabLookupActive());
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -20,7 +22,7 @@ export const AdminHeader = () => {
 
   const signout = () => {
     reconfigurePersistor(defaultPersistConfig.whitelist);
-    dispatch(appActions.logout({ callback: () => navigate('/') }));
+    dispatch(appActions.logout({ callback: () => navigate(`/?tab=${tabLookupActive}`) }));
   };
 
   return (

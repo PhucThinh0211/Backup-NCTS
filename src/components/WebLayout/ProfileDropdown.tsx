@@ -3,6 +3,7 @@ import { useWindowSize } from '@/hooks';
 import { defaultPersistConfig } from '@/store';
 import { appActions, getCurrentUser } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getTabLookupActive } from '@/store/persistState';
 import { persistStateActions } from '@/store/persistState';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import Utils from '@/utils';
@@ -11,8 +12,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
-
 const { useToken } = theme;
 
 export const ProfileDropdown = () => {
@@ -20,13 +19,14 @@ export const ProfileDropdown = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['common', 'leftPanel']);
   const navigate = useNavigate();
+  const tabLookupActive = useAppSelector(getTabLookupActive());
   const [innerWidth] = useWindowSize();
 
   const currentUser = useAppSelector(getCurrentUser());
 
   const signout = () => {
     reconfigurePersistor(defaultPersistConfig.whitelist);
-    dispatch(appActions.logout({ callback: () => navigate('/') }));
+    dispatch(appActions.logout({ callback: () => navigate(`/?tab=${tabLookupActive}`) }));
   };
 
   const openCustomerPanelNav = () => {
