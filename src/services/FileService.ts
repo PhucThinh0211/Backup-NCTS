@@ -57,6 +57,11 @@ export interface FolderResponse {
   isFolder?: boolean;
 }
 
+export enum LogoCategory {
+  PARTNER = 'partner',
+  CUSTOMER = 'customer',
+}
+
 export interface CreateUpdateFolderPayload {
   type: MediaType;
   location?: string;

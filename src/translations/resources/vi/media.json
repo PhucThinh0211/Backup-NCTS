@@ -5,10 +5,16 @@
     "Create folder": "Tạo thư mục",
     "Create album": "Tạo bộ sưu tập",
     "File": "Tệp tin",
+    "Code": "Mã",
     "Select file": "Chọn tệp tin",
     "File required": "Vui lòng chọn tệp tin",
-    "Code required": "Vui lòng chọn code",
+    "Code required": "Vui lòng nhập mã",
     "Name required": "Vui lòng nhập tên",
     "Document type": "Loại biểu mẫu",
-    "Document type required": "Vui lòng chọn loại biểu mẫu"
+    "Document type required": "Vui lòng chọn loại biểu mẫu",
+    "Partner": "Đối tác",
+    "Customer": "Khách hàng",
+    "Link": "Đường dẫn",
+    "Link required": "Vui lòng nhập đường dẫn",
+    "Publish date": "Ngày phát hành"
 }

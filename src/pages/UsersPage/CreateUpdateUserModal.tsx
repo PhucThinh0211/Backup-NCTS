@@ -28,6 +28,7 @@ import {
 } from '@/store/identity';
 import { getLoading } from '@/store/loading';
 import { getModalVisible, hideModal } from '@/store/modal';
+import { getCurrentUser } from '@/store/app';
 
 export const CreateUpdateUserModal = () => {
   const { t } = useTranslation(['common']);
@@ -38,6 +39,7 @@ export const CreateUpdateUserModal = () => {
   const selectedUser = useAppSelector(createUserSelectedSelector());
   const userRoles = useAppSelector(createUserRolesSelector());
   const assignableRoles = useAppSelector(createAssignableRolesSelector());
+  const currentUser = useAppSelector(getCurrentUser());
 
   const isModalOpen = useAppSelector(
     getModalVisible(IdentityModalEnum.userModal)
@@ -139,6 +141,7 @@ export const CreateUpdateUserModal = () => {
                   initialValues={{
                     ...selectedUser,
                   }}
+                  autoCorrect='off'
                   onFinish={handleSaveUser}
                   onFinishFailed={onFinishFailed}
                   autoComplete='off'
@@ -169,7 +172,7 @@ export const CreateUpdateUserModal = () => {
                     name='password'
                     rules={[
                       {
-                        required: true,
+                        required: !selectedUser,
                         message: t('Enter password', { ns: 'common' }),
                       },
                     ]}
@@ -235,16 +238,21 @@ export const CreateUpdateUserModal = () => {
               key: '2',
               children: (
                 <div>
-                  {assignableRoles.map((role) => (
-                    <div key={role.id} className='my-2'>
-                      <Checkbox
-                        checked={checkRoleSelected(role.id)}
-                        onClick={() => onChangeRoles(role)}
-                      >
-                        {role.name}
-                      </Checkbox>
-                    </div>
-                  ))}
+                  {assignableRoles
+                    .filter(
+                      (role) =>
+                        currentUser.name === 'admin' || role.name !== 'admin'
+                    )
+                    .map((role) => (
+                      <div key={role.id} className='my-2'>
+                        <Checkbox
+                          checked={checkRoleSelected(role.id)}
+                          onClick={() => onChangeRoles(role)}
+                        >
+                          {role.name}
+                        </Checkbox>
+                      </div>
+                    ))}
                 </div>
               ),
             },

@@ -29,6 +29,7 @@ export interface ContentResponse {
   deletionTime: string | null;
   published: boolean;
   publishDate: string | null;
+  issueDate: string | null;
   photoUrl: string | null;
   title: string | null;
   description: string | null;
@@ -50,6 +51,7 @@ export interface CreateUpdateContentPayload {
   sortSeq: number;
   published: boolean;
   publishDate: string | null;
+  issueDate?: string;
   url: string;
   seoId: string | null;
   seo?: CreateUpdateSeoPayload;

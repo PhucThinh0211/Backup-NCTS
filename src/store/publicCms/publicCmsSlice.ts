@@ -31,9 +31,9 @@ interface publicCmsState {
   selectedNewsDetail?: ContentResponse;
   departments?: DepartmentResponse[];
   photos?: FolderResponse[];
-  selectedPhotoAlbum?: FolderResponse;
+  photoAlbumPath: FolderResponse[];
   videos?: FolderResponse[];
-  selectedVideosAlbum?: FolderResponse;
+  videosAlbumPath: FolderResponse[];
 }
 
 const initialState: publicCmsState = {
@@ -42,6 +42,8 @@ const initialState: publicCmsState = {
   servicePages: [],
   photos: [],
   videos: [],
+  photoAlbumPath: [],
+  videosAlbumPath: [],
 };
 
 const publicCmsSlice = createSlice({
@@ -118,11 +120,11 @@ const publicCmsSlice = createSlice({
     setVideos: (state, action) => {
       state.videos = action.payload;
     },
-    setSelectedPhotoAlbum: (state, action) => {
-      state.selectedPhotoAlbum = action.payload;
+    setPhotoAlbumPath: (state, action) => {
+      state.photoAlbumPath = action.payload;
     },
-    setSelectedVideoAlbum: (state, action) => {
-      state.selectedVideosAlbum = action.payload;
+    setVideoAlbumPath: (state, action) => {
+      state.videosAlbumPath = action.payload;
     },
   },
 });

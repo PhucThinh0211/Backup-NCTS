@@ -70,11 +70,12 @@ export const uploadedPhotoUrl = (fileName: string) =>
   fileName ? `${apiUrl}/api/photo/dowload/${fileName}` : '';
 
 export const uploadedFileUrl = (path: string) =>
-  path ? `${apiUrl}/api/app/file/download/${path}` : '';
+  path ? `${apiUrl}/api/app/file/download?Path=${path}` : '';
 
 export const dateTimeFormat = 'HH:mm DD-MM-YYYY';
 export const timeFormat = 'HH:mm';
 export const dateFormat = 'DD-MM-YYYY';
+export const invalidDateStrings = ['0001-01-01T00:00:00'];
 
 export const bootstrapBreakpoints = {
   xs: 0,
