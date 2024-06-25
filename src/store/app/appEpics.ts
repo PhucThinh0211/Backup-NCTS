@@ -26,6 +26,7 @@ const loginRequest$: RootEpic = (action$) => {
             }
             success = true;
             const actionMap = [
+              publicCmsActions.getCaptchaRequest(),
               appActions.loginSuccess({ loginResponse, loginData: input }),
               stopLoading({ key: 'login' }),
             ];

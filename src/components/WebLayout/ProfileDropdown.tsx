@@ -1,14 +1,13 @@
 import { defaultPersistConfig } from '@/store';
 import { appActions, getCurrentUser } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { getTabLookupActive } from '@/store/persistState';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import Utils from '@/utils';
 import { Avatar, Divider, Dropdown, MenuProps, theme, Typography } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 
 const { useToken } = theme;
 
@@ -18,10 +17,11 @@ export const ProfileDropdown = () => {
   const { t } = useTranslation(['common', 'leftPanel']);
   const currentUser = useAppSelector(getCurrentUser());
   const navigate = useNavigate();
+  const tabLookupActive = useAppSelector(getTabLookupActive());
 
   const signout = () => {
     reconfigurePersistor(defaultPersistConfig.whitelist);
-    dispatch(appActions.logout({ callback: () => navigate('/') }));
+    dispatch(appActions.logout({ callback: () => navigate(`/?tab=${tabLookupActive}`) }));
   };
 
   const items: MenuProps['items'] = [
