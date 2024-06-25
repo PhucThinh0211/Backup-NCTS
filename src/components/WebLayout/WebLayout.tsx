@@ -28,6 +28,7 @@ import { getLoading } from '@/store/loading';
 import { CustomerLogoSection } from './CustomerLogoSection';
 import { getCurrentUser, getGrantedPolicies } from '@/store/app';
 import { ProfileDropdown } from './ProfileDropdown';
+import { CustomerPanelNav } from './CustomerPanelNav';
 
 const { Header, Content, Footer } = Layout;
 
@@ -163,6 +164,7 @@ export const WebLayout = () => {
               />
             </FloatButton.Group>
             <AppPanelNav />
+            <CustomerPanelNav />
           </div>
         </Content>
         <Footer

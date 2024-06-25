@@ -6,5 +6,8 @@
   "Host": "Máy chủ",
   "Port": "Cổng",
   "Enable ssl": "Kịch hoạt ssl",
-  "Use default credentials": "Sử dụng thông tin đăng nhập mặc định"
+  "Use default credentials": "Sử dụng thông tin đăng nhập mặc định",
+  "Username": "Tài khoản",
+  "Password": "Mật khẩu",
+  "Domain": "Tên miền"
 }

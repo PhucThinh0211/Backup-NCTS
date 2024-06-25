@@ -10,6 +10,7 @@ import {
   GettingContentListLoadingKey,
   GettingDepartmentListLoadingKey,
   GettingIntroducePageLoadingKey,
+  GettingMediaLoadingKey,
   GettingMenuListLoadingKey,
   GettingMoreContentListLoadingKey,
   GettingNewsDetailBySlugLoadingKey,
@@ -20,6 +21,7 @@ import {
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
 import { DepartmentService } from '@/services/DepartmentService';
+import { FolderResponse } from '@/services/FileService';
 
 const getCompanyRequest$: RootEpic = (action$) => {
   return action$.pipe(
@@ -356,6 +358,80 @@ const getDepartmentsRequest$: RootEpic = (action$) => {
   );
 };
 
+const getPhotosRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getPhotosRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const { selectedPhotoAlbum } = state.publicCms;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getImagesGallery({ search }).pipe(
+          switchMap((photos) => {
+            const rootFolder = photos.find(
+              (folder: FolderResponse) => !folder.parentId
+            );
+
+            const setRootFolderPathActions = !selectedPhotoAlbum
+              ? [publicCmsActions.setSelectedPhotoAlbum(rootFolder)]
+              : [];
+            return [
+              ...setRootFolderPathActions,
+              publicCmsActions.setPhotos(photos),
+            ];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setPhotos(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
+const getVideosRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getVideosRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const { selectedVideosAlbum } = state.publicCms;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getVideosGallery({ search }).pipe(
+          switchMap((videos) => {
+            const rootFolder = videos.find(
+              (folder: FolderResponse) => !folder.parentId
+            );
+
+            const setRootFolderPathActions = !selectedVideosAlbum
+              ? [publicCmsActions.setSelectedPhotoAlbum(rootFolder)]
+              : [];
+            return [
+              ...setRootFolderPathActions,
+              publicCmsActions.setVideos(videos),
+            ];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setVideos(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -371,4 +447,6 @@ export const publicCmsEpics = [
   getLatestNewsListRequest$,
   getMoreNewsListRequest$,
   getInvestorNewsListRequest$,
+  getPhotosRequest$,
+  getVideosRequest$,
 ];

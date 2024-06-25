@@ -6,5 +6,8 @@
   "Host": "Host",
   "Port": "Port",
   "Enable ssl": "Enable ssl",
-  "Use default credentials": "Use default credentials"
+  "Use default credentials": "Use default credentials",
+  "Username": "Username",
+  "Password": "Password",
+  "Domain": "Domain"
 }

@@ -1,7 +1,10 @@
+import { bootstrapBreakpoints } from '@/common';
+import { useWindowSize } from '@/hooks';
 import { defaultPersistConfig } from '@/store';
 import { appActions, getCurrentUser } from '@/store/app';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getTabLookupActive } from '@/store/persistState';
+import { persistStateActions } from '@/store/persistState';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
 import Utils from '@/utils';
 import { Avatar, Divider, Dropdown, MenuProps, theme, Typography } from 'antd';
@@ -15,13 +18,19 @@ export const ProfileDropdown = () => {
   const { token } = useToken();
   const dispatch = useAppDispatch();
   const { t } = useTranslation(['common', 'leftPanel']);
-  const currentUser = useAppSelector(getCurrentUser());
   const navigate = useNavigate();
   const tabLookupActive = useAppSelector(getTabLookupActive());
+  const [innerWidth] = useWindowSize();
+
+  const currentUser = useAppSelector(getCurrentUser());
 
   const signout = () => {
     reconfigurePersistor(defaultPersistConfig.whitelist);
     dispatch(appActions.logout({ callback: () => navigate(`/?tab=${tabLookupActive}`) }));
+  };
+
+  const openCustomerPanelNav = () => {
+    dispatch(persistStateActions.setCustomerPanelNavVisibility(true));
   };
 
   const items: MenuProps['items'] = [
@@ -87,7 +96,7 @@ export const ProfileDropdown = () => {
     boxShadow: 'none',
   };
 
-  return (
+  return innerWidth > bootstrapBreakpoints.lg ? (
     <Dropdown
       menu={{ items }}
       dropdownRender={(menu) => (
@@ -111,5 +120,17 @@ export const ProfileDropdown = () => {
         {(currentUser?.name || '').slice(0, 1).toUpperCase()}
       </Avatar>
     </Dropdown>
+  ) : (
+    <Avatar
+      gap={2}
+      size={26}
+      style={{
+        backgroundColor: Utils.stringToColour(currentUser.name),
+        cursor: 'pointer',
+      }}
+      onClick={openCustomerPanelNav}
+    >
+      {(currentUser?.name || '').slice(0, 1).toUpperCase()}
+    </Avatar>
   );
 };

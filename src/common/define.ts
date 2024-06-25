@@ -62,12 +62,15 @@ export type FlattenedItem<T> = {
 export let currentPath = '';
 export const setCurrentPath = (path: string) => {
   currentPath = path;
-}
+};
 
 export const preloadImages = new Map<string, HTMLImageElement>();
 
 export const uploadedPhotoUrl = (fileName: string) =>
   fileName ? `${apiUrl}/api/photo/dowload/${fileName}` : '';
+
+export const uploadedFileUrl = (path: string) =>
+  path ? `${apiUrl}/api/app/file/download/${path}` : '';
 
 export const dateTimeFormat = 'HH:mm DD-MM-YYYY';
 export const timeFormat = 'HH:mm';

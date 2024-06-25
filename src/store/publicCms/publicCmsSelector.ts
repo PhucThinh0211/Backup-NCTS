@@ -57,3 +57,15 @@ export function getDepartments() {
 export function getLatestNewsList() {
   return createSelector([getState], (state) => state.latestNews);
 }
+export function getPhotos() {
+  return createSelector([getState], (state) => state.photos);
+}
+export function getVideos() {
+  return createSelector([getState], (state) => state.videos);
+}
+export function getSelectedVideoAlbum() {
+  return createSelector([getState], (state) => state.selectedVideosAlbum);
+}
+export function getSelectedPhotoAlbum() {
+  return createSelector([getState], (state) => state.selectedPhotoAlbum);
+}

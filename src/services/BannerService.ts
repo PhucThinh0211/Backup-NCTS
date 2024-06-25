@@ -1,7 +1,7 @@
-import HttpClient from './HttpClient';
-import { RequestOptions } from './types';
-import { PagingResponse } from '@/common/define';
-import { getEnvVars } from '@/enviroment';
+import HttpClient from "./HttpClient";
+import { RequestOptions } from "./types";
+import { PagingResponse } from "@/common/define";
+import { getEnvVars } from "@/enviroment";
 
 const { apiUrl } = getEnvVars();
 
@@ -10,15 +10,15 @@ export interface BannersPagingResponse extends PagingResponse {
 }
 
 export enum BannerVertical {
-  TOP = 'top',
-  MIDDLE = 'middle',
-  BOTTOM = 'bottom',
+  TOP = "top",
+  MIDDLE = "middle",
+  BOTTOM = "bottom",
 }
 
 export enum BannerHorizontal {
-  LEFT = 'left',
-  CENTER = 'center',
-  RIGHT = 'right',
+  LEFT = "left",
+  CENTER = "center",
+  RIGHT = "right",
 }
 export interface BannerResponse {
   id: string;
@@ -42,6 +42,7 @@ export interface BannerResponse {
   buttonLabelColor: string | null;
   titleColor: string | null;
   descriptionColor: string | null;
+  sortSeq: number;
 }
 export interface CreateUpdateBannerPayload {
   photoUrl: string;

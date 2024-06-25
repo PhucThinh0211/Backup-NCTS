@@ -5,20 +5,20 @@ import {
   mergeMap,
   switchMap,
   withLatestFrom,
-} from 'rxjs';
+} from "rxjs";
 
-import { newsTypeActions } from './newsTypeSlice';
-import { startLoading, stopLoading } from '../loading';
-import { RootEpic } from '../types';
-import { defaultPagingParams } from '@/common/define';
+import { newsTypeActions } from "./newsTypeSlice";
+import { startLoading, stopLoading } from "../loading";
+import { RootEpic } from "../types";
+import { defaultPagingParams } from "@/common/define";
 import {
   GettingNewsTypeListLoadingKey,
   RemovingNewsTypeLoadingKey,
   SavingNewsTypeLoadingKey,
   GettingNewsTypeLoadingKey,
-} from '@/common/loadingKey';
-import { NewsTypeService } from '@/services/NewsTypeService';
-import Utils from '@/utils';
+} from "@/common/loadingKey";
+import { NewsTypeService } from "@/services/NewsTypeService";
+import Utils from "@/utils";
 
 const getNewsTypesRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -60,7 +60,7 @@ const createNewsTypeRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { newsType } = action.payload;
       const { locale } = state.persistApp;
-      const totalCount = state.menu.menus?.totalCount || 0;
+      const totalCount = state.newsType.newsTypes?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.newsType.queryParams,
@@ -187,7 +187,7 @@ const removeNewsTypeRequest$: RootEpic = (action$, state$) => {
               search,
             }).pipe(
               mergeMap((newsTypesResult) => {
-                Utils.successNotification('Removed successfully');
+                Utils.successNotification("Removed successfully");
                 return [
                   newsTypeActions.setNewsTypes(newsTypesResult),
                   newsTypeActions.setSelectedNewsType(undefined),
@@ -219,7 +219,7 @@ const getNewsTypeRequest$: RootEpic = (action$, state$) => {
       const { locale } = state.persistApp;
       const options = {
         headers: {
-          'Accept-Language': locale || 'vi',
+          "Accept-Language": locale || "vi",
         },
       };
       return concat(
