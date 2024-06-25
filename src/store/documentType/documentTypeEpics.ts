@@ -5,20 +5,20 @@ import {
   mergeMap,
   switchMap,
   withLatestFrom,
-} from 'rxjs';
+} from "rxjs";
 
-import { documentTypeActions } from './documentTypeSlice';
-import { startLoading, stopLoading } from '../loading';
-import { RootEpic } from '../types';
-import { defaultPagingParams } from '@/common/define';
+import { documentTypeActions } from "./documentTypeSlice";
+import { startLoading, stopLoading } from "../loading";
+import { RootEpic } from "../types";
+import { defaultPagingParams } from "@/common/define";
 import {
   GettingDocumentTypeListLoadingKey,
   RemovingDocumentTypeLoadingKey,
   SavingDocumentTypeLoadingKey,
   GettingDocumentTypeLoadingKey,
-} from '@/common/loadingKey';
-import { DocumentTypeService } from '@/services/DocumentTypeService';
-import Utils from '@/utils';
+} from "@/common/loadingKey";
+import { DocumentTypeService } from "@/services/DocumentTypeService";
+import Utils from "@/utils";
 
 const getDocumentTypesRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -60,7 +60,7 @@ const createDocumentTypeRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { documentType } = action.payload;
       const { locale } = state.persistApp;
-      const totalCount = state.menu.menus?.totalCount || 0;
+      const totalCount = state.documentType.documentTypes?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.documentType.queryParams,
@@ -88,7 +88,9 @@ const createDocumentTypeRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       documentTypeActions.setDocumentTypes(documentTypesResult),
-                      documentTypeActions.setSelectedDocumentType(createdDocumentType),
+                      documentTypeActions.setSelectedDocumentType(
+                        createdDocumentType
+                      ),
                     ];
                   }),
                   catchError((errors) => {
@@ -192,7 +194,7 @@ const removeDocumentTypeRequest$: RootEpic = (action$, state$) => {
               search,
             }).pipe(
               mergeMap((documentTypesResult) => {
-                Utils.successNotification('Removed successfully');
+                Utils.successNotification("Removed successfully");
                 return [
                   documentTypeActions.setDocumentTypes(documentTypesResult),
                   documentTypeActions.setSelectedDocumentType(undefined),
@@ -224,7 +226,7 @@ const getDocumentTypeRequest$: RootEpic = (action$, state$) => {
       const { locale } = state.persistApp;
       const options = {
         headers: {
-          'Accept-Language': locale || 'vi',
+          "Accept-Language": locale || "vi",
         },
       };
       return concat(

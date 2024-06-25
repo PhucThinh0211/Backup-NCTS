@@ -1,13 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { SearchOutlined } from '@ant-design/icons';
-import { Row, Space, Input } from 'antd';
-import { useTranslation } from 'react-i18next';
+import { SearchOutlined } from "@ant-design/icons";
+import { Row, Space, Input } from "antd";
+import { useTranslation } from "react-i18next";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { bannerActions, getBannerQueryParams } from "@/store/banner";
 
 export const BannerListToolbar = () => {
-  const { t } = useTranslation('banner');
+  const { t } = useTranslation("banner");
+  const dispatch = useAppDispatch();
   const [searchStr, setSearchStr] = useState();
   const [timer, setTimer] = useState<any>(null);
+  const queryParams = useAppSelector(getBannerQueryParams());
+
+  useEffect(() => {
+    if (queryParams?.search) {
+      setSearchStr(queryParams.search);
+    }
+  }, [queryParams]);
 
   const onSearchChange = (evt: any) => {
     const search = evt.target.value;
@@ -15,6 +25,7 @@ export const BannerListToolbar = () => {
     clearTimeout(timer);
     const timeoutId = setTimeout(() => {
       // dispatch(bannerActions.getBannersRequest({ params: { ...params, page: 1, search }, projectId: selectedProject?.id }));
+      dispatch(bannerActions.setQueryParams({ ...queryParams, search }));
     }, 500);
     setTimer(timeoutId);
   };
@@ -26,7 +37,7 @@ export const BannerListToolbar = () => {
           value={searchStr}
           onChange={onSearchChange}
           allowClear
-          placeholder={t('Find banner')}
+          placeholder={t("Find banner")}
           suffix={searchStr ? null : <SearchOutlined />}
           style={{ width: 300 }}
         />

@@ -1,30 +1,31 @@
-import { useEffect, useState } from 'react';
-
-import { Layout, Menu, MenuProps, SiderProps } from 'antd';
+import { useEffect } from 'react';
+import { Button, Drawer, Menu, Space } from 'antd';
+import { SwitchLang } from '..';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { LeftPanelWidth, MenuItem, TopNavHeight } from '@/common/define';
-import { customerServiceActions, getActiveMenu } from '@/store/customerService';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import MenuSvg from '@/assets/menu.svg';
 import { defaultPersistConfig } from '@/store';
-import { appActions, getCurrentUser } from '@/store/app';
+import { getActiveMenu } from '@/store/customerService';
+import { customerServiceActions } from '@/store/customerService';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { reconfigurePersistor } from '@/store/reconfigurePersistor';
+import { MenuItem } from '@/common';
+import {
+  getCustomerPanelVisibility,
+  getSearchVisibility,
+  persistStateActions,
+} from '@/store/persistState';
+import { appActions } from '@/store/app';
 
-const { Sider } = Layout;
-
-export const LeftPanel = (props: SiderProps) => {
-  const { ...rest } = props;
+export const CustomerPanelNav = () => {
   const { t } = useTranslation(['leftPanel', 'common']);
-  const [collapsed, setCollapsed] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [openKeys, setOpenKeys] = useState(['/']);
 
   const activeMenu = useAppSelector(getActiveMenu());
-  const currentUser = useAppSelector(getCurrentUser());
+  const panelNavVisibility = useAppSelector(getCustomerPanelVisibility());
+  const searchVisibility = useAppSelector(getSearchVisibility());
 
   const adminMenu: MenuItem[] = [
     {
@@ -170,14 +171,11 @@ export const LeftPanel = (props: SiderProps) => {
           if (child.key === pathname) {
             const { label, key } = child;
             dispatch(customerServiceActions.setPVKHActiveMenu({ label, key }));
-            if (!collapsed) {
-              setOpenKeys([item.key]);
-            }
           }
         }
       }
     }
-  }, [location, collapsed]);
+  }, [location]);
 
   const signout = () => {
     reconfigurePersistor(defaultPersistConfig.whitelist);
@@ -191,47 +189,52 @@ export const LeftPanel = (props: SiderProps) => {
       return;
     }
     navigate(key);
+    dispatch(persistStateActions.setCustomerPanelNavVisibility(false));
   };
 
-  const onOpenChange: MenuProps['onOpenChange'] = (keys: string[]) => {
-    setOpenKeys(keys);
+  const panelNavToggle = () => {
+    dispatch(
+      persistStateActions.setCustomerPanelNavVisibility(!panelNavVisibility)
+    );
+  };
+
+  const searchToggle = () => {
+    dispatch(persistStateActions.setSearchVisible(!searchVisibility));
+    dispatch(persistStateActions.setCustomerPanelNavVisibility(false));
   };
 
   return (
-    <Sider
-      trigger={null}
-      collapsible
-      collapsed={collapsed}
-      width={LeftPanelWidth}
-      onCollapse={setCollapsed}
-      className={`pvkh_leftSider overflow-y-auto custom_scrollbar pb-2 d-none d-lg-block`}
-      style={{
-        maxHeight: `calc(100dvh - ${TopNavHeight}px)`,
-        backgroundColor: 'transparent',
-      }}
-      {...rest}
-    >
-      <div className={'mh-100 flex-column relative px-3 pt-4'}>
-        <div className='px-1'>
-          <p className='mb-2'>
-            {t('Hello', { ns: 'common' })},{' '}
-            <span className='bold'>{currentUser.name}</span>
-          </p>
+    <Drawer
+      title={null}
+      closable={true}
+      onClose={panelNavToggle}
+      open={panelNavVisibility}
+      size='large'
+      zIndex={9999}
+      extra={
+        <div className='d-flex justify-content-between align-items-center'>
+          <Space>
+            <Button type='text' shape='circle' onClick={searchToggle}>
+              <i className='fa-solid fa-magnifying-glass fa-xl' />
+            </Button>
+            <SwitchLang />
+          </Space>
         </div>
-        <Menu
-          mode='inline'
-          onClick={onClickMenu}
-          selectedKeys={[activeMenu?.key]}
-          defaultOpenKeys={['/phuc-vu-khach-hang/dich-vu']}
-          onOpenChange={onOpenChange}
-          items={adminMenu}
-          inlineIndent={15}
-          style={{
-            background: 'transparent',
-            border: 'none',
-          }}
-        />
-      </div>
-    </Sider>
+      }
+      placement='right'
+      className='web-panel-nav'
+    >
+      <Menu
+        mode='inline'
+        onClick={onClickMenu}
+        selectedKeys={[activeMenu?.key]}
+        items={adminMenu}
+        defaultOpenKeys={['/phuc-vu-khach-hang/dich-vu']}
+        className='web-panel-nav'
+        style={{
+          width: '100%',
+        }}
+      />
+    </Drawer>
   );
 };

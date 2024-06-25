@@ -149,7 +149,7 @@ export const AppPanelNav = () => {
       extra={
         <div className='d-flex justify-content-between align-items-center'>
           <Space>
-            {currentUser?.isAuthenticated ? (
+            {/* {currentUser?.isAuthenticated ? (
               <ProfileDropdown />
             ) : (
               <Link to='/dang-nhap'>
@@ -157,7 +157,7 @@ export const AppPanelNav = () => {
                   {t('Sign In', { ns: 'common' })}
                 </Button>
               </Link>
-            )}
+            )} */}
 
             <Button type='text' shape='circle' onClick={searchToggle}>
               <i className='fa-solid fa-magnifying-glass fa-xl' />

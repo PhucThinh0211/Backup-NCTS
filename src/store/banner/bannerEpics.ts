@@ -5,22 +5,22 @@ import {
   mergeMap,
   switchMap,
   withLatestFrom,
-} from 'rxjs';
+} from "rxjs";
 
-import { bannerActions } from './bannerSlice';
-import { startLoading, stopLoading } from '../loading';
-import { RootEpic } from '../types';
-import { defaultPagingParams } from '@/common/define';
+import { bannerActions } from "./bannerSlice";
+import { startLoading, stopLoading } from "../loading";
+import { RootEpic } from "../types";
+import { defaultPagingParams } from "@/common/define";
 import {
   GettingBannerListLoadingKey,
   RemovingBannerLoadingKey,
   SavingBannerLoadingKey,
   GettingBannerLoadingKey,
   GettingMenuListLoadingKey,
-} from '@/common/loadingKey';
-import { BannerService } from '@/services/BannerService';
-import Utils from '@/utils';
-import { MenuService } from '@/services/MenuService';
+} from "@/common/loadingKey";
+import { BannerService } from "@/services/BannerService";
+import Utils from "@/utils";
+import { MenuService } from "@/services/MenuService";
 
 const getBannersRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
@@ -62,7 +62,7 @@ const createBannerRequest$: RootEpic = (action$, state$) => {
     switchMap(([action, state]) => {
       const { banner } = action.payload;
       const { locale } = state.persistApp;
-      const totalCount = state.menu.menus?.totalCount || 0;
+      const totalCount = state.banner.banners?.totalCount || 0;
       const search = {
         ...defaultPagingParams,
         ...state.banner.queryParams,
@@ -195,7 +195,7 @@ const removeBannerRequest$: RootEpic = (action$, state$) => {
               search,
             }).pipe(
               mergeMap((bannersResult) => {
-                Utils.successNotification('Removed successfully');
+                Utils.successNotification("Removed successfully");
                 return [
                   bannerActions.setBanners(bannersResult),
                   bannerActions.setSelectedBanner(undefined),
@@ -227,7 +227,7 @@ const getBannerRequest$: RootEpic = (action$, state$) => {
       const { locale } = state.persistApp;
       const options = {
         headers: {
-          'Accept-Language': locale || 'vi',
+          "Accept-Language": locale || "vi",
         },
       };
       return concat(

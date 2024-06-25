@@ -1,6 +1,7 @@
 import { getEnvVars } from '@/enviroment';
 import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
+import { MediaType } from './FileService';
 
 const { apiUrl } = getEnvVars();
 
@@ -60,8 +61,21 @@ class PublicCmsController {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/content-by-slug?slug=${slug.replace('/tin-tuc','')}`, options);
     },
     getAllDepartments: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/public-cms/departments`, options);
-    }
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/departments`,
+        options
+      );
+    },
+    getImagesGallery: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/file/folders`, {
+        search: { Type: MediaType.PHOTOS },
+      });
+    },
+    getVideosGallery: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/file/folders`, {
+        search: { Type: MediaType.VIDEOS },
+      });
+    },
   };
 }
 
