@@ -86,6 +86,13 @@ export default class Utils {
       });
       return;
     }
+    if (error?.error?.message) {
+      notification.error({
+        message: i18next.t("notification", { ns: "common" }),
+        description: i18next.t(error?.error?.message, { ns }),
+      });
+      return;
+    }
     if (error.response?.error?.message) {
       notification.error({
         message: i18next.t("notification", { ns: "common" }),
@@ -140,7 +147,7 @@ export default class Utils {
       message: i18next.t("notification", { ns: "common" }),
       description: i18next.t(
         "An error occurred while processing your request",
-        { ns }
+        { ns: 'common' }
       ),
     });
   }
