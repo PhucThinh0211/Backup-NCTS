@@ -364,7 +364,7 @@ const getPhotosRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { params } = action.payload;
-      const { selectedPhotoAlbum } = state.publicCms;
+      const { photoAlbumPath } = state.publicCms;
       const search = {
         ...params,
       };
@@ -376,8 +376,8 @@ const getPhotosRequest$: RootEpic = (action$, state$) => {
               (folder: FolderResponse) => !folder.parentId
             );
 
-            const setRootFolderPathActions = !selectedPhotoAlbum
-              ? [publicCmsActions.setSelectedPhotoAlbum(rootFolder)]
+            const setRootFolderPathActions = !photoAlbumPath?.length
+              ? [publicCmsActions.setPhotoAlbumPath([rootFolder])]
               : [];
             return [
               ...setRootFolderPathActions,
@@ -401,7 +401,7 @@ const getVideosRequest$: RootEpic = (action$, state$) => {
     withLatestFrom(state$),
     switchMap(([action, state]) => {
       const { params } = action.payload;
-      const { selectedVideosAlbum } = state.publicCms;
+      const { videosAlbumPath } = state.publicCms;
       const search = {
         ...params,
       };
@@ -413,8 +413,8 @@ const getVideosRequest$: RootEpic = (action$, state$) => {
               (folder: FolderResponse) => !folder.parentId
             );
 
-            const setRootFolderPathActions = !selectedVideosAlbum
-              ? [publicCmsActions.setSelectedPhotoAlbum(rootFolder)]
+            const setRootFolderPathActions = !videosAlbumPath?.length
+              ? [publicCmsActions.setVideoAlbumPath([rootFolder])]
               : [];
             return [
               ...setRootFolderPathActions,

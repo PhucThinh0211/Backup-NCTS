@@ -41,7 +41,7 @@ export const PhotoListTable = () => {
         ) : (
           <div
             className='d-flex gap-2 align-items-center'
-            onDoubleClick={() => openFolder(record)}
+            onClick={() => openFolder(record)}
           >
             <FolderOutlined
               style={{

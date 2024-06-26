@@ -10,5 +10,10 @@
     "Code required": "Code required",
     "Name required": "Name required",
     "Document type": "Document type",
-    "Document type required": "Document type required"
+    "Document type required": "Document type required",
+    "Partner": "Partner",
+    "Customer": "Customer",
+    "Link": "Link",
+    "Link required": "Link required",
+    "Publish date": "Publish date"
 }

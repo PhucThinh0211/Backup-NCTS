@@ -69,8 +69,8 @@ export const CreateUpdateEmailSettingPage = () => {
         form={form}
         layout='vertical'
         onFinish={handleSaveEmailSetting}
-        autoComplete='false'
-        autoCorrect='false'
+        autoComplete='off'
+        autoCorrect='off'
       >
         <Spin spinning={isLoading}>
           <div className='w-full border-b rounded-2 bg-white p-3 shadow-sm'>

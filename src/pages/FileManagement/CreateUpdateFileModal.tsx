@@ -8,10 +8,17 @@ import {
   Button,
   GetProp,
   Space,
+  DatePicker,
+  Radio,
+  Checkbox,
 } from 'antd';
 
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
-import { CreateUpdateFileModalName, SavingMediaLoadingKey } from '@/common';
+import {
+  CreateUpdateFileModalName,
+  SavingMediaLoadingKey,
+  dateFormat,
+} from '@/common';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getModalVisible, hideModal } from '@/store/modal';
 import {
@@ -23,13 +30,13 @@ import {
 import { getLoading } from '@/store/loading';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { MediaType } from '@/services/FileService';
+import { LogoCategory, MediaType } from '@/services/FileService';
 import { UploadFile } from 'antd/lib';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 export const CreateUpdateFileModal = () => {
-  const { t } = useTranslation(['media']);
+  const { t } = useTranslation(['media', 'common']);
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -61,13 +68,15 @@ export const CreateUpdateFileModal = () => {
   };
 
   const handleUpload = (values: any) => {
+    const today = new Date();
     const params = {
       ...values,
       Type: mediaType,
       FolderContentId: currentPath?.id,
-      Category: mediaType === MediaType.DOCUMENTS ? values.Category : mediaType,
-      Code: mediaType === MediaType.DOCUMENTS ? values.Code : mediaType,
+      Category: values.Category || mediaType,
+      Code: values.Code || mediaType,
       Name: values.Name || fileList[0]?.name,
+      IssueDate: values.IssueDate || today.toISOString(),
     };
 
     const formData = new FormData();
@@ -121,11 +130,61 @@ export const CreateUpdateFileModal = () => {
             >
               <Input />
             </Form.Item>
+            <Form.Item
+              label={t('Name')}
+              name={'Name'}
+              rules={[{ required: true, message: t('Name required') }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item label={t('Publish date')} name={'IssueDate'}>
+              <DatePicker className='w-100' format={dateFormat} />
+            </Form.Item>
+            <Form.Item name={'Public'} valuePropName={'checked'}>
+              <Checkbox>{t('Public', { ns: 'common' })}</Checkbox>
+            </Form.Item>
           </>
         );
 
+      case MediaType.LOGOS:
+        return (
+          <>
+            <Form.Item
+              label={t('Name')}
+              name={'Name'}
+              rules={[{ required: true, message: t('Name required') }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label={t('Link')}
+              name={'Link'}
+              rules={[{ required: true, message: t('Link required') }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name={'Category'}>
+              <Radio.Group>
+                <Radio value={LogoCategory.PARTNER}>{t('Partner')}</Radio>
+                <Radio value={LogoCategory.CUSTOMER}>{t('Customer')}</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </>
+        );
+
+      case MediaType.CERTIFICATES:
+        return <></>;
+
       default:
-        break;
+        return (
+          <Form.Item
+            label={t('Name')}
+            name={'Name'}
+            rules={[{ required: true, message: t('Name required') }]}
+          >
+            <Input />
+          </Form.Item>
+        );
     }
   };
 
@@ -144,6 +203,11 @@ export const CreateUpdateFileModal = () => {
         layout='vertical'
         autoComplete='off'
         autoCorrect='off'
+        initialValues={{
+          Category:
+            mediaType === MediaType.LOGOS ? LogoCategory.PARTNER : undefined,
+          Public: true,
+        }}
       >
         <Form.Item
           label={t('File')}
@@ -171,15 +235,6 @@ export const CreateUpdateFileModal = () => {
           )}
         </Form.Item>
         {mediaType && renderForm(mediaType)}
-        {mediaType !== MediaType.CERTIFICATES && (
-          <Form.Item
-            label={t('Name')}
-            name={'Name'}
-            rules={[{ required: true, message: t('Name required') }]}
-          >
-            <Input />
-          </Form.Item>
-        )}
       </Form>
     </Modal>
   );

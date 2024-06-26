@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Col, Divider, Form, Input, Row, Select, Space, Spin, Typography } from 'antd';
+import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Space, Spin, Typography } from 'antd';
 import { ArrowLeftOutlined, CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,8 @@ import {
   GettingContentLoadingKey,
   PublishContentLoadingKey,
   SavingContentLoadingKey,
+  dateFormat,
+  invalidDateStrings,
   largePagingParams,
 } from '@/common';
 import { getLanguage, getLocale } from '@/store/persistState';
@@ -30,6 +32,7 @@ import { SeoForm } from './SeoForm';
 import { getEnvVars } from '@/enviroment';
 import Utils from '@/utils';
 import ClassicEditor from '@/common/ckeditor';
+import dayjs from 'dayjs'
 
 const { apiUrl } = getEnvVars();
 
@@ -77,7 +80,10 @@ export const CreateUpdateNewsPage = () => {
 
   useEffect(() => {
     if (selectedContentDetail) {
-      form.setFieldsValue(selectedContentDetail);
+      form.setFieldsValue({
+        ...selectedContentDetail,
+        issueDate: selectedContentDetail.issueDate && !invalidDateStrings.includes(selectedContentDetail.issueDate) ? dayjs(selectedContentDetail.issueDate) : null
+      });
       setNewsBody(selectedContentDetail.body || '');
     } else {
       form.resetFields();
@@ -193,29 +199,46 @@ export const CreateUpdateNewsPage = () => {
                   rules={[{ required: true, message: t('News type required') }]}>
                   <Select options={newsTypesOptions} />
                 </Form.Item>
-                <Form.Item
-                  label={
-                    <div>
-                      <span>{t('Title', { ns: 'news' })}</span>
-                      {' - '}
-                      <span className="text-uppercase text-danger">{locale}</span>
-                    </div>
-                  }
-                  name="title"
-                  rules={[
-                    { required: true, message: t('Title required') },
-                    {
-                      max: 500,
-                      min: 0,
-                      message: t('StringRange', {
-                        ns: 'common',
-                        range1: 0,
-                        range2: 500,
-                      }),
-                    },
-                  ]}>
-                  <Input />
-                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col span={24} md={12}>
+                    <Form.Item
+                      label={
+                        <div>
+                          <span>{t('Title', { ns: 'news' })}</span>
+                          {' - '}
+                          <span className='text-uppercase text-danger'>
+                            {locale}
+                          </span>
+                        </div>
+                      }
+                      name='title'
+                      rules={[
+                        { required: true, message: t('Title required') },
+                        {
+                          max: 500,
+                          min: 0,
+                          message: t('StringRange', {
+                            ns: 'common',
+                            range1: 0,
+                            range2: 500,
+                          }),
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={24} md={12}>
+                    {' '}
+                    <Form.Item
+                      label={t('Issue date', { ns: 'news' })}
+                      name='issueDate'
+                    >
+                      <DatePicker className='w-100' format={dateFormat} />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                
                 <Form.Item
                   label={
                     <div>

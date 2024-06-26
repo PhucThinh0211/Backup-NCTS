@@ -24,6 +24,7 @@ import {
 } from '@/store/identity';
 import { showModal } from '@/store/modal';
 import { defaultPagingParams } from '@/common';
+import { getCurrentUser } from '@/store/app';
 export const UserListTable = () => {
   const [dataSource, setDataSource] = useState<UserResponse[]>([]);
   const [modal, contextHolder] = useModal();
@@ -33,6 +34,7 @@ export const UserListTable = () => {
 
   const users = useAppSelector(createUsersSelector());
   const isLoading = useAppSelector(getLoading([IdentityLoadingEnum.getUsers]));
+  const currentUser = useAppSelector(getCurrentUser());
 
   useEffect(() => {
     dispatch(identityActions.getUsersRequest(defaultPagingParams));
@@ -147,7 +149,9 @@ export const UserListTable = () => {
       {contextHolder}
       <Table
         rowKey={(record) => record.id}
-        dataSource={dataSource}
+        dataSource={dataSource.filter(
+          (record) => currentUser.name === 'admin' || record.name !== 'admin'
+        )}
         columns={columns}
         style={{ width: '100%' }}
         size='small'
