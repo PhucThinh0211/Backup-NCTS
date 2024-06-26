@@ -13,6 +13,7 @@ import { RootEpic } from '../types';
 import {
   GettingDocumentTypeListLoadingKey,
   GettingMediaListLoadingKey,
+  RemovingMediaLoadingKey,
   SavingMediaLoadingKey,
 } from '@/common/loadingKey';
 import Utils from '@/utils';
@@ -162,9 +163,41 @@ const getDocumentTypesRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const deleteFileRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(mediaActions.deleteFileRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { fileId } = action.payload;
+      const search = {
+        Type: state.media.mediaType,
+      };
+      return concat(
+        [startLoading({ key: RemovingMediaLoadingKey })],
+        FileService.Delete.deleteFile({
+          search: {
+            FileId: fileId,
+          },
+        }).pipe(
+          mergeMap(() => {
+            Utils.successNotification();
+            return [mediaActions.getFoldersRequest({ params: search })];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: RemovingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
 export const mediaEpics = [
   getFoldersRequest$,
   uploadFileRequest$,
   createFolderRequest$,
   getDocumentTypesRequest$,
+  deleteFileRequest$,
 ];

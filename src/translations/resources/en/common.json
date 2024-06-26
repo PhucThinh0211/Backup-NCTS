@@ -114,6 +114,7 @@
   "Enter role name": "Enter role name",
   "_Default": "_Default",
   "Public": "Public",
+  "Non Public": "Non-public",
   "Permission": "Permission",
   "Grant all permission": "Grant all permission",
   "Select all": "Select all",

@@ -76,7 +76,8 @@ export const CreateUpdateFileModal = () => {
       Category: values.Category || mediaType,
       Code: values.Code || mediaType,
       Name: values.Name || fileList[0]?.name,
-      IssueDate: values.IssueDate || today.toISOString(),
+      IssueDate: values.IssueDate?.toISOString() || today.toISOString(),
+      Public: values.Public !== undefined ? values.Public : true,
     };
 
     const formData = new FormData();

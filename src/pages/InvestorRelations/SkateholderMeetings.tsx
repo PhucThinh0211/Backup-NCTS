@@ -18,7 +18,6 @@ import { NewsPublicSection } from '../NewsPublic/components/NewsPublicSection';
 import dayjs from 'dayjs';
 import { useWindowSize } from '@/hooks/useWindowSize';
 
-const newsTypeCode = 'DHCD';
 const currentYear = dayjs().get('year');
 
 export const SkateholderMeetings = () => {
@@ -30,6 +29,8 @@ export const SkateholderMeetings = () => {
   const news = useAppSelector(getInvestorNewsList());
   const newsTypes = useAppSelector(getNewsTypeList());
   const pageDetail = useAppSelector(getSelectedPageDetail());
+
+  const newsTypeCode = pageDetail?.codeType;
 
   const foundNewsType = (newsTypes || []).find(
     (newsType) => newsType.code === newsTypeCode

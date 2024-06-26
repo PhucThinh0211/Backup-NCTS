@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { MenuResponse } from '@/services/MenuService';
 import { CompanyResponse } from '@/services/CompanyService';
@@ -11,7 +11,8 @@ import {
 import { NewsTypeResponse } from '@/services/NewsTypeService';
 import { PageContentResponse } from '@/services/PageContentService';
 import { DepartmentResponse } from '@/services/DepartmentService';
-import { FolderResponse } from '@/services/FileService';
+import { FileResponse, FolderResponse } from '@/services/FileService';
+import { DocumentTypeResponse } from '@/services/DocumentTypeService';
 
 interface publicCmsState {
   company?: CompanyResponse;
@@ -23,6 +24,8 @@ interface publicCmsState {
   investorNewsParams?: any;
   latestNews?: ContentsPagingResponse;
   newsTypes?: NewsTypeResponse[];
+  documentTypes?: DocumentTypeResponse[];
+  documentList?: FileResponse[];
   selectedNewsTypeId?: string;
   captcha?: CaptchaResponse;
   servicePages: PageContentResponse[];
@@ -44,6 +47,7 @@ const initialState: publicCmsState = {
   videos: [],
   photoAlbumPath: [],
   videosAlbumPath: [],
+  documentList: [],
 };
 
 const publicCmsSlice = createSlice({
@@ -84,6 +88,19 @@ const publicCmsSlice = createSlice({
     getNewsTypesRequest: (state, action) => {},
     setNewsTypes: (state, action) => {
       state.newsTypes = action.payload;
+    },
+    getDocumentTypesRequest: (state, action) => {},
+    setDocumentTypes: (state, action) => {
+      state.documentTypes = action.payload;
+    },
+    getDocumentListRequest: (
+      state,
+      action: PayloadAction<{
+        params: { DocumentTypeId?: string; Year?: number };
+      }>
+    ) => {},
+    setDocumentList: (state, action) => {
+      state.documentList = action.payload;
     },
     setSelectedNewsTypeId: (state, action) => {
       state.selectedNewsTypeId = action.payload;
@@ -126,6 +143,10 @@ const publicCmsSlice = createSlice({
     setVideoAlbumPath: (state, action) => {
       state.videosAlbumPath = action.payload;
     },
+    downloadFileRequest: (
+      state,
+      action: PayloadAction<{ document: FileResponse }>
+    ) => {},
   },
 });
 

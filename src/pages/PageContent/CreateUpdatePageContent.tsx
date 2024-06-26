@@ -286,6 +286,9 @@ export const CreateUpdatePageContent = () => {
         );
 
       case PageContentType.DOCUMENT:
+      case PageContentType.ANNUAL_REPORTS:
+      case PageContentType.FINANCIAL_REPORTS:
+      case PageContentType.CORPORATE_GOVERNANCE:
         return (
           <>
             <Form.Item
@@ -311,6 +314,8 @@ export const CreateUpdatePageContent = () => {
         );
 
       case PageContentType.NEWS:
+      case PageContentType.INVESTOR_NEWS:
+      case PageContentType.SHAREHOLDER_MEETINGS:
         return (
           <>
             <Form.Item

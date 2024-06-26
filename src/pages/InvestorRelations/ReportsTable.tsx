@@ -1,18 +1,53 @@
-import { Table } from 'antd';
+import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 
-export const ReportsTable = () => {
-  const columns = [
+import { Button, Space, Table, TableColumnsType, TableProps } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { dateFormat, invalidDateStrings } from '@/common';
+import { FileResponse } from '@/services/FileService';
+import { useAppDispatch } from '@/store/hooks';
+import { publicCmsActions } from '@/store/publicCms';
+
+interface ReportsTableProps extends TableProps {
+  dataSource: FileResponse[];
+}
+export const ReportsTable = (props: ReportsTableProps) => {
+  const { t } = useTranslation(['common', 'media']);
+  const dispatch = useAppDispatch();
+
+  const handleDownloadDocument = (record: FileResponse) => {
+    dispatch(publicCmsActions.downloadFileRequest({ document: record }));
+  };
+
+  const columns: TableColumnsType<FileResponse> = [
     {
-      title: 'Title',
-      key: 'title',
+      title: t('Name', { ns: 'media' }),
+      key: 'name',
+      dataIndex: 'name',
     },
     {
-      title: 'Published date',
-      key: 'publishedDate',
+      title: t('Publish date', { ns: 'media' }),
+      key: 'issueDate',
+      dataIndex: 'issueDate',
+      render(value, record, index) {
+        if (value && !invalidDateStrings.includes(value)) {
+          return <>{dayjs(value).format(dateFormat)}</>;
+        }
+      },
     },
     {
-      render: () => <>Download</>,
+      key: 'Action',
+      width: 40,
+      render: (_, record) => (
+        <Space>
+          <Button
+            icon={<DownloadOutlined style={{ color: '#eca42e' }} />}
+            type='text'
+            onClick={() => handleDownloadDocument(record)}
+          />
+        </Space>
+      ),
     },
   ];
-  return <Table dataSource={[]} columns={columns} />;
+  return <Table {...props} columns={columns} />;
 };

@@ -211,7 +211,7 @@ export const PageContentListTable = () => {
               columns={columns}
               style={{ width: '100%' }}
               size='small'
-              scroll={{ x: 1000, y: windowSize[1] - 310 }}
+              scroll={{ x: 860, y: windowSize[1] - 310 }}
               pagination={{
                 ...Utils.parseParamsToPagination(
                   queryParams || defaultPagingParams

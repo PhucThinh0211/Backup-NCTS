@@ -112,6 +112,7 @@
   "Enter role name": "Nhập tên",
   "_Default": "Mặc định",
   "Public": "Công khai",
+  "Non Public": "Không công khai",
   "Permission": "Phân quyền",
   "Grant all permission": "Phân toàn quyền",
   "Select all": "Chọn tất cả",

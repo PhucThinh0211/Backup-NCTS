@@ -28,6 +28,12 @@ export function getInvestorNewsParams() {
 export function getNewsTypeList() {
   return createSelector([getState], (state) => state.newsTypes);
 }
+export function getDocumentTypeList() {
+  return createSelector([getState], (state) => state.documentTypes);
+}
+export function getDocumentList() {
+  return createSelector([getState], (state) => state.documentList);
+}
 export function getSelectedNewsTypeId() {
   return createSelector([getState], (state) => state.selectedNewsTypeId);
 }
