@@ -142,5 +142,7 @@
   "Kind of goods": "Kind of goods",
   "Change password": "Change Password",
   "Hello": "Hello",
-  "The specified refresh token has already been redeemed.": "The specified refresh token has already been redeemed."
+  "The specified refresh token has already been redeemed.": "The specified refresh token has already been redeemed.",
+  "An error occurred while processing your request": "An internal error occurred during your request!",
+  "An internal error occurred during your request!": "An internal error occurred during your request!"
 }
