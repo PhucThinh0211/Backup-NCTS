@@ -141,5 +141,7 @@
   "Kind of goods": "Loại dịch vụ",
   "Change password": "Đổi mật khẩu",
   "Hello": "Xin chào",
-  "The specified refresh token has already been redeemed.": "Mã khóa làm mới đã thay đổi."
+  "The specified refresh token has already been redeemed.": "Mã khóa làm mới đã thay đổi.",
+  "An error occurred while processing your request": "Có lỗi xảy ra trong khi xử lý yêu cầu của bạn!",
+  "An internal error occurred during your request!": "Có lỗi xảy ra trong khi xử lý yêu cầu của bạn!"
 }
