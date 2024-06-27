@@ -1,70 +1,78 @@
 // ckeditor.ts
 
-import { ClassicEditor as ClassicEditorBase } from '@ckeditor/ckeditor5-editor-classic';
-
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices.js';
-import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import ExportPdf from '@ckeditor/ckeditor5-export-pdf/src/exportpdf';
-import ExportWord from '@ckeditor/ckeditor5-export-word/src/exportword';
-import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace';
-import { Font } from '@ckeditor/ckeditor5-font';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
-import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
-import GeneralHtmlSupport from '@ckeditor/ckeditor5-html-support/src/generalhtmlsupport';
-import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert';
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
-import PictureEditing from '@ckeditor/ckeditor5-image/src/pictureediting';
-import ImportWord from '@ckeditor/ckeditor5-import-word/src/importword';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-import TextPartLanguage from '@ckeditor/ckeditor5-language/src/textpartlanguage';
-import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties';
-import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-import Mention from '@ckeditor/ckeditor5-mention/src/mention';
-import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
-import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
-import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
-import { Style } from '@ckeditor/ckeditor5-style';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableCaption from '@ckeditor/ckeditor5-table/src/tablecaption';
-import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
-import TableColumnResize from '@ckeditor/ckeditor5-table/src/tablecolumnresize';
-import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
-import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
-import { SourceEditing } from '@ckeditor/ckeditor5-source-editing';
-import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
 import { getEnvVars } from '@/enviroment';
-// import WProofreader from '@webspellchecker/wproofreader-ckeditor5/src/wproofreader';
+import {
+	ClassicEditor as ClassicEditorBase,
+	Alignment,
+	Autoformat,
+	Bold,
+	CKBox,
+	Code,
+	Italic,
+	Strikethrough,
+	Subscript,
+	Superscript,
+	Underline,
+	BlockQuote,
+	CloudServices,
+	CodeBlock,
+	Essentials,
+	FindAndReplace,
+	Font,
+	Heading,
+	Highlight,
+	HorizontalLine,
+	GeneralHtmlSupport,
+	AutoImage,
+	Image,
+	ImageCaption,
+	ImageInsert,
+	ImageResize,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload,
+	Base64UploadAdapter,
+	PictureEditing,
+	Indent,
+	IndentBlock,
+	TextPartLanguage,
+	AutoLink,
+	Link,
+	LinkImage,
+	List,
+	ListProperties,
+	TodoList,
+	MediaEmbed,
+	Mention,
+	PageBreak,
+	Paragraph,
+	PasteFromOffice,
+	RemoveFormat,
+	SpecialCharacters,
+	SpecialCharactersEssentials,
+	Style,
+	Table,
+	TableCaption,
+	TableCellProperties,
+	TableColumnResize,
+	TableProperties,
+	TableToolbar,
+	TextTransformation,
+	WordCount,
+  SourceEditing
+} from 'ckeditor5';
+
+import {
+	CaseChange,
+	ExportPdf,
+	ExportWord,
+	FormatPainter,
+	ImportWord,
+	MultiLevelList,
+	SlashCommand,
+	TableOfContents,
+	Template,
+} from 'ckeditor5-premium-features';
 
 const { apiUrl } = getEnvVars();
 const exportHorizontalSpace = '10mm';
@@ -536,10 +544,10 @@ ClassicEditor.builtinPlugins = [
   TextTransformation,
   TodoList,
   Underline,
-  UploadAdapter,
+  // UploadAdapter,
   WordCount,
   SourceEditing,
-  Markdown,
+  // Markdown,
 ];
 
 ClassicEditor.defaultConfig = {
