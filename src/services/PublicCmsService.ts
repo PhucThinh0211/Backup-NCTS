@@ -38,8 +38,7 @@ class PublicCmsController {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
     },
     getDocumentTypeList: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/document-type`, options);
-      // return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/document-types`, options);
     },
     getDocumentList: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/documents`, options);
