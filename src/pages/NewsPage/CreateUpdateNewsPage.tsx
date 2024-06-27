@@ -162,7 +162,7 @@ export const CreateUpdateNewsPage = () => {
                 onClick={createContent}
                 style={{ backgroundColor: '#0c75a0db'}} 
               >
-                {t('Add news')}
+                {t('Add new')}
               </Button>
               <Divider type='vertical' />
             </>

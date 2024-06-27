@@ -18,8 +18,8 @@ import { NewsPublicSection } from '../NewsPublic/components/NewsPublicSection';
 import dayjs from 'dayjs';
 import { useWindowSize } from '@/hooks/useWindowSize';
 
-const newsTypeCode = 'TCD';
 const currentYear = dayjs().get('year');
+const oldestYear = 2013;
 
 export const InvestorNews = () => {
   const { t } = useTranslation(['common']);
@@ -67,17 +67,19 @@ export const InvestorNews = () => {
               tabPosition={
                 innerWidth > bootstrapBreakpoints.sm ? 'left' : 'top'
               }
-              items={new Array(6).fill(null).map((_, index) => {
-                const year = currentYear - index;
-                const newsByYear = (news?.items || []).filter(
-                  (item) => dayjs(item.publishDate).get('year') === year
-                );
-                return {
-                  label: `${year}`,
-                  key: `${year}`,
-                  children: <NewsPublicSection newsList={newsByYear || []} />,
-                };
-              })}
+              items={new Array(currentYear - oldestYear + 1)
+                .fill(null)
+                .map((_, index) => {
+                  const year = currentYear - index;
+                  const newsByYear = (news?.items || []).filter(
+                    (item) => dayjs(item.publishDate).get('year') === year
+                  );
+                  return {
+                    label: `${year}`,
+                    key: `${year}`,
+                    children: <NewsPublicSection newsList={newsByYear || []} />,
+                  };
+                })}
             />
           </>
         )}

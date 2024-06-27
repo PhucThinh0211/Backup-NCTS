@@ -49,5 +49,5 @@ export const ReportsTable = (props: ReportsTableProps) => {
       ),
     },
   ];
-  return <Table {...props} columns={columns} />;
+  return <Table columns={columns} {...props} />;
 };

@@ -24,5 +24,10 @@ export const antdThemeConfig: ThemeConfig = {
       itemColor: '#166987',
       itemHoverColor: '#166987',
     },
+    Table: {
+      headerBg: '#006d9c',
+      headerColor: '#fff',
+      headerBorderRadius: 4,
+    },
   },
 };
