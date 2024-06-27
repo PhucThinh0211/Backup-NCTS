@@ -38,7 +38,7 @@ export const CorporateGovernance = () => {
         </div>
         <div>
           <Segmented options={options} block />
-          <ReportsTable />
+          <ReportsTable dataSource={[]} />
         </div>
       </div>
     </div>

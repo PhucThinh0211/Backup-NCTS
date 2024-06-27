@@ -37,6 +37,13 @@ class PublicCmsController {
     getNewsTypeList: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
     },
+    getDocumentTypeList: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/document-type`, options);
+      // return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
+    },
+    getDocumentList: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/documents`, options);
+    },
     getCaptcha: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/captcha`, options);
     },
@@ -66,15 +73,11 @@ class PublicCmsController {
         options
       );
     },
-    getImagesGallery: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/file/folders`, {
-        search: { Type: MediaType.PHOTOS },
-      });
-    },
-    getVideosGallery: (options?: RequestOptions) => {
-      return HttpClient.get(`${apiUrl}/api/app/file/folders`, {
-        search: { Type: MediaType.VIDEOS },
-      });
+    getFileContents: (options?: RequestOptions) => {
+      return HttpClient.get(
+        `${apiUrl}/api/app/public-cms/file-contents`,
+        options
+      );
     },
   };
 }

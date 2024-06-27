@@ -31,6 +31,8 @@ export const InvestorNews = () => {
   const newsTypes = useAppSelector(getNewsTypeList());
   const pageDetail = useAppSelector(getSelectedPageDetail());
 
+  const newsTypeCode = pageDetail?.codeType;
+
   const foundNewsType = (newsTypes || []).find(
     (newsType) => newsType.code === newsTypeCode
   );

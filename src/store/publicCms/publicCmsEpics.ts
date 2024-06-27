@@ -1,14 +1,17 @@
 import { catchError, concat, filter, switchMap, withLatestFrom } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 import { RootEpic } from '../types';
 import { publicCmsActions } from './publicCmsSlice';
 import { startLoading, stopLoading } from '../loading';
 import {
+  DownloadingMediaLoadingKey,
   GettingBannerListLoadingKey,
   GettingCaptchaLoadingKey,
   GettingCompanyLoadingKey,
   GettingContentListLoadingKey,
   GettingDepartmentListLoadingKey,
+  GettingDocumentTypeListLoadingKey,
   GettingIntroducePageLoadingKey,
   GettingMediaLoadingKey,
   GettingMenuListLoadingKey,
@@ -21,7 +24,7 @@ import {
 import { PublicCmsService } from '@/services/PublicCmsService';
 import Utils from '@/utils';
 import { DepartmentService } from '@/services/DepartmentService';
-import { FolderResponse } from '@/services/FileService';
+import { FileService, FolderResponse, MediaType } from '@/services/FileService';
 
 const getCompanyRequest$: RootEpic = (action$) => {
   return action$.pipe(
@@ -231,6 +234,56 @@ const getNewsTypesRequest$: RootEpic = (action$) => {
   );
 };
 
+const getDocumentTypesRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getDocumentTypesRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingDocumentTypeListLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getDocumentTypeList({ search }).pipe(
+          switchMap((documentTypes) => {
+            return [publicCmsActions.setDocumentTypes(documentTypes.items)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setDocumentTypes(undefined)];
+          })
+        ),
+        [stopLoading({ key: GettingDocumentTypeListLoadingKey })]
+      );
+    })
+  );
+};
+
+const getDocumentListRequest$: RootEpic = (action$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getDocumentListRequest.match),
+    switchMap((action) => {
+      const { params } = action.payload;
+      const search = {
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getDocumentList({ search }).pipe(
+          switchMap((documents) => {
+            return [publicCmsActions.setDocumentList(documents)];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setDocumentList([])];
+          })
+        ),
+        [stopLoading({ key: GettingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
 const getCaptchaRequest$: RootEpic = (action$) => {
   return action$.pipe(
     filter(publicCmsActions.getCaptchaRequest.match),
@@ -366,11 +419,12 @@ const getPhotosRequest$: RootEpic = (action$, state$) => {
       const { params } = action.payload;
       const { photoAlbumPath } = state.publicCms;
       const search = {
+        Type: MediaType.PHOTOS,
         ...params,
       };
       return concat(
         [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
-        PublicCmsService.Get.getImagesGallery({ search }).pipe(
+        PublicCmsService.Get.getFileContents({ search }).pipe(
           switchMap((photos) => {
             const rootFolder = photos.find(
               (folder: FolderResponse) => !folder.parentId
@@ -403,11 +457,12 @@ const getVideosRequest$: RootEpic = (action$, state$) => {
       const { params } = action.payload;
       const { videosAlbumPath } = state.publicCms;
       const search = {
+        Type: MediaType.VIDEOS,
         ...params,
       };
       return concat(
         [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
-        PublicCmsService.Get.getVideosGallery({ search }).pipe(
+        PublicCmsService.Get.getFileContents({ search }).pipe(
           switchMap((videos) => {
             const rootFolder = videos.find(
               (folder: FolderResponse) => !folder.parentId
@@ -432,6 +487,36 @@ const getVideosRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const downloadFileRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(publicCmsActions.downloadFileRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { document } = action.payload;
+      const path = `${document.location}/${document.fileName}`;
+      const search = {
+        Path: path,
+      };
+      return concat(
+        [startLoading({ key: DownloadingMediaLoadingKey, type: 'top' })],
+        FileService.Get.downloadFile({ search }).pipe(
+          switchMap((blob) => {
+            if (blob) {
+              saveAs(blob, document.fileName);
+            }
+            return [];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [];
+          })
+        ),
+        [stopLoading({ key: DownloadingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
 export const publicCmsEpics = [
   getMenuListRequest$,
   getCompanyRequest$,
@@ -449,4 +534,7 @@ export const publicCmsEpics = [
   getInvestorNewsListRequest$,
   getPhotosRequest$,
   getVideosRequest$,
+  getDocumentTypesRequest$,
+  getDocumentListRequest$,
+  downloadFileRequest$,
 ];

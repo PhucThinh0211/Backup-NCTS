@@ -44,6 +44,7 @@ const mediaSlice = createSlice({
     setDocumentTypes: (state, action) => {
       state.documentTypes = action.payload;
     },
+    deleteFileRequest: (state, action: PayloadAction<any>) => {},
   },
 });
 

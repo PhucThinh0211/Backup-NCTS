@@ -71,9 +71,9 @@ export const CertificateListToolbar = () => {
         <Button icon={<UploadOutlined />} onClick={openUploadFile}>
           {t('Upload')}
         </Button>
-        <Button icon={<PlusOutlined />} onClick={createFolder} type='primary'>
+        {/* <Button icon={<PlusOutlined />} onClick={createFolder} type='primary'>
           {t('Create folder')}
-        </Button>
+        </Button> */}
       </Space>
     </Row>
   );

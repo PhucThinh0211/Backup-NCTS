@@ -1,8 +1,15 @@
-import { FolderOutlined } from '@ant-design/icons';
+import { FolderOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getFolderPath, getFolders, mediaActions } from '@/store/media';
-import { FolderResponse } from '@/services/FileService';
-import { Table, TableColumnsType, Typography } from 'antd';
+import { FileResponse, FolderResponse } from '@/services/FileService';
+import {
+  Button,
+  Modal,
+  Space,
+  Table,
+  TableColumnsType,
+  Typography,
+} from 'antd';
 import Utils from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { VideoListToolbar } from './VideoListToolbar';
@@ -28,6 +35,51 @@ export const VideoListTable = () => {
   const openFolder = (folder: any) => {
     // dispatch(documentActions.getLabelRequest({ documentId: document.id, params: defaultPagingParams }));
     setFolderPath([...folderPath, folder]);
+  };
+
+  const handleDeleteFile = (fileId: string) => {
+    dispatch(mediaActions.deleteFileRequest({ fileId }));
+  };
+
+  const confirmDeleteFile = (file: FileResponse) => {
+    Modal.confirm({
+      title: t('Notification', { ns: 'common' }),
+      content: (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: t('ConfirmRemove', {
+              name: `<strong>"${file.name}"</strong>`,
+              ns: 'common',
+            }),
+          }}
+        />
+      ),
+      centered: true,
+      closable: true,
+      onOk: (close) => {
+        handleDeleteFile(file.id);
+        close();
+      },
+    });
+  };
+
+  const moreActions = [
+    {
+      key: 'remove',
+      label: t('Remove', { ns: 'common' }),
+      icon: <DeleteOutlined style={{ color: '#ff4d4f' }} />,
+    },
+  ];
+
+  const handleMoreActionClick = (key: any, record: FileResponse) => {
+    switch (key) {
+      case 'remove':
+        confirmDeleteFile(record);
+        break;
+      default:
+        confirmDeleteFile(record);
+        break;
+    }
   };
 
   const columns: TableColumnsType<any> = [
@@ -57,6 +109,19 @@ export const VideoListTable = () => {
       },
     },
     {
+      title: t('Public', { ns: 'common' }),
+      dataIndex: 'public',
+      key: 'public',
+      render: (value, record) =>
+        !record.isFolder && (
+          <>
+            {value
+              ? t('Public', { ns: 'common' })
+              : t('Non Public', { ns: 'common' })}
+          </>
+        ),
+    },
+    {
       title: t('Size'),
       dataIndex: 'fileSize',
       key: 'fileSize',
@@ -69,12 +134,18 @@ export const VideoListTable = () => {
       key: 'action',
       render: (_, record) => {
         return (
-          <></>
-          // !!getMoreActions(record).length && (
-          //   <Dropdown menu={{ items: getMoreActions(record) }}>
-          //     <Button icon={<DashOutlined style={{ fontSize: 12 }} />} shape="circle" />
-          //   </Dropdown>
-          // )
+          !record.isFolder && (
+            <Space>
+              {moreActions.map((action) => (
+                <Button
+                  type='text'
+                  icon={action.icon}
+                  key={action.key}
+                  onClick={() => handleMoreActionClick(action.key, record)}
+                />
+              ))}
+            </Space>
+          )
         );
       },
     },

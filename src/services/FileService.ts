@@ -75,6 +75,15 @@ class FileController {
     getAllFolders: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/file/folders`, options);
     },
+    downloadFile: (options?: RequestOptions) => {
+      return HttpClient.get(`${apiUrl}/api/app/file/download`, {
+        ...options,
+        headers: {
+          ...options?.headers,
+        },
+        responseType: 'blob',
+      });
+    },
   };
 
   public Post = {
@@ -91,7 +100,11 @@ class FileController {
 
   public Put = {};
 
-  public delete = {};
+  public Delete = {
+    deleteFile: (options?: RequestOptions) => {
+      return HttpClient.delete(`${apiUrl}/api/app/file`, options);
+    },
+  };
 }
 
 export const FileService = new FileController();

@@ -4,21 +4,61 @@ import { Tabs, Table } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLanguage } from '@/store/persistState';
-import { getSelectedPageDetail } from '@/store/publicCms';
+import {
+  getDocumentList,
+  getDocumentTypeList,
+  getSelectedPageDetail,
+  publicCmsActions,
+} from '@/store/publicCms';
 import dayjs from 'dayjs';
 import { ReportsTable } from './ReportsTable';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { bootstrapBreakpoints } from '@/common';
+import {
+  GettingMediaLoadingKey,
+  bootstrapBreakpoints,
+  largePagingParams,
+} from '@/common';
+import { useEffect, useState } from 'react';
+import { getLoading } from '@/store/loading';
 
 const currentYear = dayjs().get('year');
+const oldestYear = 2013;
 
 export const AnnualReports = () => {
   const { t } = useTranslation(['common']);
   const dispatch = useAppDispatch();
   const [innerWidth] = useWindowSize();
+  const [activeYear, setActiveYear] = useState(currentYear);
 
+  const isLoading = useAppSelector(getLoading(GettingMediaLoadingKey));
   const lang = useAppSelector(getLanguage());
+  const documentList = useAppSelector(getDocumentList());
+  const documentTypes = useAppSelector(getDocumentTypeList());
   const pageDetail = useAppSelector(getSelectedPageDetail());
+  const documentTypeCode = pageDetail?.codeType;
+
+  const foundDocumentType = documentTypes?.find(
+    (documentType) => documentType.code === documentTypeCode
+  );
+
+  useEffect(() => {
+    dispatch(
+      publicCmsActions.getDocumentTypesRequest({ params: largePagingParams })
+    );
+  }, [lang]);
+
+  useEffect(() => {
+    if (pageDetail && foundDocumentType && activeYear) {
+      dispatch(
+        publicCmsActions.getDocumentListRequest({
+          params: {
+            DocumentTypeId: foundDocumentType.id,
+            Year: activeYear,
+          },
+        })
+      );
+    }
+  }, [pageDetail, foundDocumentType, activeYear]);
 
   return (
     <div style={{ backgroundColor: '#80808008' }}>
@@ -28,14 +68,24 @@ export const AnnualReports = () => {
         </div>
         <Tabs
           tabPosition={innerWidth > bootstrapBreakpoints.md ? 'left' : 'top'}
-          items={new Array(6).fill(null).map((_, index) => {
-            const year = currentYear - index;
-            return {
-              label: `${year}`,
-              key: `${year}`,
-              children: <ReportsTable />,
-            };
-          })}
+          activeKey={activeYear.toString()}
+          onChange={(activeKey) => setActiveYear(parseInt(activeKey))}
+          items={new Array(currentYear - oldestYear + 1)
+            .fill(null)
+            .map((_, index) => {
+              const year = currentYear - index;
+              return {
+                label: `${year}`,
+                key: `${year}`,
+                children: (
+                  <ReportsTable
+                    dataSource={documentList || []}
+                    loading={isLoading}
+                    pagination={false}
+                  />
+                ),
+              };
+            })}
         />
       </div>
     </div>
