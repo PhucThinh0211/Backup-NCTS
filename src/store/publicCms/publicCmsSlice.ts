@@ -37,6 +37,7 @@ interface publicCmsState {
   photoAlbumPath: FolderResponse[];
   videos?: FolderResponse[];
   videosAlbumPath: FolderResponse[];
+  logos?: FolderResponse[];
 }
 
 const initialState: publicCmsState = {
@@ -45,6 +46,7 @@ const initialState: publicCmsState = {
   servicePages: [],
   photos: [],
   videos: [],
+  logos: [],
   photoAlbumPath: [],
   videosAlbumPath: [],
   documentList: [],
@@ -147,6 +149,10 @@ const publicCmsSlice = createSlice({
       state,
       action: PayloadAction<{ document: FileResponse }>
     ) => {},
+    getLogosRequest: (state, action) => {},
+    setLogos: (state, action) => {
+      state.logos = action.payload;
+    },
   },
 });
 

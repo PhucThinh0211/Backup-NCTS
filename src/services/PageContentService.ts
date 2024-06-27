@@ -16,6 +16,8 @@ export enum PageContentType {
   CONTACT = 'contact',
   LOGIN = 'login',
   REGISTER = 'register',
+  CUSTOMER = 'customer',
+  PARTNER = 'partner',
   INVESTOR_RELATIONS = 'investor_relations',
   INVESTOR_NEWS = 'investor-news',
   SHAREHOLDER_MEETINGS = 'shareholder-meetings',

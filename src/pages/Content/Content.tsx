@@ -26,6 +26,8 @@ import {
 } from '../InvestorRelations';
 import { PhotoGallery } from '../PhotoGallery/PhotoGallery';
 import { VideoGallery } from '../VideoGallery/VideoGallery';
+import { LogoGallery } from '../LogoGallery/LogoGallery';
+import { LogoCategory } from '@/services/FileService';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
@@ -74,6 +76,12 @@ export const Content = () => {
       )}
       {pageDetail?.pageType === PageContentType.VIDEO && <VideoGallery />}
       {pageDetail?.pageType === PageContentType.PHOTO && <PhotoGallery />}
+      {pageDetail?.pageType === PageContentType.CUSTOMER && (
+        <LogoGallery category={LogoCategory.CUSTOMER} />
+      )}
+      {pageDetail?.pageType === PageContentType.PARTNER && (
+        <LogoGallery category={LogoCategory.PARTNER} />
+      )}
       {pageDetail?.pageType === PageContentType.DOCUMENT && (
         <div>Thư viện document</div>
       )}

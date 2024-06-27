@@ -37,6 +37,7 @@ export interface FileResponse {
   location: string;
   public: boolean;
   isFolder?: boolean;
+  link: string;
 }
 
 export interface FolderResponse {

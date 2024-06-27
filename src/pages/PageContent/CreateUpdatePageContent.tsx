@@ -117,6 +117,14 @@ export const CreateUpdatePageContent = () => {
           value: PageContentType.PHOTO,
         },
         {
+          label: t('Customer', { ns: 'pageContent' }),
+          value: PageContentType.CUSTOMER,
+        },
+        {
+          label: t('Partner', { ns: 'pageContent' }),
+          value: PageContentType.PARTNER,
+        },
+        {
           label: t('Document', { ns: 'pageContent' }),
           value: PageContentType.DOCUMENT,
         },

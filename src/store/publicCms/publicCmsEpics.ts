@@ -487,6 +487,33 @@ const getVideosRequest$: RootEpic = (action$, state$) => {
   );
 };
 
+const getLogosRequest$: RootEpic = (action$, state$) => {
+  return action$.pipe(
+    filter(publicCmsActions.getLogosRequest.match),
+    withLatestFrom(state$),
+    switchMap(([action, state]) => {
+      const { params } = action.payload;
+      const search = {
+        Type: MediaType.LOGOS,
+        ...params,
+      };
+      return concat(
+        [startLoading({ key: GettingMediaLoadingKey, type: 'top' })],
+        PublicCmsService.Get.getFileContents({ search }).pipe(
+          switchMap((logos) => {
+            return [publicCmsActions.setLogos(logos || [])];
+          }),
+          catchError((errors) => {
+            Utils.errorHandling(errors);
+            return [publicCmsActions.setLogos([])];
+          })
+        ),
+        [stopLoading({ key: GettingMediaLoadingKey })]
+      );
+    })
+  );
+};
+
 const downloadFileRequest$: RootEpic = (action$, state$) => {
   return action$.pipe(
     filter(publicCmsActions.downloadFileRequest.match),
@@ -537,4 +564,5 @@ export const publicCmsEpics = [
   getDocumentTypesRequest$,
   getDocumentListRequest$,
   downloadFileRequest$,
+  getLogosRequest$,
 ];
