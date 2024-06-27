@@ -69,6 +69,9 @@ export function getPhotos() {
 export function getVideos() {
   return createSelector([getState], (state) => state.videos);
 }
+export function getLogos() {
+  return createSelector([getState], (state) => state.logos);
+}
 export function getVideoAlbumPath() {
   return createSelector([getState], (state) => state.videosAlbumPath);
 }

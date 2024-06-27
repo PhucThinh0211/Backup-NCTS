@@ -160,7 +160,7 @@ export const CreateUpdateFileModal = () => {
             <Form.Item
               label={t('Link')}
               name={'Link'}
-              rules={[{ required: true, message: t('Link required') }]}
+              // rules={[{ required: true, message: t('Link required') }]}
             >
               <Input />
             </Form.Item>
