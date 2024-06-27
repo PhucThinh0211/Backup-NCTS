@@ -60,7 +60,7 @@ export const PhotoGallery = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#80808008' }}>
+    <div style={{ backgroundColor: '#80808008', flex: 1 }}>
       <div className='container py-2 py-md-5  p-3 p-lg-5'>
         {!!photoAlbumPath.length ? (
           <Breadcrumb items={breadcrumbs} style={{ padding: '0 0 12px' }} />

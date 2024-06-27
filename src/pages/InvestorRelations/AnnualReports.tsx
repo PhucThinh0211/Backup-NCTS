@@ -82,6 +82,7 @@ export const AnnualReports = () => {
                     dataSource={documentList || []}
                     loading={isLoading}
                     pagination={false}
+                    bordered
                   />
                 ),
               };

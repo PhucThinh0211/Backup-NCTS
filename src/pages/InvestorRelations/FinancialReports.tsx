@@ -82,6 +82,7 @@ export const FinancialReports = () => {
                     dataSource={documentList || []}
                     loading={isLoading}
                     pagination={false}
+                    bordered
                   />
                 ),
               };

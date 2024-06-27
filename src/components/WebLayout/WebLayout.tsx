@@ -149,7 +149,7 @@ export const WebLayout = () => {
             {searchVisibility && <SearchForm />}
             <HeroSection />
           </div>
-          <div className="w-100" style={{ flex: 1 }}>
+          <div className="w-100 d-flex flex-column" style={{ flex: 1 }}>
             <Outlet />
           </div>
           <div className="w-100">
