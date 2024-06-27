@@ -3,6 +3,8 @@
 import { getEnvVars } from '@/enviroment';
 import {
 	ClassicEditor as ClassicEditorBase,
+  CKFinder,
+  CKFinderUploadAdapter,
 	Alignment,
 	Autoformat,
 	Bold,
@@ -486,6 +488,8 @@ export default class ClassicEditor extends ClassicEditorBase {
 }
 
 ClassicEditor.builtinPlugins = [
+  CKFinder,
+  CKFinderUploadAdapter,
   Alignment,
   Autoformat,
   AutoImage,
@@ -511,7 +515,7 @@ ClassicEditor.builtinPlugins = [
   ImageStyle,
   ImageToolbar,
   ImageUpload,
-  Base64UploadAdapter,
+  // Base64UploadAdapter,
   ImportWord,
   Indent,
   IndentBlock,
@@ -578,6 +582,7 @@ ClassicEditor.defaultConfig = {
       // --- "Insertables" ----------------------------------------------------------------------------
 
       'link',
+      // 'ckfinder',
       'insertImage',
       /* You must provide a valid token URL in order to use the CKBox application.
 			After registering to CKBox, the fastest way to try out CKBox is to use the development token endpoint:
