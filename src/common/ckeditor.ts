@@ -472,7 +472,10 @@ function SpecialCharactersEmoji(editor: any) {
   // };
 }
 
-export default class ClassicEditor extends ClassicEditorBase {}
+export default class ClassicEditor extends ClassicEditorBase {
+  static builtinPlugins: any[] = [];
+  static defaultConfig = {};
+}
 
 ClassicEditor.builtinPlugins = [
   Alignment,

@@ -16,7 +16,7 @@
     "@ckeditor/ckeditor5-export-word": "^41.4.2",
     "@ckeditor/ckeditor5-font": "^41.4.2",
     "@ckeditor/ckeditor5-import-word": "^41.4.2",
-    "@ckeditor/ckeditor5-react": "6.2.0",
+    "@ckeditor/ckeditor5-react": "^6.2.0",
     "@ckeditor/ckeditor5-source-editing": "^41.4.2",
     "@ckeditor/ckeditor5-style": "^41.4.2",
     "@ckeditor/ckeditor5-template": "^41.4.2",
