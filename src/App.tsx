@@ -3,6 +3,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './App.css';
 import "@/common/featureTextRich.css";
 import "@/common/ckcontent.css";
+import 'ckeditor5/ckeditor5.css';
+import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
 import { ThemeCustomization } from '@/themes';
 import { AppRouter } from './routes';
 import { AuthProvider, ReduxStoreProvider } from './components';
