@@ -5,11 +5,7 @@ import { Col, Divider, Row, Typography } from 'antd';
 import { SEO } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLanguage } from '@/store/persistState';
-import {
-  getNewsTypeList,
-  getSelectedNewsDetail,
-  publicCmsActions,
-} from '@/store/publicCms';
+import { getNewsTypeList, getSelectedNewsDetail, publicCmsActions } from '@/store/publicCms';
 import { NewsPublicSider } from './components/NewsPublicSider';
 import { ContentsPagingResponse } from '@/services/ContentService';
 import { defaultPagingParams, largePagingParams } from '@/common';
@@ -41,9 +37,7 @@ export const NewsDetail = () => {
   }, [location, lang]);
 
   useEffect(() => {
-    const foundNewsType = (newsTypeList || []).find(
-      (type) => type.code === newsDetail?.type
-    );
+    const foundNewsType = (newsTypeList || []).find((type) => type.code === newsDetail?.type);
     if (foundNewsType) {
       PublicCmsService.Get.getNewsList({
         search: {
@@ -62,52 +56,50 @@ export const NewsDetail = () => {
   }, [newsDetail, newsTypeList]);
 
   return (
-    <div className='container p-3 p-lg-5'>
-      <SEO title={newsDetail?.title || ''} description='' />
+    <div className="container p-3 p-lg-5">
+      <SEO title={newsDetail?.title || ''} description="" />
       {!newsDetail && <div>Không tìm thấy nội dung</div>}
       <Row gutter={[50, 10]}>
         <Col span={24} lg={14}>
           {newsDetail && (
-            <div className='h5 text-orange'>
-              <div className='h5 text-orange'>{newsDetail.title}</div>
-              <Divider style={{ marginBlock: 8 }} />
-              <div className='d-flex flex-row gap-4 mb-4'>
-                <div style={{ fontSize: 12 }} className=' text-black-50'>
-                  <i className='fa-regular fa-clock me-1'></i>
-                  {Utils.convertISODateToLocalTime(
-                    newsDetail.publishDate || ''
-                  ).toLocaleDateString('vi')}
-                </div>
-                <div style={{ fontSize: 12 }} className=' text-black-50'>
-                  <i className='fa-solid fa-eye me-1'></i>
-                  {`${newsDetail.viewsCount} views`}
+            <>
+              <div className="h5 text-orange">
+                <div className="h5 text-orange">{newsDetail.title}</div>
+                <Divider style={{ marginBlock: 8 }} />
+                <div className="d-flex flex-row gap-4 mb-4">
+                  <div style={{ fontSize: 12 }} className=" text-black-50">
+                    <i className="fa-regular fa-clock me-1"></i>
+                    {Utils.convertISODateToLocalTime(
+                      newsDetail.publishDate || ''
+                    ).toLocaleDateString('vi')}
+                  </div>
+                  <div style={{ fontSize: 12 }} className=" text-black-50">
+                    <i className="fa-solid fa-eye me-1"></i>
+                    {`${newsDetail.viewsCount} views`}
+                  </div>
                 </div>
               </div>
               <div
-                className='ck-content'
+                className="ck-content"
                 dangerouslySetInnerHTML={{ __html: newsDetail.body || '' }}
               />
-            </div>
+            </>
           )}
           {relatedNews?.items?.length && (
             <>
               <Divider />
               <div>
-                <div className='h6 text-orange'>{t('Related news')}</div>
+                <div className="h6 text-orange">{t('Related news')}</div>
                 <ul>
                   {relatedNews.items
                     .filter((item) => item.id !== newsDetail?.id)
                     .map((item) => (
                       <li key={item.id} style={{ color: '#eca42e' }}>
                         <Link
-                          to={`/tin-tuc${
-                            item.url || '/' + Utils.createSlug(item.title || '')
-                          }`}
-                        >
+                          to={`/tin-tuc${item.url || '/' + Utils.createSlug(item.title || '')}`}>
                           <Typography.Link
                             style={{ fontSize: 12 }}
-                            className='text-black-50 hover-text-orange'
-                          >
+                            className="text-black-50 hover-text-orange">
                             {item.title}
                           </Typography.Link>
                         </Link>

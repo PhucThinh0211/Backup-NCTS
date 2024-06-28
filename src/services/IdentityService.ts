@@ -3,7 +3,7 @@ import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
 import { PagingResponse } from '@/common';
 
-const { apiUrl, oAuthConfig } = getEnvVars();
+const { identityUrl, apiUrl, oAuthConfig } = getEnvVars();
 
 export interface ILoginInput {
   username: string;
@@ -137,7 +137,7 @@ const getLoginData = (inputValues: any) => {
 
 export const login = (inputValues: any) => {
   const loginData = getLoginData(inputValues);
-  return HttpClient.post(`${apiUrl}/connect/token`, loginData, {
+  return HttpClient.post(`${identityUrl}/connect/token`, loginData, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   });
 };

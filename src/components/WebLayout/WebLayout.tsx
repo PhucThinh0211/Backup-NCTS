@@ -55,7 +55,7 @@ export const WebLayout = () => {
   useEffect(() => {
     const { href } = window.location;
     if (currentPath != href) {
-      setCurrentPath(href);
+      setCurrentPath(href + lang);
       const params = {
         pageUrl: href,
       };
