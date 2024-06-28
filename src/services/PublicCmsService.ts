@@ -1,7 +1,6 @@
 import { getEnvVars } from '@/enviroment';
 import HttpClient from './HttpClient';
 import { RequestOptions } from './types';
-import { MediaType } from './FileService';
 
 const { apiUrl } = getEnvVars();
 
@@ -14,10 +13,7 @@ export interface CaptchaResponse {
 class PublicCmsController {
   public Get = {
     getCompany: (option?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/company/0101640729`,
-        option
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/company/0101640729`, option);
     },
     getMenuList: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/menu`, options);
@@ -29,10 +25,7 @@ class PublicCmsController {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/content`, options);
     },
     getNewsById: (contentId: string, options?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/content-detail/${contentId}`,
-        options
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/content-detail/${contentId}`, options);
     },
     getNewsTypeList: (options?: RequestOptions) => {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/news-types`, options);
@@ -47,16 +40,10 @@ class PublicCmsController {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/captcha`, options);
     },
     getServicePages: (options?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/service-pages`,
-        options
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/service-pages`, options);
     },
     getIntroducePage: (options?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/introduce-page`,
-        options
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/introduce-page`, options);
     },
     getPageDetailBySlug: (slug: string, options?: RequestOptions) => {
       // prettier-ignore
@@ -67,16 +54,10 @@ class PublicCmsController {
       return HttpClient.get(`${apiUrl}/api/app/public-cms/content-by-slug?slug=${slug.replace('/tin-tuc','')}`, options);
     },
     getAllDepartments: (options?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/departments`,
-        options
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/departments`, options);
     },
     getFileContents: (options?: RequestOptions) => {
-      return HttpClient.get(
-        `${apiUrl}/api/app/public-cms/file-contents`,
-        options
-      );
+      return HttpClient.get(`${apiUrl}/api/app/public-cms/file-contents`, options);
     },
   };
 }

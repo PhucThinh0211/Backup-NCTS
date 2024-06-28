@@ -24,7 +24,7 @@ export const ContactPage = () => {
 
   return (
     <div
-      className="px-3 px-lg-5 py-2 pb-4 py-lg-4 mx-auto"
+      className="px-3 px-lg-5 py-2 pb-4 py-lg-4"
       style={{ maxWidth: 1920, backgroundColor: 'white' }}>
       <SessionTitle title={t('Contact us', { ns: 'common' })} titleLayer="NCTS" />
       <div className="container mt-2 mt-lg-4">
