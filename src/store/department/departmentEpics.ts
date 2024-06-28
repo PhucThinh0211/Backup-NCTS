@@ -93,7 +93,9 @@ const createDepartmentRequest$: RootEpic = (action$, state$) => {
                     Utils.successNotification();
                     return [
                       departmentActions.setDepartments(departmentsResult),
-                      departmentActions.setSelectedDepartment(createdDepartment),
+                      departmentActions.setSelectedDepartment(
+                        createdDepartment
+                      ),
                     ];
                   }),
                   catchError((errors) => {
@@ -230,12 +232,10 @@ const createContactRequest$: RootEpic = (action$, state$) => {
       const sortSeq = (foundDepartment?.contacts?.length || 0) + 1;
       return concat(
         [startLoading({ key: SavingContactLoadingKey })],
-        DepartmentService.Post.createContacts(departmentId, [
-          {
-            ...contact,
-            sortSeq,
-          },
-        ]).pipe(
+        DepartmentService.Post.createContacts(departmentId, {
+          ...contact,
+          sortSeq,
+        }).pipe(
           switchMap((createdContact) => {
             const createTranslationInput = {
               language: locale,

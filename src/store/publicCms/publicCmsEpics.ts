@@ -164,20 +164,23 @@ const getInvestorNewsListRequest$: RootEpic = (action$, state$) => {
         ...params,
       };
       return concat(
-        [startLoading({ key: GettingMoreContentListLoadingKey, type: 'top' })],
+        [startLoading({ key: GettingContentListLoadingKey, type: 'top' })],
         PublicCmsService.Get.getNewsList({ search }).pipe(
           switchMap((newsList) => {
             return [
               publicCmsActions.setInvestorNewsList(newsList),
-              publicCmsActions.setNewsParams(search),
+              publicCmsActions.setInvestorNewsParams(search),
             ];
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);
-            return [];
+            return [
+              publicCmsActions.setInvestorNewsList(undefined),
+              publicCmsActions.setInvestorNewsParams(undefined),
+            ];
           })
         ),
-        [stopLoading({ key: GettingMoreContentListLoadingKey })]
+        [stopLoading({ key: GettingContentListLoadingKey })]
       );
     })
   );
@@ -246,7 +249,7 @@ const getDocumentTypesRequest$: RootEpic = (action$) => {
         [startLoading({ key: GettingDocumentTypeListLoadingKey, type: 'top' })],
         PublicCmsService.Get.getDocumentTypeList({ search }).pipe(
           switchMap((documentTypes) => {
-            return [publicCmsActions.setDocumentTypes(documentTypes.items)];
+            return [publicCmsActions.setDocumentTypes(documentTypes)];
           }),
           catchError((errors) => {
             Utils.errorHandling(errors);

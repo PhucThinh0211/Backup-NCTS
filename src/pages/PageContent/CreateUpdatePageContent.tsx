@@ -232,7 +232,7 @@ export const CreateUpdatePageContent = () => {
   }, [selectedPageContentDetail]);
 
   useEffect(() => {
-    if (pageTitle && !selectedPageContent) {
+    if (pageTitle && (!selectedPageContent || (!selectedMenuId && locale === 'vi'))) {
       form.setFieldValue('slug', '/' + Utils.createSlug(pageTitle));
     }
   }, [pageTitle]);

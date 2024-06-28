@@ -103,7 +103,7 @@ export const LeftPanel = (props: SiderProps) => {
           key: '/phuc-vu-khach-hang/hang-nhap/dang-ky-xe',
         },
         {
-          label: t('Instorage good'),
+          label: t('Instorage goods'),
           key: '/phuc-vu-khach-hang/hang-nhap/hang-trong-kho',
         },
         {

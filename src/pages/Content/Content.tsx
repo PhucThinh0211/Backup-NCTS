@@ -11,7 +11,7 @@ import {
   publicCmsActions,
 } from '@/store/publicCms';
 import { MenuResponse } from '@/services/MenuService';
-import { Col, Divider, Row } from 'antd';
+import { Col, Divider, Row, Spin } from 'antd';
 import { SignUp } from '../SignUp';
 import { ContactPage } from '../Contact';
 import { NewsPublic } from '..';
@@ -28,13 +28,19 @@ import { PhotoGallery } from '../PhotoGallery/PhotoGallery';
 import { VideoGallery } from '../VideoGallery/VideoGallery';
 import { LogoGallery } from '../LogoGallery/LogoGallery';
 import { LogoCategory } from '@/services/FileService';
+import { getLoading } from '@/store/loading';
+import { GettingPageDetailBySlugLoadingKey } from '@/common';
 
 export const Content = () => {
   const dispatch = useAppDispatch();
-  const activeMenuKey = useAppSelector(getActiveMenuKey());
-  const menus = useAppSelector(getMenuList());
   const [currentMenu, setCurrentMenu] = useState<MenuResponse>();
   const location = useLocation();
+
+  const isLoading = useAppSelector(
+    getLoading(GettingPageDetailBySlugLoadingKey)
+  );
+  const activeMenuKey = useAppSelector(getActiveMenuKey());
+  const menus = useAppSelector(getMenuList());
   const pageDetail = useAppSelector(getSelectedPageDetail());
   const lang = useAppSelector(getLanguage());
 
@@ -56,6 +62,7 @@ export const Content = () => {
         }
         description={pageDetail?.seo?.description || ''}
       />
+      <Spin spinning={isLoading} fullscreen />
       {!pageDetail && <div className='p-3 p-lg-5'>Không tìm thấy nội dung</div>}
       {pageDetail?.pageType === PageContentType.DYNAMIC && (
         <div className='container p-3 p-lg-5'>

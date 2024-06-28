@@ -9,7 +9,11 @@ import { RemovingContactLoadingKey } from '@/common/loadingKey';
 import { useWindowSize } from '@/hooks/useWindowSize';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { getLoading } from '@/store/loading';
-import { getSelectedDepartment, departmentActions } from '@/store/department';
+import {
+  getSelectedDepartment,
+  departmentActions,
+  getSelectedDepartmentDetail,
+} from '@/store/department';
 import { ContactResponse } from '@/services/DepartmentService';
 import Utils from '@/utils';
 import { showModal } from '@/store/modal';
@@ -24,17 +28,20 @@ export const ContactListTable = () => {
   const dispatch = useAppDispatch();
 
   const selectedDepartment = useAppSelector(getSelectedDepartment());
+  const selectedDepartmentDetail = useAppSelector(
+    getSelectedDepartmentDetail()
+  );
   const isLoading = useAppSelector(getLoading([RemovingContactLoadingKey]));
 
   useEffect(() => {
-    if (selectedDepartment) {
+    if (selectedDepartmentDetail) {
       const sortedContacts: ContactResponse[] = Utils.deepClone(
-        selectedDepartment.contacts || []
+        selectedDepartmentDetail.contacts || []
       );
       sortedContacts.sort((a, b) => a.sortSeq - b.sortSeq);
       setDataSource(sortedContacts);
     }
-  }, [selectedDepartment]);
+  }, [selectedDepartmentDetail]);
 
   const getMoreActions = (record: ContactResponse) => {
     return [

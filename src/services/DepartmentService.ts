@@ -99,7 +99,7 @@ class DepartmentController {
     },
     createContacts: (
       departmentId: string,
-      input: CreateUpdateContactPayload[],
+      input: CreateUpdateContactPayload,
       options?: RequestOptions
     ) => {
       return HttpClient.post(

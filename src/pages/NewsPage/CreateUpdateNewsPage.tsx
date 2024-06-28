@@ -82,7 +82,7 @@ export const CreateUpdateNewsPage = () => {
     if (selectedContentDetail) {
       form.setFieldsValue({
         ...selectedContentDetail,
-        issueDate: selectedContentDetail.issueDate && !invalidDateStrings.includes(selectedContentDetail.issueDate) ? dayjs(selectedContentDetail.issueDate) : null
+        issueDate: selectedContentDetail.issueDate && !invalidDateStrings.includes(selectedContentDetail.issueDate) ? dayjs(selectedContentDetail.issueDate) : dayjs()
       });
       setNewsBody(selectedContentDetail.body || '');
     } else {
@@ -92,7 +92,7 @@ export const CreateUpdateNewsPage = () => {
   }, [selectedContentDetail]);
 
   useEffect(() => {
-    if (newsTitle && !selectedContent) {
+    if (newsTitle && (!selectedContent || locale === 'vi')) {
       form.setFieldValue('url', '/' + Utils.createSlug(newsTitle));
     }
   }, [newsTitle]);
@@ -181,7 +181,9 @@ export const CreateUpdateNewsPage = () => {
           </Button>
         </Space>
       </div>
-      <Form form={form} layout="vertical" onFinish={handleSaveContent} autoComplete="off">
+      <Form initialValues={{
+        issueDate: dayjs()
+      }} form={form} layout="vertical" onFinish={handleSaveContent} autoComplete="off">
         <Spin spinning={isLoading}>
           <Row gutter={[10, 10]} className="mt-2">
             <Col span={16}>
@@ -234,7 +236,7 @@ export const CreateUpdateNewsPage = () => {
                       label={t('Issue date', { ns: 'news' })}
                       name='issueDate'
                     >
-                      <DatePicker className='w-100' format={dateFormat} />
+                      <DatePicker className='w-100' format={dateFormat} allowClear={false} />
                     </Form.Item>
                   </Col>
                 </Row>

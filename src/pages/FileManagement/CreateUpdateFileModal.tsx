@@ -32,6 +32,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { LogoCategory, MediaType } from '@/services/FileService';
 import { UploadFile } from 'antd/lib';
+import dayjs from 'dayjs';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -139,7 +140,11 @@ export const CreateUpdateFileModal = () => {
               <Input />
             </Form.Item>
             <Form.Item label={t('Publish date')} name={'IssueDate'}>
-              <DatePicker className='w-100' format={dateFormat} />
+              <DatePicker
+                className='w-100'
+                format={dateFormat}
+                allowClear={false}
+              />
             </Form.Item>
             <Form.Item name={'Public'} valuePropName={'checked'}>
               <Checkbox>{t('Public', { ns: 'common' })}</Checkbox>
@@ -208,6 +213,7 @@ export const CreateUpdateFileModal = () => {
           Category:
             mediaType === MediaType.LOGOS ? LogoCategory.PARTNER : undefined,
           Public: true,
+          IssueDate: dayjs(),
         }}
       >
         <Form.Item

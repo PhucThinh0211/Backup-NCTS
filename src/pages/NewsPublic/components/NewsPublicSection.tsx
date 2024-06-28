@@ -8,7 +8,7 @@ import {
 import { MiniNewsCard, NewsCard } from '@/components';
 import { ContentResponse } from '@/services/ContentService';
 import Utils from '@/utils';
-import { Col, Empty, Row } from 'antd';
+import { Col, Empty, Row, Spin } from 'antd';
 import dayjs from 'dayjs';
 import parse from 'node-html-parser';
 import { useWindowSize } from '@/hooks/useWindowSize';
@@ -17,11 +17,11 @@ interface NewsSectionProps {
   title?: ReactNode;
   mainNews?: ContentResponse;
   newsList: ContentResponse[];
+  loading?: boolean;
 }
 
 const convertNewsResponseToNewsData = (news: ContentResponse) => {
   return {
-    key: news.id,
     url: `/tin-tuc${news.url || '/' + Utils.createSlug(news.title || '')}`,
     img: uploadedPhotoUrl(news.photoUrl || ''),
     date: news.lastModificationTime
@@ -43,6 +43,7 @@ export const NewsPublicSection = ({
   title,
   mainNews,
   newsList,
+  loading,
 }: NewsSectionProps) => {
   const [innerWidth] = useWindowSize();
   const hasMainNews = !!mainNews;
@@ -54,58 +55,66 @@ export const NewsPublicSection = ({
         </div>
       )}
       <div>
-        {!newsList.length && <Empty />}
-        <Row gutter={[16, 16]}>
-          {hasMainNews && (
-            <Col span={24} md={24} lg={16}>
-              <NewsCard
-                {...convertNewsResponseToNewsData(mainNews)}
-                style={cardStyle}
-              />
-            </Col>
-          )}
-          {hasMainNews ? (
-            <Col span={24} md={24} lg={8}>
-              <Row gutter={[16, 16]}>
-                {newsList.slice(0, 2).map((news) => (
-                  <Col span={24} sm={12} md={12} lg={24}>
-                    {innerWidth > bootstrapBreakpoints.sm ? (
-                      <NewsCard
-                        {...convertNewsResponseToNewsData(news)}
-                        style={cardStyle}
-                      />
-                    ) : (
-                      <MiniNewsCard
-                        {...convertNewsResponseToNewsData(news)}
-                        style={cardStyle}
-                      />
-                    )}
-                  </Col>
-                ))}
-              </Row>
-            </Col>
-          ) : (
-            <Col span={24}>
-              <Row gutter={[16, 16]}>
-                {newsList.map((news) => (
-                  <Col span={24} sm={12} lg={8}>
-                    {innerWidth > bootstrapBreakpoints.sm ? (
-                      <NewsCard
-                        {...convertNewsResponseToNewsData(news)}
-                        style={cardStyle}
-                      />
-                    ) : (
-                      <MiniNewsCard
-                        {...convertNewsResponseToNewsData(news)}
-                        style={cardStyle}
-                      />
-                    )}
-                  </Col>
-                ))}
-              </Row>
-            </Col>
-          )}
-        </Row>
+        {loading ? (
+          <div className='w-full d-flex justify-content-center'>
+            <Spin spinning={loading} />
+          </div>
+        ) : (
+          <>
+            {!newsList.length && <Empty />}
+            <Row gutter={[16, 16]}>
+              {hasMainNews && (
+                <Col span={24} md={24} lg={16}>
+                  <NewsCard
+                    {...convertNewsResponseToNewsData(mainNews)}
+                    style={cardStyle}
+                  />
+                </Col>
+              )}
+              {hasMainNews ? (
+                <Col span={24} md={24} lg={8}>
+                  <Row gutter={[16, 16]}>
+                    {newsList.slice(0, 2).map((news) => (
+                      <Col span={24} sm={12} md={12} lg={24} key={news.id}>
+                        {innerWidth > bootstrapBreakpoints.sm ? (
+                          <NewsCard
+                            {...convertNewsResponseToNewsData(news)}
+                            style={cardStyle}
+                          />
+                        ) : (
+                          <MiniNewsCard
+                            {...convertNewsResponseToNewsData(news)}
+                            style={cardStyle}
+                          />
+                        )}
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              ) : (
+                <Col span={24}>
+                  <Row gutter={[16, 16]}>
+                    {newsList.map((news) => (
+                      <Col span={24} sm={12} lg={8} key={news.id}>
+                        {innerWidth > bootstrapBreakpoints.sm ? (
+                          <NewsCard
+                            {...convertNewsResponseToNewsData(news)}
+                            style={cardStyle}
+                          />
+                        ) : (
+                          <MiniNewsCard
+                            {...convertNewsResponseToNewsData(news)}
+                            style={cardStyle}
+                          />
+                        )}
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              )}
+            </Row>
+          </>
+        )}
       </div>
     </div>
   );
